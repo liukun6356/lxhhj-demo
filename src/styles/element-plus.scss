@@ -1,0 +1,155 @@
+/**
+ * @author: liuk
+ * @date: 2024/08/01
+ * @describe:统一管理 element-plus 重置样式
+ */
+
+@import "element-plus/theme-chalk/index.css";
+// 示例：
+html.dark {
+  color-scheme: dark;
+  --el-color-white: #ccc;
+}
+
+// 备注: 已修改的全局样式 -- 修改过的主题变量在下方记录，以便维护
+/* 改变element主题变量 */
+
+// 全局 table列表
+html .el-table {
+  --el-table-bg-color: transparent;
+  --el-table-border-color: transparent;
+  --el-table-header-bg-color: #0D2434;
+  --el-table-tr-bg-color: transparent;
+  --el-fill-color-lighter: transparent;
+  --el-table-row-hover-bg-color: rgba(204, 204, 204, 0.3);
+  --el-table-text-color: #fff;
+
+  .el-table__inner-wrapper {
+    height: 100% !important;
+  }
+}
+
+html .bar-warp .el-table { // 侧边栏列表样式
+  --el-table-header-bg-color: transparent;
+  --el-table-header-text-color: #fff;
+  --el-table-text-color: #B2BBD7;
+  --el-table-bg-color: rgba(29, 51, 85, 0.3);
+
+  .el-table__header-wrapper {
+    font-size: 12px;
+  }
+
+  .el-table__body-wrapper {
+    font-size: 14px;
+  }
+
+  .el-table__cell {
+    padding: 4px 0;
+    cursor: default;
+    border-top: 1px solid rgba(110, 135, 197, 0.38);
+
+    .cell {
+      font-weight: normal;
+
+      .select {
+        position: relative;
+        color: rgba(255, 198, 26, 1);
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          right: -15px;
+          transform: translateY(-50%);
+          width: 7px;
+          height: 7px;
+          background: url("@/assets/images/zs2@2x.png") no-repeat center/cover;
+        }
+      }
+    }
+  }
+}
+
+// 全局 日期时间选择器 默认只能选中小时级别
+html .el-popper.hour-picker-popper {
+  --el-text-color-regular: #666;
+
+  .el-button--text {
+    display: none; //删除时间弹框中此刻按钮(根据需求决定是否保留)
+  }
+
+  .el-time-spinner__wrapper {
+    width: 100%;
+  }
+
+  .el-scrollbar:nth-child(2) {
+    display: none;
+  }
+
+  .is-text.el-picker-panel__link-btn {
+    display: none;
+  }
+}
+
+// 全局 分页选择器 pagination
+html .el-pagination {
+  --el-text-color-regular: #848689;
+  --el-pagination-bg-color: rgba(76, 82, 87, .4);
+  --el-pagination-button-color: #fff;
+  --el-pagination-button-disabled-bg-color: #515a62;
+  --el-fill-color-blank: rgba(76, 82, 87, 0.4);
+  --el-pagination-hover-color: #fff;
+
+  .number {
+    border: 1px solid #515a62;
+
+    &.is-active {
+      background: #2ea5ff;
+    }
+  }
+}
+
+// 全局 滑块 slider
+html .el-slider {
+  --el-slider-button-size: 13px;
+  --el-slider-height: 4px;
+  --el-slider-runway-bg-color: rgb(255, 255, 255, 0.3);
+  --el-color-info: #2ea5ff;
+  --el-slider-stop-bg-color: rgb(255, 255, 255, 0.3);
+
+  .el-slider__marks-text {
+    font-size: 12px;
+  }
+}
+
+// 全局 表单 form
+html .el-form {
+  --el-text-color-regular: #606266;
+}
+
+html .el-form-item__label {
+  color: #fff !important;
+}
+
+// 全局 树 tree
+html .el-tree {
+  --el-fill-color-blank: transparent;
+  --el-tree-text-color: #fff;
+  --el-tree-node-hover-bg-color: transparent;
+
+}
+
+// 全局 多选框 checkbox
+html .el-checkbox {
+  --el-checkbox-checked-bg-color: rgba(46, 165, 255, 0.3);
+  --el-checkbox-checked-input-border-color: #2ea5ff;
+}
+
+// loading效果
+.el-loading-mask {
+  height: calc(100% - 50px);
+  margin-top: 50px;
+  z-index: 6 !important;
+  background: rgba(41, 12, 12, .5);
+
+}

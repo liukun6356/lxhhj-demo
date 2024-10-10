@@ -1,0 +1,32 @@
+{
+  "name": "gis-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "proj4": "^2.12.0",
+    "@types/proj4": "^2.5.5",
+    "vue": "^3.5.10",
+    "vue-router": "^4.1.6",
+    "axios": "^1.2.0",
+    "pinia": "^2.1.7",
+    "element-plus": "^2.2.27",
+    "rollup-plugin-terser": "^7.0.2",
+    "xlsx": "^0.17.0",
+    "xlsx-style-vite": "^0.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "^5.5.3",
+    "@types/cesium": "^1.70.0",
+    "eslint": "^8.14.0",
+    "sass": "^1.53.0",
+    "vite": "^5.4.8",
+    "vue-tsc": "^2.1.6"
+  }
+}
