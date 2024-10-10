@@ -1,7 +1,9 @@
 {
   "name": "gis-demo",
   "private": true,
-  "version": "0.0.0",
+  "author": "柳晓黑胡椒",
+  "blog": "https://blog.csdn.net/hr_beginner",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
