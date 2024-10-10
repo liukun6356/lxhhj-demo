@@ -11,6 +11,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 导入全局样式
 import '@/styles/index.scss';
 
+// 导入mars3d样式
+import "mars3d/dist/mars3d.css"
+
 // 导入proj4投影
 import "@/utils/projection"
 

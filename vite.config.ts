@@ -2,10 +2,16 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import {terser} from 'rollup-plugin-terser';
+import vitePluginMars3d from "vite-plugin-mars3d"
+import glsl from 'vite-plugin-glsl';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [
+        vue(),
+        vitePluginMars3d(),
+        glsl(),
+    ],
 
     resolve: {// Vite路径别名配置
         alias: {

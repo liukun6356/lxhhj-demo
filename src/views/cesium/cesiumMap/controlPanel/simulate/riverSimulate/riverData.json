@@ -1,0 +1,62 @@
+[
+  {
+    "name": "郴州站",
+    "id": "7529ffc3507d11efa44d0242ac110002",
+    "riverwayWaterLevel": 148.890,
+    "objectId": [11],
+    "lat": 113.039313,
+    "lng": 25.801775,
+    "z": 333.05,
+    "heading": 359.7,
+    "pitch": -30.8,
+    "roll": 0
+  },
+  {
+    "name": "海泉",
+    "id": "752a7a02507d11efa44d0242ac110002",
+    "riverwayWaterLevel": 169.110,
+    "objectId": [1, 2],
+    "lat": 113.045729,
+    "lng": 25.744816,
+    "z": 332.38,
+    "heading": 329.7,
+    "pitch": -28,
+    "roll": 359.9
+  },
+  {
+    "name": "鸡嘴桥",
+    "id": "00231",
+    "riverwayWaterLevel": 147.530,
+    "objectId": [15],
+    "lat": 113.01283,
+    "lng": 25.815965,
+    "z": 241.01,
+    "heading": 269.8,
+    "pitch": -32.1,
+    "roll": 359.9
+  },
+  {
+    "name": "四普庄闸上游",
+    "id": "752abe36507d11efa44d0242ac110002",
+    "riverwayWaterLevel": 152,
+    "objectId": [16],
+    "lat": 113.041371,
+    "lng": 25.809035,
+    "z": 324.14,
+    "heading": 292.9,
+    "pitch": -19.2,
+    "roll": 359.9
+  },
+  {
+    "name": "潘家湾闸下游",
+    "id": "752a99bb507d11efa44d0242ac110002",
+    "riverwayWaterLevel": 152,
+    "objectId": [21, 22],
+    "lat": 113.021649,
+    "lng": 25.831545,
+    "z": 354.61,
+    "heading": 305.7,
+    "pitch": -20.5,
+    "roll": 359.9
+  }
+]
