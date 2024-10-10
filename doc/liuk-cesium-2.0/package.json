@@ -1,0 +1,59 @@
+{
+  "name": "das3d",
+  "version": "2.2.2",
+  "description": "云端地球平台",
+  "main": "index.js",
+  "keywords": [
+    "dasgis",
+    "das3d",
+    "cesium",
+    "3dgis",
+    "webgis"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@turf/turf": "^5.1.6",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.0.6",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "cesium": "^1.76",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^5.15.3",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "file-loader": "^5.0.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^1.16.4",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-glsl-loader": "^1.0.1",
+    "webpack-obfuscator": "^0.28.5"
+  },
+  "scripts": {
+    "build": "webpack --env.prod  --env.min --progress --profile --colors && webpack --env.prod --progress --profile --colors",
+    "build-src": "webpack --env.prod --progress --profile --colors ",
+    "build-min": "webpack --env.prod  --env.min --env.obfuscator --progress --profile --colors "
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marsgis/MarsGIS-for-Cesium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marsgis/MarsGIS-for-Cesium/issues",
+    "email": "wh@marsgis.cn"
+  },
+  "author": {
+    "name": "大势智慧",
+    "url": "https://www.daspatial.com"
+  },
+  "license": "ISC",
+  "homepage": "https://www.daspatial.com"
+}

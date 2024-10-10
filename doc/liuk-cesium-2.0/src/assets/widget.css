@@ -1,0 +1,13 @@
+/* widget测试工具栏 */
+.das3d-widgetbar {
+    margin: 0 auto;
+    position: absolute;
+    bottom: 30px;
+    left: 20%;
+    width: 60%;
+    height: auto;
+    z-index: 1987;
+}
+.das3d-widgetbar .fa {
+    margin-right: 5px;
+}

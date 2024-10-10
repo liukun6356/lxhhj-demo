@@ -1,0 +1,852 @@
+/**地球容器div*/
+
+.das3d-container, .cesium-container {
+    /* .cesium-container为兼容v1旧版本的*/
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+/**左下角，鼠标经纬度提示*/
+
+.das3d-locationbar {
+    position: absolute;
+    z-index: 991;
+    /*left: 110px;
+    bottom: 1px;*/
+    padding: 3px 10px;
+    font-size: 13px;
+    color: rgb(233, 233, 233);
+    text-shadow: 2px 2px 2px #000;
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+.das3d-locationbar-content {
+    float: right;
+}
+
+.das3d-locationbar-content div {
+    float: left;
+    /* min-width: 80px; */
+    margin-right: 30px;
+}
+
+@media screen and (max-width:600px) {
+    .das3d-locationbar {
+        display: none;
+    }
+}
+
+/**滚轮样式*/
+
+.das3d-mousezoom {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    height: 40px;
+    margin-top: -23px;
+    /*图片高度的一半*/
+    margin-left: -23px;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: visibility 0s 0.2s, opacity 0.2s ease-in;
+    -moz-transition: visibility 0s 0.2s, opacity 0.2s ease-in;
+    transition: visibility 0s 0.2s, opacity 0.2s ease-in;
+}
+
+.das3d-mousezoom .zoomimg {
+    width: 36px;
+    height: 36px;
+    background-image: url(./img/cursor.png);
+    background-size: 100% 100%;
+}
+
+.das3d-mousezoom-visible {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity 0.2s ease-out;
+    -moz-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+}
+
+/*****popup弹出框样式******/
+
+.das3d-popup {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    text-align: center;
+    z-index: 999;
+}
+
+.das3d-popup-close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 4px 0 0;
+    text-align: center;
+    width: 18px;
+    height: 14px;
+    font: 16px/14px Tahoma, Verdana, sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    background: transparent;
+    z-index: 999;
+}
+
+.das3d-popup-content-wrapper {
+    text-align: center;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+    padding: 10px 1px 1px 1px;
+    text-align: left;
+    border-radius: 3px;
+}
+
+.das3d-popup-content {
+    margin: 10px;
+    line-height: 1.4;
+    font-size: 13px;
+    max-width: 800px;
+    min-width: 50px;
+}
+.das3d-popup-tip-container {
+    margin: 0 auto;
+    width: 40px;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.das3d-popup-content tr>td>.das3d-popup-tip-container{
+    margin: 0 auto;
+    width: 40px;
+    height: 20px;
+    bottom: -19px;
+    position: fixed;
+    overflow: hidden;
+}
+.das3d-popup-content tbody tr:hover{
+	background-color: unset;
+}
+
+.das3d-popup-tip {
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+    width: 17px;
+    height: 17px;
+    padding: 1px;
+    margin: -10px auto 0;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.das3d-popup-color {
+    /* color: #2b2929;*/ /*黑色字体*/
+    color: #ffffff;   /*白色字体*/
+}
+
+.das3d-popup-background {
+    background: rgba(63, 72, 84, 0.9);  /*黑色背景*/
+    /*background: rgba(255,255,255,0.85);*/   /*白色背景*/
+}
+.das3d-popup-content-volumeResult { /*体积测量结果样式*/
+    width: 250px;
+    padding: 2px 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-size: 17px;
+    color: white;
+    border-radius: 10px;
+}
+.das3d-popup-volume-wrapper{
+    position: absolute;
+    transform: translate(-50%, 0);
+    bottom: -18px;
+    left: 50%;
+    height: 18px !important;
+    line-height: 18px !important;
+    width: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 17px solid rgba(0, 0, 0, 0.5);
+}
+.das3d-popup-content-volumeResult div {
+    height: 30px;
+    line-height: 30px;
+}
+ /*体积测量结果样式*/
+/**内部配置*/
+
+.das-popup-titile {
+    border-radius: 3px 0 0 3px;
+    padding: 0 80px 0 10px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: white;
+    border-bottom: 1px solid #616161;
+    overflow: hidden;
+}
+
+.das-popup-content {
+    min-width: 150px;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.das-popup-content>div {
+    margin-top: 5px;
+}
+.das-popup-content label {
+    margin: 0 10px;
+    min-width: 55px;
+    float: left;
+}
+.das-popup-content input,textarea {
+    color: #ffffff;
+    background-color: rgba(63, 72, 84, 0.7);
+    border-width: 1px;
+    border-style: solid;
+}
+.das-popup-content textarea {
+    height: 60px;
+    resize: none;
+}
+
+/**标绘Draw提示信息*/
+
+.das3d-draw-tooltip {
+    display: block;
+    position: absolute;
+    visibility: visible;
+    max-width: 200px;
+    min-width: 100px;
+    padding: 2px 5px;
+    font-size: 11px;
+    z-index: 1000;
+    opacity: 0.8;
+    -khtml-opacity: 0.8;
+    -moz-opacity: 0.8;
+    filter: alpha(opacity=80);
+    pointer-events: none;
+}
+
+.das3d-draw-tooltip.left .das3d-draw-tooltip-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -5px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #000000;
+}
+
+.das3d-draw-tooltip.right .das3d-draw-tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #000000;
+}
+
+.das3d-draw-tooltip-inner {
+    padding: 3px 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: left;
+    max-width: 200px;
+    text-decoration: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.das3d-draw-tooltip-inner p {
+    margin: 0;
+}
+
+.das3d-draw-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/**右键菜单*/
+
+.das3d-contextmenu {
+    position: absolute;
+    padding: 0;
+    z-index: 999;
+    display: none;
+    /* top: 100px;
+    left: 100px; */
+}
+
+.das3d-contextmenu-ul i {
+    padding-right: 10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.das3d-contextmenu-ul {
+    background: rgba(43, 44, 47, 0.8);
+    border: 1px solid #2b2c2f;
+    min-width: 110px;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.das3d-contextmenu-ul li+li {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.das3d-contextmenu-ul li+li:before {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: -webkit-linear-gradient(to left, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.2), transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.das3d-contextmenu-ul .line {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 96%;
+    position: absolute;
+    left: 2%;
+    background: #dddddd
+}
+
+.das3d-contextmenu-ul>li>a {
+    padding: 6px 10px;
+    -webkit-transition: background-color .25s;
+    -o-transition: background-color .25s;
+    transition: background-color .25s;
+    display: block;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #76838f;
+    white-space: nowrap;
+    color: #edffff;
+    text-decoration: none;
+}
+
+.das3d-contextmenu-ul>li>a:hover, .das3d-contextmenu-ul>li>a:focus, .das3d-contextmenu-ul>li>.active {
+    color: #fff;
+    background-color: #444d59;
+    text-decoration: none;
+}
+
+.das3d-contextmenu-ul>.active>a, .das3d-contextmenu-ul>.active>a:hover, .das3d-contextmenu-ul>.active>a:focus {
+    color: #fff;
+    background-color: #444d59;
+    text-decoration: none;
+}
+
+.das3d-contextmenu-ul line {
+    width: 100%;
+    height: 20px;
+    border: 1px
+}
+
+.das3d-sub-menu {
+    min-width: 160px;
+    position: absolute;
+    top: 0;
+    left: 160px;
+    background: rgba(43, 44, 47, 0.8);
+    display: none;
+}
+
+.das3d-sub-menu li {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.das3d-sub-menu li:hover {
+    background-color: #444d59;
+}
+
+/**动画点*/
+.das3d-animation-point, .das3d-animation-point:after, .das3d-animation-point:before, .das3d-animation-point p, .das3d-animation-point p:after, .das3d-animation-point p:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.das3d-animation-point {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid hsla(0, 0%, 100%, .5);
+    cursor: pointer;
+    color: #0ff;
+    background: currentColor;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 2em currentColor, 0 0 .5em currentColor;
+    position: absolute;
+}
+
+.das3d-animation-point.mapError {
+    color: red
+}
+
+.das3d-animation-point.mapWarn {
+    color: #b5a603
+}
+
+.das3d-animation-point.mapSuccess {
+    color: #239233
+}
+
+.das3d-animation-point.mapOrange {
+    color: #8c4d34
+}
+
+.das3d-animation-point:after, .das3d-animation-point:before, .das3d-animation-point p:after, .das3d-animation-point p:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.das3d-animation-point:after, .das3d-animation-point:before {
+    border: 1px solid;
+    -webkit-animation: das3d-mapAni 1s ease infinite;
+    -moz-animation: das3d-mapAni 1s ease infinite;
+    -o-animation: das3d-mapAni 1s ease infinite;
+    -ms-animation: das3d-mapAni 1s ease infinite;
+    animation: das3d-mapAni 1s ease infinite
+}
+
+.das3d-animation-point p:before {
+    border: 1px solid
+}
+
+.das3d-animation-point p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-animation: das3d-mapAni 2s ease infinite;
+    -moz-animation: das3d-mapAni 2s ease infinite;
+    -o-animation: das3d-mapAni 2s ease infinite;
+    -ms-animation: das3d-mapAni 2s ease infinite;
+    animation: das3d-mapAni 2s ease infinite
+}
+
+@-webkit-keyframes das3d-mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-moz-keyframes das3d-mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-o-keyframes das3d-mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@-ms-keyframes das3d-mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+@keyframes das3d-mapAni {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        filter: alpha(opacity=1)
+    }
+    25% {
+        width: 12px;
+        height: 12px;
+        opacity: .7;
+        filter: alpha(opacity=70)
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+        opacity: .5;
+        filter: alpha(opacity=50)
+    }
+    75% {
+        width: 30px;
+        height: 30px;
+        opacity: .2;
+        filter: alpha(opacity=20)
+    }
+    to {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+}
+
+.third-bar-p {
+  margin-top: 7vh;
+}
+
+.perspective {
+  -webkit-perspective: 70vh;
+  perspective: 70vh;
+  text-align: center;
+  -webkit-perspective-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+  position: relative;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+
+  .perspective:hover {
+    -webkit-transform: scale(1.04);
+    transform: scale(1.04);
+  }
+
+.bar-input {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  opacity: 0;
+}
+
+#first-bar .bar-input {
+  width: 55vh;
+}
+
+#second-bar .bar-input {
+  width: 40vh;
+}
+
+#third-bar .bar-input {
+  width: 42vh;
+}
+
+.bar {
+  display: inline-block;
+  position: relative;
+  -webkit-transform: rotateX(55deg);
+  transform: rotateX(55deg);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+  .bar .bar-face {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+
+    .bar .bar-face.front {
+      -webkit-transform: rotateX(-90deg);
+      transform: rotateX(-90deg);
+    }
+
+    .bar .bar-face.percentage:before {
+      height: 100%;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      margin: 0;
+    }
+
+#first-bar .bar {
+  width: 55vh;
+  height: 7vh;
+}
+
+  #first-bar .bar .bar-face {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+    #first-bar .bar .bar-face.floor {
+      box-shadow: 0 1.3em 1.2em -0.4em rgba(0, 0, 70, 0.25), 0 -2em 15em 0.5em #4d5075, 0 -0.75em 25em 10em rgba(255, 255, 255, 0.4);
+    }
+
+    #first-bar .bar .bar-face.percentage:before {
+      box-shadow: 0 1.6em 7em -0.3em rgba(149, 65, 105, 0.5);
+    }
+
+    #first-bar .bar .bar-face.roof {
+      -webkit-transform: translateZ(7vh);
+      transform: translateZ(7vh);
+    }
+
+    #first-bar .bar .bar-face.back {
+      -webkit-transform: rotateX(-90deg) translateZ(-7vh);
+      transform: rotateX(-90deg) translateZ(-7vh);
+    }
+
+    #first-bar .bar .bar-face.percentage:before {
+      background-color: rgba(149, 65, 105, 0.6);
+    }
+
+#second-bar .bar {
+  width: 40vh;
+  height: 10vh;
+}
+
+  #second-bar .bar .bar-face {
+    background: rgba(60, 75, 132, 0.5);
+    background-image: linear-gradient(90deg, rgba(134, 114, 146, 0.5), rgba(60, 75, 132, 0.1)), url("https://zephyo.github.io/22Days/code/5/graphics/stars.svg"), url("https://zephyo.github.io/22Days/code/5/graphics/stars2.svg");
+    background-repeat: repeat repeat;
+  }
+
+    #second-bar .bar .bar-face.floor {
+      box-shadow: 0 1.3em 1.2em -0.4em rgba(0, 0, 70, 0.25), 0 -2em 15em 0.5em #4d5075, 0 -0.75em 25em 10em rgba(255, 255, 255, 0.4);
+    }
+
+    #second-bar .bar .bar-face.percentage:before {
+      box-shadow: 0 1.6em 7em -0.3em rgba(200, 212, 250, 0.5);
+    }
+
+    #second-bar .bar .bar-face.roof {
+      -webkit-transform: translateZ(10vh);
+      transform: translateZ(10vh);
+    }
+
+    #second-bar .bar .bar-face.back {
+      -webkit-transform: rotateX(-90deg) translateZ(-10vh);
+      transform: rotateX(-90deg) translateZ(-10vh);
+    }
+
+    #second-bar .bar .bar-face.percentage:before {
+      background-image: url("https://zephyo.github.io/22Days/code/5/graphics/sky.png");
+      opacity: 0.9;
+    }
+
+#third-bar .bar {
+  width: 42vh;
+  height: 8vh;
+}
+
+  #third-bar .bar .bar-face {
+    background: rgba(232, 154, 173, 0.7);
+  }
+
+    #third-bar .bar .bar-face.floor {
+      box-shadow: 0 1.3em 1.2em -0.4em rgba(0, 0, 70, 0.25), 0 -2em 15em 0.5em #4d5075, 0 -0.75em 25em 10em rgba(255, 255, 255, 0.4);
+    }
+
+    #third-bar .bar .bar-face.percentage:before {
+      box-shadow: 0 1.6em 7em -0.3em rgba(236, 0, 113, 0.5);
+    }
+
+    #third-bar .bar .bar-face.roof {
+      -webkit-transform: translateZ(8vh);
+      transform: translateZ(8vh);
+    }
+
+    #third-bar .bar .bar-face.back {
+      -webkit-transform: rotateX(-90deg) translateZ(-8vh);
+      transform: rotateX(-90deg) translateZ(-8vh);
+    }
+
+    #third-bar .bar .bar-face.percentage:before {
+      background: linear-gradient(90deg, rgba(245, 239, 200, 0.5), #ec0071);
+    }
+
+  #third-bar .bar .indicator {
+    box-shadow: 0px 15px 35px rgba(236, 0, 113, 0.3);
+    background: #ec0071;
+    width: 8vh;
+    height: 8vh;
+    color: white;
+    -webkit-transform: translateY(9.6vh);
+    transform: translateY(9.6vh);
+    text-align: center;
+    font-size: 2.5vh;
+    font-weight: 900;
+    line-height: 8vh;
+  }
+
+    #third-bar .bar .indicator:before {
+      content: "";
+      position: absolute;
+      background: #ec0071;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: -6px;
+      width: 4vh;
+      height: 4vh;
+      z-index: -1;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
