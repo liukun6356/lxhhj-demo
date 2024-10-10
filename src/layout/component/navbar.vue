@@ -1,6 +1,6 @@
 <!--导航条-->
 <template>
-  <div class="navbar-box">
+  <div class="navbar-box" :style="{marginTop:arrowType?'-70px':'0'}">
     <div class="top-title">
       <span>{{ curMenu }}</span>
     </div>
@@ -13,12 +13,20 @@
         </div>
       </div>
     </div>
+    <div class="operation" @click="arrowType=!arrowType">
+      <el-icon v-if="arrowType">
+        <CaretBottom/>
+      </el-icon>
+      <el-icon v-else>
+        <CaretTop/>
+      </el-icon>
+    </div>
   </div>
 
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, reactive, toRefs} from 'vue'
+import {computed, reactive, toRefs} from 'vue'
 import {useRoute, useRouter} from "vue-router"
 // Component
 const route = useRoute()
@@ -26,20 +34,13 @@ const router = useRouter()
 
 const curMenu = computed(() => route.name)
 const model = reactive({
-
+  arrowType: false
 })
-const {} = toRefs(model)
-
-onMounted(() => {
-  // model.preRouteName = route.query.preName || ""
-
-})
-
+const {arrowType} = toRefs(model)
 
 const changeActiveId = ({name}) => {
   router.push({name})
 }
-
 
 const menus = [
   {label: '四全', name: 'Cesium'},
@@ -65,6 +66,7 @@ const menus = [
   user-select: none;
   background: url("@/assets/images/top.png") no-repeat center/100% 100%;
   pointer-events: auto;
+  transition: all 0.5s ease-in-out;
 
   .top-title {
     width: 1100px;
@@ -115,6 +117,19 @@ const menus = [
     }
   }
 
+  .operation {
+    width: 60px;
+    height: 20px;
+    margin-top: 70px;
+    background: #215073;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    user-select: none;
+    //background: rgb(130, 150, 163, .15);
+  }
 
   .top-bar-right {
     display: flex;

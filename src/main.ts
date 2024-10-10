@@ -15,6 +15,10 @@ import '@/styles/index.scss';
 import "@/utils/projection"
 
 const app = createApp(App);
+
+// 全局使用Icon图标  <el-icon><Close/></el-icon>
+Object.entries(ElementPlusIconsVue).forEach(([key, component])=>app.component(key, component))
+
 // 全局挂载
 setupStore(app);
 app.use(router);

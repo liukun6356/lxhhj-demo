@@ -1,5 +1,5 @@
 {
-  "name": "gis-demo",
+  "name": "lxhhj-demo",
   "private": true,
   "author": "柳晓黑胡椒",
   "blog": "https://blog.csdn.net/hr_beginner",
@@ -26,6 +26,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "typescript": "^5.5.3",
     "@types/cesium": "^1.70.0",
+    "@element-plus/icons-vue": "^2.1.0",
     "eslint": "^8.14.0",
     "sass": "^1.53.0",
     "vite": "^5.4.8",
