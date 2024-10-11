@@ -85,15 +85,15 @@ const model = reactive({
 })
 const {boundaryShow, diagramShow} = toRefs(model)
 
-onMounted(() => {
-  model.boundaryShow = true
-  nextTick(() => {
-    resetCamera({type: "2d"})
-  })
-  mittBus.on('toggmap2dOr3d', toggmap2dOr3dMittBusFn)
-  mittBus.on('resetControlPanel', topToolSelectRightTool)
-  mittBus.on('mapResetCamera', resetCamera)
-})
+// onMounted(() => {
+//   model.boundaryShow = true
+//   nextTick(() => {
+//     resetCamera({type: "2d"})
+//   })
+//   mittBus.on('toggmap2dOr3d', toggmap2dOr3dMittBusFn)
+//   mittBus.on('resetControlPanel', topToolSelectRightTool)
+//   mittBus.on('mapResetCamera', resetCamera)
+// })
 
 onUnmounted(() => {
   mittBus.off('toggmap2dOr3d', toggmap2dOr3dMittBusFn)

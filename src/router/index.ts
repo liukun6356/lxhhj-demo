@@ -14,7 +14,7 @@ export const constantRoutes = [
         children: [
             {
                 path: 'main',
-                component: () => import('@/views/cesium/cesiumMap/index.vue'),
+                component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-main',
                 redirect: '/cesium/main/controlPanel',
                 children: [
