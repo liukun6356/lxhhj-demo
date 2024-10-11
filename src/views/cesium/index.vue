@@ -19,11 +19,12 @@
 
 <script lang="ts" setup>
 import CesiumMap from "@/views/cesium/cesiumMap/index.vue"
-import {nextTick, onMounted, reactive, ref, toRefs} from "vue";
+import { onMounted, reactive, ref, toRefs} from "vue";
 import treeDataJson from "./menuList";
-
+import { useRouter} from "vue-router";
 // Refs
 const treeRef = ref(null)
+const router = useRouter()
 const model = reactive({
   treeData: [],
   checkedKeys: [11]
@@ -32,6 +33,7 @@ const model = reactive({
 const {treeData, checkedKeys} = toRefs(model)
 
 const checkChange = (node, checked) => {
+  router.push({name:node.name})
   const isLeaf = !node.children || node.children.length === 0;
   if (!isLeaf) {
     treeRef.value.setChecked(node.id, false, true)

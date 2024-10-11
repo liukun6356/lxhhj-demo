@@ -22,7 +22,13 @@ export const constantRoutes = [
                         path: 'controlPanel',
                         component: () => import('@/views/cesium/component/controlPanel/index.vue'),
                         name: 'Cesium-main-ControlPanel',
-                        meta: {title: 'cover', icon: '', affix: true},
+                        meta: {title: 'controlPanel', icon: '', affix: true},
+                    },
+                    {
+                        path: 'aaa',
+                        component: () => import('@/views/cesium/component/aaa/index.vue'),
+                        name: 'Cesium-main-Aaa',
+                        meta: {title: 'aaa', icon: '', affix: true},
                     },
                 ]
             }
