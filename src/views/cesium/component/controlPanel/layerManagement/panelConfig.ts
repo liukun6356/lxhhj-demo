@@ -15,26 +15,26 @@ export default [
                 label: '天地图-影像注记',
                 type: 'img_z',
             },
-            // {
-            //     id: 13,
-            //     label: '天地图-矢量底图',
-            //     type: 'vec_d',
-            // },
-            // {
-            //     id: 14,
-            //     label: '天地图-矢量注记',
-            //     type: 'vec_z',
-            // },
-            // {
-            //     id: 15,
-            //     label: '天地图-地形晕渲',
-            //     type: 'ter_d',
-            // },
-            // {
-            //     id: 16,
-            //     label: '天地图-地形注记',
-            //     type: 'ter_z',
-            // },
+            {
+                id: 13,
+                label: '天地图-矢量底图',
+                type: 'vec_d',
+            },
+            {
+                id: 14,
+                label: '天地图-矢量注记',
+                type: 'vec_z',
+            },
+            {
+                id: 15,
+                label: '天地图-地形晕渲',
+                type: 'ter_d',
+            },
+            {
+                id: 16,
+                label: '天地图-地形注记',
+                type: 'ter_z',
+            },
         ],
     },
     {
@@ -133,27 +133,6 @@ export default [
         ],
     },
     {
-        id: 6,
-        label: '水利工程',
-        children: [
-            {
-                id: 61,
-                label: '水库',
-                type: 'wz-reservoir',
-            },
-            {
-                id: 62,
-                label: '水电站',
-                type: 'wz-hydropowerStation',
-            },
-            {
-                id: 63,
-                label: '水闸',
-                type: 'wz-gateDam',
-            },
-        ],
-    },
-    {
         id: 7,
         label: '测站',
         children: [
@@ -171,17 +150,6 @@ export default [
                 id: 73,
                 label: '水库站',
                 type: 'reservoirStation',
-            },
-            {
-                id: 74,
-                label: '视频测流站',
-                type: 'videoTraffic',
-            },
-            {
-                id: 75,
-                label: '河湖监控',
-                type: 'riverMonitoring',
-                // disabled: true
             },
         ],
     },

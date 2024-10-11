@@ -9,13 +9,22 @@ export const constantRoutes = [
     {
         path: '/cesium',
         component: () => import('@/layout/index.vue'),
-        redirect: '/cesium/complete',
-        name:"Cesium",
+        redirect: '/cesium/main',
+        name: "Cesium",
         children: [
             {
-                path: 'complete',
-                component: () => import('@/views/cesium/index.vue'),
-                name: 'Cesium-Complete',
+                path: 'main',
+                component: () => import('@/views/cesium/cesiumMap/index.vue'),
+                name: 'Cesium-main',
+                redirect: '/cesium/main/controlPanel',
+                children: [
+                    {
+                        path: 'controlPanel',
+                        component: () => import('@/views/cesium/component/controlPanel/index.vue'),
+                        name: 'Cesium-main-ControlPanel',
+                        meta: {title: 'cover', icon: '', affix: true},
+                    },
+                ]
             }
         ]
     },
@@ -23,7 +32,7 @@ export const constantRoutes = [
         path: '/three',
         component: () => import('@/layout/index.vue'),
         redirect: '/three/complete',
-        name:"Three",
+        name: "Three",
         children: [
             {
                 path: 'complete',
@@ -36,7 +45,7 @@ export const constantRoutes = [
         path: '/webgl',
         component: () => import('@/layout/index.vue'),
         redirect: '/webgl/complete',
-        name:"WebGl",
+        name: "WebGl",
         children: [
             {
                 path: 'complete',

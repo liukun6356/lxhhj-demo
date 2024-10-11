@@ -4,22 +4,32 @@
  * @describe: 全局球组件
  */-->
 <template>
-  <div class="map-area">
-    <!--主地图-->
-    <div id="cesiumContainer" :style="{width: mapStore.isDualScreen?'50%':'100%',height: '100%'}"></div>
-    <!--双屏地图-->
-    <dual-map v-if="mapStore.isDualScreen"/>
-  </div>
-  <control-panel v-if="mapStore.isActiveMap"/>
-  <div class="locationbar">
-    <span>经度:{{ locationData.longitude }}</span>
-    <span>纬度:{{ locationData.latitude }}</span>
-    <span>层级：{{ locationData.zoom }}</span>
-    <span>方向：{{ locationData.heading }}度</span>
-    <span>俯仰角：{{ locationData.pitch }}度</span>
-    <span>视高：{{ locationData.height }}米</span>
-    <span :style="{color:getColorForFPS(parseInt(locationData.fps))}">{{ locationData.fps }}</span>
-    <span :style="{color:getColorForLatency(parseInt(locationData.ms))}">{{ locationData.ms }}</span>
+  <div>
+    <div class="map-area">
+      <!--主地图-->
+      <div id="cesiumContainer" :style="{width: mapStore.isDualScreen?'50%':'100%',height: '100%'}"></div>
+      <!--双屏地图-->
+      <dual-map v-if="mapStore.isDualScreen"/>
+    </div>
+    <div class="locationbar">
+      <span>经度:{{ locationData.longitude }}</span>
+      <span>纬度:{{ locationData.latitude }}</span>
+      <span>层级：{{ locationData.zoom }}</span>
+      <span>方向：{{ locationData.heading }}度</span>
+      <span>俯仰角：{{ locationData.pitch }}度</span>
+      <span>视高：{{ locationData.height }}米</span>
+      <span :style="{color:getColorForFPS(parseInt(locationData.fps))}">{{ locationData.fps }}</span>
+      <span :style="{color:getColorForLatency(parseInt(locationData.ms))}">{{ locationData.ms }}</span>
+    </div>
+    <section class="complete-main" v-if="mapStore.isActiveMap">
+      <router-view v-slot="{ Component, route }">
+        <transition name="router-fade" mode="out-in">
+          <keep-alive include="[]">
+            <component :is="Component" :key="route.fullPath"/>
+          </keep-alive>
+        </transition>
+      </router-view>
+    </section>
   </div>
 </template>
 
@@ -36,7 +46,6 @@ import skyBoxLeftJpg from "@/assets/images/cesiumMap/lantian/Left.jpg"
 import skyBoxRightJpg from "@/assets/images/cesiumMap/lantian/Right.jpg"
 import skyBoxUpJpg from "@/assets/images/cesiumMap/lantian/Up.jpg"
 // Components
-import ControlPanel from "./controlPanel/index.vue"
 import DualMap from "./dualMap.vue"
 
 import {ElMessage} from "element-plus";
@@ -225,6 +234,7 @@ const getColorForLatency = (ms) => {
   display: flex;
   width: 100%;
   height: 100%;
+  pointer-events: auto;
 }
 
 .locationbar {
@@ -258,6 +268,10 @@ const getColorForLatency = (ms) => {
   span {
     margin-left: 15px;
   }
+}
+.complete-main {
+  width: 100%;
+  height: 100%;
 }
 </style>
 

@@ -4,9 +4,9 @@
     <!--导航栏-->
     <navbar/>
     <!--全局地图-->
-    <cesium-map />
+<!--    <cesium-map />-->
     <!--主页面-->
-    <app-main v-if="mapStore.isActiveMap"/>
+    <app-main/>
   </div>
 </template>
 

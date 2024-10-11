@@ -14,12 +14,11 @@
 <style lang="scss" scoped>
 .app-main {
   position: absolute;
-  top: 100px;
-  height: calc(100% - 100px);
+  height: 100%;
   width: 100%;
   overflow: hidden;
   background: transparent;
-  z-index: 8;
+  z-index: 0;
   pointer-events: none;
 }
 </style>
