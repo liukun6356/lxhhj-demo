@@ -6,7 +6,7 @@
       <div class="content">
         <el-tree :data="treeData" accordion default-expand-all @node-click="handleNodeClick">
           <template #default="{data}">
-            <span :style="{color:route.name ===data.name?'red':''}">{{ data.label }}</span>
+            <span :style="{color:route.name ===data.name?'#FFBB1F':''}">{{ data.label }}</span>
           </template>
         </el-tree>
       </div>

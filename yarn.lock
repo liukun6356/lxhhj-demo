@@ -3938,10 +3938,10 @@ mars3d-cesium@~1.103.0:
     "@cesium/engine" "2.1.0"
     "@cesium/widgets" "2.1.0"
 
-mars3d@^3.5.0:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/mars3d/-/mars3d-3.8.3.tgz#15cd5dcfbca2715a1b3516bb7802b64d8aef563c"
-  integrity sha512-dRVTuNbmOD8MdEwj8rvmtde7eBBpELTGtggY5OKZpiMXvMhxEqWKFVYd1aPvhF2HvBuV0y9tJ4oEj8tFJmMScQ==
+mars3d@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/mars3d/-/mars3d-3.5.0.tgz#ac81b20a0bb1a3cff90fb0d74ec4d259f7fbb91a"
+  integrity sha512-PqOz24LEmjBx5hIcJzA5ZaP2PkcLC3mfuty1Qw7UtIMs5bCPCP8FsUE/yVBJiYMW7gNzO/dAseJF8eECZDPU4g==
 
 mdn-data@2.0.14:
   version "2.0.14"

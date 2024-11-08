@@ -5,13 +5,18 @@ export default [
         children: [
             {
                 id: 11,
-                label: '地图工具栏',
+                label: '地图工具栏(图层管理)',
                 name:"Cesium-main-ControlPanel"
             },
             {
                 id: 12,
                 label: '地图工具栏1',
                 name:"Cesium-main-Aaa"
+            },
+            {
+                id: 13,
+                label: '图例展示',
+                name:"Cesium-main-lengendShow"
             },
         ],
     },

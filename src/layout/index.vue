@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts" setup>
+import {usemapStore} from "../store/modules/cesiumMap";
 // Components
 import AppMain from "./component/appMain.vue"
 import Navbar from "./component/navbar.vue"

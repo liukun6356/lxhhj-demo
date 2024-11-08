@@ -30,6 +30,12 @@ export const constantRoutes = [
                         name: 'Cesium-main-Aaa',
                         meta: {title: 'aaa', icon: '', affix: true},
                     },
+                    {
+                        path: 'Cesium-main-lengendShow',
+                        component: () => import('@/views/cesium/component/lengendShow/index.vue'),
+                        name: 'Cesium-main-lengendShow',
+                        meta: {title: 'lengendShow', icon: '', affix: true},
+                    },
                 ]
             }
         ]

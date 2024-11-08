@@ -34,7 +34,7 @@ const router = useRouter()
 
 const curMenu = computed(() => route.name)
 const model = reactive({
-  arrowType: false
+  arrowType: true
 })
 const {arrowType} = toRefs(model)
 
@@ -43,9 +43,9 @@ const changeActiveId = ({name}) => {
 }
 
 const menus = [
-  {label: '四全', name: 'Cesium'},
-  {label: '四预', name: 'Three'},
-  {label: '四制', name: 'WebGl'},
+  {label: 'cesium', name: 'Cesium'},
+  {label: 'three', name: 'Three'},
+  {label: 'webGl', name: 'WebGl'},
 ];
 </script>
 
