@@ -4,14 +4,11 @@
     <div class="showContainer">
       <div class="head_title_arrow">MenuList</div>
       <div class="content">
-        <el-tree
-            ref="treeRef"
-            :data="treeData"
-            show-checkbox
-            accordion
-            @check="checkChange"
-            :default-checked-keys="checkedKeys"
-            node-key="id"/>
+        <el-tree :data="treeData" accordion default-expand-all @node-click="handleNodeClick">
+          <template #default="{data}">
+            <span :style="{color:route.name ===data.name?'red':''}">{{ data.label }}</span>
+          </template>
+        </el-tree>
       </div>
     </div>
   </div>
@@ -19,33 +16,23 @@
 
 <script lang="ts" setup>
 import CesiumMap from "@/views/cesium/cesiumMap/index.vue"
-import { onMounted, reactive, ref, toRefs} from "vue";
+import {onMounted, reactive, toRefs} from "vue";
 import treeDataJson from "./menuList";
-import { useRouter} from "vue-router";
+import {useRouter,useRoute} from "vue-router";
+
 // Refs
-const treeRef = ref(null)
 const router = useRouter()
+const route = useRoute()
 const model = reactive({
   treeData: [],
-  checkedKeys: [11]
 })
 
-const {treeData, checkedKeys} = toRefs(model)
+const {treeData} = toRefs(model)
 
-const checkChange = (node, checked) => {
-  router.push({name:node.name})
-  const isLeaf = !node.children || node.children.length === 0;
-  if (!isLeaf) {
-    treeRef.value.setChecked(node.id, false, true)
-    return;
-  }
-  if (checked) {
-    model.checkedKeys = [];
-    model.checkedKeys.push(node.id);
-  } else {
-    model.checkedKeys = model.checkedKeys.filter(key => key !== node.id);
-  }
-  treeRef.value.setCheckedKeys(model.checkedKeys);
+const handleNodeClick = (row) => {
+  const {name} = row
+  if (!name) return
+  router.push({name})
 }
 
 onMounted(async () => {

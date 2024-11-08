@@ -1,13 +1,13 @@
 <!--地图工具栏-->
 <template>
   <div class="controlPanel-wrap">
-    <!-- <div class="topTool">-->
-    <!--   <div v-for="(item, index) in topToolList" :key="index" class="toolBtn topBtn"-->
-    <!--        :class="{ active: mapStore.mapType === item.label }" @click="topToolActive(item.label)">-->
-    <!--     <img :src="item.src" style="width: 20px"/>-->
-    <!--     <div style="font-size: 12px">{{ item.label }}</div>-->
-    <!--   </div>-->
-    <!-- </div>-->
+     <div class="topTool">
+       <div v-for="(item, index) in topToolList" :key="index" class="toolBtn topBtn"
+            :class="{ active: mapStore.mapType === item.label }" @click="topToolActive(item.label)">
+         <img :src="item.src" style="width: 20px"/>
+         <div style="font-size: 12px">{{ item.label }}</div>
+       </div>
+     </div>
     <div class="rightTool">
       <div v-for="(item, index) in rightToolList2" :key="index" class="toolBtn topBtn"
            :class="{ select: mapStore.curSelectTool === item.label }" @click="topToolSelectRightTool(item)">
@@ -87,9 +87,6 @@ const {boundaryShow, diagramShow} = toRefs(model)
 
 onMounted(() => {
   model.boundaryShow = true
-  nextTick(() => {
-    resetCamera({type: "2d"})
-  })
   mittBus.on('toggmap2dOr3d', toggmap2dOr3dMittBusFn)
   mittBus.on('resetControlPanel', topToolSelectRightTool)
   mittBus.on('mapResetCamera', resetCamera)
@@ -115,15 +112,10 @@ const topToolSelectRightTool = (item) => {
 }
 
 const topToolActive = (type) => {
-  if (type === '概化图') {
-    model.diagramShow = true
-    return
-  }
   resetCamera({type})
 }
 
 const topToolList = [
-  {label: '概化图', src: ghtPng},
   {label: '2d', src: twoD},
   {label: '3d', src: threeD}
 ]
@@ -217,23 +209,6 @@ const resetCamera = async (obj?: any) => {
       justify-content: center;
       align-items: center;
       cursor: pointer;
-
-      &:nth-child(1) {
-        position: absolute;
-        left: -70px;
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: -5px;
-          width: 50px;
-          height: 50px;
-          border-radius: 6px;
-          background: rgb(5, 9, 9, 0.5);
-          z-index: -1;
-        }
-      }
     }
 
     .topBtn {
@@ -250,7 +225,7 @@ const resetCamera = async (obj?: any) => {
 
   .rightTool {
     width: 50px;
-    margin-top: -8px;
+    margin-top: 10px;
     padding: 2px;
     padding-bottom: 10px;
     border-radius: 6px;

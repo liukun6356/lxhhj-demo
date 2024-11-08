@@ -46,7 +46,6 @@ const menus = [
   {label: '四全', name: 'Cesium'},
   {label: '四预', name: 'Three'},
   {label: '四制', name: 'WebGl'},
-  {label: '四管', name: 'Cockpit-Manage'}
 ];
 </script>
 
