@@ -37,13 +37,22 @@ export const constantRoutes = [
     {
         path: '/three',
         component: () => import('@/layout/index.vue'),
-        redirect: '/three/complete',
+        redirect: '/three/main',
         name: "Three",
         children: [
             {
-                path: 'complete',
+                path: 'main',
                 component: () => import('@/views/three/index.vue'),
-                name: 'Three-Complete',
+                name: 'Three-main',
+                redirect: '/three/main/building',
+                children: [
+                    {
+                        path: 'building',
+                        component: () => import('@/views/three/component/building/index.vue'),
+                        name: 'Three-main-building',
+                        meta: {title: 'building', icon: '', affix: true},
+                    }
+                ]
             }
         ]
     },
