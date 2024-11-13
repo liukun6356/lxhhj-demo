@@ -10,12 +10,7 @@ export default [
             },
             {
                 id: 12,
-                label: '地图工具栏1',
-                name:"Cesium-main-Aaa"
-            },
-            {
-                id: 13,
-                label: '图例展示',
+                label: '图例展示+点聚合(base64)',
                 name:"Cesium-main-lengendShow"
             },
         ],

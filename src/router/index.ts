@@ -25,12 +25,6 @@ export const constantRoutes = [
                         meta: {title: 'controlPanel', icon: '', affix: true},
                     },
                     {
-                        path: 'aaa',
-                        component: () => import('@/views/cesium/component/aaa/index.vue'),
-                        name: 'Cesium-main-Aaa',
-                        meta: {title: 'aaa', icon: '', affix: true},
-                    },
-                    {
                         path: 'Cesium-main-lengendShow',
                         component: () => import('@/views/cesium/component/lengendShow/index.vue'),
                         name: 'Cesium-main-lengendShow',
