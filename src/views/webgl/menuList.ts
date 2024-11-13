@@ -5,8 +5,8 @@ export default [
         children: [
             {
                 id: 11,
-                label: '3d楼栋',
-                name: "Three-main-Building"
+                label: 'canvas2d',
+                name: "Webgl-main-Canvas2d"
             },
         ],
     },

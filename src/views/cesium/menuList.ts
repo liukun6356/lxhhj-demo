@@ -11,12 +11,12 @@ export default [
             {
                 id: 12,
                 label: '图例展示+点聚合(base64)',
-                name: "Cesium-main-lengendShow"
+                name: "Cesium-main-LengendShow"
             },
             {
                 id: 13,
                 label: "场景编辑",
-                name: "Cesium-main-sceneEdit"
+                name: "Cesium-main-SceneEdit"
             }
         ],
     },

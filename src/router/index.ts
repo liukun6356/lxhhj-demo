@@ -25,9 +25,9 @@ export const constantRoutes = [
                         meta: {title: 'controlPanel', icon: '', affix: true},
                     },
                     {
-                        path: 'Cesium-main-lengendShow',
+                        path: 'lengendShow',
                         component: () => import('@/views/cesium/component/lengendShow/index.vue'),
-                        name: 'Cesium-main-lengendShow',
+                        name: 'Cesium-main-LengendShow',
                         meta: {title: 'lengendShow', icon: '', affix: true},
                     },
                 ]
@@ -49,7 +49,7 @@ export const constantRoutes = [
                     {
                         path: 'building',
                         component: () => import('@/views/three/component/building/index.vue'),
-                        name: 'Three-main-building',
+                        name: 'Three-main-Building',
                         meta: {title: 'building', icon: '', affix: true},
                     }
                 ]
@@ -59,13 +59,22 @@ export const constantRoutes = [
     {
         path: '/webgl',
         component: () => import('@/layout/index.vue'),
-        redirect: '/webgl/complete',
+        redirect: '/webgl/main',
         name: "WebGl",
         children: [
             {
-                path: 'complete',
+                path: 'main',
                 component: () => import('@/views/webgl/index.vue'),
-                name: 'WebGl-Complete',
+                name: 'Webgl-main',
+                redirect: '/webgl/main/canvas2d',
+                children: [
+                    {
+                        path: 'canvas2d',
+                        component: () => import('@/views/webgl/component/canvas2d/index.vue'),
+                        name: 'Webgl-main-Canvas2d',
+                        meta: {title: 'building', icon: '', affix: true},
+                    }
+                ]
             }
         ]
     },
