@@ -51,6 +51,7 @@ onMounted(() => {
 onUnmounted(() => {
   const primitive = viewer.scene.primitives._primitives.find(primitive => primitive.name === 'terrainClipPlan')
   viewer.scene.primitives.remove(primitive)
+  viewer.terrainProvider = null;
 })
 
 const selecteHeight = () => {

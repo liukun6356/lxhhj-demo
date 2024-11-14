@@ -97,7 +97,15 @@ export const constantRoutes = [
             }
         ]
     },
-
+    { // 匹配不到跳到首页
+        path: "/:pathMatch(.*)*",
+        redirect: "/404",
+    },
+    {
+        path: '/404',
+        component: () => import('@/views/404.vue'),
+        name: "404",
+    }
 ];
 
 // 创建路由
