@@ -126,7 +126,7 @@ const initMap = (domId) => new Promise((resolve) => {
     resolve(rawViewer)
     // 默认加载郴州地形
     const terrainProvider = await mars3d.LayerUtil.createTerrainProvider({
-      url: import.meta.env.VITE_APP_TERRAIN_URL,
+      url: import.meta.env.VITE_APP_GISDATA + "/cz/dem/chenzhouDem",
     })
     viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.terrainProvider.isFlag = true

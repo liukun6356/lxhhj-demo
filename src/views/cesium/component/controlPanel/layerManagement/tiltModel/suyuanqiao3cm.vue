@@ -12,7 +12,7 @@ onMounted(() => {
   const viewer = mapStore.getCesiumViewer();
   const tileset = new mars3d.layer.TilesetLayer({
     name: "suYuanqiao3cm",
-    url: import.meta.env.VITE_APP_DTILES_URL + '/%E8%8B%8F%E5%9B%AD%E4%B8%9C%E6%A1%A5/3dt/tileset.json', //数据地址
+    url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/%E8%8B%8F%E5%9B%AD%E4%B8%9C%E6%A1%A5/3dt/tileset.json', //数据地址
      maximumScreenSpaceError: 25,
     maximumMemoryUsage: 1024,
     enableCollision:true,

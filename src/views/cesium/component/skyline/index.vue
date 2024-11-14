@@ -41,11 +41,10 @@ const addSkyLine = () =>{
 const add3dtiles = () => {
   const tileset = new mars3d.layer.TilesetLayer({
     name: "eastStreetBridge3cm",
-    url: import.meta.env.VITE_APP_DTILES_URL + '/%E4%B8%9C%E8%A1%97%E6%A1%A5/3dt/tileset.json', //数据地址
+    url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/%E4%B8%9C%E8%A1%97%E6%A1%A5/3dt/tileset.json', //数据地址
     maximumScreenSpaceError: 25,
     maximumMemoryUsage: 1024,
     enableCollision:true,
-
     flyTo: true,
     position:{
       alt:152.8
@@ -65,7 +64,7 @@ export default {
   },
   methods: {
     addSkyLine() {
-      const viewer = window.dasViewer;
+      const viewer = viewer;
       const tjxWidth = 2; //天际线宽度
       const strokeType = new Cesium.Cartesian3(true, false, false); //天际线，物体描边，全描边
       const tjxColor = new Cesium.Color(1.0, 0.0, 0.0); //边际线颜色
@@ -91,7 +90,7 @@ export default {
       viewer.scene.postProcessStages.add(postProcess);
     },
     add3dtiles() {
-      const viewer = window.dasViewer;
+      const viewer = viewer;
       const tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
         url: process.env.VUE_APP_GIS_API + "/baoshan/3dtiles/tileset.json", //数据地址
         maximumScreenSpaceError: 10,  //最大的屏幕空间误差
@@ -100,7 +99,7 @@ export default {
       }));
       tileset.readyPromise.then(function (tileset) {
         viewer.zoomTo(tileset)
-        window.dasViewer.camera.flyTo({
+        viewer.camera.flyTo({
           destination: Cesium.Cartesian3.fromDegrees(99.154401, 25.128285, 1856.78),
           orientation: {
             heading: Cesium.Math.toRadians(296.2),

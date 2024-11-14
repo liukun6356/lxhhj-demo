@@ -16,19 +16,33 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-main',
-                redirect: '/cesium/main/controlPanel',
+                redirect: '/cesium/main/lengendShow',
                 children: [
                     {
                         path: 'controlPanel',
                         component: () => import('@/views/cesium/component/controlPanel/index.vue'),
                         name: 'Cesium-main-ControlPanel',
                         meta: {title: 'controlPanel', icon: '', affix: true},
-                    },
-                    {
+                    }, {
                         path: 'lengendShow',
                         component: () => import('@/views/cesium/component/lengendShow/index.vue'),
                         name: 'Cesium-main-LengendShow',
                         meta: {title: 'lengendShow', icon: '', affix: true},
+                    }, {
+                        path: 'rangeSearch',
+                        component: () => import('@/views/cesium/component/rangeSearch/index.vue'),
+                        name: 'Cesium-main-RangeSearch',
+                        meta: {title: 'rangeSearch', icon: '', affix: true},
+                    }, {
+                        path: 'sceneEdit',
+                        component: () => import('@/views/cesium/component/sceneEdit/index.vue'),
+                        name: 'Cesium-main-SceneEdit',
+                        meta: {title: 'sceneEdit', icon: '', affix: true},
+                    }, {
+                        path: 'buildingProgression',
+                        component: () => import('@/views/cesium/component/buildingProgression/index.vue'),
+                        name: 'Cesium-main-BuildingProgression',
+                        meta: {title: 'buildingProgression', icon: '', affix: true},
                     },
                 ]
             }

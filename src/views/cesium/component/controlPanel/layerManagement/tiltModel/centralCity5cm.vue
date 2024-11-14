@@ -11,7 +11,7 @@ const mapStore = usemapStore()
 onMounted(() => {
   const viewer = mapStore.getCesiumViewer();
   // const tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-  //   url: import.meta.env.VITE_APP_DTILES_URL + '/zxcq/tileset.json', //数据地址
+  //   url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/zxcq/tileset.json', //数据地址
   //   maximumScreenSpaceError: 10,  //最大的屏幕空间误差,越小越精细
   //   maximumNumberOfLoadedTiles: 512, //最大加载瓦片个数
   //   maximumMemoryUsage: 1024,
@@ -19,7 +19,7 @@ onMounted(() => {
   // tileset.name = 'centralCity5cm'
   const tileset = new mars3d.layer.TilesetLayer({
     name: "centralCity5cm",
-    url: import.meta.env.VITE_APP_DTILES_URL + '/zxcq/tileset.json', //数据地址
+    url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/zxcq/tileset.json', //数据地址
     // maximumScreenSpaceError: 25,
     // maximumMemoryUsage: 1024,
     enableCollision:true,

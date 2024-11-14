@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>热源-正常hover</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#514E4E" offset="0%"></stop>
+            <stop stop-color="#322F2F" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-48.8%" y="-48.8%" width="197.5%" height="197.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="6" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="99.7340062%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#B1ABAB" stop-opacity="0.495164991" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-4" cx="40" cy="40" r="20"></circle>
+        <filter x="-38.8%" y="-33.7%" width="177.5%" height="177.5%" filterUnits="objectBoundingBox" id="filter-5">
+            <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="4.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-有背景" transform="translate(-633.000000, -112.000000)">
+            <g id="热源-正常hover" transform="translate(633.000000, 112.000000)">
+                <g id="编组" transform="translate(20.000000, 20.000000)">
+                    <circle id="椭圆形" fill="url(#linearGradient-1)" cx="20" cy="20" r="20"></circle>
+                    <path d="M24.1809853,27.4373678 C23.1070771,26.7099946 23.2728037,24.769869 23.2728037,24.769869 C22.2405638,24.972458 21.8281414,27.2751112 21.8281414,27.2751112 C21.1676026,26.2246155 22.1581741,23.8807028 22.158174,23.8807027 C22.3229536,21.6179183 20.1770311,20.4876851 20.1770312,20.4876851 C20.8375699,24.8509973 17.8658556,25.5783706 17.8658556,25.5783705 C17.7001291,24.4472101 16.4619148,24.0424957 16.4619147,24.0424958 C16.4571797,24.1106436 16.4524446,24.1801821 16.4462891,24.2474027 L16.4453421,24.2571381 C16.397033,24.7603081 16.3025827,25.2582023 16.1631334,25.7447995 C16.0348136,26.2635571 15.860564,26.8022491 15.6356494,27.1527233 C15.6356494,27.1527233 15.1053243,28.0761952 15.7090426,29.4507406 C16.1479812,30.0802962 16.8729166,30.6685924 16.8729166,30.6685924 C6.9676757,30.1832133 10.6823186,22.5858949 10.6823186,22.5858949 C10.7301426,22.5423174 10.772758,22.4987399 10.8191614,22.4533081 C11.3570625,21.8325607 12.1530237,20.771866 12.1999006,20.7088177 C13.6242021,18.1984761 12.4982084,16.2017926 12.4982084,16.2017925 C14.7681891,16.9694981 16.9965013,20.8084896 16.9965013,20.8084896 C16.1707095,18.7074983 16.0892667,14.5453843 16.0892667,14.5453843 C16.4609677,9.05137534 21.9091106,6.66666667 21.9091106,6.66666667 C20.1344157,8.72732566 20.000414,11.5561539 20.000414,11.5561538 C19.742354,15.7989325 24.7984352,19.3546704 24.7984352,19.3546704 C24.0559802,15.7178042 28.347825,14.4651831 28.347825,14.4651832 C27.1512791,16.4451775 28.0177924,18.9912156 28.0177924,18.9912156 C30.0401301,21.4959941 30,23.8797756 30,23.8797756 C29.7110446,30.9115137 23.5204466,30.9523096 23.5204465,30.9523096 C25.7482852,29.6598198 24.1809853,27.4373678 24.1809853,27.4373678 Z" id="路径" fill="#EEEEEE" fill-rule="nonzero"></path>
+                </g>
+                <circle id="椭圆形" stroke="#FFFFFF" stroke-width="1.5" opacity="0.827191" style="mix-blend-mode: screen;" fill-rule="nonzero" filter="url(#filter-2)" cx="40" cy="40" r="20.75"></circle>
+                <g id="椭圆形" fill-rule="nonzero">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <circle stroke="url(#linearGradient-3)" stroke-width="1" cx="40" cy="40" r="20.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -99,7 +99,7 @@ onMounted(() => {
 
 onUnmounted(async () => {
   // const terrainProvider = await mars3d.LayerUtil.createTerrainProvider({
-  //   url: import.meta.env.VITE_APP_TERRAIN_URL,
+  //   url: import.meta.env.VITE_APP_GISDATA + "/cz/dem/chenzhouDem",
   // })
   if (viewer.scene){
     // viewer.scene.terrainProvider = terrainProvider;

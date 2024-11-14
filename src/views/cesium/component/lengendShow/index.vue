@@ -32,11 +32,11 @@
 </template>
 
 <script lang="ts" setup>
-// Component
-import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import {onMounted, onUnmounted, reactive, toRefs, ref} from "vue";
 import jsonData from "./data.json"
 import {usemapStore} from "@/store/modules/cesiumMap";
+// Component
+import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 // Refs
 const animationListRef = ref(null)
 

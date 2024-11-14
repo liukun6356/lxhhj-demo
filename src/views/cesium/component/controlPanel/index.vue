@@ -1,4 +1,8 @@
-<!--地图工具栏-->
+/**
+* @author: liuk
+* @date: 2024-11-13 16:40:51
+* @describe:地图工具栏 cz
+*/
 <template>
   <div class="controlPanel-wrap">
      <div class="topTool">
@@ -151,7 +155,7 @@ const resetCamera = async (obj?: any) => {
     case "3d":
       if (!viewer.terrainProvider.isFlag && mapStore.curSelectTool !== "数值") {
         const terrainProvider = await mars3d.LayerUtil.createTerrainProvider({
-          url: import.meta.env.VITE_APP_TERRAIN_URL,
+          url: import.meta.env.VITE_APP_GISDATA + "/cz/dem/chenzhouDem",
         })
         viewer.scene.terrainProvider = terrainProvider;
         viewer.scene.terrainProvider.isFlag = true

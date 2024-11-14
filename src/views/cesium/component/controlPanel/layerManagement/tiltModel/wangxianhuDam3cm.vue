@@ -12,7 +12,7 @@ onMounted(() => {
   const viewer = mapStore.getCesiumViewer();
   const tileset = new mars3d.layer.TilesetLayer({
     name: "wangxianhuDam3cm",
-    url: import.meta.env.VITE_APP_DTILES_URL + '/DT/WXH/3dt/tileset.json', //数据地址
+    url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/DT/WXH/3dt/tileset.json', //数据地址
      maximumScreenSpaceError: 25,
     maximumMemoryUsage: 1024,
     enableCollision:true,

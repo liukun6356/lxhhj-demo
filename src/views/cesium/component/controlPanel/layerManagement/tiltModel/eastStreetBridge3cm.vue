@@ -12,7 +12,7 @@ onMounted(() => {
   const viewer = mapStore.getCesiumViewer();
   const tileset = new mars3d.layer.TilesetLayer({
     name: "eastStreetBridge3cm",
-    url: import.meta.env.VITE_APP_DTILES_URL + '/%E4%B8%9C%E8%A1%97%E6%A1%A5/3dt/tileset.json', //数据地址
+    url: import.meta.env.VITE_APP_GISDATA + '/cz/3dt/%E4%B8%9C%E8%A1%97%E6%A1%A5/3dt/tileset.json', //数据地址
      maximumScreenSpaceError: 25,
     maximumMemoryUsage: 1024,
     enableCollision:true,

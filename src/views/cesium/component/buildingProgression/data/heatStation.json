@@ -1,0 +1,296 @@
+{
+    "type": "FeatureCollection",
+    "group": [
+        "默认分组"
+    ],
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.273743,
+                    43.986618,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.272502,
+                    43.979656,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.264492,
+                    43.987727,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.270182,
+                    43.973451,
+                    -0.02
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.261714,
+                    43.975352,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.261911,
+                    43.968701,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.253166,
+                    43.963763,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.245417,
+                    43.968006,
+                    0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.237565,
+                    43.977706,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.246997,
+                    43.983132,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.2949,
+                    43.946088,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.268145,
+                    43.933482,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.280183,
+                    43.934897,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.294302,
+                    43.936236,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.306143,
+                    43.91984,
+                    -0.01
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "point",
+                "style": {
+                    "pixelSize": 12
+                },
+                "group": "默认分组"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    125.275442,
+                    43.899561,
+                    -0.01
+                ]
+            }
+        }
+    ]
+}

@@ -146,7 +146,7 @@ const addEntity = () => {
     position: position,
     orientation,
     model: {
-      uri: import.meta.env.VITE_APP_GLB_URL + '/sxhzb_01.glb',
+      uri: import.meta.env.VITE_APP_GISDATA + '/cz/glb/sxhzb_01.glb',
     }
   })
   const entity2 = modelDatasource.entities.add({
@@ -154,7 +154,7 @@ const addEntity = () => {
     position: position,
     orientation,
     model: {
-      uri: import.meta.env.VITE_APP_GLB_URL + '/sxhzb_02.glb',
+      uri: import.meta.env.VITE_APP_GISDATA + '/cz/glb/sxhzb_02.glb',
     }
   })
   // 三维模型姿态
@@ -167,7 +167,7 @@ const addEntity = () => {
     position: position1,
     orientation: Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(113.055605, 25.772641, 163.8), new Cesium.HeadingPitchRoll(-80.11, 0, 0)),
     model: {
-      uri: import.meta.env.VITE_APP_GLB_URL + '/wshzb_01.glb',
+      uri: import.meta.env.VITE_APP_GISDATA + '/cz/glb/wshzb_01.glb',
     }
   })
   const entity4 = modelDatasource.entities.add({
@@ -175,7 +175,7 @@ const addEntity = () => {
     position: position1,
     orientation: Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(113.055605, 25.772641, 163.8), new Cesium.HeadingPitchRoll(-80.11, 0, 0)),
     model: {
-      uri: import.meta.env.VITE_APP_GLB_URL + '/wshzb_02-1.glb',
+      uri: import.meta.env.VITE_APP_GISDATA + '/cz/glb/wshzb_02-1.glb',
     }
   })
   const entity5 = modelDatasource.entities.add({
@@ -183,7 +183,7 @@ const addEntity = () => {
     position: position1,
     orientation: Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(113.055605, 25.772641, 164), new Cesium.HeadingPitchRoll(-80.129, 0, 0)),
     model: {
-      uri: import.meta.env.VITE_APP_GLB_URL + '/wshzb_02-2.glb',
+      uri: import.meta.env.VITE_APP_GISDATA + '/cz/glb/wshzb_02-2.glb',
     }
   })
 }
