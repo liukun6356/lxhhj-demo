@@ -2,7 +2,7 @@
 
 |  | github
 | --- | --- 
-| cz-fixed | [链接](https://github.com/liukun6356/lxhhj-demo)
+| lxhhj | [链接](https://github.com/liukun6356/lxhhj-demo)
 
 
 ## 技术栈
@@ -53,33 +53,7 @@
 
     ```bash
     npm run build:prod
-    ``` 
-
-## 项目视觉views目录结构
-|-- cesiumMap 全局地图模块 
-|   |-- controlPanel 地图工具栏
-|   |   |-- boundary 遮罩层组件
-|   |   |-- layerManagement 图层管理组件
-|   |   |   |-- administrativeDivision 行政区划图层
-|   |   |   |-- basicMap 基础地图图层
-|   |   |   |-- basinZoning 流域分区图层
-|   |   |   |-- drainage 水系组件图层
-|   |   |   |-- surveyStation 测站图层
-|   |   |   |-- tiltModel 倾斜模型图层
-|   |   |   |-- waterproject 水利工程图层
-|   |   |-- mapScene 地图环境组件
-|   |   |-- numericalValue 数值组件
-|   |   |-- simulation 仿真组件
-|   |   |-- roam 飞行漫游组件
-|   |   |-- diagram 概化图组件
-|-- forecast 预报模块
-|   |-- floodForecast 洪水预报页面
-|   |-- rainfallForecast 降雨预报页面
-|-- forewarning 预警模块
-|-- home 全景模块
-|-- login 全局登录模块
-|-- prePlan 预案模块
-|-- prolusion 预演模块
+    ```
 
 ##  <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg!1" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒
 https://blog.csdn.net/hr_beginner

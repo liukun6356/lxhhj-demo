@@ -34,7 +34,12 @@ export default [
                 label: '范围查询',
                 name: "Cesium-main-RangeSearch"
             },
+            {
+              id:22,
+              label:'挖方分析(dom+dem)',
+              name:"Cesium-main-TerrainClipPlan"
+            },
         ]
-    }
+    },
 
 ];

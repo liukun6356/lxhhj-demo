@@ -43,7 +43,12 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/buildingProgression/index.vue'),
                         name: 'Cesium-main-BuildingProgression',
                         meta: {title: 'buildingProgression', icon: '', affix: true},
-                    },
+                    },{
+                        path: 'terrainClipPlan',
+                        component: () => import('@/views/cesium/component/terrainClipPlan/index.vue'),
+                        name: 'Cesium-main-TerrainClipPlan',
+                        meta: {title: 'terrainClipPlan', icon: '', affix: true},
+                    }
                 ]
             }
         ]
@@ -92,6 +97,7 @@ export const constantRoutes = [
             }
         ]
     },
+
 ];
 
 // 创建路由
