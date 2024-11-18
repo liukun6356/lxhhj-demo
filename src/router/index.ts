@@ -58,6 +58,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/tilesetOnlyEntity/index.vue'),
                         name: 'Cesium-monomer-TilesetOnlyEntity',
                         meta: {title: 'tilesetOnlyEntity', icon: '', affix: true},
+                    },{
+                        path: 'floorsStacking',
+                        component: () => import('@/views/cesium/component/floorsStacking/index.vue'),
+                        name: 'Cesium-monomer-FloorsStacking',
+                        meta: {title: 'floorsStacking', icon: '', affix: true},
                     }
                 ]
             }

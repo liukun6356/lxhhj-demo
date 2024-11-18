@@ -55,6 +55,11 @@ export default [
                 label: '模型单体化(entity)',
                 name: "Cesium-monomer-TilesetOnlyEntity"
             },
+            {
+                id: 32,
+                label: '楼层叠加',
+                name: "Cesium-monomer-FloorsStacking"
+            },
         ]
     }
 

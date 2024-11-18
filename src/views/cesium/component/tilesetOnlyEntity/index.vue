@@ -1,8 +1,6 @@
 <!--模型单体化(entity)-->
 <template>
   <div class="tilesetOnlyEntity-wrap">
-
-
     <Tdt_img_d/>
   </div>
 </template>
