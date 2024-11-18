@@ -32,19 +32,30 @@ export default [
             {
                 id: 21,
                 label: '范围查询(wkt)',
-                name: "Cesium-main-RangeSearch"
+                name: "Cesium-analyse-RangeSearch"
             },
             {
                 id: 22,
                 label: '挖方分析(dom+dem)',
-                name: "Cesium-main-TerrainClipPlan"
+                name: "Cesium-analyse-TerrainClipPlan"
             },
             {
-                id:23,
-                label:'天际线分析',
-                name:"Cesium-main-Skyline"
+                id: 23,
+                label: '天际线分析',
+                name: "Cesium-analyse-Skyline"
             }
         ]
     },
+    {
+        id: 3,
+        label: "单体化",
+        children: [
+            {
+                id: 31,
+                label: '模型单体化(entity)',
+                name: "Cesium-monomer-TilesetOnlyEntity"
+            },
+        ]
+    }
 
 ];

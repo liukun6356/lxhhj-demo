@@ -31,7 +31,7 @@ export const constantRoutes = [
                     }, {
                         path: 'rangeSearch',
                         component: () => import('@/views/cesium/component/rangeSearch/index.vue'),
-                        name: 'Cesium-main-RangeSearch',
+                        name: 'Cesium-analyse-RangeSearch',
                         meta: {title: 'rangeSearch', icon: '', affix: true},
                     }, {
                         path: 'sceneEdit',
@@ -46,13 +46,18 @@ export const constantRoutes = [
                     },{
                         path: 'terrainClipPlan',
                         component: () => import('@/views/cesium/component/terrainClipPlan/index.vue'),
-                        name: 'Cesium-main-TerrainClipPlan',
+                        name: 'Cesium-analyse-TerrainClipPlan',
                         meta: {title: 'terrainClipPlan', icon: '', affix: true},
                     },{
                         path: 'skyline',
                         component: () => import('@/views/cesium/component/skyline/index.vue'),
-                        name: 'Cesium-main-Skyline',
+                        name: 'Cesium-analyse-Skyline',
                         meta: {title: 'skyline', icon: '', affix: true},
+                    },{
+                        path: 'tilesetOnlyEntity',
+                        component: () => import('@/views/cesium/component/tilesetOnlyEntity/index.vue'),
+                        name: 'Cesium-monomer-TilesetOnlyEntity',
+                        meta: {title: 'tilesetOnlyEntity', icon: '', affix: true},
                     }
                 ]
             }
