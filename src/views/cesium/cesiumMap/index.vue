@@ -120,6 +120,11 @@ const initMap = (domId) => new Promise((resolve) => {
       navigationHelpButton: false, // 帮助按钮
       fullscreenButton: false, // 全屏按钮
     },
+    contextOptions: {
+      webgl: {
+        preserveDrawingBuffer: true, //允许canvas 截图
+      },
+    }
   }).on(mars3d.EventType.load, async (e) => {
     const viewer = e.target
     const rawViewer = markRaw(viewer);
@@ -269,6 +274,7 @@ const getColorForLatency = (ms) => {
     margin-left: 15px;
   }
 }
+
 .complete-main {
   width: 100%;
   height: 100%;

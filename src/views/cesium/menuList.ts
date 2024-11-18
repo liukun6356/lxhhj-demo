@@ -39,6 +39,11 @@ export default [
                 label: '挖方分析(dom+dem)',
                 name: "Cesium-main-TerrainClipPlan"
             },
+            {
+                id:23,
+                label:'天际线分析',
+                name:"Cesium-main-Skyline"
+            }
         ]
     },
 

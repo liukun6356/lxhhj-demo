@@ -48,6 +48,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/terrainClipPlan/index.vue'),
                         name: 'Cesium-main-TerrainClipPlan',
                         meta: {title: 'terrainClipPlan', icon: '', affix: true},
+                    },{
+                        path: 'skyline',
+                        component: () => import('@/views/cesium/component/skyline/index.vue'),
+                        name: 'Cesium-main-Skyline',
+                        meta: {title: 'skyline', icon: '', affix: true},
                     }
                 ]
             }
