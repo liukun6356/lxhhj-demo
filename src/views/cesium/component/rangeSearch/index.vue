@@ -27,28 +27,105 @@
 <script lang="ts" setup>
 // Component
 import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import {usemapStore} from "@/store/modules/cesiumMap";
+import * as mars3d from "mars3d";
+import {onMounted, onUnmounted, reactive, toRefs} from "vue";
+import {cartesianToWgs84} from "@/utils/dictionary";
+
+const mapStore = usemapStore()
+const model = reactive({
+  info: {}
+})
+const {info} = toRefs(model)
+
+onMounted(() => {
+  graphicLayer.on(mars3d.EventType.drawCreated, drawCreatedFn)
+  viewer.addLayer(graphicLayer)
+})
+
+onUnmounted(() => {
+  graphicLayer.off(mars3d.EventType.drawCreated, drawCreatedFn)
+  graphicLayer.clear()
+  viewer.removeLayer(graphicLayer)
+})
 
 const drawEllipse = () => {
-
+  clearDraw()
+  graphicLayer.startDraw({
+    type: "circle",
+    style: {
+      color: "#00C4FF",      //颜色
+      opacity: 0.2,
+      outline: true,
+      outlineColor: "#00C4FF",
+      clampToGround: true
+    },
+  })
 }
 
 const drawRectangle = () => {
-
+  clearDraw()
+  graphicLayer.startDraw({
+    type: "rectangle",
+    style: {
+      color: "#00C4FF",      //颜色
+      opacity: 0.2,
+      outline: true,
+      outlineColor: "#00C4FF",
+      clampToGround: true
+    },
+  })
 }
 
 const drawPolygon = () => {
-
+  clearDraw()
+  graphicLayer.startDraw({
+    type: "polygon",
+    style: {
+      color: "#00C4FF",      //颜色
+      opacity: 0.2,
+      outline: true,
+      outlineColor: "#00C4FF",
+      clampToGround: true
+    },
+  })
 }
+
 
 const clearDraw = () => {
-
+  graphicLayer.clear()
 }
 
-console.log("范围查询")
+const drawCreatedFn = (e) => {
+  const geometry = toWKT(e.sourceTarget.outlinePositions.map(pos => cartesianToWgs84(pos)))
+  console.log(geometry)
+}
+
+// 转wkt
+const toWKT = (posArr) => {
+  let temp = [];
+  posArr.forEach(pos => {
+    let newArr = [pos[0].toFixed(3), pos[1].toFixed(3)];
+    let str = newArr.join(" ");
+    temp.push(str);
+  })
+  return 'POLYGON((' + temp.join() + '))';
+}
+
+// 地图逻辑
+const viewer = mapStore.getCesiumViewer();
+const graphicLayer = new mars3d.layer.GraphicLayer({
+  // isRestorePositions: true,
+  // hasEdit: true,
+  // isAutoEditing: true // 绘制完成后是否自动激活编辑
+})
+
 </script>
 
 <style lang="scss" scoped>
 .rangeSearch-wrap {
+  pointer-events: auto;
+
   .measure-box {
     position: fixed;
     left: 300px;

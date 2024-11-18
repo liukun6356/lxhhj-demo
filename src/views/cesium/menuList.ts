@@ -31,13 +31,13 @@ export default [
         children: [
             {
                 id: 21,
-                label: '范围查询',
+                label: '范围查询(wkt)',
                 name: "Cesium-main-RangeSearch"
             },
             {
-              id:22,
-              label:'挖方分析(dom+dem)',
-              name:"Cesium-main-TerrainClipPlan"
+                id: 22,
+                label: '挖方分析(dom+dem)',
+                name: "Cesium-main-TerrainClipPlan"
             },
         ]
     },

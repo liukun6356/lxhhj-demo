@@ -14,7 +14,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  !viewer.isDestroyed() && viewer.dataSources.remove(heatDatasource);
+  viewer.dataSources.remove(heatDatasource);
 })
 
 // 地图逻辑

@@ -53,7 +53,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   handler.destroy()
-  !viewer.isDestroyed() && viewer.dataSources.remove(heatDatasource);
+  viewer.dataSources.remove(heatDatasource);
 })
 
 
