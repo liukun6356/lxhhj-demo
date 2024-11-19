@@ -1,15 +1,15 @@
 <!--雷达图-->
 <template>
-  <div class="radar-wrap"></div>
+  <div class="nephogram-wrap"></div>
 </template>
 
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive} from "vue";
-import img1 from "./img/201906211112.png"
-import img2 from "./img/201906211124.png"
-import img3 from "./img/201906211130.png"
-import img4 from "./img/201906211136.png"
-import img5 from "./img/201906211142.png"
+import img1 from "./img/cloud01.png"
+import img2 from "./img/cloud02.png"
+import img3 from "./img/cloud03.png"
+import img4 from "./img/cloud04.png"
+import img5 from "./img/cloud05.png"
 import {usemapStore} from "@/store/modules/cesiumMap";
 const mapStore = usemapStore()
 const urlArr = [img1, img2, img3, img4, img5]
@@ -36,10 +36,10 @@ const addImageryProvider = () => {
   urlArr.forEach(url => {
     const imageryProvider = new Cesium.SingleTileImageryProvider({
       url,
-      rectangle: Cesium.Rectangle.fromDegrees(73.16895, 12.2023 - 1.8, 134.86816, 54.11485 - 1.8),
+      rectangle: Cesium.Rectangle.fromDegrees(112.848443, 25.554061, 113.213276, 25.949843),
     });
     const imagelayer = new Cesium.ImageryLayer(imageryProvider, {alpha: 0})
-    imagelayer.customType = "radar"
+    imagelayer.customType = "nephogram"
     viewer.imageryLayers.add(imagelayer);
     layerArr.push(imagelayer)
   })
@@ -72,7 +72,7 @@ const changeRadarAlpha = () =>{
 </script>
 
 <style lang="scss" scoped>
-.radar-wrap{
+.nephogram-wrap{
 
 }
 </style>

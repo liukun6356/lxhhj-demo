@@ -34,6 +34,7 @@
       <!-- <numerical-value v-if="mapStore.curSelectTool === '数值'"/>-->
       <!-- <simulation v-if="mapStore.curSelectTool === '仿真'"/>-->
       <Radar v-if="mapStore.curSelectTool === '雷达'"/>
+      <Nephogram v-if="mapStore.curSelectTool === '云图'"/>
     </div>
   </div>
 </template>
@@ -67,7 +68,7 @@ import NumericalValue from "./numericalValue/index.vue"
 import Simulate from "./simulate/index.vue"
 import Simulation from "./simulation/index.vue"
 import Radar from "./radar/index.vue"
-
+import Nephogram from "./nephogram/index.vue"
 
 const route = useRoute()
 const rightToolList2 = computed(() => {
