@@ -29,7 +29,7 @@
       <!--   <Legend v-if="mapStore.curSelectTool === '图例'"/>-->
       <!-- </Teleport>-->
       <map-scene v-if="mapStore.curSelectTool === '环境'"/>
-      <!-- <roam v-if="mapStore.curSelectTool === '漫游'"/>-->
+       <roam v-if="mapStore.curSelectTool === '漫游'"/>
       <!-- <simulate v-if="mapStore.curSelectTool === '模拟'"/>-->
       <!-- <numerical-value v-if="mapStore.curSelectTool === '数值'"/>-->
       <!-- <simulation v-if="mapStore.curSelectTool === '仿真'"/>-->

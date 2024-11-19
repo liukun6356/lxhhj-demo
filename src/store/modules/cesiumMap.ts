@@ -26,7 +26,7 @@ export const usemapStore = defineStore({
         mapType: '3d',// 当前地图模式
         isDualScreen: false,// 是否双屏模式
         isActiveMap: false,// 地图是否初始化完成
-        curSelectTool: "", // 当前选择地图工具
+        curSelectTool: "漫游", // 当前选择地图工具
         numericalValueShowTip: true,// 数值功能-是否显示断面tip 双屏地图交互
         numericalValueShowGrid: true,// 数值功能-是否显示网格 双屏地图交互
         allPointPosList: allPointPosList, // 所有点高程信息

@@ -56,7 +56,7 @@ const changeRadarAlpha = () =>{
   const layer1 = layerArr[model.step];
   const layer2 = layerArr[model.step + 1];
   if (!layer1 || !layer2) return;
-  layer1.alpha = 1;
+  layer1.alpha = 0.3;
   layer2.alpha = 0;
   window.clearInterval(idxTimer);
   idxTimer = window.setInterval(function () {
