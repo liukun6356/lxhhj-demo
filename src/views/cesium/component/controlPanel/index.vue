@@ -5,13 +5,13 @@
 */
 <template>
   <div class="controlPanel-wrap">
-     <div class="topTool">
-       <div v-for="(item, index) in topToolList" :key="index" class="toolBtn topBtn"
-            :class="{ active: mapStore.mapType === item.label }" @click="topToolActive(item.label)">
-         <img :src="item.src" style="width: 20px"/>
-         <div style="font-size: 12px">{{ item.label }}</div>
-       </div>
-     </div>
+    <div class="topTool">
+      <div v-for="(item, index) in topToolList" :key="index" class="toolBtn topBtn"
+           :class="{ active: mapStore.mapType === item.label }" @click="topToolActive(item.label)">
+        <img :src="item.src" style="width: 20px"/>
+        <div style="font-size: 12px">{{ item.label }}</div>
+      </div>
+    </div>
     <div class="rightTool">
       <div v-for="(item, index) in rightToolList2" :key="index" class="toolBtn topBtn"
            :class="{ select: mapStore.curSelectTool === item.label }" @click="topToolSelectRightTool(item)">
@@ -31,8 +31,9 @@
       <map-scene v-if="mapStore.curSelectTool === '环境'"/>
       <!-- <roam v-if="mapStore.curSelectTool === '漫游'"/>-->
       <!-- <simulate v-if="mapStore.curSelectTool === '模拟'"/>-->
-      <numerical-value v-if="mapStore.curSelectTool === '数值'"/>
+      <!-- <numerical-value v-if="mapStore.curSelectTool === '数值'"/>-->
       <!-- <simulation v-if="mapStore.curSelectTool === '仿真'"/>-->
+      <Radar v-if="mapStore.curSelectTool === '雷达'"/>
     </div>
   </div>
 </template>
@@ -65,6 +66,8 @@ import Diagram from "./diagram.vue"
 import NumericalValue from "./numericalValue/index.vue"
 import Simulate from "./simulate/index.vue"
 import Simulation from "./simulation/index.vue"
+import Radar from "./radar/index.vue"
+
 
 const route = useRoute()
 const rightToolList2 = computed(() => {
@@ -74,6 +77,9 @@ const rightToolList2 = computed(() => {
     {label: '环境', src: gj},
     {label: '漫游', src: my},
     {label: '模拟', src: fz},
+    {label: '雷达', src: twoD},
+    {label: '云图', src: sz},
+    {label: '台风', src: ghtPng},
     {label: '全图', src: dt},
   ]
 })
