@@ -109,6 +109,7 @@ const toWKT = (posArr) => {
     let str = newArr.join(" ");
     temp.push(str);
   })
+  debugger
   return 'POLYGON((' + temp.join() + '))';
 }
 

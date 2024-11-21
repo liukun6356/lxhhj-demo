@@ -52,3 +52,83 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(207, 207, 207, 0.5);
 }
+
+// 全局地图 popup 气泡样式
+.surveyStation-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: max-content;
+  height: max-content;
+  margin: 0;
+  padding: 7px 15px;
+  list-style: none;
+  background: rgba(5, 9, 9, 0.6);
+  border-radius: 4px;
+  font-size: 14px;
+  color: #fff;
+  cursor: default;
+  --w: 24px;
+  --h: 10px;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+
+
+  &::before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: var(--w);
+    height: var(--h);
+    transform: translate(-50%, 100%) translateY(-0.5px);
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+  }
+
+  &.ponint-list { // 重叠站点下拉列表
+    pointer-events: auto;
+
+    &::before {
+      display: none;
+    }
+
+    &.map2d {
+      margin-left: 12px; // 二维图片底座尺寸大小
+      margin-top: -5px;
+    }
+
+    &.map3d {
+      margin-left: 10px; // 三维图片底座尺寸大小
+      margin-top: -50px;
+    }
+  }
+
+
+  &.map2d {
+    margin-left: -15px; // 二维图片底座尺寸大小
+    margin-top: -50px;
+  }
+
+  &.map3d {
+    margin-left: -15px; // 三维图片底座尺寸大小
+    margin-top: -100px;
+  }
+
+  .ponint-list-li {
+    cursor: pointer;
+
+    .label {
+      color: orange;
+    }
+
+    .value {
+      color: #fff;
+    }
+
+    &:hover {
+      background: rgba(204, 204, 204, .6);
+    }
+  }
+}

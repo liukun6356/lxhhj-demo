@@ -161,7 +161,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-
+  stopRoaming()
 })
 
 const getlist = () => {
@@ -209,8 +209,10 @@ const removeRoam = async (row) => {
   try {
     await ElMessageBox.confirm(`此操作将永久删除名字为 ${row.name} 的漫游轨迹, 是否继续?`, '提示', {type: "warning"})
     removeData(row.id)
-    ElMessage.success("删除成功")
-    getlist()
+    setTimeout(() => {
+      ElMessage.success("删除成功")
+      getlist()
+    }, 500)
   } catch (e) {
   }
 }
@@ -222,9 +224,11 @@ const addRoaming = () => {
     children: model.curAddNodes
   }
   addData(obj)
-  getlist()
-  ElMessage.success("添加成功")
-  model.activeValue = "漫游列表"
+  setTimeout(() => {
+    getlist()
+    ElMessage.success("添加成功")
+    model.activeValue = "漫游列表"
+  }, 500)
 }
 
 const deleteRoaming = () => {
@@ -294,7 +298,7 @@ const roamPreview = () => {
 
 // 数据逻辑
 const TokenKey = 'roam-data';
-localStorage.setItem(TokenKey, JSON.stringify(jsonData))
+localStorage.getItem(TokenKey) || localStorage.setItem(TokenKey, JSON.stringify(jsonData));
 const allData = computed({
   get() {
     return JSON.parse(localStorage.getItem(TokenKey));

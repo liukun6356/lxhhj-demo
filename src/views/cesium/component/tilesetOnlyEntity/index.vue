@@ -1,4 +1,8 @@
-<!--模型单体化(entity)-->
+/**
+ * @author: liuk
+ * @date: 2024-11-21
+ * @describe: 模型单体化(entity)
+ */
 <template>
   <div class="tilesetOnlyEntity-wrap">
     <Tdt_img_d/>
