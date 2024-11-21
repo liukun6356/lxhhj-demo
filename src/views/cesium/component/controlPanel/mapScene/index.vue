@@ -14,6 +14,7 @@
       <div @click="weatherClick(1)" :class="{ select: weatherItemSelectIndex === 1 }">下雨</div>
       <div @click="weatherClick(2)" :class="{ select: weatherItemSelectIndex === 2 }">下雪</div>
       <div @click="weatherClick(3)" :class="{ select: weatherItemSelectIndex === 3 }">大雾</div>
+      <div @click="weatherClick(4)" :class="{ select: weatherItemSelectIndex === 4 }">风场</div>
     </div>
     <div class="second-level-heading">
       <span>日照模拟</span>
@@ -103,7 +104,7 @@ const removeStage = () => {
   position: absolute;
   top: 70px;
   right: 65px;
-  width: 300px;
+  width: 310px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 4px;
   backdrop-filter: blur(2px);
@@ -149,7 +150,7 @@ const removeStage = () => {
 
     & > div {
       padding: 4px 10px;
-      margin-right: 10px;
+      margin-right: 5px;
       cursor: pointer;
       color: #fff;
       font-size: 13px;
@@ -169,6 +170,7 @@ const removeStage = () => {
 
   .ymfxClass {
     margin: -17px 0 0 5px;
+
     .nowDate {
       text-align: right;
       font-size: 12px;
