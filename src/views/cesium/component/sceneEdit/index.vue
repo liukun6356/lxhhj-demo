@@ -9,41 +9,9 @@
           三维模型
         </div>
         <div class="model-item">
-          <div class="son-item" @click="drwaModel('tree','树木')">
-            <img src="@/assets/images/sceneEdit/树木@2x.jpg" alt=""/>
-            <div>树木</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/草地@2x.jpg" alt=""/>
-            <div>草地</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/建筑@2x.jpg" alt=""/>
-            <div>建筑</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/道路@2x.jpg" alt=""/>
-            <div>道路</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/河流@2x.jpg" alt=""/>
-            <div>河流</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/湖泊@2x.jpg" alt=""/>
-            <div>湖泊</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/教室@2x.jpg" alt=""/>
-            <div>教室</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/电脑@2x.jpg" alt=""/>
-            <div>电脑</div>
-          </div>
-          <div class="son-item">
-            <img src="@/assets/images/sceneEdit/课桌@2x.jpg" alt=""/>
-            <div>课桌</div>
+          <div class="son-item" v-for="(item,index) in modelArr" :key="index" @click="drwaModel(item.label)">
+            <img :src="item.img" alt=""/>
+            <div>{{ item.label }}</div>
           </div>
         </div>
         <div class="model-title">
@@ -51,32 +19,40 @@
           二维标注
         </div>
         <div class="model-item-btn">
-          <el-button v-for="str in draw2dArr" :key="str" @click="drawWall(str)" size="small">{{ str }}</el-button>
+          <el-button v-for="str in draw2dArr" :key="str" @click="drwaModel(str)" size="small">{{ str }}</el-button>
         </div>
         <div class="model-title">
           <span></span>
           三维标注
         </div>
         <div class="model-item-btn">
-          <el-button v-for="str in draw3dArr" :key="str" @click="drawWall(str)" size="small">{{ str }}</el-button>
+          <el-button v-for="str in draw3dArr" :key="str" @click="drwaModel(str)" size="small">{{ str }}</el-button>
+        </div>
+        <div class="model-title">
+          <span></span>
+          场景特效
+        </div>
+        <div class="model-item">
+          <div class="son-item" v-for="(item,index) in effectArr" :key="index" @click="drwaModel(item.label)">
+            <img :src="item.img" alt=""/>
+            <div>{{ item.label }}</div>
+          </div>
         </div>
       </div>
       <div class="operate">
         <el-button type="primary" plain @click="cutImg">截取封面</el-button>
-        <el-button type="primary" plain @click="perspective">默认视角</el-button>
+        <el-button type="primary" plain @click="mapResetCamera">默认视角</el-button>
         <el-button type="primary" class="preserve" @click="saveConfig">保存</el-button>
       </div>
     </div>
     <div class="render-area">
-      <div class="head_title_arrow">图层管理</div>
+      <div class="head_title_arrow">展示管理</div>
       <div class="content">
         <el-tree
             ref="treeRef"
             :data="treeData"
             show-checkbox
             @check-change="checkChange"
-            :default-expanded-keys="[]"
-            :default-checked-keys="[11,21,41]"
             node-key="id"/>
       </div>
     </div>
@@ -85,10 +61,13 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, toRefs} from "vue";
+import {reactive, toRefs, ref, onMounted, onUnmounted} from "vue";
 import {usemapStore} from "@/store/modules/cesiumMap.ts";
+import jsonData from "./data.ts"
 // Component
 import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+// Refs
+const treeRef = ref()
 
 const mapStore = usemapStore()
 const model = reactive({
@@ -96,21 +75,86 @@ const model = reactive({
 })
 const {treeData} = toRefs(model)
 
+onMounted(() => {
+  model.treeData = jsonData
+})
+onUnmounted(() => {
+
+})
+
 const drwaModel = (type) => {
-  switch (type){
+  switch (type) {
 
   }
+}
+
+const saveConfig = () => {
+
 }
 
 const checkChange = () => {
 
 }
 
-const draw2dArr = ['线', '虚线', '面', '矩形', '圆', '文字']
-const draw3dArr = ['墙体', '动态墙', '箭头']
+
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer()
+
+const mapResetCamera = () => {
+  viewer.camera.flyTo({
+    destination: new Cesium.Cartesian3.fromDegrees(113.048936, 25.755645, 77805.77),
+    orientation: {
+      heading: Cesium.Math.toRadians(0),
+      pitch: Cesium.Math.toRadians(-90),
+      roll: Cesium.Math.toRadians(0),
+    },
+    duration: 2,
+  })
+}
+
+const cutImg = () => {
+   viewer.expImage({type:"image/png"})
+}
+
+import png1 from "@/assets/images/sceneEdit/sm@2x.jpg"
+import png2 from "@/assets/images/sceneEdit/cd@2x.jpg"
+import png3 from "@/assets/images/sceneEdit/jz@2x.jpg"
+import png4 from "@/assets/images/sceneEdit/dl@2x.jpg"
+import png5 from "@/assets/images/sceneEdit/hl@2x.jpg"
+import png6 from "@/assets/images/sceneEdit/hb@2x.jpg"
+import png7 from "@/assets/images/sceneEdit/js@2x.jpg"
+import png8 from "@/assets/images/sceneEdit/dn@2x.jpg"
+import png9 from "@/assets/images/sceneEdit/kz@2x.jpg"
+
+const modelArr = [
+  {label: "树木", img: png1},
+  {label: "草地", img: png2},
+  {label: "建筑", img: png3},
+  {label: "道路", img: png4},
+  {label: "河流", img: png5},
+  {label: "湖泊", img: png6},
+  {label: "教室", img: png7},
+  {label: "电脑", img: png8},
+  {label: "课桌", img: png9},
+]
+
+import png11 from "@/assets/images/sceneEdit/h@2x.png"
+import png22 from "@/assets/images/sceneEdit/y@2x.png"
+import png33 from "@/assets/images/sceneEdit/dgy@2x.png"
+import png44 from "@/assets/images/sceneEdit/jgy@2x.png"
+import png55 from "@/assets/images/sceneEdit/s@2x.png"
+
+const effectArr = [
+  {label: "火", img: png11},
+  {label: "烟", img: png22},
+  {label: "点光源", img: png33},
+  {label: "聚光源", img: png44},
+  {label: "水", img: png55},
+]
+
+const draw2dArr = ['线', '虚线', '面', '矩形', '圆', '文字']
+const draw3dArr = ['墙体', '动态墙', '箭头']
 </script>
 
 <style lang="scss" scoped>
@@ -140,7 +184,7 @@ const viewer = mapStore.getCesiumViewer()
     }
 
     .operate-area {
-      height: calc(100% - 85px);
+      height: calc(100% - 90px);
       overflow-y: auto;
       padding: 0px 5px;
       box-sizing: border-box;
@@ -203,13 +247,12 @@ const viewer = mapStore.getCesiumViewer()
       }
     }
 
-
     .operate {
       display: flex;
       justify-content: flex-end;
       position: absolute;
       left: 0;
-      bottom: 7px;
+      bottom: 8px;
       width: 100%;
 
       .el-button {
@@ -228,7 +271,6 @@ const viewer = mapStore.getCesiumViewer()
     width: 220px;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
-
   }
 }
 </style>
