@@ -11,20 +11,23 @@ import img3 from "./img/cloud03.png"
 import img4 from "./img/cloud04.png"
 import img5 from "./img/cloud05.png"
 import {usemapStore} from "@/store/modules/cesiumMap";
+import mittBus from "@/utils/mittBus"
+
 const mapStore = usemapStore()
 const urlArr = [img1, img2, img3, img4, img5]
 
 const model = reactive({
-  step:0,
-  alphaStep:0.01
+  step: 0,
+  alphaStep: 0.01
 })
 
 onMounted(() => {
+  mittBus.emit("mapResetCamera")
   addImageryProvider()
 })
 
 onUnmounted(() => {
-  viewer.imageryLayers._layers.filter(item=>item.customType).forEach(layer=>viewer.imageryLayers.remove(layer))
+  viewer.imageryLayers._layers.filter(item => item.customType).forEach(layer => viewer.imageryLayers.remove(layer))
   window.clearInterval(idxTimer)
   layerArr.length = 0
 })
@@ -48,7 +51,7 @@ const addImageryProvider = () => {
 }
 
 let idxTimer
-const changeRadarAlpha = () =>{
+const changeRadarAlpha = () => {
   if (model.step > layerArr.length - 1) {
     model.step = 0;
     layerArr[layerArr.length - 1].alpha = 0;
@@ -60,9 +63,9 @@ const changeRadarAlpha = () =>{
   layer2.alpha = 0;
   window.clearInterval(idxTimer);
   idxTimer = window.setInterval(function () {
-    layer1.alpha -=  model.alphaStep;
-    layer2.alpha +=  model.alphaStep;
-    if (layer1.alpha <  model.alphaStep) {
+    layer1.alpha -= model.alphaStep;
+    layer2.alpha += model.alphaStep;
+    if (layer1.alpha < model.alphaStep) {
       layer1.alpha = 0;
       model.step++;
       changeRadarAlpha()
@@ -72,7 +75,7 @@ const changeRadarAlpha = () =>{
 </script>
 
 <style lang="scss" scoped>
-.nephogram-wrap{
+.nephogram-wrap {
 
 }
 </style>

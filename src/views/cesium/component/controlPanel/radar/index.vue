@@ -11,6 +11,7 @@ import img3 from "./img/201906211130.png"
 import img4 from "./img/201906211136.png"
 import img5 from "./img/201906211142.png"
 import {usemapStore} from "@/store/modules/cesiumMap";
+import mittBus from "@/utils/mittBus";
 const mapStore = usemapStore()
 const urlArr = [img1, img2, img3, img4, img5]
 
@@ -21,6 +22,7 @@ const model = reactive({
 
 onMounted(() => {
   addImageryProvider()
+  mittBus.emit("mapResetCamera")
 })
 
 onUnmounted(() => {

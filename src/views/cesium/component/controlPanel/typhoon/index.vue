@@ -26,8 +26,8 @@
 import {onMounted, onUnmounted, reactive, toRefs, ref} from "vue";
 import {usemapStore} from "@/store/modules/cesiumMap";
 import LineFlowMaterialProperty from "@/utils/material/LineFlowMaterialProperty.ts"
-import tfGif from "@/assets/images/cesiumMap/controlPanel/tf.gif"
 import arrowPng from "@/assets/images/cesiumMap/controlPanel/ArrowOpacity.png"
+import mittBus from "@/utils/mittBus"
 
 const mapStore = usemapStore()
 const model = reactive({
@@ -40,6 +40,7 @@ const model = reactive({
 const {popupPos,showPopup} = toRefs(model)
 
 onMounted(() => {
+   mittBus.emit("mapResetCamera")
   viewer.dataSources.add(typhoonDatasource);
   addEntity()
   viewer.scene.postRender.addEventListener(showPopupBox);
