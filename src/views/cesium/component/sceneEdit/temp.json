@@ -1,0 +1,93 @@
+{
+  "type": "FeatureCollection",
+  "layer": {
+    "id": "m-b0b7cf57-fe1a-4afa-b4e3-408c26d45c33"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "",
+        "label": "树木",
+        "customType": "三维模型",
+        "nodeId": "a83029f3-9788-4509-94bd-3dddc3f439e9",
+        "id": "m-d16eedb4-a144-4f3f-ba45-9f3b38c93f5d",
+        "type": "label",
+        "remark": "这是备注3",
+        "style": {
+          "text": "科技三维地球",
+          "color": "#0081c2",
+          "font_size": 50,
+          "outline": true,
+          "outlineColor": "#ffffff",
+          "outlineWidth": 2,
+          "visibleDepth": false
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.734313,
+          25.650497,
+          -7.1
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "",
+        "label": "树木_1",
+        "customType": "三维模型",
+        "nodeId": "585344be-88fd-4db1-86c9-5ac779f9dcfe",
+        "id": "m-9250c473-7ef8-45bd-a2ad-779f3d332660",
+        "type": "label",
+        "remark": "这是备注2",
+        "style": {
+          "text": "科技三维地球",
+          "color": "#0081c2",
+          "font_size": 50,
+          "outline": true,
+          "outlineColor": "#ffffff",
+          "outlineWidth": 2
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.20571,
+          25.973048,
+          -5.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "",
+        "label": "树木_2",
+        "customType": "三维模型",
+        "nodeId": "b1827038-ca4d-4be7-8aa3-e7005516d882",
+        "id": "m-bf35e4e9-614a-4b86-ae4e-6a44533d8617",
+        "type": "label",
+        "remark": "这是备注1",
+        "style": {
+          "text": "科技三维地球",
+          "color": "#0081c2",
+          "font_size": 50,
+          "outline": true,
+          "outlineColor": "#ffffff",
+          "outlineWidth": 2
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.765522,
+          25.969489,
+          -10.3
+        ]
+      }
+    }
+  ]
+}

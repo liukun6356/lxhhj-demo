@@ -31,12 +31,11 @@
     <div class="edit-area">
       <div class="head_title_arrow">编辑区</div>
       <div class="content">
-        <el-tree ref="treeRef" :data="treeData" :default-expanded-keys="defaultKeys"
-                 @check-change="checkChange" node-key="id">
+        <el-tree ref="treeRef" :data="treeData" :default-expanded-keys="defaultKeys" node-key="id">
           <template #default="{data}">
             <span>{{ data.label }}</span>
             <span>{{ data.children ? `&nbsp;(${data.children.length})` : '' }}</span>
-            <el-icon style="margin-left: 5px" v-if="!data.children">
+            <el-icon style="margin-left: 5px" v-if="!data.children" @click="flyToGraphic(data.id)">
               <Promotion/>
             </el-icon>
             <el-icon style="margin-left: 5px" @click="removeNode(data.id)" v-if="!data.children">
@@ -64,7 +63,7 @@
           <DocumentCopy/>
         </el-icon>
       </div>
-      <el-form :model="formData" ref="formRef" label-width="100" label-position="right">
+      <el-form :model="formData" ref="formRef"  label-width="100" label-position="right">
         <el-form-item v-for="(item,index) in curStyles" :key="index" :label="item.label" :prop="item.name">
           <component :is="components[item.type]" size="small" v-model="formData[item.name]"
                      :min="item.min || item.min === 0 ? item.min : -Infinity"
@@ -78,16 +77,24 @@
       </el-form>
     </div>
     <Tdt_img_d/>
+    <!-- 气泡-->
+    <ul v-for="(item,index) in popupList" :key="index">
+      <li class="surveyStation-popup" :style="{ transform: `translate(${item.x }px, ${item.y}px)`}">
+        {{ item.remark }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {reactive, toRefs, ref, onMounted, onUnmounted} from "vue";
 import {usemapStore} from "@/store/modules/cesiumMap.ts";
-import {generateUUID} from "@/utils/dictionary"
+import {generateUUID, downloadFile, cartesianToWgs84} from "@/utils/dictionary"
 import * as mars3d from "mars3d";
-import jsonData from "./data"
+import defaultData from "./data"
+import tempJSON from "./temp.json"
 import styleConfig from "./styleConfig"
+
 // Component
 import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
@@ -102,7 +109,6 @@ const components = {
 }
 // Refs
 const treeRef = ref()
-const formRef = ref()
 
 const mapStore = usemapStore()
 const model = reactive({
@@ -115,12 +121,30 @@ const model = reactive({
 const {treeData, defaultKeys, propertyEditingShow, curStyles, formData} = toRefs(model)
 
 onMounted(() => {
-  model.treeData = jsonData
+  popupModel.popupList = tempJSON.features.map(item => {
+    const {nodeId, label, customType, remark} = item.properties
+    const temp = defaultData.find(item => item.label === customType)
+    temp.children.push({id: nodeId, label})
+    return {
+      id: nodeId,
+      longitude: item.geometry.coordinates[0],
+      latitude: item.geometry.coordinates[1],
+      height: item.geometry.coordinates[2],
+      remark
+    }
+  })
+  model.treeData = defaultData
   viewer.addLayer(graphicLayer)
+  graphicLayer.loadGeoJSON(tempJSON)
   graphicLayer.on([mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint], EditorFn)
+  graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], editStopFn)
+  viewer.scene.postRender.addEventListener(showPopupBox);
 })
 onUnmounted(() => {
+  model.treeData = []
   graphicLayer.off([mars3d.EventType.drawCreated, mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint], EditorFn)
+  graphicLayer.off([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], editStopFn)
+  viewer.scene.postRender.removeEventListener(showPopupBox);
   graphicLayer.clear()
   viewer.removeLayer(graphicLayer)
 })
@@ -131,7 +155,7 @@ const drawFn = (type, label) => {
       graphicLayer.startDraw({
         type: "label",
         style: {
-          text: "火星科技三维地球",
+          text: "科技三维地球",
           color: "#0081c2",
           font_size: 50,
           outline: true,
@@ -151,8 +175,13 @@ const drawFn = (type, label) => {
   }
 }
 
-const flyToGraphic = () => {
-  curGraphic.flyTo({duration: 1})
+const editStopFn = () => {
+  model.propertyEditingShow = false
+}
+
+const flyToGraphic = (id?: string) => {
+  const graphic = id ? graphicLayer.getGraphicsByAttr(id, "nodeId")[0] : curGraphic
+  graphic.flyTo({duration: 1})
 }
 
 const removeNode = (id) => {
@@ -170,11 +199,13 @@ const removeNode = (id) => {
 }
 
 const saveConfig = () => {
-
-}
-
-const checkChange = () => {
-
+  if (!graphicLayer.getGraphics().length) {
+    ElMessage.warning("当前没有标注任何数据，无需保存！")
+    return
+  }
+  const geojson = graphicLayer.toGeoJSON()
+  const jsonString = JSON.stringify(geojson, null, 2);
+  downloadFile(`temp.json`, jsonString)
 }
 
 const closeEdit = () => {
@@ -185,7 +216,6 @@ const reset = () => {
   model.curStyles = []
   model.formData = {}
 }
-
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer()
@@ -209,15 +239,26 @@ const mapResetCamera = () => {
 
 const EditorFn = (e) => {
   curGraphic = e.graphic
-  const {customType, label, nodeId} = curGraphic.attr
+  const {customType, label, nodeId, remark} = curGraphic.attr
+  // 属性配置区
   model.propertyEditingShow = true
   model.curStyles = [
-    {name: "name", label: "所属组类", type: "textarea", defval: label},
+    {name: "name", label: "名称", type: "textarea", defval: label},
+    {name: "remark", label: "备注", type: "textarea", defval: remark},
     {name: "customType", label: "所属组类", type: "textarea", defval: customType, disabled: true},
     {name: "editType", label: "样式类型", type: "textarea", defval: curGraphic.type, disabled: true},
     ...styleConfig[curGraphic.type]?.style,
   ]
   model.curStyles.forEach(({name, defval}) => model.formData[name] = curGraphic.style[name] || defval)
+  // 气泡
+  const [longitude, latitude, height] = cartesianToWgs84(curGraphic.position.getValue())
+  const index = popupModel.popupList.findIndex(item => item.id === nodeId)
+  if (index !== -1) {
+    popupModel.popupList[index] = {id: nodeId, longitude, latitude, height, remark: remark || "暂无"}
+  } else {
+    nodeId && popupModel.popupList.push({id: nodeId, longitude, latitude, height, remark: remark || "暂无"})
+  }
+  // 编辑区
   if (nodeId) return
   const {id: parentNode, children} = model.treeData.find(item => item.label === customType)
   const count = children.filter(item => item.label.match(/[\u4e00-\u9fa5]+/g).join("") === label.match(/[\u4e00-\u9fa5]+/g).join("")).length
@@ -229,20 +270,47 @@ const EditorFn = (e) => {
 }
 
 const styleChange = (name, val) => {
-  curGraphic.setStyle({[name]: val})
+  switch (name) {
+    case "name":
+      const {nodeId} = curGraphic.attr
+      const node = treeRef.value.getNode(nodeId)
+      node.data.label = val
+      curGraphic.attr.label = val
+      break
+    case "remark":
+      curGraphic.attr.remark = val
+      break
+    default:
+      curGraphic.setStyle({[name]: val})
+  }
 }
 
 const getGeoJson = () => {
+  const {customType, label} = curGraphic.attr
   const geojson = curGraphic.toGeoJSON() // 文件处理
-  debugger
-  geojson.properties._layer = curGraphic._layer.name
-  viewer.downloadFile("标绘item.json", JSON.stringify(geojson))
+  const jsonString = JSON.stringify(geojson, null, 2);
+  downloadFile(`${customType}-${label}.json`, jsonString)
 }
 
 const cutImg = () => {
   viewer.expImage({type: "image/png"})
 }
 
+// 地图弹框逻辑
+const popupModel = reactive({
+  popupList: []
+})
+const {popupList} = toRefs(popupModel)
+
+const showPopupBox = () => {
+  popupModel.popupList.forEach(item => {
+    const {longitude, latitude, height} = item
+    const curPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+    const {x, y} = viewer.scene.cartesianToCanvasCoordinates(curPosition)
+    item.x = x - 60
+    item.y = y - 70
+  })
+}
 
 import png1 from "@/assets/images/sceneEdit/sm@2x.jpg"
 import png2 from "@/assets/images/sceneEdit/cd@2x.jpg"
@@ -258,38 +326,50 @@ import png22 from "@/assets/images/sceneEdit/y@2x.png"
 import png33 from "@/assets/images/sceneEdit/dgy@2x.png"
 import png44 from "@/assets/images/sceneEdit/jgy@2x.png"
 import png55 from "@/assets/images/sceneEdit/s@2x.png"
+import {ElMessage} from "element-plus";
 
 const infos = [
   {
     name: "三维模型",
     types: [
-      {label: "树木", img: png1},
-      {label: "草地", img: png2},
-      {label: "建筑", img: png3},
-      {label: "道路", img: png4},
-      {label: "河流", img: png5},
-      {label: "湖泊", img: png6},
-      {label: "教室", img: png7},
-      {label: "电脑", img: png8},
-      {label: "课桌", img: png9},
+      {label: "树木", img: png1, drawType: ""},
+      {label: "草地", img: png2, drawType: ""},
+      {label: "建筑", img: png3, drawType: ""},
+      {label: "道路", img: png4, drawType: ""},
+      {label: "河流", img: png5, drawType: ""},
+      {label: "湖泊", img: png6, drawType: ""},
+      {label: "教室", img: png7, drawType: ""},
+      {label: "电脑", img: png8, drawType: ""},
+      {label: "课桌", img: png9, drawType: ""},
     ]
   },
   {
     name: "二维标注",
-    types: [{label: '线'}, {label: '虚线'}, {label: '面'}, {label: '矩形'}, {label: '圆'}, {label: '文字'}]
+    types: [
+      {label: '线', drawType: ""},
+      {label: '虚线', drawType: ""},
+      {label: '面', drawType: ""},
+      {label: '矩形', drawType: ""},
+      {label: '圆', drawType: ""},
+      {label: '文字', drawType: ""}
+    ]
   },
   {
     name: "二维标注",
-    types: [{label: '墙体'}, {label: '动态墙'}, {label: '箭头'}]
+    types: [
+      {label: '墙体', drawType: ""},
+      {label: '动态墙', drawType: ""},
+      {label: '箭头', drawType: ""}
+    ]
   },
   {
     name: "场景特效",
     types: [
-      {label: "火", img: png11},
-      {label: "烟", img: png22},
-      {label: "点光源", img: png33},
-      {label: "聚光源", img: png44},
-      {label: "水", img: png55},
+      {label: "火", img: png11, drawType: ""},
+      {label: "烟", img: png22, drawType: ""},
+      {label: "点光源", img: png33, drawType: ""},
+      {label: "聚光源", img: png44, drawType: ""},
+      {label: "水", img: png55, drawType: ""}
     ]
   }
 ]
@@ -409,14 +489,20 @@ const infos = [
     left: 20px;
     padding: 10px;
     width: 220px;
-    max-height: 300px;
+    height: 300px;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
     overflow-y: auto;
+     z-index: 2;
 
     .head_title_arrow {
       font-family: YouSheBiaoTiHei;
       font-size: 16px;
+    }
+
+    .content {
+      height: calc(100% - 25px);
+      overflow-y: auto;
     }
   }
 
@@ -430,6 +516,7 @@ const infos = [
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
     overflow-y: auto;
+    z-index: 2;
 
     .top-area {
       display: flex;
