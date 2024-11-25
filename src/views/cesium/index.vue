@@ -58,6 +58,7 @@ onMounted(async () => {
     backdrop-filter: blur(4px);
     overflow: auto;
     width: 220px;
+    max-height: 300px;
     border-radius: 4px;
     pointer-events: auto;
 
