@@ -63,7 +63,7 @@
           <DocumentCopy/>
         </el-icon>
       </div>
-      <el-form :model="formData" ref="formRef"  label-width="100" label-position="right">
+      <el-form :model="formData" ref="formRef" label-width="100" label-position="right">
         <el-form-item v-for="(item,index) in curStyles" :key="index" :label="item.label" :prop="item.name">
           <component :is="components[item.type]" size="small" v-model="formData[item.name]"
                      :min="item.min || item.min === 0 ? item.min : -Infinity"
@@ -79,8 +79,9 @@
     <Tdt_img_d/>
     <!-- 气泡-->
     <ul v-for="(item,index) in popupList" :key="index">
-      <li class="surveyStation-popup" :style="{ transform: `translate(${item.x }px, ${item.y}px)`}">
+      <li :class="['surveyStation-popup',item.class]" :style="{ transform: `translate(${item.x }px, ${item.y}px)`}">
         {{ item.remark }}
+        <img src="@/assets/images/no-select.png"/>
       </li>
     </ul>
   </div>
@@ -130,7 +131,8 @@ onMounted(() => {
       longitude: item.geometry.coordinates[0],
       latitude: item.geometry.coordinates[1],
       height: item.geometry.coordinates[2],
-      remark
+      remark,
+      class: `popup-box-${nodeId}`
     }
   })
   model.treeData = defaultData
@@ -254,9 +256,9 @@ const EditorFn = (e) => {
   const [longitude, latitude, height] = cartesianToWgs84(curGraphic.position.getValue())
   const index = popupModel.popupList.findIndex(item => item.id === nodeId)
   if (index !== -1) {
-    popupModel.popupList[index] = {id: nodeId, longitude, latitude, height, remark: remark || "暂无"}
+    popupModel.popupList[index] = {id: nodeId, longitude, latitude, height, remark: remark || "暂无备注"}
   } else {
-    nodeId && popupModel.popupList.push({id: nodeId, longitude, latitude, height, remark: remark || "暂无"})
+    nodeId && popupModel.popupList.push({id: nodeId, longitude, latitude, height, remark: remark || "暂无备注"})
   }
   // 编辑区
   if (nodeId) return
@@ -270,15 +272,17 @@ const EditorFn = (e) => {
 }
 
 const styleChange = (name, val) => {
+  const {nodeId} = curGraphic.attr
   switch (name) {
     case "name":
-      const {nodeId} = curGraphic.attr
       const node = treeRef.value.getNode(nodeId)
       node.data.label = val
       curGraphic.attr.label = val
       break
     case "remark":
       curGraphic.attr.remark = val
+      const index = popupModel.popupList.findIndex(item => item.id === nodeId)
+      popupModel.popupList[index].remark = val
       break
     default:
       curGraphic.setStyle({[name]: val})
@@ -304,11 +308,14 @@ const {popupList} = toRefs(popupModel)
 
 const showPopupBox = () => {
   popupModel.popupList.forEach(item => {
-    const {longitude, latitude, height} = item
-    const curPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+    const {longitude, latitude, height: heigtZ} = item
+    const dom = document.querySelector("." + item.class)
+    const width = parseInt(getComputedStyle(dom).width)
+    const height = parseInt(getComputedStyle(dom).height)
+    const curPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, heigtZ);
     const {x, y} = viewer.scene.cartesianToCanvasCoordinates(curPosition)
-    item.x = x - 60
-    item.y = y - 70
+    item.x = x - (width / 2)
+    item.y = y - height - 50
   })
 }
 
@@ -493,7 +500,7 @@ const infos = [
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
     overflow-y: auto;
-     z-index: 2;
+    z-index: 2;
 
     .head_title_arrow {
       font-family: YouSheBiaoTiHei;
