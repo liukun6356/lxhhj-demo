@@ -364,11 +364,11 @@ const infos = [
     name: "三维模型",
     types: [
       {
-        label: "树木", img: png1, drawType: "",
-        // style: {
-        //   scale: 10,
-        //   url: "http//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
-        // }
+        label: "树木", img: png1, drawType: "model",
+        style: {
+          scale: 10,
+          url: "/tree.glb"
+        }
       },
       {label: "草地", img: png2, drawType: ""},
       {label: "建筑", img: png3, drawType: ""},
@@ -600,11 +600,12 @@ const infos = [
     top: 100px;
     left: 280px;
     padding: 10px;
-    width: 250px;
+    width: 260px;
     height: 300px;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 2;
 
     .top-area {
