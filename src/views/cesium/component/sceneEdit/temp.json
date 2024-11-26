@@ -1,7 +1,7 @@
 {
   "type": "FeatureCollection",
   "layer": {
-    "id": "m-7123cc1d-2cdc-4e90-adaa-04a3e66e47d5"
+    "id": "m-00abd2db-807a-49e0-b92b-67af4108fb6d"
   },
   "features": [
     {
@@ -12,8 +12,10 @@
         "customType": "二维标注",
         "nodeId": "3b3d2484-e19f-4c6a-a002-8b85eff7d08d",
         "remark": "lxhhj",
-        "id": "m-80180d61-cd76-4d3a-9019-c4bf346dad29",
+        "id": "m-3e68cb23-da28-475f-8810-eadf5b796bf0",
         "type": "label",
+        "longitude": 113.067022,
+        "latitude": 25.881547,
         "style": {
           "text": "柳晓黑胡椒",
           "color": "#0081c2",
@@ -42,8 +44,10 @@
         "label": "线",
         "customType": "二维标注",
         "nodeId": "a6ce701f-8bd8-4abb-88f1-0bbf9c1da5bd",
-        "id": "m-5884e86b-5262-4785-ab40-db5c563057ca",
+        "id": "m-ee33359f-17e4-4098-9da2-d34bcac2f2fc",
         "type": "polyline",
+        "longitude": 113.0228345,
+        "latitude": 25.7843825,
         "style": {
           "color": "#ffff00",
           "width": 3,
@@ -79,8 +83,10 @@
         "label": "虚线",
         "customType": "二维标注",
         "nodeId": "b897b097-47b9-4a25-ad0e-2c2c176c001b",
-        "id": "m-924982b8-bb05-4b0b-8cbf-1c5632a4a852",
+        "id": "m-7bb48140-0c66-4d07-ba2e-aefd2faacb2e",
         "type": "polyline",
+        "longitude": 113.29715300000001,
+        "latitude": 25.909778000000003,
         "style": {
           "color": "#ffff00",
           "width": 3,
@@ -116,8 +122,10 @@
         "label": "矩形",
         "customType": "二维标注",
         "nodeId": "5233c7bb-932d-4672-abb9-2e950f803bec",
-        "id": "m-6b2cb2c1-e6c2-4c66-a1f1-6429057da5bb",
+        "id": "m-1d2bb151-b721-4d9a-9dd7-8f1c880b5f2c",
         "type": "rectangle",
+        "longitude": 113.1681175,
+        "latitude": 25.665429500000002,
         "style": {
           "color": "#ffff00",
           "opacity": 0.6,
@@ -151,8 +159,10 @@
         "label": "圆",
         "customType": "二维标注",
         "nodeId": "698ad08c-3f79-407b-b0a1-b2de0ec94ce1",
-        "id": "m-1d31f5a7-a746-4816-a6f7-e0a8d764e672",
+        "id": "m-14983f6a-7558-490b-a098-caf5f8c8258f",
         "type": "circle",
+        "longitude": 112.808479,
+        "latitude": 25.707146,
         "style": {
           "color": "#ffff00",
           "opacity": 0.6,
