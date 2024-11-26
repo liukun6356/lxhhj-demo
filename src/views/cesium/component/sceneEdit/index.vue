@@ -10,13 +10,13 @@
             {{ info.name }}
           </div>
           <div class="model-item" v-if="info.types[0]?.img">
-            <div class="son-item" v-for="item in info.types" :key="item.label" @click="drawFn(info.name,item.label)">
+            <div class="son-item" v-for="item in info.types" :key="item.label" @click="drawFn(info.name,item)">
               <img :src="item.img" alt=""/>
               <div>{{ item.label }}</div>
             </div>
           </div>
           <div class="model-item-btn" v-else>
-            <el-button v-for="item in info.types" :key="item.label" @click="drawFn(info.name,item.label)" size="small">
+            <el-button v-for="item in info.types" :key="item.label" @click="drawFn(info.name,item)" size="small">
               {{ item.label }}
             </el-button>
           </div>
@@ -53,7 +53,7 @@
         </el-icon>
       </div>
       <div>
-        <el-icon :size="18" style="margin-right: 6px" @click="flyToGraphic">
+        <el-icon :size="18" style="margin-right: 6px" @click="flyToGraphic()">
           <Promotion/>
         </el-icon>
         <el-icon :size="18" style="margin-right: 6px" @click="removeNode()">
@@ -64,11 +64,16 @@
         </el-icon>
       </div>
       <el-form :model="formData" ref="formRef" label-width="100" label-position="right">
-        <el-form-item v-for="(item,index) in curStyles" :key="index" :label="item.label" :prop="item.name">
+        <el-form-item v-for="(item,index) in curStyles" :key="index" :label="item.label" :prop="item.name"
+                      :name="item.name">
+          <template #label>
+            <span :title="item.name" @click="copyUrl(item.name)">{{ item.label }}</span>
+          </template>
           <component :is="components[item.type]" size="small" v-model="formData[item.name]"
                      :min="item.min || item.min === 0 ? item.min : -Infinity"
                      :max="item.max || item.max === 0 ? item.max : Infinity" :step="item.step || 0.1"
                      style="width: 100%" @change="styleChange(item.name,$event)" :disabled="item.disabled">
+
             <template v-if="item.type ==='combobox'">
               <el-option v-for="(x,index) in item.data" :key="index" :label="x.label" :value="x.value"/>
             </template>
@@ -90,8 +95,9 @@
 <script lang="ts" setup>
 import {reactive, toRefs, ref, onMounted, onUnmounted} from "vue";
 import {usemapStore} from "@/store/modules/cesiumMap.ts";
-import {generateUUID, downloadFile, cartesianToWgs84} from "@/utils/dictionary"
+import {generateUUID, downloadFile, cartesianToWgs84, copyUrl} from "@/utils/dictionary"
 import * as mars3d from "mars3d";
+import * as turf from '@turf/turf'
 import defaultData from "./data"
 import tempJSON from "./temp.json"
 import styleConfig from "./styleConfig"
@@ -151,30 +157,14 @@ onUnmounted(() => {
   viewer.removeLayer(graphicLayer)
 })
 
-const drawFn = (type, label) => {
-  switch (type) {
-    case "三维模型":
-      graphicLayer.startDraw({
-        type: "label",
-        style: {
-          text: "科技三维地球",
-          color: "#0081c2",
-          font_size: 50,
-          outline: true,
-          outlineColor: "#ffffff",
-          outlineWidth: 2,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-        },
-        attr: {label, customType: type,}
-      })
-      break
-    case "二维标注":
-      break
-    case "二维标注":
-      break
-    case "场景特效":
-      break
+const drawFn = (name, row) => {
+  console.log(name, row, 222)
+  const {label, drawType: type, style} = row
+  if (!type) {
+    ElMessage.warning("开发中")
+    return
   }
+  graphicLayer.startDraw({type, style, attr: {label, customType: name}})
 }
 
 const editStopFn = () => {
@@ -196,6 +186,8 @@ const removeNode = (id) => {
     model.propertyEditingShow = false
   }
   treeRef.value.remove(id)
+  const index = popupModel.popupList.findIndex(item => item.id === id)
+  index !== -1 && popupModel.popupList.splice(index, 1)
   graphic && graphic.remove()
   reset()
 }
@@ -253,12 +245,43 @@ const EditorFn = (e) => {
   ]
   model.curStyles.forEach(({name, defval}) => model.formData[name] = curGraphic.style[name] || defval)
   // 气泡
-  const [longitude, latitude, height] = cartesianToWgs84(curGraphic.position.getValue())
+  let longitude, latitude, height, features, center
+  switch (true) {
+    case !!curGraphic.coordinates : // rectangle,polygon,polyline
+      console.log(curGraphic.coordinates, 22)
+      features = turf.points(curGraphic.coordinates)
+      break
+      // case !!curGraphic.hierarchy: // polygon
+      //   features = turf.points(curGraphic.hierarchy.positions.map(pos => cartesianToWgs84(pos)))
+      //   break
+      // case !!curGraphic.positions: // polyline
+      //   features = turf.points(curGraphic.positions.getValue().map(pos => cartesianToWgs84(pos)))
+      //   break
+      // case !!curGraphic.position:
+      //   features = [cartesianToWgs84(curGraphic.position.getValue())]
+      //   break
+  }
+  center = turf.center(features);
+  ;[longitude, latitude, height] = center.geometry.coordinates
   const index = popupModel.popupList.findIndex(item => item.id === nodeId)
   if (index !== -1) {
-    popupModel.popupList[index] = {id: nodeId, longitude, latitude, height, remark: remark || "暂无备注"}
+    popupModel.popupList[index] = {
+      id: nodeId,
+      longitude,
+      latitude,
+      height,
+      class: `popup-box-${nodeId}`,
+      remark: remark || "暂无备注"
+    }
   } else {
-    nodeId && popupModel.popupList.push({id: nodeId, longitude, latitude, height, remark: remark || "暂无备注"})
+    nodeId && popupModel.popupList.push({
+      id: nodeId,
+      longitude,
+      latitude,
+      height,
+      class: `popup-box-${nodeId}`,
+      remark: remark || "暂无备注"
+    })
   }
   // 编辑区
   if (nodeId) return
@@ -310,6 +333,7 @@ const showPopupBox = () => {
   popupModel.popupList.forEach(item => {
     const {longitude, latitude, height: heigtZ} = item
     const dom = document.querySelector("." + item.class)
+    if (!dom) return
     const width = parseInt(getComputedStyle(dom).width)
     const height = parseInt(getComputedStyle(dom).height)
     const curPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, heigtZ);
@@ -339,7 +363,13 @@ const infos = [
   {
     name: "三维模型",
     types: [
-      {label: "树木", img: png1, drawType: ""},
+      {
+        label: "树木", img: png1, drawType: "",
+        // style: {
+        //   scale: 10,
+        //   url: "http//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf"
+        // }
+      },
       {label: "草地", img: png2, drawType: ""},
       {label: "建筑", img: png3, drawType: ""},
       {label: "道路", img: png4, drawType: ""},
@@ -353,20 +383,72 @@ const infos = [
   {
     name: "二维标注",
     types: [
-      {label: '线', drawType: ""},
-      {label: '虚线', drawType: ""},
-      {label: '面', drawType: ""},
-      {label: '矩形', drawType: ""},
-      {label: '圆', drawType: ""},
-      {label: '文字', drawType: ""}
+      {label: '线', drawType: "polyline", style: {color: "#ffff00", width: 3, clampToGround: true}},
+      {
+        label: '虚线',
+        drawType: "polyline",
+        style: {color: "#ffff00", width: 3, materialType: "PolylineDash", clampToGround: true}
+      },
+      {
+        label: '面', drawType: "polygon",
+        style: {
+          color: "#ffff00",
+          opacity: 0.5,
+          outline: true,
+          outlineColor: "#ffffff",
+          outlineWidth: 2.0,
+          clampToGround: true
+        }
+      },
+      {
+        label: '矩形', drawType: "rectangle",
+        style: {
+          color: "#ffff00",
+          opacity: 0.6,
+          outline: true,
+          outlineColor: "#ffffff",
+          outlineWidth: 2.0,
+          clampToGround: true
+        }
+      },
+      {
+        label: '圆', drawType: "circle",
+        style: {
+          color: "#ffff00",
+          opacity: 0.6,
+          outline: true,
+          outlineColor: "#ffffff",
+          outlineWidth: 2.0,
+          clampToGround: true
+        }
+      },
+      {
+        label: '文字', drawType: "label",
+        style: {
+          text: "柳晓黑胡椒",
+          color: "#0081c2",
+          font_size: 50,
+          outline: true,
+          outlineColor: "#ffffff",
+          outlineWidth: 2
+        }
+      }
     ]
   },
   {
-    name: "二维标注",
+    name: "三维标注",
     types: [
-      {label: '墙体', drawType: ""},
-      {label: '动态墙', drawType: ""},
-      {label: '箭头', drawType: ""}
+      {
+        label: '墙体', drawType: "wall",
+        style: {
+          color: "#00ff00",
+          opacity: 0.8,
+          diffHeight: 400,
+          closure: false
+        }
+      },
+      // {label: '动态墙', drawType: ""},
+      // {label: '箭头', drawType: ""}
     ]
   },
   {

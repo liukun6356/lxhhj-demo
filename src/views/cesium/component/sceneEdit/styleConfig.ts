@@ -1356,7 +1356,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -1429,16 +1429,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -1460,7 +1460,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -1483,7 +1483,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -1491,7 +1491,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -1590,7 +1590,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -1656,16 +1656,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -1687,7 +1687,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -1710,7 +1710,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -1718,7 +1718,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -2242,7 +2242,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -2454,7 +2454,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -3723,7 +3723,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -3731,7 +3731,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -3739,7 +3739,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -3747,7 +3747,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -3755,7 +3755,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -3763,7 +3763,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -3772,7 +3772,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -3781,7 +3781,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -3789,7 +3789,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -3797,14 +3797,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -3812,14 +3812,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -3827,7 +3827,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -3835,7 +3835,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -3843,7 +3843,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -3851,7 +3851,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -3860,7 +3860,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -4046,7 +4046,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -4054,7 +4054,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -4140,7 +4140,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -4167,7 +4167,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/arrow.png",
+                            "image": "http://data.mars3d.cn/img/textures/arrow.png",
                             "repeat_x": 10
                         }
                     },
@@ -4175,7 +4175,7 @@ const styleConfig = {
                         "label": "流动arrowh",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/arrow-h.png",
+                            "image": "http://data.mars3d.cn/img/textures/arrow-h.png",
                             "repeat_x": 10
                         }
                     },
@@ -4183,7 +4183,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "axisY": true
                         }
                     },
@@ -4191,7 +4191,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "axisY": true
                         }
                     },
@@ -4199,10 +4199,10 @@ const styleConfig = {
                         "label": "图片fence",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "axisY": true,
                             "color": "#ff0000",
-                            "image2": "//data.mars3d.cn/img/textures/tanhao.png",
+                            "image2": "http://data.mars3d.cn/img/textures/tanhao.png",
                             "color2": "#FFFF00",
                             "outline": false,
                             "diffHeight": 1000,
@@ -4579,7 +4579,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -4620,16 +4620,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -4651,7 +4651,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -4674,7 +4674,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -4682,7 +4682,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -4800,7 +4800,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -4862,16 +4862,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -4893,7 +4893,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -4916,7 +4916,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -4924,7 +4924,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -5062,7 +5062,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -5124,16 +5124,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -5155,7 +5155,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -5178,7 +5178,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -5186,7 +5186,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -5299,7 +5299,7 @@ const styleConfig = {
                 "name": "normalMap",
                 "label": "反射图片",
                 "type": "label",
-                "defval": "//data.mars3d.cn/img/textures/waterNormals.jpg"
+                "defval": "http://data.mars3d.cn/img/textures/waterNormals.jpg"
             },
             {
                 "name": "frequency",
@@ -5455,7 +5455,7 @@ const styleConfig = {
                 "name": "normalMap",
                 "label": "水扰动的法线图",
                 "type": "label",
-                "defval": "//data.mars3d.cn/img/textures/waterNormals.jpg"
+                "defval": "http://data.mars3d.cn/img/textures/waterNormals.jpg"
             },
             {
                 "name": "reflectivity",
@@ -7490,7 +7490,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -7563,16 +7563,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -7594,7 +7594,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -7617,7 +7617,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -7625,7 +7625,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -8288,7 +8288,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -8500,7 +8500,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -8617,7 +8617,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -8625,7 +8625,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -8633,7 +8633,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -8641,7 +8641,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -8649,7 +8649,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -8657,7 +8657,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -8666,7 +8666,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -8675,7 +8675,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -8683,7 +8683,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -8691,14 +8691,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -8706,14 +8706,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -8721,7 +8721,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -8729,7 +8729,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -8737,7 +8737,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -8745,7 +8745,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -8754,7 +8754,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -8896,7 +8896,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -8904,7 +8904,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -8912,7 +8912,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -8920,7 +8920,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -8928,7 +8928,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -8936,7 +8936,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -8945,7 +8945,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -8954,7 +8954,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -8962,7 +8962,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -8970,14 +8970,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -8985,14 +8985,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -9000,7 +9000,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9008,7 +9008,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -9016,7 +9016,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -9024,7 +9024,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -9033,7 +9033,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -9175,7 +9175,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9183,7 +9183,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -9191,7 +9191,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -9199,7 +9199,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -9207,7 +9207,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -9215,7 +9215,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -9224,7 +9224,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -9233,7 +9233,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -9241,7 +9241,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -9249,14 +9249,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -9264,14 +9264,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -9279,7 +9279,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9287,7 +9287,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -9295,7 +9295,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -9303,7 +9303,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -9312,7 +9312,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -9454,7 +9454,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9462,7 +9462,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -9470,7 +9470,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -9478,7 +9478,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -9486,7 +9486,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -9494,7 +9494,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -9503,7 +9503,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -9512,7 +9512,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -9520,7 +9520,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -9528,14 +9528,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -9543,14 +9543,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -9558,7 +9558,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9566,7 +9566,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -9574,7 +9574,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -9582,7 +9582,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -9591,7 +9591,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -9733,7 +9733,7 @@ const styleConfig = {
                         "label": "流动blue",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9741,7 +9741,7 @@ const styleConfig = {
                         "label": "流动dovetail",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-dovetail.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-dovetail.png",
                             "repeat_x": 10
                         }
                     },
@@ -9749,7 +9749,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-right.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-right.png",
                             "repeat_x": 10
                         }
                     },
@@ -9757,7 +9757,7 @@ const styleConfig = {
                         "label": "流动aqua",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-aqua.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-aqua.png",
                             "repeat_x": 10
                         }
                     },
@@ -9765,7 +9765,7 @@ const styleConfig = {
                         "label": "流动azure",
                         "value": "LineFlow-5",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-azure.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-azure.png",
                             "repeat_x": 10
                         }
                     },
@@ -9773,7 +9773,7 @@ const styleConfig = {
                         "label": "流动red",
                         "value": "LineFlow-6",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-red.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-red.png",
                             "color": "#ff0000",
                             "repeat_x": 10
                         }
@@ -9782,7 +9782,7 @@ const styleConfig = {
                         "label": "流动yellow",
                         "value": "LineFlow-7",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#ffff00",
                             "repeat_x": 10
                         }
@@ -9791,7 +9791,7 @@ const styleConfig = {
                         "label": "流动colour",
                         "value": "LineFlow-8",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-colour.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-colour.png",
                             "repeat_x": 10
                         }
                     },
@@ -9799,7 +9799,7 @@ const styleConfig = {
                         "label": "流动gradual",
                         "value": "LineFlow-9",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-gradual.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-gradual.png",
                             "repeat_x": 10
                         }
                     },
@@ -9807,14 +9807,14 @@ const styleConfig = {
                         "label": "流动pulse",
                         "value": "LineFlow-10",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-pulse.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-pulse.png"
                         }
                     },
                     {
                         "label": "流动sprite",
                         "value": "LineFlow-11",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-sprite.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-sprite.png",
                             "repeat_x": 10
                         }
                     },
@@ -9822,14 +9822,14 @@ const styleConfig = {
                         "label": "流动tarans",
                         "value": "LineFlow-13",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-tarans.png"
+                            "image": "http://data.mars3d.cn/img/textures/line-tarans.png"
                         }
                     },
                     {
                         "label": "流动vertebral",
                         "value": "LineFlow-14",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral.png",
                             "repeat_x": 10
                         }
                     },
@@ -9837,7 +9837,7 @@ const styleConfig = {
                         "label": "流动vertebral-blue",
                         "value": "LineFlow-15",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-vertebral-blue.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-vertebral-blue.png",
                             "repeat_x": 10
                         }
                     },
@@ -9845,7 +9845,7 @@ const styleConfig = {
                         "label": "流动fence-line",
                         "value": "LineFlow-16",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -9853,7 +9853,7 @@ const styleConfig = {
                         "label": "流动transarrow",
                         "value": "LineFlow-17",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-arrow-trans.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-arrow-trans.png",
                             "repeat_x": 10
                         }
                     },
@@ -9861,7 +9861,7 @@ const styleConfig = {
                         "label": "流动天青",
                         "value": "LineFlow-18",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "repeat_x": 1
                         }
@@ -9870,7 +9870,7 @@ const styleConfig = {
                         "label": "天青pulse",
                         "value": "LineFlow-19",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/line-color-yellow.png",
+                            "image": "http://data.mars3d.cn/img/textures/line-color-yellow.png",
                             "color": "#33e8df",
                             "width": 8
                         }
@@ -10023,7 +10023,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -10031,7 +10031,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -10117,7 +10117,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10144,7 +10144,7 @@ const styleConfig = {
                         "label": "流动arrow",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/arrow.png",
+                            "image": "http://data.mars3d.cn/img/textures/arrow.png",
                             "repeat_x": 10
                         }
                     },
@@ -10152,7 +10152,7 @@ const styleConfig = {
                         "label": "流动arrowh",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/arrow-h.png",
+                            "image": "http://data.mars3d.cn/img/textures/arrow-h.png",
                             "repeat_x": 10
                         }
                     },
@@ -10160,7 +10160,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-2",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "axisY": true
                         }
                     },
@@ -10168,7 +10168,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow-3",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "axisY": true
                         }
                     },
@@ -10176,10 +10176,10 @@ const styleConfig = {
                         "label": "图片fence",
                         "value": "LineFlow-4",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "axisY": true,
                             "color": "#ff0000",
-                            "image2": "//data.mars3d.cn/img/textures/tanhao.png",
+                            "image2": "http://data.mars3d.cn/img/textures/tanhao.png",
                             "color2": "#FFFF00",
                             "outline": false,
                             "diffHeight": 1000,
@@ -10404,7 +10404,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10445,16 +10445,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -10476,7 +10476,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10499,7 +10499,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -10507,7 +10507,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -10625,7 +10625,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10687,16 +10687,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -10718,7 +10718,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10741,7 +10741,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -10749,7 +10749,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -10874,7 +10874,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10936,16 +10936,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -10967,7 +10967,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -10990,7 +10990,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -10998,7 +10998,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -11123,7 +11123,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11185,16 +11185,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -11216,7 +11216,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11239,7 +11239,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -11247,7 +11247,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -11372,7 +11372,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11434,16 +11434,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -11465,7 +11465,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11488,7 +11488,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -11496,7 +11496,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -11621,7 +11621,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11683,16 +11683,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -11714,7 +11714,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11737,7 +11737,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -11745,7 +11745,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -11870,7 +11870,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11932,16 +11932,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -11963,7 +11963,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -11986,7 +11986,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -11994,7 +11994,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -12119,7 +12119,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12181,16 +12181,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -12212,7 +12212,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12235,7 +12235,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -12243,7 +12243,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -12368,7 +12368,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12430,16 +12430,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -12461,7 +12461,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12484,7 +12484,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -12492,7 +12492,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -12617,7 +12617,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12679,16 +12679,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -12710,7 +12710,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12733,7 +12733,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -12741,7 +12741,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -12866,7 +12866,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12928,16 +12928,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -12959,7 +12959,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -12982,7 +12982,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -12990,7 +12990,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -13115,7 +13115,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13177,16 +13177,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -13208,7 +13208,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13231,7 +13231,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -13239,7 +13239,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -13364,7 +13364,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13426,16 +13426,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -13457,7 +13457,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13480,7 +13480,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -13488,7 +13488,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -13613,7 +13613,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13675,16 +13675,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -13706,7 +13706,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13729,7 +13729,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -13737,7 +13737,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -13862,7 +13862,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13924,16 +13924,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -13955,7 +13955,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -13978,7 +13978,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -13986,7 +13986,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -14111,7 +14111,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -14173,16 +14173,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -14204,7 +14204,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -14227,7 +14227,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -14235,7 +14235,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }
@@ -14360,7 +14360,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -14422,16 +14422,16 @@ const styleConfig = {
                 "type": "color",
                 "defval": "#ffffff"
             },
-            {
-                "name": "outlineStyle",
-                "next": "width",
-                "label": "边框宽度",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "defval": 1,
-                "contant": "outlineWidth"
-            },
+            // {
+            //     "name": "outlineStyle",
+            //     "next": "width",
+            //     "label": "边框宽度",
+            //     "type": "number",
+            //     "min": 0,
+            //     "step": 1,
+            //     "defval": 1,
+            //     "contant": "outlineWidth"
+            // },
             {
                 "name": "outlineStyle",
                 "next": "materialType",
@@ -14453,7 +14453,7 @@ const styleConfig = {
                         "label": "图片",
                         "value": "Image",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/map/gugong.jpg"
+                            "image": "http://data.mars3d.cn/img/map/gugong.jpg"
                         }
                     },
                     {
@@ -14476,7 +14476,7 @@ const styleConfig = {
                         "label": "流动line",
                         "value": "LineFlow",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence-line.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence-line.png",
                             "repeat_x": 10
                         }
                     },
@@ -14484,7 +14484,7 @@ const styleConfig = {
                         "label": "流动fence",
                         "value": "LineFlow-1",
                         "defval": {
-                            "image": "//data.mars3d.cn/img/textures/fence.png",
+                            "image": "http://data.mars3d.cn/img/textures/fence.png",
                             "repeat_x": 10
                         }
                     }

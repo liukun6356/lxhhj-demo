@@ -1,35 +1,37 @@
 {
   "type": "FeatureCollection",
   "layer": {
-    "id": "m-b0b7cf57-fe1a-4afa-b4e3-408c26d45c33"
+    "id": "m-7123cc1d-2cdc-4e90-adaa-04a3e66e47d5"
   },
   "features": [
     {
       "type": "Feature",
       "properties": {
         "name": "",
-        "label": "树木",
-        "customType": "三维模型",
-        "nodeId": "a83029f3-9788-4509-94bd-3dddc3f439e9",
-        "id": "m-d16eedb4-a144-4f3f-ba45-9f3b38c93f5d",
+        "label": "文字",
+        "customType": "二维标注",
+        "nodeId": "3b3d2484-e19f-4c6a-a002-8b85eff7d08d",
+        "remark": "lxhhj",
+        "id": "m-80180d61-cd76-4d3a-9019-c4bf346dad29",
         "type": "label",
-        "remark": "这是备注3",
         "style": {
-          "text": "科技三维地球",
+          "text": "柳晓黑胡椒",
           "color": "#0081c2",
           "font_size": 50,
           "outline": true,
           "outlineColor": "#ffffff",
           "outlineWidth": 2,
+          "background": false,
+          "distanceDisplayCondition": false,
           "visibleDepth": false
         }
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          112.734313,
-          25.650497,
-          -7.1
+          113.067022,
+          25.881547,
+          171.7
         ]
       }
     },
@@ -37,27 +39,36 @@
       "type": "Feature",
       "properties": {
         "name": "",
-        "label": "树木_1",
-        "customType": "三维模型",
-        "nodeId": "585344be-88fd-4db1-86c9-5ac779f9dcfe",
-        "id": "m-9250c473-7ef8-45bd-a2ad-779f3d332660",
-        "type": "label",
-        "remark": "这是备注2",
+        "label": "线",
+        "customType": "二维标注",
+        "nodeId": "a6ce701f-8bd8-4abb-88f1-0bbf9c1da5bd",
+        "id": "m-5884e86b-5262-4785-ab40-db5c563057ca",
+        "type": "polyline",
         "style": {
-          "text": "科技三维地球",
-          "color": "#0081c2",
-          "font_size": 50,
-          "outline": true,
-          "outlineColor": "#ffffff",
-          "outlineWidth": 2
+          "color": "#ffff00",
+          "width": 3,
+          "clampToGround": true,
+          "materialType": "Color"
         }
       },
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          113.20571,
-          25.973048,
-          -5.7
+          [
+            113.121399,
+            25.767795,
+            329.4
+          ],
+          [
+            112.92427,
+            25.759673,
+            229.6
+          ],
+          [
+            112.940876,
+            25.809092,
+            116
+          ]
         ]
       }
     },
@@ -65,27 +76,100 @@
       "type": "Feature",
       "properties": {
         "name": "",
-        "label": "树木_2",
-        "customType": "三维模型",
-        "nodeId": "b1827038-ca4d-4be7-8aa3-e7005516d882",
-        "id": "m-bf35e4e9-614a-4b86-ae4e-6a44533d8617",
-        "type": "label",
-        "remark": "这是备注1",
+        "label": "虚线",
+        "customType": "二维标注",
+        "nodeId": "b897b097-47b9-4a25-ad0e-2c2c176c001b",
+        "id": "m-924982b8-bb05-4b0b-8cbf-1c5632a4a852",
+        "type": "polyline",
         "style": {
-          "text": "科技三维地球",
-          "color": "#0081c2",
-          "font_size": 50,
+          "color": "#ffff00",
+          "width": 3,
+          "materialType": "PolylineDash",
+          "clampToGround": true
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.277362,
+            25.972529,
+            -11.5
+          ],
+          [
+            113.245676,
+            25.847027,
+            -2.7
+          ],
+          [
+            113.34863,
+            25.875942,
+            -8.3
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "",
+        "label": "矩形",
+        "customType": "二维标注",
+        "nodeId": "5233c7bb-932d-4672-abb9-2e950f803bec",
+        "id": "m-6b2cb2c1-e6c2-4c66-a1f1-6429057da5bb",
+        "type": "rectangle",
+        "style": {
+          "color": "#ffff00",
+          "opacity": 0.6,
           "outline": true,
           "outlineColor": "#ffffff",
-          "outlineWidth": 2
+          "outlineWidth": 2,
+          "clampToGround": true,
+          "materialType": "Color"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.20975,
+            25.700529,
+            -5.3
+          ],
+          [
+            113.126485,
+            25.63033,
+            114.1
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "",
+        "label": "圆",
+        "customType": "二维标注",
+        "nodeId": "698ad08c-3f79-407b-b0a1-b2de0ec94ce1",
+        "id": "m-1d31f5a7-a746-4816-a6f7-e0a8d764e672",
+        "type": "circle",
+        "style": {
+          "color": "#ffff00",
+          "opacity": 0.6,
+          "outline": true,
+          "outlineColor": "#ffffff",
+          "outlineWidth": 2,
+          "clampToGround": true,
+          "materialType": "Color",
+          "radius": 9033.08
         }
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          112.765522,
-          25.969489,
-          -10.3
+          112.808479,
+          25.707146,
+          -10
         ]
       }
     }
