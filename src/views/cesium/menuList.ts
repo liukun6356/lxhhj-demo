@@ -22,7 +22,12 @@ export default [
                 id: 14,
                 label: "楼宇管线场景递进+白膜",
                 name: "Cesium-main-BuildingProgression"
-            }
+            },
+            {
+                id: 15,
+                label: "救援场景演练(czml)",
+                name: "Cesium-main-SceneRehearsal"
+            },
         ],
     },
     {

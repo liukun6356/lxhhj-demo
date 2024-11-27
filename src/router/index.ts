@@ -63,6 +63,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/floorsStacking/index.vue'),
                         name: 'Cesium-monomer-FloorsStacking',
                         meta: {title: 'floorsStacking', icon: '', affix: true},
+                    },{
+                        path: 'sceneRehearsal',
+                        component: () => import('@/views/cesium/component/sceneRehearsal/index.vue'),
+                        name: 'Cesium-main-SceneRehearsal',
+                        meta: {title: 'sceneRehearsal', icon: '', affix: true},
                     }
                 ]
             }

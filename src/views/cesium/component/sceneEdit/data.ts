@@ -19,4 +19,9 @@ export default [
         label: '场景特效',
         children: [],
     },
+    {
+        id: 5,
+        label: '军事标绘',
+        children: [],
+    },
 ];

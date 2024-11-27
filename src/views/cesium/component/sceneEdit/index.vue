@@ -1,4 +1,8 @@
-<!--场景编辑-->
+/**
+* @author: liuk
+* @date: 2024-11-26
+* @describe: 场景编辑(物料区+编辑区+属性配置区)
+*/
 <template>
   <div class="sceneEdit-wrap">
     <div class="material-area">
@@ -243,7 +247,7 @@ const EditorFn = (e) => {
   // 气泡
   // const features = turf.points(curGraphic.coordinates)
   // const center = turf.center(features);
-  const [longitude, latitude, height] =  cartesianToWgs84(e.graphic.center)
+  const [longitude, latitude, height] = cartesianToWgs84(e.graphic.center)
   curGraphic.attr.longitude = longitude
   curGraphic.attr.latitude = latitude
   curGraphic.attr.height = height
@@ -336,13 +340,7 @@ const infos = [
   {
     name: "三维模型",
     types: [
-      {
-        label: "树木", img: png1, drawType: "model",
-        style: {
-          scale: 10,
-          url: "/tree.glb"
-        }
-      },
+      {label: "树木", img: png1, drawType: "model", style: {scale: 10, url: "/tree.glb"}},
       {label: "草地", img: png2, drawType: ""},
       {label: "建筑", img: png3, drawType: ""},
       {label: "道路", img: png4, drawType: ""},
@@ -358,12 +356,23 @@ const infos = [
     types: [
       {label: '线', drawType: "polyline", style: {color: "#ffff00", width: 3, clampToGround: true}},
       {
+        label: '图标点', drawType: "billboard", style: {
+          image: "http://data.mars3d.cn/img/marker/mark-red.png",
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        }
+      },
+      {
         label: '虚线',
         drawType: "polyline",
         style: {color: "#ffff00", width: 3, materialType: "PolylineDash", clampToGround: true}
       },
       {
         label: '面', drawType: "polygon",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: '环型面', drawType: "gatheringPlace",
         style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
       },
       {
@@ -399,6 +408,47 @@ const infos = [
       {label: "点光源", img: png33, drawType: ""},
       {label: "聚光源", img: png44, drawType: ""},
       {label: "水", img: png55, drawType: ""}
+    ]
+  },
+  {
+    name: "军事标绘",
+    types: [
+      {
+        label: "钳击箭头", drawType: "doubleArrow",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "闭合曲面", drawType: "closeVurve",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "攻击箭头", drawType: "attackArrow",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "集结地", drawType: "gatheringPlace",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "粗直箭头", drawType: "straightArrow",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "燕尾直箭头", drawType: "fineArrowYW",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "粗单尖直箭头", drawType: "fineArrow",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "平尾攻击箭头", drawType: "attackArrowPW",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
+      {
+        label: "燕尾攻击箭头", drawType: "attackArrowYW",
+        style: {color: "#ffff00", opacity: 0.6, outlineWidth: 2.0, clampToGround: true}
+      },
     ]
   }
 ]
@@ -481,15 +531,15 @@ const infos = [
       }
 
       .model-item-btn {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        grid-gap: 10px;
-        padding-left: 5px;
-        margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+
 
         button {
-          width: 50px;
-          margin-left: 0;
+          width: max-content;
+          min-width: 55px;
+          //margin-left: 10;
+          margin: 3px;
         }
       }
     }

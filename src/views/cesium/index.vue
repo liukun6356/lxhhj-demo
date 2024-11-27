@@ -58,12 +58,13 @@ onMounted(async () => {
     backdrop-filter: blur(4px);
     overflow: auto;
     width: 220px;
-    max-height: 300px;
+    height: 340px;
     border-radius: 4px;
     pointer-events: auto;
 
     .content {
-      max-height: 690px;
+      height: calc(100% - 25px);
+      overflow-y: auto;
       margin-top: 10px;
     }
   }
