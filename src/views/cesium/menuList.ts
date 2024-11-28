@@ -30,7 +30,7 @@ export default [
             },
             {
                 id:16,
-                label:"轨道飞行",
+                label:"无人机轨道飞行(clock)",
                 name:"Cesium-main-PolylineFly"
             }
         ],
