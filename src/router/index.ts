@@ -68,6 +68,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/sceneRehearsal/index.vue'),
                         name: 'Cesium-main-SceneRehearsal',
                         meta: {title: 'sceneRehearsal', icon: '', affix: true},
+                    },{
+                        path: 'polylineFly',
+                        component: () => import('@/views/cesium/component/polylineFly/index.vue'),
+                        name: 'Cesium-main-PolylineFly',
+                        meta: {title: 'polylineFly', icon: '', affix: true},
                     }
                 ]
             }

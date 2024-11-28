@@ -28,6 +28,11 @@ export default [
                 label: "救援场景演练(czml)",
                 name: "Cesium-main-SceneRehearsal"
             },
+            {
+                id:16,
+                label:"轨道飞行",
+                name:"Cesium-main-PolylineFly"
+            }
         ],
     },
     {

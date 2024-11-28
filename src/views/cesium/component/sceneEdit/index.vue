@@ -85,7 +85,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <Tdt_img_d/>
     <!-- 气泡-->
     <ul v-for="(item,index) in popupList" :key="index">
       <li :class="['surveyStation-popup',item.class]" :style="{ transform: `translate(${item.x }px, ${item.y}px)`}">
@@ -93,6 +92,7 @@
         <img src="@/assets/images/no-select.png"/>
       </li>
     </ul>
+    <Tdt_img_d/>
   </div>
 </template>
 
