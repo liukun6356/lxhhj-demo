@@ -1,18 +1,18 @@
 ## 项目地址
 
-|  | github
+|  | 链接
 | --- | --- 
-| lxhhj | [链接](https://github.com/liukun6356/lxhhj-demo)
+| 源代码 | https://github.com/liukun6356/lxhhj-demo
 
 
 ## 技术栈
-
 | 技术栈 | 描述 | 官网 |
 | --- | --- | --- |
 | Cesium | 三维GIS引擎 | https://sandcastle.cesium.com/ |
 | mars3d | 开源三维SDK | http://mars3d.cn/project/vue/jcxm.html |
 | Turf | 地理空间分析工具 | https://turfjs.fenxianglu.cn/ |
 | proj4 | 地理坐标转换 | http://proj4js.org/ |
+|geoserver|编辑和发布地理控件| https://geoserver.org
 | Vue3 | 渐进式 JavaScript 框架 | https://v3.cn.vuejs.org/ |
 | TypeScript | JavaScript 的一个超集 | https://www.tslang.cn/ |
 | Vite | 前端开发与构建工具 | https://cn.vitejs.dev/ |
@@ -23,36 +23,31 @@
 ## 环境要求
 
 - Node 环境
-
-  版本：16+
+  版本：18.0.0
 - 开发工具
-
   Webstorm
 
 ## 项目启动
-
 1. 安装依赖
 
     ```bash
-    npm install
+    yarn install
     ```
 2. 启动运行
 
     ```bash
-    npm run dev
+    yarn dev
     ```
 3. 访问测试
 
-   浏览器访问： [http://localhost:8080](http://localhost:8080)
+   浏览器访问： [--](--)
 4. 测试环境打包
-
     ```bash
-    npm run build:staging
+    yarn build:staging
     ```
 5. 正式环境打包
-
     ```bash
-    npm run build:prod
+    yarn build:prod
     ```
 
 ##  <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg!1" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒

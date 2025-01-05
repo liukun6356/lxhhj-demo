@@ -10,4 +10,15 @@ export default [
             },
         ],
     },
+    {
+        id: 2,
+        label: "例子效果",
+        children: [
+            {
+                id: 21,
+                label: "颜色渐变",
+                name: "Three-main-InstancingBillboards"
+            }
+        ]
+    }
 ];

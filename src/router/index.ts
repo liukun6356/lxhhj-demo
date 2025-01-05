@@ -4,7 +4,7 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 export const constantRoutes = [
     {
         path: '/',
-        redirect: '/cesium',
+        redirect: '/webgl',
     },
     {
         path: '/cesium',
@@ -88,13 +88,19 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/three/index.vue'),
                 name: 'Three-main',
-                redirect: '/three/main/building',
+                redirect: '/three/main/instancingBillboards',
                 children: [
                     {
                         path: 'building',
                         component: () => import('@/views/three/component/building/index.vue'),
                         name: 'Three-main-Building',
                         meta: {title: 'building', icon: '', affix: true},
+                    },
+                    {
+                        path: 'instancingBillboards',
+                        component: () => import('@/views/three/component/instancingBillboards/index.vue'),
+                        name: 'Three-main-InstancingBillboards',
+                        meta: {title: 'instancingBillboards', icon: '', affix: true},
                     }
                 ]
             }
@@ -110,14 +116,20 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/webgl/index.vue'),
                 name: 'Webgl-main',
-                redirect: '/webgl/main/canvas2d',
+                redirect: '/webgl/main/helloWebgl',
                 children: [
                     {
-                        path: 'canvas2d',
-                        component: () => import('@/views/webgl/component/canvas2d/index.vue'),
-                        name: 'Webgl-main-Canvas2d',
-                        meta: {title: 'building', icon: '', affix: true},
-                    }
+                        path: 'helloWebgl',
+                        component: () => import('@/views/webgl/component/helloWebgl.vue'),
+                        name: 'Webgl-main-HelloWebgl',
+                        meta: {title: 'helloWebgl', icon: '', affix: true},
+                    },
+                    {
+                        path: 'spinEditing',
+                        component: () => import('@/views/webgl/component/spinEditing.vue'),
+                        name: 'Webgl-main-SpinEditing',
+                        meta: {title: 'spinEditing', icon: '', affix: true},
+                    },
                 ]
             }
         ]

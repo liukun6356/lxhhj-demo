@@ -1,5 +1,6 @@
 <template>
   <div class="webgl-container">
+    <canvas-box />
     <div class="showContainer">
       <div class="head_title_arrow">MenuList</div>
       <div class="content">
@@ -11,7 +12,7 @@
       </div>
     </div>
     <section class="complete-main">
-      <router-view v-slot="{ Component, route }">
+      <router-view v-slot="{ Component, route }" v-if="webglGlStore.isActiveGl">
         <transition name="router-fade" mode="out-in">
           <keep-alive include="[]">
             <component :is="Component" :key="route.fullPath"/>
@@ -26,10 +27,14 @@
 import {onMounted, reactive, toRefs} from "vue";
 import treeDataJson from "./menuList";
 import {useRouter,useRoute} from "vue-router";
-
+// Component
+import CanvasBox from "./canvasBox/index.vue"
+import {usewebglGlStore} from "@/store/modules/webglGl";
 // Refs
 const router = useRouter()
 const route = useRoute()
+
+const webglGlStore = usewebglGlStore()
 const model = reactive({
   treeData: [],
 })

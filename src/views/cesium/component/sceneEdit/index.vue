@@ -562,7 +562,7 @@ const infos = [
 
   .edit-area {
     position: fixed;
-    top: 450px;
+    top: 470px;
     left: 20px;
     padding: 10px;
     width: 220px;

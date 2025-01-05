@@ -31,7 +31,7 @@ export default defineConfig({
                 rewrite: (p) => p.replace(/^\/dev-api/, ""),
             },
             "/geoserve-api": {
-                // target: "http://192.168.40.18:6060",// 本地geoserver地址
+                // target: "http://192.168.60.24:6060",// 本地geoserver地址
                 target: "http://192.168.30.50:8089", // dsy内网geoserver地址
                 changeOrigin: true,
                 rewrite: (p) => p.replace(/^\/geoserve-api/, ""),

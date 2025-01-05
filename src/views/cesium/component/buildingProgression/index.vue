@@ -105,6 +105,9 @@ const add3dtileset = () => {
     }
   });
   viewer.addLayer(cctlLayer)
+  setTimeout(()=>{
+    console.log(cctlLayer.tileset.boundingSphere,222)
+  },5000)
   mapResetCamera()
 }
 

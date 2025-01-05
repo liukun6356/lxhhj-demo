@@ -1,12 +1,12 @@
 import {defineStore} from 'pinia'
 
-interface globalStore {
+interface GlobalStore {
 
 }
 
 export const useglobalStore = defineStore({
     id: 'globalMap',
-    state: (): globalStore => ({
+    state: (): GlobalStore => ({
 
     }),
     actions: {
