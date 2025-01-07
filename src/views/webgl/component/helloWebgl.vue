@@ -12,8 +12,6 @@
 import {usewebglGlStore} from "@/store/modules/webglGl"
 import {onMounted, reactive, toRefs} from "vue";
 
-
-
 const model = reactive({
   typelist: ["点", "线条", "闭合线圈", "线段", "三角带", "三角扇", "三角形",],
   activeValue: ""

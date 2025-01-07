@@ -117,18 +117,6 @@ const drawScence = () => {
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 
-const resizeCanvasToDisplaySize = (canvas, multiplier) => {
-  multiplier = multiplier || 1;
-  const width = canvas.clientWidth * multiplier | 0;
-  const height = canvas.clientHeight * multiplier | 0;
-  if (canvas.width !== width || canvas.height !== height) {
-    canvas.width = width;
-    canvas.height = height;
-    return true;
-  }
-  return false;
-}
-
 const createProgram = (vshader, fshader) => {
   const vertexShader = loadShader(gl.VERTEX_SHADER, vshader);
   const fragmentShader = loadShader(gl.FRAGMENT_SHADER, fshader);

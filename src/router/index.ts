@@ -130,6 +130,18 @@ export const constantRoutes = [
                         name: 'Webgl-main-SpinEditing',
                         meta: {title: 'spinEditing', icon: '', affix: true},
                     },
+                    {
+                        path: 'imageProcessing',
+                        component: () => import('@/views/webgl/component/imageProcessing.vue'),
+                        name: 'Webgl-main-ImageProcessing',
+                        meta: {title: 'imageProcessing', icon: '', affix: true},
+                    },
+                    {
+                        path: 'transform2d',
+                        component: () => import('@/views/webgl/component/transform2d.vue'),
+                        name: 'Webgl-main-Transform2d',
+                        meta: {title: 'transform2d', icon: '', affix: true},
+                    },
                 ]
             }
         ]
