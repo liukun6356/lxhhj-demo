@@ -24,7 +24,7 @@ onMounted(() => {
   init()
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
   gl.deleteProgram(program);
 })
 
@@ -52,7 +52,7 @@ const clear = () => {
   gl.clear(gl.COLOR_BUFFER_BIT); // gl.COLOR_BUFFER_BIT 清除颜色缓存区
 }
 
-const init = () =>{
+const init = () => {
   program = createProgram(vsGLSL, fsGLSL);
 }
 
@@ -159,13 +159,13 @@ const vsGLSL = `
   varying vec2 v_texCoord; // 可变量,可传递到片段着色器
 
   void main() {
-     // 纹理坐标范围始终是 0.0 到 1.0
+     // 从像素坐标转换到 0.0 到 1.0
      vec2 zeroToOne = a_position / u_resolution;
 
-     //  将0->1转换为0->2
+     // 再把 0->1 转换 0->2
      vec2 zeroToTwo = zeroToOne * 2.0;
 
-     // convert from 0->2 to -1->+1 (clipspace)
+     // 把 0->2 转换到 -1->+1 (裁剪空间)
      vec2 clipSpace = zeroToTwo - 1.0;
 
      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
@@ -175,7 +175,23 @@ const vsGLSL = `
      v_texCoord = a_texCoord;
   }
 `
+/*
+比如 画布 400*300
+裁剪空间坐标  画布像素坐标
+(0,0)       (200,150)
+(0,0.5)     (200,225)
 
+例如传入 （200，150）
+vec2 zeroToOne = a_position / u_resolution; => [200,150]/[400,300]
+vec2 zeroToTwo = zeroToOne * 2.0; => [0.5,0.5]*2
+vec2 clipSpace = zeroToTwo - 1.0; => [0,0]
+gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1); => [0,0,0,1]
+例如传入 （0，0）
+vec2 zeroToOne = a_position / u_resolution; => [0,0]/[400,300]
+vec2 zeroToTwo = zeroToOne * 2.0; => [0,0]*2
+vec2 clipSpace = zeroToTwo - 1.0; => [-1,-1]
+gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1); => [-1,1,0,1]
+*/
 const fsGLSL = `
   precision mediump float;
 

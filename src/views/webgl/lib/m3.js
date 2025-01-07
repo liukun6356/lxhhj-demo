@@ -186,6 +186,12 @@ function translation(tx, ty, dst) {
     dst[7] = ty;
     dst[8] = 1;
 
+    // [
+    //     1, 0, 0,
+    //     0, 1, 0,
+    //     tx, ty, 1,
+    // ]
+
     return dst;
 }
 
@@ -224,7 +230,11 @@ function rotation(angleInRadians, dst) {
     dst[6] = 0;
     dst[7] = 0;
     dst[8] = 1;
-
+    // [
+    //     c,-s, 0,
+    //     s, c, 0,
+    //     0, 0, 1,
+    // ]
     return dst;
 }
 
@@ -260,6 +270,12 @@ function scaling(sx, sy, dst) {
     dst[6] = 0;
     dst[7] = 0;
     dst[8] = 1;
+
+    // [
+    //     sx, 0, 0,
+    //     0, sy, 0,
+    //     0, 0, 1,
+    // ]
 
     return dst;
 }
@@ -357,7 +373,6 @@ function inverse(m, dst) {
 
     return dst;
 }
-
 
 
 export default {

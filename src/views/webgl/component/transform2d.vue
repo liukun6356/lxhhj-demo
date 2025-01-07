@@ -70,8 +70,6 @@ const updateChange = () => {
       drawRect()
       break
     case "F":
-      console.log(model.formData.scaleX,model.formData.scaleY)
-
       drawF()
       break
   }

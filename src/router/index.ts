@@ -142,6 +142,12 @@ export const constantRoutes = [
                         name: 'Webgl-main-Transform2d',
                         meta: {title: 'transform2d', icon: '', affix: true},
                     },
+                    {
+                        path: 'transform2dmatrix',
+                        component: () => import('@/views/webgl/component/transform2dmatrix.vue'),
+                        name: 'Webgl-main-Transform2dmatrix',
+                        meta: {title: 'transform2dmatrix', icon: '', affix: true},
+                    },
                 ]
             }
         ]

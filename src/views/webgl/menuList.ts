@@ -23,6 +23,11 @@ export default [
                 label: '二维平移',
                 name: "Webgl-main-Transform2d"
             },
+            {
+                id: 15,
+                label: '二维平移(矩阵)',
+                name: "Webgl-main-Transform2dmatrix"
+            },
         ],
     },
 ];
