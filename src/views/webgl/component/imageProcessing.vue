@@ -192,6 +192,13 @@ vec2 zeroToTwo = zeroToOne * 2.0; => [0,0]*2
 vec2 clipSpace = zeroToTwo - 1.0; => [-1,-1]
 gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1); => [-1,1,0,1]
 */
+
+/*
+glsl命名约定
+a_  代表缓存，值从缓冲中提供
+u_  代表全局变量，直接对着色器设置
+v_  代表可变量，从顶点着色器的顶点中插值出来的
+*/
 const fsGLSL = `
   precision mediump float;
 

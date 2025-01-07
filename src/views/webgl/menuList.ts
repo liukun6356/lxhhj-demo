@@ -28,14 +28,11 @@ export default [
                 label: '二维平移(矩阵)',
                 name: "Webgl-main-Transform2dmatrix"
             },
+            {
+                id: 16,
+                label: '三维正射投影',
+                name: "Webgl-main-Transform3d"
+            },
         ],
     },
 ];
-
-/*
-glsl命名约定
-a_  代表缓存，值从缓冲中提供
-u_  代表全局变量，直接对着色器设置
-v_  代表可变量，从顶点着色器的顶点中插值出来的
-
-*/

@@ -167,7 +167,7 @@ const drawF = () => {
   const scaleMatrix = m3.scaling(model.formData.scaleX, model.formData.scaleY);
   let matrix = m3.multiply(translationMatrix, rotationMatrix);
   matrix = m3.multiply(matrix, scaleMatrix)
-  gl.uniformMatrix3fv(matrixLocation, false, matrix)
+  gl.uniformMatrix3fv(matrixLocation, false, matrix) // 三阶方阵 9个浮点数的数组
   gl.drawArrays(gl.TRIANGLES, 0, 18);
 }
 
@@ -176,7 +176,7 @@ const draw5F = () => {
   gl.enableVertexAttribArray(positionLocation);
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.uniform2f(resolutionLocation, gl.canvas.clientWidth , gl.canvas.clientHeight);
+  gl.uniform2f(resolutionLocation, gl.canvas.clientWidth , gl.canvas.clientHeight);// 赋值
   gl.uniform4fv(colorLocation, [0.5, 0.3, 0.1, 1]);
 
   const translationMatrix = m3.translation(model.formData.x, model.formData.y);
@@ -190,7 +190,6 @@ const draw5F = () => {
     matrix = m3.multiply(matrix, rotationMatrix);
     matrix = m3.multiply(matrix, scaleMatrix);
     gl.uniformMatrix3fv(matrixLocation, false, matrix);
-
     gl.drawArrays(gl.TRIANGLES, 0, 18);
   }
 }
