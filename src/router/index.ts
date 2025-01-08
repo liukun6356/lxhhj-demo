@@ -43,32 +43,32 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/buildingProgression/index.vue'),
                         name: 'Cesium-main-BuildingProgression',
                         meta: {title: 'buildingProgression', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'terrainClipPlan',
                         component: () => import('@/views/cesium/component/terrainClipPlan/index.vue'),
                         name: 'Cesium-analyse-TerrainClipPlan',
                         meta: {title: 'terrainClipPlan', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'skyline',
                         component: () => import('@/views/cesium/component/skyline/index.vue'),
                         name: 'Cesium-analyse-Skyline',
                         meta: {title: 'skyline', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'tilesetOnlyEntity',
                         component: () => import('@/views/cesium/component/tilesetOnlyEntity/index.vue'),
                         name: 'Cesium-monomer-TilesetOnlyEntity',
                         meta: {title: 'tilesetOnlyEntity', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'floorsStacking',
                         component: () => import('@/views/cesium/component/floorsStacking/index.vue'),
                         name: 'Cesium-monomer-FloorsStacking',
                         meta: {title: 'floorsStacking', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'sceneRehearsal',
                         component: () => import('@/views/cesium/component/sceneRehearsal/index.vue'),
                         name: 'Cesium-main-SceneRehearsal',
                         meta: {title: 'sceneRehearsal', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'polylineFly',
                         component: () => import('@/views/cesium/component/polylineFly/index.vue'),
                         name: 'Cesium-main-PolylineFly',
@@ -110,7 +110,7 @@ export const constantRoutes = [
         path: '/webgl',
         component: () => import('@/layout/index.vue'),
         redirect: '/webgl/main',
-        name: "WebGl",
+        name: "Webgl",
         children: [
             {
                 path: 'main',
@@ -153,6 +153,28 @@ export const constantRoutes = [
                         component: () => import('@/views/webgl/component/transform3d.vue'),
                         name: 'Webgl-main-Transform3d',
                         meta: {title: 'transform3d', icon: '', affix: true},
+                    },
+                ]
+            }
+        ]
+    },
+    {
+        path: '/arcgis',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/arcgis/main',
+        name: "Arcgis",
+        children: [
+            {
+                path: 'main',
+                component: () => import('@/views/arcgis/index.vue'),
+                name: 'Arcgis-main',
+                redirect: '/arcgis/main/tsFeature',
+                children: [
+                    {
+                        path: 'tsFeature',
+                        component: () => import('@/views/arcgis/component/tsFeature/index.vue'),
+                        name: 'Arcgis-main-TsFeature',
+                        meta: {title: 'tsFeature', icon: '', affix: true},
                     },
                 ]
             }

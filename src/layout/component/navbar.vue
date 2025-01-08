@@ -45,7 +45,8 @@ const changeActiveId = ({name}) => {
 const menus = [
   {label: 'cesium', name: 'Cesium'},
   {label: 'three', name: 'Three'},
-  {label: 'webGl', name: 'WebGl'},
+  {label: 'webGl', name: 'Webgl'},
+  {label: 'arcgis', name: 'Arcgis'},
 ];
 </script>
 
