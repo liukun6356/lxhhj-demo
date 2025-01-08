@@ -60,7 +60,7 @@ const initMap = (domId) => new Promise((resolve) => {
   })
   reactiveUtils.when(() => viewer.ready, () => {
     console.log("Truthy", viewer.ready)
-    const rawViewer = markRaw(viewer);
+    const rawViewer = markRaw(viewer)
     resolve(rawViewer)
   });
   viewer.on("pointer-move", throttle((e) => {

@@ -10,6 +10,8 @@
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
+import {usemapStore} from "@/store/modules/arcgisMap";
+import {TileGridLayer} from "./tile-grid-layer";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
@@ -30,13 +32,16 @@ const model = reactive({
 })
 const {formData} = toRefs(model)
 
-
 onMounted(() => {
   initGui()
+  gridLayer = new TileGridLayer()
+  viewer.map.add(gridLayer);
 })
 
 onUnmounted(() => {
   gui1.destroy()
+  viewer.map?.remove(gridLayer);
+  gridLayer.destroy();
 })
 
 const formDatachange = (k, v) => {
@@ -44,13 +49,28 @@ const formDatachange = (k, v) => {
 }
 
 const showGridChange = (bool) => {
-  console.log(bool)
+  gridLayer.visible = bool
 }
 
 const seriesChange = (series) => {
   console.log(series)
 }
 
+// 地图逻辑
+const mapStore = usemapStore()
+const viewer = mapStore.getArcgisViewer();
+let gridLayer
+const colorStops = [
+  "rgb(255, 195, 0)",
+  "rgb(255, 90, 31)",
+  "rgb(255, 8, 59)",
+  "rgb(255, 0, 128)",
+  "rgb(180, 0, 201)",
+  "rgb(42, 0, 252)",
+]
+
+
+// lil-gui逻辑
 let gui1, gui2, seriesControl
 const initGui = () => {
   gui1 = new GUI({title: "污染物过程模拟"});

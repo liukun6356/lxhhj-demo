@@ -20,6 +20,7 @@
     "element-plus": "^2.2.27",
     "file-saver": "^2.0.5",
     "flv.js": "^1.6.2",
+    "gl-matrix": "^3.4.3",
     "heatmap.js": "^2.0.5",
     "jsencrypt": "^3.3.2",
     "lil-gui": "^0.20.0",

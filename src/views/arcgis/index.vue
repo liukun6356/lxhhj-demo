@@ -10,8 +10,8 @@
         </el-tree>
       </div>
     </div>
-    <arcgis-map />
-    <section class="complete-main">
+    <arcgis-map/>
+    <section class="complete-main" v-if="mapStore.isActiveMap">
       <router-view v-slot="{ Component, route }">
         <transition name="router-fade" mode="out-in">
           <keep-alive include="[]">
@@ -25,10 +25,11 @@
 
 <script lang="ts" setup>
 import {onMounted, reactive, toRefs} from "vue";
-import {useRouter,useRoute} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 import treeDataJson from "./menuList";
 // Component
 import ArcgisMap from "./arcgisMap/index.vue"
+import {usemapStore} from "@/store/modules/arcgisMap";
 
 // Refs
 const router = useRouter()
@@ -48,17 +49,22 @@ const handleNodeClick = (row) => {
 onMounted(async () => {
   model.treeData = treeDataJson as any
 })
+
+// 地图逻辑
+const mapStore = usemapStore()
 </script>
 
 <style lang="scss" scoped>
-.arcgis-container{
+.arcgis-container {
   width: 100%;
   height: 100%;
   pointer-events: auto;
+
   .complete-main {
     width: 100%;
     height: 100%;
   }
+
   .showContainer {
     position: fixed;
     top: 100px;
