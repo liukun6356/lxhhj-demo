@@ -1,7 +1,7 @@
 export default [
     {
         id: 1,
-        label: 'demo效果',
+        label: '案例效果',
         children: [
             {
                 id: 11,
@@ -35,4 +35,16 @@ export default [
             },
         ],
     },
-];
+    {
+        id: 2,
+        label: '项目shader',
+        children: [
+            {
+                id: 21,
+                label: 'grid网格',
+                name: "Webgl-main-TsFeatureGrid"
+            }
+        ]
+    }
+]
+;

@@ -13,6 +13,8 @@ const canvasWebglRef = ref(null)
 const webglGlStore = usewebglGlStore()
 onMounted(() => {
   // const gl = getWebGLContext(canvasWebglRef.value)
+  // getContext("webgl") / getContext("2d")
+  // 因为 webgl是基于OpenGL ES 的图形上下文， 2d 是基于常规的 2D 图像绘制
   const gl = canvasWebglRef.value.getContext("webgl")
   const rawGl = markRaw(gl)
   webglGlStore.setWebglGl(rawGl)

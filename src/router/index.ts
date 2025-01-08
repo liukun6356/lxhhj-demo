@@ -154,6 +154,12 @@ export const constantRoutes = [
                         name: 'Webgl-main-Transform3d',
                         meta: {title: 'transform3d', icon: '', affix: true},
                     },
+                    {
+                        path: 'tsFeatureGrid',
+                        component: () => import('@/views/webgl/component/tsFeatureGrid.vue'),
+                        name: 'Webgl-main-TsFeatureGrid',
+                        meta: {title: 'tsFeatureGrid', icon: '', affix: true},
+                    },
                 ]
             }
         ]
