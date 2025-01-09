@@ -40,10 +40,9 @@ class CustomLayerView2D extends BaseLayerViewGL2D {
     private vertexBuffer: WebGLBuffer;
     private indexBuffer: WebGLBuffer;
 
-    tilesChanged(a, b) {
-        console.log(a, b)
-
-    }
+    // tilesChanged(a, b) {
+    //     console.log(a, b)
+    // }
 
     attach() {
         // We create and keep around a canvas and its associated 2D context.

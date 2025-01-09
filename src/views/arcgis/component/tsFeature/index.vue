@@ -8,10 +8,12 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
+import {onMounted, onUnmounted, reactive, ref, toRefs, markRaw} from "vue"
 import GUI from "lil-gui";
 import {usemapStore} from "@/store/modules/arcgisMap";
 import {TileGridLayer} from "./tile-grid-layer";
+import {TimeSeriesFeatureLayer} from "./layer";
+import moment from "moment";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
@@ -35,6 +37,13 @@ const {formData} = toRefs(model)
 onMounted(() => {
   initGui()
   gridLayer = new TileGridLayer()
+  layer = new TimeSeriesFeatureLayer({
+    graphics: [],
+    tolerance: 0,
+    //@ts-ignore
+    debug: true,
+    renderOpts: {},
+  })
   viewer.map.add(gridLayer);
 })
 
@@ -42,6 +51,8 @@ onUnmounted(() => {
   gui1.destroy()
   viewer.map?.remove(gridLayer);
   gridLayer.destroy();
+  viewer.map?.remove(layer);
+  layer.destroy();
 })
 
 const formDatachange = (k, v) => {
@@ -59,7 +70,7 @@ const seriesChange = (series) => {
 // 地图逻辑
 const mapStore = usemapStore()
 const viewer = mapStore.getArcgisViewer();
-let gridLayer
+let gridLayer, layer
 const colorStops = [
   "rgb(255, 195, 0)",
   "rgb(255, 90, 31)",
@@ -69,6 +80,55 @@ const colorStops = [
   "rgb(42, 0, 252)",
 ]
 
+const handleToggleDataSource = async (name) => {
+  console.log(123243, name)
+  const meta = typelist.find((i) => i.name === name);
+  if (!meta.gs) {
+    await fetch(`/test-data/timing-graphic/${name}.json`).then(async (res) => {
+      const fs = await res.json();
+      debugger
+      const gs = fs.features.map((i) => {
+        if (i.geometry.type === "Polygon") {
+          return {
+            attributes: i.properties,
+            geometry: {
+              type: "polygon",
+              spatialReference: crs,
+              rings: i.geometry.coordinates,
+            } as __esri.Polygon,
+          }
+        } else if (i.geometry.type === "LineString") {
+          return {
+            // style: {
+            //     lineWidth: Math.random() > 0.5 ? 6 : undefined,
+            // },
+            geometry: {
+              type: "polyline",
+              spatialReference: crs,
+              paths: [i.geometry.coordinates],
+            } as __esri.Polyline,
+          }
+        } else if (i.geometry.type === "Point") {
+          const useDefault = Math.random() > 0.5;
+          return {
+
+            geometry: {
+              type: "point",
+              spatialReference: crs,
+              x: i.geometry.coordinates[0],
+              y: i.geometry.coordinates[1],
+            } as __esri.Point,
+          }
+        }
+      });
+      //@ts-ignore
+      layer.graphics = gs;
+
+      meta.gs = markRaw(gs);
+    });
+  }
+}
+
 
 // lil-gui逻辑
 let gui1, gui2, seriesControl
@@ -77,6 +137,7 @@ const initGui = () => {
   gui1.add(model, "showGrid").onChange(showGridChange);
   gui1.add(model, "geoDataName", typelist.map(item => item.name)).name("数据源").onChange(name => {
     console.log("geoDataName", name)
+    handleToggleDataSource(name)
     gui2.show()
     seriesControl?.destroy()
     const seriesOption = typelist.find((i) => i.name === name).series;
