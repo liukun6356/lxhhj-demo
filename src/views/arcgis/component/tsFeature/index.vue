@@ -186,7 +186,6 @@ const handleToggleSeries = async () => {
   layer.source = {
     times: model.times,
     dataGetter: async (time, index) => {
-      console.log(time, index)
       return new Float32Array(data.buffer, count * 4 * index, count);
     },
   }
@@ -199,14 +198,12 @@ const initGui = () => {
   gui1 = new GUI({title: "污染物过程模拟"});
   gui1.add(model, "showGrid").onChange(showGridChange);
   gui1.add(model, "geoDataName", typelist.map(item => item.name)).name("数据源").onChange(name => {
-    console.log("geoDataName", name)
     handleToggleDataSource(name)
     gui2.show()
     seriesControl?.destroy()
     const seriesOption = typelist.find((i) => i.name === name).series;
-    seriesControl = gui1.add(model, "seriesName", seriesOption).name("系列").onChange(seriesChange)
+    seriesControl = gui1.add(model, "seriesName", seriesOption).name("系列").onChange(handleToggleSeries)
     seriesControl.setValue(seriesOption[0])
-    // colorMappingControl.set
     gui2.children.forEach(controller => controller.hide())
     switch (name) {
       case "node":
