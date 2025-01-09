@@ -10,7 +10,7 @@ const mapStore = usemapStore()
 onMounted(() => {
   const viewer = mapStore.getCesiumViewer();
   const WmsMapService = new Cesium.WebMapServiceImageryProvider({
-    url: import.meta.env.VITE_GEOSERVE_URL + '/geoserver/chenzhou/wms',
+    url: import.meta.env.VITE_APP_GEOSERVE_URL + '/geoserver/chenzhou/wms',
     layers: 'chenzhou:space_catchment', // 服务名称
     parameters: {
       service: 'WMS',

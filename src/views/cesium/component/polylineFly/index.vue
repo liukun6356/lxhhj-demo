@@ -115,7 +115,7 @@ const addModelEntity = () => {
       material: Cesium.Color.fromCssColorString("red")
     },
     model: {
-      uri: import.meta.env.VITE_APP_MODELDATA + '/wrj.glb',
+      uri: import.meta.env.VITE_APP_MODELVIEW + '/wrj.glb',
       minimumPixelSize: 128, //模型最小像素
       maximumScale: 200, //模型最大放大倍数,
     },

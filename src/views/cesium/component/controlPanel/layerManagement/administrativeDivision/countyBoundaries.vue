@@ -15,7 +15,7 @@ const viewer = props.isDualMap ? mapStore.getDualCesoumViewer() : mapStore.getCe
 
 onMounted(() => {
   const WmsMapService = new Cesium.WebMapServiceImageryProvider({
-    url: import.meta.env.VITE_GEOSERVE_URL + '/geoserver/chenzhou/wms',
+    url: import.meta.env.VITE_APP_GEOSERVE_URL + '/geoserver/chenzhou/wms',
     layers: 'chenzhou:space_county', // 服务名称
     parameters: {
       service: 'WMS',

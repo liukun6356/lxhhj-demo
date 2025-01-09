@@ -97,17 +97,17 @@ const reset = () => {
 const getGlbUrl = (i) => {
   switch (true) {
     case i === 1:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/1.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/1.glb`
     case i < 7:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/${i}.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/${i}.glb`
     case i < 16:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/6.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/6.glb`
     case i === 16:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/16.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/16.glb`
     case i < 19:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/17.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/17.glb`
     default:
-      return `${import.meta.env.VITE_APP_MODELDATA}/floorsStackGlb/${i}.glb`
+      return `${import.meta.env.VITE_APP_MODELVIEW}/floorsStackGlb/${i}.glb`
   }
 }
 

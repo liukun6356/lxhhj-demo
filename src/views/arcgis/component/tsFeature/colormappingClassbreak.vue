@@ -38,24 +38,24 @@ const max = computed(() => {
 })
 
 onMounted(() => {
-  const data = {
-    "type": "class-break",
-    "truncHead": false,
-    "truncTail": false,
-    "breaks": {
-      "min": 0,
-      "max": 53.86,
-      "colors": [
-        "rgb(255, 195, 0)",
-        "rgb(255, 90, 31)",
-        "rgb(255, 8, 59)",
-        "rgb(255, 0, 128)",
-        "rgb(180, 0, 201)",
-        "rgb(42, 0, 252)"
-      ]
-    }
-  }
-  const {min, max, colors} = data.breaks;
+  // const data = {
+  //   "type": "class-break",
+  //   "truncHead": false,
+  //   "truncTail": false,
+  //   "breaks": {
+  //     "min": 0,
+  //     "max": 53.86,
+  //     "colors": [
+  //       "rgb(255, 195, 0)",
+  //       "rgb(255, 90, 31)",
+  //       "rgb(255, 8, 59)",
+  //       "rgb(255, 0, 128)",
+  //       "rgb(180, 0, 201)",
+  //       "rgb(42, 0, 252)"
+  //     ]
+  //   }
+  // }
+  const {min, max, colors} = props.data.breaks;
   const count = colors.length;
   const interval = (max - min) / count;
   breaks.value = colors.map((color, index) => {

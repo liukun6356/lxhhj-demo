@@ -1,9 +1,10 @@
 <template>
   <div class="ts-feature-wrap">
     <Teleport :to="gui2Dom" :disabled="!gui2Dom">
-      <colormapping-gradient :data="1" v-if="formData.colorMapping === 'gradient'"/>
-      <colormapping-classbreak data="1" v-if="formData.colorMapping === 'class-break'"/>
+      <colormapping-gradient :data="curColorMapping" v-if="formData.colorMapping === 'gradient'"/>
+      <colormapping-classbreak :data="curColorMapping" v-if="formData.colorMapping === 'class-break'"/>
     </Teleport>
+    <yb-panl v-if="selTimeRang" :selTimeRang="selTimeRang" :defaultStartTime="selTimeRang.start" @timeChange="timeChange"/>
   </div>
 </template>
 
@@ -17,12 +18,13 @@ import moment from "moment";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
+import YbPanl from "@/components/ybPanl.vue"
 // Refs
 const gui2Dom = ref(null)
 
 const model = reactive({
   geoDataName: "",
-  series: "",
+  seriesName: "",
   showGrid: true,
   formData: {
     pointSize: 6,
@@ -30,12 +32,22 @@ const model = reactive({
     pointStyle: "circle",
     lineWidth: 6,
     colorMapping: "gradient"
-  }
+  },
+  valueRange: [0, 0],// 数据区间 [min , max]
+  times: [],//所有数据时间点
+  startTime: "",
+  endTime: "",
+  curColorMapping: {},
+  selTimeRang:null
 })
-const {formData} = toRefs(model)
+const {formData, valueRange, selTimeRang, curColorMapping} = toRefs(model)
 
 onMounted(() => {
   initGui()
+  viewer.goTo({
+    center: [115.994105, 29.666986],
+    zoom: 13
+  })
   gridLayer = new TileGridLayer()
   layer = new TimeSeriesFeatureLayer({
     graphics: [],
@@ -44,7 +56,13 @@ onMounted(() => {
     debug: true,
     renderOpts: {},
   })
-  viewer.map.add(gridLayer);
+  viewer.map.add(layer);
+
+  const start = new Date("2022-02-02 08:00:00").getTime();
+  const interval = 1000 * 60 ** 2;
+  model.times = new Array(288).fill(0).map((i, index) => index * interval + start);
+  const end = model.times[model.times.length - 1]
+  model.selTimeRang = {start,end}
 })
 
 onUnmounted(() => {
@@ -55,8 +73,44 @@ onUnmounted(() => {
   layer.destroy();
 })
 
+const timeChange = (timestamp) => {
+  layer.curTime = timestamp
+}
+
 const formDatachange = (k, v) => {
-  console.log(k, v)
+  switch (k) {
+    case "pointSize":
+      layer.renderOpts.defaultPointSize = model.formData.pointSize
+      break
+    case "isUpright":
+      layer.renderOpts.defaultPointUpright = model.formData.isUpright
+      break
+    case "pointStyle":
+      layer.renderOpts.defaultPointStyle = model.formData.pointStyle
+      break
+    case "lineWidth":
+      layer.renderOpts.defaultLineWidth = model.formData.lineWidth
+      break
+    case "colorMapping":
+      model.curColorMapping = v === "gradient" ?
+          {
+            type: "gradient",
+            stops: colorStops,
+            valueRange: model.valueRange,
+          } :
+          {
+            type: "class-break",
+            truncHead: false,
+            truncTail: false,
+            breaks: {
+              min: model.valueRange[0],
+              max: model.valueRange[1],
+              colors: colorStops,
+            },
+          }
+      layer.renderOpts.colorMapping = model.curColorMapping
+      break
+  }
 }
 
 const showGridChange = (bool) => {
@@ -64,71 +118,80 @@ const showGridChange = (bool) => {
 }
 
 const seriesChange = (series) => {
-  console.log(series)
+
+
 }
 
 // 地图逻辑
 const mapStore = usemapStore()
 const viewer = mapStore.getArcgisViewer();
 let gridLayer, layer
-const colorStops = [
-  "rgb(255, 195, 0)",
-  "rgb(255, 90, 31)",
-  "rgb(255, 8, 59)",
-  "rgb(255, 0, 128)",
-  "rgb(180, 0, 201)",
-  "rgb(42, 0, 252)",
-]
+const colorStops = ["rgb(255, 195, 0)", "rgb(255, 90, 31)", "rgb(255, 8, 59)", "rgb(255, 0, 128)", "rgb(180, 0, 201)", "rgb(42, 0, 252)",]
 
 const handleToggleDataSource = async (name) => {
-  console.log(123243, name)
   const meta = typelist.find((i) => i.name === name);
   if (!meta.gs) {
-    await fetch(`/test-data/timing-graphic/${name}.json`).then(async (res) => {
-      const fs = await res.json();
-      debugger
-      const gs = fs.features.map((i) => {
-        if (i.geometry.type === "Polygon") {
+    const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${name}.json`)
+    const jsonData = await res.json()
+    const gs = jsonData.features.map((i) => {
+      switch (i.geometry.type) {
+        case "Polygon":
           return {
             attributes: i.properties,
             geometry: {
               type: "polygon",
-              spatialReference: crs,
+              spatialReference: {wkid: 4326},
               rings: i.geometry.coordinates,
-            } as __esri.Polygon,
+            },
           }
-        } else if (i.geometry.type === "LineString") {
+        case "LineString":
           return {
-            // style: {
-            //     lineWidth: Math.random() > 0.5 ? 6 : undefined,
-            // },
+            attributes: i.properties,
             geometry: {
               type: "polyline",
-              spatialReference: crs,
+              spatialReference: {wkid: 4326},
               paths: [i.geometry.coordinates],
-            } as __esri.Polyline,
+            },
           }
-        } else if (i.geometry.type === "Point") {
-          const useDefault = Math.random() > 0.5;
+        case "Point":
           return {
-
+            attributes: i.properties,
             geometry: {
               type: "point",
-              spatialReference: crs,
+              spatialReference: {wkid: 4326},
               x: i.geometry.coordinates[0],
               y: i.geometry.coordinates[1],
-            } as __esri.Point,
+            },
           }
-        }
-      });
-      //@ts-ignore
-      layer.graphics = gs;
-
-      meta.gs = markRaw(gs);
+      }
     });
+    meta.gs = gs;
+    layer.graphics = gs;
+  } else {
+    layer.graphics = meta.gs;
   }
+  handleToggleSeries()
 }
 
+const handleToggleSeries = async () => {
+  const meta = typelist.find((i) => i.name === model.geoDataName);
+  const count = meta.gs.length;
+  const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${meta.name}/${meta.sPath}${model.seriesName}.bin`)
+  const buffer = await res.arrayBuffer()
+  const data = new Float32Array(buffer);
+  let max = -Infinity;
+  data.forEach(item => max = Math.max(max, item))
+  max = +max.toFixed(2);
+  model.valueRange = [0, max]
+  layer.source = {
+    times: model.times,
+    dataGetter: async (time, index) => {
+      console.log(time, index)
+      return new Float32Array(data.buffer, count * 4 * index, count);
+    },
+  }
+  formDatachange("colorMapping", model.formData.colorMapping)
+}
 
 // lil-gui逻辑
 let gui1, gui2, seriesControl
@@ -141,8 +204,9 @@ const initGui = () => {
     gui2.show()
     seriesControl?.destroy()
     const seriesOption = typelist.find((i) => i.name === name).series;
-    seriesControl = gui1.add(model, "series", seriesOption).name("系列").onChange(seriesChange)
+    seriesControl = gui1.add(model, "seriesName", seriesOption).name("系列").onChange(seriesChange)
     seriesControl.setValue(seriesOption[0])
+    // colorMappingControl.set
     gui2.children.forEach(controller => controller.hide())
     switch (name) {
       case "node":
@@ -168,7 +232,7 @@ const initGui = () => {
     三角形: "triangle",
   }).onChange(pointStyle => formDatachange("pointStyle", pointStyle))
   gui2.add(model.formData, "lineWidth", 1, 20, 1).onChange(lineWidth => formDatachange("lineWidth", lineWidth))
-  gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
+  const colorMappingControl =  gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
 }
 
 const typelist = [
