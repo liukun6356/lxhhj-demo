@@ -13,6 +13,9 @@
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
 import {usemapStore} from "@/store/modules/arcgisMap";
+import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import {TileGridLayer} from "./tile-grid-layer";
 import {TimeSeriesFeatureLayer} from "./layer";
 import moment from "moment";
@@ -64,12 +67,43 @@ onMounted(() => {
   const end = model.times[model.times.length - 1]
   model.selTimeRang = {start, end}
 
-  viewer.on("click", async (e) => {
+  viewer.on("click", async (e) => { // pointer-move,click
     const result = await viewer.hitTest(e, {include: [layer]});
     viewer.graphics.removeAll();
     if (result.results.length) {
       console.log(result.results.map(item => item.graphic.rawData.attributes.Name))
-      viewer.graphics.addMany((result.results).map((i) => i.graphic));
+      const graphic = result.results[0].graphic
+      switch (graphic.geometry.type) {
+        case "point":
+          graphic.symbol = new SimpleMarkerSymbol({
+            style: "circle",
+            size: 18,
+            outline: {
+              width: 2,
+              color: "rgba(0,255,255,1)"
+            }
+          })
+          break
+        case "polyline":
+          graphic.symbol = new SimpleLineSymbol({
+            color: "lightblue",
+            width: "8px",
+            style: "solid"
+          })
+          break
+        case "polygon":
+          graphic.symbol = new SimpleFillSymbol({
+            color: "transparent",
+            style: "solid",
+            outline: {
+              color: "white",
+              width: 2
+            }
+          })
+          break
+      }
+
+      viewer.graphics.addMany([graphic]);
     }
   });
 })
@@ -179,7 +213,7 @@ const handleToggleDataSource = async (name) => {
 
 const handleToggleSeries = async () => {
   const meta = typelist.find((i) => i.name === model.geoDataName);
-  if(!meta.gs)return
+  if (!meta.gs) return
   const count = meta.gs.length;
   const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${meta.name}/${meta.sPath}${model.seriesName}.bin`)
   const buffer = await res.arrayBuffer()
@@ -229,12 +263,12 @@ const initGui = () => {
   gui2.add(model.formData, "pointSize", 2, 20, 1).onChange(pointSize => formDatachange("pointSize", pointSize))
   gui2.add(model.formData, "isUpright").onChange(isUpright => formDatachange("isUpright", isUpright))
   gui2.add(model.formData, "pointStyle", {
-    圆形: "circle",
-    方形: "square",
-    三角形: "triangle",
+    "圆形": "circle",
+    "方形": "square",
+    "三角形": "triangle",
   }).onChange(pointStyle => formDatachange("pointStyle", pointStyle))
   gui2.add(model.formData, "lineWidth", 1, 20, 1).onChange(lineWidth => formDatachange("lineWidth", lineWidth))
-  const colorMappingControl = gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
+  gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
 }
 
 const typelist = [
