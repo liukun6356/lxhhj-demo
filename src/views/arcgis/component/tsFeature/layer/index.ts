@@ -21,26 +21,12 @@ import { openCustomArcgisWorker } from "./worker";
 import { createStore, disposeStore, getTileRenderData, hitTest } from "./vt.worker";
 import { clamp, isNaN, isNil, throttle } from "lodash-es";
 import {
-    BufferGeometry,
-    CustomBlending,
     DataTexture,
-    Float32BufferAttribute,
     FloatType,
-    FrontSide,
     Matrix3,
     Mesh,
-    NoBlending,
-    OneMinusSrcAlphaFactor,
-    OrthographicCamera,
     RGBAFormat,
-    RawShaderMaterial,
     Sphere,
-    SrcAlphaFactor,
-    Texture,
-    Vector2,
-    Vector3,
-    Vector4,
-    WebGLRenderTarget,
 } from "three";
 import {
     AbortError,

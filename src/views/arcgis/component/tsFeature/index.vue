@@ -4,12 +4,13 @@
       <colormapping-gradient :data="curColorMapping" v-if="formData.colorMapping === 'gradient'"/>
       <colormapping-classbreak :data="curColorMapping" v-if="formData.colorMapping === 'class-break'"/>
     </Teleport>
-    <yb-panl v-if="selTimeRang" :selTimeRang="selTimeRang" :defaultStartTime="selTimeRang.start" @timeChange="timeChange"/>
+    <yb-panl v-if="selTimeRang" :selTimeRang="selTimeRang" :defaultStartTime="selTimeRang.start"
+             @timeChange="timeChange"/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {onMounted, onUnmounted, reactive, ref, toRefs, markRaw} from "vue"
+import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
 import {usemapStore} from "@/store/modules/arcgisMap";
 import {TileGridLayer} from "./tile-grid-layer";
@@ -38,7 +39,7 @@ const model = reactive({
   startTime: "",
   endTime: "",
   curColorMapping: {},
-  selTimeRang:null
+  selTimeRang: null
 })
 const {formData, valueRange, selTimeRang, curColorMapping} = toRefs(model)
 
@@ -52,7 +53,6 @@ onMounted(() => {
   layer = new TimeSeriesFeatureLayer({
     graphics: [],
     tolerance: 0,
-    //@ts-ignore
     debug: true,
     renderOpts: {},
   })
@@ -62,7 +62,16 @@ onMounted(() => {
   const interval = 1000 * 60 ** 2;
   model.times = new Array(288).fill(0).map((i, index) => index * interval + start);
   const end = model.times[model.times.length - 1]
-  model.selTimeRang = {start,end}
+  model.selTimeRang = {start, end}
+
+  viewer.on("click", async (e) => {
+    const result = await viewer.hitTest(e, {include: [layer]});
+    viewer.graphics.removeAll();
+    if (result.results.length) {
+      console.log(result.results.map(item => item.graphic.rawData.attributes.Name))
+      viewer.graphics.addMany((result.results).map((i) => i.graphic));
+    }
+  });
 })
 
 onUnmounted(() => {
@@ -115,11 +124,6 @@ const formDatachange = (k, v) => {
 
 const showGridChange = (bool) => {
   gridLayer.visible = bool
-}
-
-const seriesChange = (series) => {
-
-
 }
 
 // 地图逻辑
@@ -175,6 +179,7 @@ const handleToggleDataSource = async (name) => {
 
 const handleToggleSeries = async () => {
   const meta = typelist.find((i) => i.name === model.geoDataName);
+  if(!meta.gs)return
   const count = meta.gs.length;
   const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${meta.name}/${meta.sPath}${model.seriesName}.bin`)
   const buffer = await res.arrayBuffer()
@@ -229,7 +234,7 @@ const initGui = () => {
     三角形: "triangle",
   }).onChange(pointStyle => formDatachange("pointStyle", pointStyle))
   gui2.add(model.formData, "lineWidth", 1, 20, 1).onChange(lineWidth => formDatachange("lineWidth", lineWidth))
-  const colorMappingControl =  gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
+  const colorMappingControl = gui2.add(model.formData, "colorMapping", ["gradient", "class-break"]).name("色带映射").onChange(colorMapping => formDatachange("colorMapping", colorMapping))
 }
 
 const typelist = [
@@ -256,5 +261,3 @@ const typelist = [
   },
 ]
 </script>
-
-<style lang="scss" scoped></style>

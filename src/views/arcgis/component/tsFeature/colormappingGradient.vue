@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from "vue"
+import {ref, onMounted, watch} from "vue"
 
 type GradientColorMapping = {
   type: "gradient";
@@ -33,26 +33,11 @@ const props = defineProps<{
 const src = ref("");
 const valueRange = ref<number[]>();
 
-onMounted(() => {
-  const d = {
-    "type": "gradient",
-    "stops": [
-      "rgb(255, 195, 0)",
-      "rgb(255, 90, 31)",
-      "rgb(255, 8, 59)",
-      "rgb(255, 0, 128)",
-      "rgb(180, 0, 201)",
-      "rgb(42, 0, 252)"
-    ],
-    "valueRange": [
-      0,
-      0.53
-    ]
-  }
+watch(()=>props.data,()=>{
+  const d = props.data
   valueRange.value = d.valueRange;
   src.value = Array.isArray(d.stops) ? createGradientColorMappingFromStops(d.stops, 128, 32) : d.stops;
-
-})
+},{immediate:true})
 
 const createGradientColorMappingFromStops = (stopDef, width, height) => {
   const canvas = document.createElement("canvas");

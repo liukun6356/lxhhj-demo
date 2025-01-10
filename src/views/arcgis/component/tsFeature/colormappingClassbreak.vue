@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref, computed} from "vue"
+import {onMounted, ref, computed, watch} from "vue"
 
 type ClassBreakColorMapping = {
   type: "class-break";
@@ -37,24 +37,7 @@ const max = computed(() => {
   return arr.slice(-1)[0].max.toFixed(2)
 })
 
-onMounted(() => {
-  // const data = {
-  //   "type": "class-break",
-  //   "truncHead": false,
-  //   "truncTail": false,
-  //   "breaks": {
-  //     "min": 0,
-  //     "max": 53.86,
-  //     "colors": [
-  //       "rgb(255, 195, 0)",
-  //       "rgb(255, 90, 31)",
-  //       "rgb(255, 8, 59)",
-  //       "rgb(255, 0, 128)",
-  //       "rgb(180, 0, 201)",
-  //       "rgb(42, 0, 252)"
-  //     ]
-  //   }
-  // }
+watch(()=>props.data,()=>{
   const {min, max, colors} = props.data.breaks;
   const count = colors.length;
   const interval = (max - min) / count;
@@ -62,7 +45,7 @@ onMounted(() => {
     const _min = min + index * interval;
     return {min: _min, max: _min + interval, color,};
   });
-})
+},{immediate:true})
 
 </script>
 
