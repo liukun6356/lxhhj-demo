@@ -12,11 +12,11 @@ export default [
     },
     {
         id: 2,
-        label: "例子效果",
+        label: "案例效果",
         children: [
             {
                 id: 21,
-                label: "颜色渐变",
+                label: "柏林噪声",
                 name: "Three-main-InstancingBillboards"
             }
         ]

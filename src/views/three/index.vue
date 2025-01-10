@@ -10,7 +10,8 @@
         </el-tree>
       </div>
     </div>
-    <section class="complete-main">
+    <three-box/>
+    <section class="complete-main" v-if="threeBoxStore.isActiveRenderer">
       <router-view v-slot="{ Component, route }">
         <transition name="router-fade" mode="out-in">
           <keep-alive include="[]">
@@ -25,11 +26,15 @@
 <script lang="ts" setup>
 import {onMounted, reactive, toRefs} from "vue";
 import treeDataJson from "./menuList";
-import {useRouter,useRoute} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
+import {usethreeBoxStore} from "@/store/modules/threeBox";
+// Component
+import ThreeBox from "./threeBox/index.vue"
 
 // Refs
 const router = useRouter()
 const route = useRoute()
+const threeBoxStore = usethreeBoxStore()
 const model = reactive({
   treeData: [],
 })
@@ -48,13 +53,15 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.three-container{
+.three-container {
   width: 100%;
   height: 100%;
+
   .complete-main {
     width: 100%;
     height: 100%;
   }
+
   .showContainer {
     position: fixed;
     top: 100px;
