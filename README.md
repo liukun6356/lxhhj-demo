@@ -10,6 +10,8 @@
 | --- | --- | --- |
 | Cesium | 三维GIS引擎 | https://sandcastle.cesium.com/ |
 | mars3d | 开源三维SDK | http://mars3d.cn/project/vue/jcxm.html |
+| three | 3D 图形渲染库 | https://threejs.org |
+| arcgis | 二维GIS引擎 | https://developers.arcgis.com/javascript/latest/ |
 | Turf | 地理空间分析工具 | https://turfjs.fenxianglu.cn/ |
 | proj4 | 地理坐标转换 | http://proj4js.org/ |
 |geoserver|编辑和发布地理控件| https://geoserver.org
@@ -17,6 +19,7 @@
 | TypeScript | JavaScript 的一个超集 | https://www.tslang.cn/ |
 | Vite | 前端开发与构建工具 | https://cn.vitejs.dev/ |
 | Element Plus | 基于 Vue 3，面向设计师和开发者的组件库 | https://element-plus.gitee.io/zh-CN/ |
+| lil-gui | 轻量界面库 | https://lil-gui.georgealways.com/ |
 | Pinia | 新一代状态管理工具 | https://pinia.vuejs.org/ |
 | Vue Router | Vue.js 的官方路由 | https://router.vuejs.org/zh/ |
 
