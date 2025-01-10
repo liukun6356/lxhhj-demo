@@ -107,6 +107,28 @@ export const constantRoutes = [
         ]
     },
     {
+        path: '/arcgis',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/arcgis/main',
+        name: "Arcgis",
+        children: [
+            {
+                path: 'main',
+                component: () => import('@/views/arcgis/index.vue'),
+                name: 'Arcgis-main',
+                redirect: '/arcgis/main/tsFeature',
+                children: [
+                    {
+                        path: 'tsFeature',
+                        component: () => import('@/views/arcgis/component/tsFeature/index.vue'),
+                        name: 'Arcgis-main-TsFeature',
+                        meta: {title: 'tsFeature', icon: '', affix: true},
+                    },
+                ]
+            }
+        ]
+    },
+    {
         path: '/webgl',
         component: () => import('@/layout/index.vue'),
         redirect: '/webgl/main',
@@ -165,22 +187,22 @@ export const constantRoutes = [
         ]
     },
     {
-        path: '/arcgis',
+        path: '/webgpu',
         component: () => import('@/layout/index.vue'),
-        redirect: '/arcgis/main',
-        name: "Arcgis",
+        redirect: '/webgpu/main',
+        name: "Webgpu",
         children: [
             {
                 path: 'main',
-                component: () => import('@/views/arcgis/index.vue'),
-                name: 'Arcgis-main',
-                redirect: '/arcgis/main/tsFeature',
+                component: () => import('@/views/webgpu/index.vue'),
+                name: 'Webgpu-main',
+                redirect: '/webgpu/main/helloWebgpu',
                 children: [
                     {
-                        path: 'tsFeature',
-                        component: () => import('@/views/arcgis/component/tsFeature/index.vue'),
-                        name: 'Arcgis-main-TsFeature',
-                        meta: {title: 'tsFeature', icon: '', affix: true},
+                        path: 'helloWebgpu',
+                        component: () => import('@/views/webgpu/component/hellowebgpu.vue'),
+                        name: 'Webgpu-main-HelloWebgpu',
+                        meta: {title: 'helloWebgpu', icon: '', affix: true},
                     },
                 ]
             }
