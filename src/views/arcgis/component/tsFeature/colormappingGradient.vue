@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, watch} from "vue"
+import {ref, watch} from "vue"
 
 type GradientColorMapping = {
   type: "gradient";

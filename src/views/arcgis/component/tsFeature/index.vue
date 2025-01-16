@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
-import {usemapStore} from "@/store/modules/arcgisMap";
+import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
@@ -102,7 +102,6 @@ onMounted(() => {
           })
           break
       }
-
       viewer.graphics.addMany([graphic]);
     }
   });
@@ -121,6 +120,7 @@ const timeChange = (timestamp) => {
 }
 
 const formDatachange = (k, v) => {
+
   switch (k) {
     case "pointSize":
       layer.renderOpts.defaultPointSize = model.formData.pointSize
@@ -161,7 +161,7 @@ const showGridChange = (bool) => {
 }
 
 // 地图逻辑
-const mapStore = usemapStore()
+const mapStore = usearcgisMapStore()
 const viewer = mapStore.getArcgisViewer();
 let gridLayer, layer
 const colorStops = ["rgb(255, 195, 0)", "rgb(255, 90, 31)", "rgb(255, 8, 59)", "rgb(255, 0, 128)", "rgb(180, 0, 201)", "rgb(42, 0, 252)",]
@@ -203,6 +203,7 @@ const handleToggleDataSource = async (name) => {
           }
       }
     });
+    console.log(name,123,gs)
     meta.gs = gs;
     layer.graphics = gs;
   } else {
@@ -225,6 +226,7 @@ const handleToggleSeries = async () => {
   layer.source = {
     times: model.times,
     dataGetter: async (time, index) => {
+      console.log(time,index,21324)
       return new Float32Array(data.buffer, count * 4 * index, count);
     },
   }

@@ -47,7 +47,8 @@ const menus = [
   {label: 'three', name: 'Three'},
   {label: 'arcgis', name: 'Arcgis'},
   {label: 'webGl', name: 'Webgl'},
-  // {label:"webGpu",name:"Webgpu"}
+  // {label:"webGpu",name:"Webgpu"},
+  {label: 'ui', name: 'Ui'},
 ];
 </script>
 

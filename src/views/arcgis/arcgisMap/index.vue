@@ -16,11 +16,11 @@ import MapView from "@arcgis/core/views/MapView.js";
 import Map from "@arcgis/core/Map.js";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 import {onMounted, markRaw, onUnmounted, reactive, toRefs, ref, watch} from "vue";
-import {usemapStore} from "@/store/modules/arcgisMap";
+import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import {formatToFixed, throttle} from "@/utils/dictionary";
 import WebTileLayer from "@arcgis/core/layers/WebTileLayer.js";
 
-const mapStore = usemapStore()
+const mapStore = usearcgisMapStore()
 const model = reactive({
   locationData: {
     longitude: "100.586029",//经度

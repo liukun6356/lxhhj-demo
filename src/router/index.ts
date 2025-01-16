@@ -124,6 +124,12 @@ export const constantRoutes = [
                         name: 'Arcgis-main-TsFeature',
                         meta: {title: 'tsFeature', icon: '', affix: true},
                     },
+                    {
+                        path: 'layerManage',
+                        component: () => import('@/views/arcgis/component/layerManage/index.vue'),
+                        name: 'Arcgis-main-LayerManage',
+                        meta: {title: 'layerManage', icon: '', affix: true},
+                    },
                 ]
             }
         ]
@@ -203,6 +209,28 @@ export const constantRoutes = [
                         component: () => import('@/views/webgpu/component/hellowebgpu.vue'),
                         name: 'Webgpu-main-HelloWebgpu',
                         meta: {title: 'helloWebgpu', icon: '', affix: true},
+                    },
+                ]
+            }
+        ]
+    },
+    {
+        path: '/ui',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/ui/main',
+        name: "Ui",
+        children: [
+            {
+                path: 'main',
+                component: () => import('@/views/ui/index.vue'),
+                name: 'Ui-main',
+                redirect: '/ui/main/dragSort',
+                children: [
+                    {
+                        path: 'dragSort',
+                        component: () => import('@/views/ui/component/dragSort.vue'),
+                        name: 'Ui-main-DragSort',
+                        meta: {title: 'dragSort', icon: '', affix: true},
                     },
                 ]
             }
