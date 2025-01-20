@@ -19,7 +19,7 @@
         <Close/>
       </el-icon>
     </div>
-    <!-- 默认加载天地图-->
+    <!-- 默认加载天地 图-->
     <Tdt_img_d/>
   </div>
 </template>
