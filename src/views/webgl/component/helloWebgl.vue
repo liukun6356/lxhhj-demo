@@ -1,3 +1,4 @@
+<!--点，线，三角-->
 <template>
   <div class="helloWebgl-wrap">
     <ul>

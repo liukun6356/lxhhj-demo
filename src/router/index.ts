@@ -188,6 +188,18 @@ export const constantRoutes = [
                         name: 'Webgl-main-TsFeatureGrid',
                         meta: {title: 'tsFeatureGrid', icon: '', affix: true},
                     },
+                    {
+                        path: 'transform3dPerspective',
+                        component: () => import('@/views/webgl/component/transform3dPerspective.vue'),
+                        name: 'Webgl-main-Transform3dPerspective',
+                        meta: {title: 'transform3dPerspective', icon: '', affix: true},
+                    },
+                    {
+                        path: 'cameraAngle',
+                        component: () => import('@/views/webgl/component/cameraAngle.vue'),
+                        name: 'Webgl-main-CameraAngle',
+                        meta: {title: 'cameraAngle', icon: '', affix: true},
+                    },
                 ]
             }
         ]

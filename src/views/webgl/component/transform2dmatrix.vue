@@ -1,3 +1,7 @@
+<!--二维平移(矩阵)
+  使用矩阵代替 着色器的运算
+-->
+
 <template>
   <div class="transform2d-wrap">
     <ul>

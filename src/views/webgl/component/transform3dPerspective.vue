@@ -1,12 +1,19 @@
-<!--三维投影(正射)-->
+<!--三维投影(透视)
+  基础特性:离得越远显得越小
+-->
 <template>
-  <div class="transform3d-wrap">
+  <div class="transform3dPerspective-wrap">
     <ul>
       <li v-for="str in typelist" :key="str" @click="itemClick(str)">
         <el-tag :type="activeValue===str?'success':'info'">{{ str }}</el-tag>
       </li>
     </ul>
     <el-form class="transform2d-form" :model="formData" :rules="rules" label-width="70">
+      <el-form-item label="fudge:" prop="fudge">
+        <el-slider style="width: 85%" v-model="formData.fudge" @change="updateChange" :show-tooltip="false"
+                   :min="0" :max="2" :step="0.1"></el-slider>
+        <span style="margin-left: 8px">{{ formData.fudge }}</span>
+      </el-form-item>
       <el-form-item label="x:" prop="x">
         <el-slider style="width: 85%" v-model="formData.x" @change="updateChange" :show-tooltip="false" :min="0"
                    :max="gl.canvas.clientWidth "></el-slider>
@@ -37,49 +44,30 @@
                    :max="360"></el-slider>
         <span style="margin-left: 8px">{{ formData.angleZ }}</span>
       </el-form-item>
-      <el-form-item label="scaleX:" prop="scaleX">
-        <el-slider style="width: 85%" v-model="formData.scaleX" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleX }}</span>
-      </el-form-item>
-      <el-form-item label="scaleY:" prop="scaleY">
-        <el-slider style="width: 85%" v-model="formData.scaleY" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleY }}</span>
-      </el-form-item>
-      <el-form-item label="scaleZ:" prop="scaleZ">
-        <el-slider style="width: 85%" v-model="formData.scaleZ" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleZ }}</span>
-      </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {onMounted, onUnmounted, reactive, toRefs} from "vue"
+import {onMounted, onUnmounted, reactive, toRefs} from "vue";
 import {usewebglGlStore} from "@/store/modules/webglGl";
 
 const model = reactive({
   formData: {
+    fudge: 1,
     x: 200,
     y: 150,
     z: 0,
-    angleX: 0,
-    angleY: 0,
-    angleZ: 0,
+    angleX: 40,
+    angleY: 25,
+    angleZ: 25,
     scaleX: 1,
     scaleY: 1,
     scaleZ: 1,
   },
-  typelist: ["2dF", "3dF"],
   activeValue: ""
 })
-
-const {formData, typelist, activeValue} = toRefs(model)
+const {formData, activeValue} = toRefs(model)
 
 onMounted(() => {
   clear()
@@ -92,11 +80,8 @@ onUnmounted(() => {
 const updateChange = () => {
   clear()
   switch (model.activeValue) {
-    case "2dF":
-      draw2dF()
-      break
-    case "3dF":
-      draw3dF()
+    case "fudge":
+      drawFudge()
       break
   }
 }
@@ -108,108 +93,73 @@ const itemClick = (row) => {
   gl.deleteBuffer(colorBuffer);
   model.activeValue = row
   switch (row) {
-    case "2dF":
+    case "fudge":
       program = createProgram(vsGLSL1, fsGLSL1);
       positionLocation = gl.getAttribLocation(program, "a_position");
-      colorLocation = gl.getUniformLocation(program, "u_color");
-      matrixLocation = gl.getUniformLocation(program, "u_matrix");
+
       positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.bufferData(
-          gl.ARRAY_BUFFER,
-          new Float32Array([
-            0, 0, 0, 30, 0, 0, 0, 150, 0, 0, 150, 0, 30, 0, 0, 30, 150, 0,// 左竖
-            30, 0, 0, 100, 0, 0, 30, 30, 0, 30, 30, 0, 100, 0, 0, 100, 30, 0,// 上横
-            30, 60, 0, 67, 60, 0, 30, 90, 0, 30, 90, 0, 67, 60, 0, 67, 90, 0,// 中横
-          ]),
-          gl.STATIC_DRAW)
-      draw2dF()
-      break
-    case "3dF":
-      program = createProgram(vsGLSL2, fsGLSL2);
-      positionLocation = gl.getAttribLocation(program, "a_position");
-      positionBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.bufferData(
-          gl.ARRAY_BUFFER,
-          new Float32Array([
-            0, 0, 0, 0, 150, 0, 30, 0, 0, 0, 150, 0, 30, 150, 0, 30, 0, 0, // left column front
-            30, 0, 0, 30, 30, 0, 100, 0, 0, 30, 30, 0, 100, 30, 0, 100, 0, 0,// top rung front
-            30, 60, 0, 30, 90, 0, 67, 60, 0, 30, 90, 0, 67, 90, 0, 67, 60, 0,// middle rung front
-            0, 0, 30, 30, 0, 30, 0, 150, 30, 0, 150, 30, 30, 0, 30, 30, 150, 30,// left column back
-            30, 0, 30, 100, 0, 30, 30, 30, 30, 30, 30, 30, 100, 0, 30, 100, 30, 30,// top rung back
-            30, 60, 30, 67, 60, 30, 30, 90, 30, 30, 90, 30, 67, 60, 30, 67, 90, 30,// middle rung back
-            0, 0, 0, 100, 0, 0, 100, 0, 30, 0, 0, 0, 100, 0, 30, 0, 0, 30,// top
-            100, 0, 0, 100, 30, 0, 100, 30, 30, 100, 0, 0, 100, 30, 30, 100, 0, 30,// top rung right
-            30, 30, 0, 30, 30, 30, 100, 30, 30, 30, 30, 0, 100, 30, 30, 100, 30, 0,// under top rung
-            30, 30, 0, 30, 60, 30, 30, 30, 30, 30, 30, 0, 30, 60, 0, 30, 60, 30,// between top rung and middle
-            30, 60, 0, 67, 60, 30, 30, 60, 30, 30, 60, 0, 67, 60, 0, 67, 60, 30,// top of middle rung
-            67, 60, 0, 67, 90, 30, 67, 60, 30, 67, 60, 0, 67, 90, 0, 67, 90, 30,// right of middle rung
-            30, 90, 0, 30, 90, 30, 67, 90, 30, 30, 90, 0, 67, 90, 30, 67, 90, 0,// bottom of middle rung.
-            30, 90, 0, 30, 150, 30, 30, 90, 30, 30, 90, 0, 30, 150, 0, 30, 150, 30,// right of bottom
-            0, 150, 0, 0, 150, 30, 30, 150, 30, 0, 150, 0, 30, 150, 30, 30, 150, 0,// bottom
-            0, 0, 0, 0, 0, 30, 0, 150, 30, 0, 0, 0, 0, 150, 30, 0, 150, 0// left side
-          ]),
-          gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        0, 0, 0, 0, 150, 0, 30, 0, 0, 0, 150, 0, 30, 150, 0, 30, 0, 0, // left column front
+        30, 0, 0, 30, 30, 0, 100, 0, 0, 30, 30, 0, 100, 30, 0, 100, 0, 0,// top rung front
+        30, 60, 0, 30, 90, 0, 67, 60, 0, 30, 90, 0, 67, 90, 0, 67, 60, 0,// middle rung front
+        0, 0, 30, 30, 0, 30, 0, 150, 30, 0, 150, 30, 30, 0, 30, 30, 150, 30,// left column back
+        30, 0, 30, 100, 0, 30, 30, 30, 30, 30, 30, 30, 100, 0, 30, 100, 30, 30,// top rung back
+        30, 60, 30, 67, 60, 30, 30, 90, 30, 30, 90, 30, 67, 60, 30, 67, 90, 30,// middle rung back
+        0, 0, 0, 100, 0, 0, 100, 0, 30, 0, 0, 0, 100, 0, 30, 0, 0, 30,// top
+        100, 0, 0, 100, 30, 0, 100, 30, 30, 100, 0, 0, 100, 30, 30, 100, 0, 30,// top rung right
+        30, 30, 0, 30, 30, 30, 100, 30, 30, 30, 30, 0, 100, 30, 30, 100, 30, 0,// under top rung
+        30, 30, 0, 30, 60, 30, 30, 30, 30, 30, 30, 0, 30, 60, 0, 30, 60, 30,// between top rung and middle
+        30, 60, 0, 67, 60, 30, 30, 60, 30, 30, 60, 0, 67, 60, 0, 67, 60, 30,// top of middle rung
+        67, 60, 0, 67, 90, 30, 67, 60, 30, 67, 60, 0, 67, 90, 0, 67, 90, 30,// right of middle rung
+        30, 90, 0, 30, 90, 30, 67, 90, 30, 30, 90, 0, 67, 90, 30, 67, 90, 0,// bottom of middle rung.
+        30, 90, 0, 30, 150, 30, 30, 90, 30, 30, 90, 0, 30, 150, 0, 30, 150, 30,// right of bottom
+        0, 150, 0, 0, 150, 30, 30, 150, 30, 0, 150, 0, 30, 150, 30, 30, 150, 0,// bottom
+        0, 0, 0, 0, 0, 30, 0, 150, 30, 0, 0, 0, 0, 150, 30, 0, 150, 0,// left side
+      ]), gl.STATIC_DRAW);
+
       colorLocation = gl.getAttribLocation(program, "a_color");
       colorBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-      gl.bufferData(
-          gl.ARRAY_BUFFER,
-          new Uint8Array([
-            200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// left column front
-            200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// top rung front
-            200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// middle rung front
-            80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// left column back
-            80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// top rung back
-            80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// middle rung back
-            70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210,// top
-            200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70,// top rung right
-            210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70,// under top rung
-            210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70,// between top rung and middle
-            70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210,// top of middle rung
-            100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210,// right of middle rung
-            76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100,// bottom of middle rung.
-            140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80,// right of bottom
-            90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110,// bottom
-            160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220// left side
-          ]),
-          gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array([
+        200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// left column front
+        200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// top rung front
+        200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,// middle rung front
+        80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// left column back
+        80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// top rung back
+        80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200,// middle rung back
+        70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210,// top
+        200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200, 70,// top rung right
+        210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70,// under top rung
+        210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70,// between top rung and middle
+        70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210, 70, 180, 210,// top of middle rung
+        100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210,// right of middle rung
+        76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100,// bottom of middle rung.
+        140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80,// right of bottom
+        90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110,// bottom
+        160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220// left side
+      ]), gl.STATIC_DRAW);
+
       matrixLocation = gl.getUniformLocation(program, "u_matrix");
-      draw3dF()
+      fudgeLocation = gl.getUniformLocation(program, "u_fudgeFactor");
+      drawFudge()
       break
   }
 }
 
 const rules = {}
 
+const typelist = ["fudge"]
 // webgl逻辑
 const webglGlStore = usewebglGlStore()
 const gl = webglGlStore.getWebglGl()
 let program,
     positionLocation, positionBuffer,
     colorLocation, colorBuffer,
-    matrixLocation
+    matrixLocation,
+    fudgeLocation;
 
-const draw2dF = () => {
-  gl.useProgram(program);
-  gl.enableVertexAttribArray(positionLocation);
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
-  gl.uniform4fv(colorLocation, [0.5, 0.3, 0.1, 1]);
-
-  let matrix = m4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
-  matrix = m4.translate(matrix, model.formData.x, model.formData.y, model.formData.z);
-  matrix = m4.xRotate(matrix, model.formData.angleX);
-  matrix = m4.yRotate(matrix, model.formData.angleY);
-  matrix = m4.zRotate(matrix, model.formData.angleZ);
-  matrix = m4.scale(matrix, model.formData.scaleX, model.formData.scaleY, model.formData.scaleZ);
-
-  gl.uniformMatrix4fv(matrixLocation, false, matrix)
-  gl.drawArrays(gl.TRIANGLES, 0, 18);
-}
-
-const draw3dF = () => {
+const drawFudge = () => {
   clear()
   gl.enable(gl.CULL_FACE);
   gl.enable(gl.DEPTH_TEST);
@@ -231,8 +181,10 @@ const draw3dF = () => {
   matrix = m4.scale(matrix, model.formData.scaleX, model.formData.scaleY, model.formData.scaleZ);
 
   gl.uniformMatrix4fv(matrixLocation, false, matrix)
-  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
 
+  gl.uniform1f(fudgeLocation, model.formData.fudge);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
 }
 
 const clear = () => {
@@ -284,26 +236,24 @@ const getAngle = (angle) => {
 
 const vsGLSL1 = `
   attribute vec4 a_position;
-  uniform mat4 u_matrix;
-
-  void main() {
-    // 使位置和矩阵相乘
-    gl_Position = u_matrix * a_position;
-  }
-`
-
-const vsGLSL2 = `
-  attribute vec4 a_position;
   attribute vec4 a_color;
 
   uniform mat4 u_matrix;
+  uniform float u_fudgeFactor;
 
   varying vec4 v_color;
 
   void main() {
-    // 使位置和矩阵相乘
-    gl_Position = u_matrix * a_position;
-    // 将颜色传递给片段着色器
+    // Multiply the position by the matrix.
+    vec4 position = u_matrix * a_position;
+
+    // Adjust the z to divide by
+    float zToDivideBy = 1.0 + position.z * u_fudgeFactor;
+
+    // Divide x and y by z.
+    gl_Position = vec4(position.xy / zToDivideBy, position.zw);
+
+    // Pass the color to the fragment shader.
     v_color = a_color;
   }
 `
@@ -311,16 +261,7 @@ const vsGLSL2 = `
 const fsGLSL1 = `
   precision mediump float;
 
-  uniform vec4 u_color;
-
-  void main() {
-     gl_FragColor = u_color;
-  }
-`
-
-const fsGLSL2 = `
-  precision mediump float;
-  // 从顶点着色器中传入
+  // Passed in from the vertex shader.
   varying vec4 v_color;
 
   void main() {
@@ -436,11 +377,10 @@ const m4 = {
     ];
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
-.transform3d-wrap {
+.transform3dPerspective-wrap {
   pointer-events: auto;
 
   ul {

@@ -10,7 +10,7 @@ export default [
             },
             {
                 id: 12,
-                label: 'spinEditing',
+                label: '旋转编辑',
                 name: "Webgl-main-SpinEditing"
             },
             {
@@ -30,8 +30,18 @@ export default [
             },
             {
                 id: 16,
-                label: '三维正射投影',
+                label: '三维投影(正射)',
                 name: "Webgl-main-Transform3d"
+            },
+            {
+                id: 17,
+                label: '三维投影(透视)',
+                name: "Webgl-main-Transform3dPerspective"
+            },
+            {
+                id: 18,
+                label: '三维相机',
+                name: "Webgl-main-CameraAngle"
             },
         ],
     },
