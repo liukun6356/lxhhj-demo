@@ -196,7 +196,7 @@ export const constantRoutes = [
                     },
                     {
                         path: 'cameraAngle',
-                        component: () => import('@/views/webgl/component/cameraAngle.vue'),
+                        component: () => import('@/views/webgl/component/cameraAngle/index.vue'),
                         name: 'Webgl-main-CameraAngle',
                         meta: {title: 'cameraAngle', icon: '', affix: true},
                     },

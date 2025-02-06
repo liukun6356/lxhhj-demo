@@ -42,6 +42,7 @@
     "vue": "^3.4.29",
     "vue-router": "^4.1.6",
     "vue3-seamless-scroll": "^2.0.1",
+    "x2js": "^3.4.4",
     "xlsx": "^0.17.0",
     "xlsx-style-vite": "^0.0.2"
   },

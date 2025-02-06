@@ -14,7 +14,6 @@ import {usewebglGlStore} from "@/store/modules/webglGl"
 import {onMounted, reactive, toRefs} from "vue"
 import {vec4, mat3} from "gl-matrix";
 
-
 const model = reactive({
   typelist: ["网格"],
   activeValue: ""
