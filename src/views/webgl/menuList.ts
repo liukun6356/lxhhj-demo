@@ -43,6 +43,16 @@ export default [
                 label: '三维相机',
                 name: "Webgl-main-CameraAngle"
             },
+            {
+                id: 19,
+                label: '方向光源',
+                name: "Webgl-main-DirectionLight"
+            },
+            {
+                id: 111,
+                label: '码少趣多',
+                name: "Webgl-main-CodeFun"
+            }
         ],
     },
     {

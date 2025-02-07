@@ -200,6 +200,18 @@ export const constantRoutes = [
                         name: 'Webgl-main-CameraAngle',
                         meta: {title: 'cameraAngle', icon: '', affix: true},
                     },
+                    {
+                        path: 'directionLight',
+                        component: () => import('@/views/webgl/component/directionLight.vue'),
+                        name: 'Webgl-main-DirectionLight',
+                        meta: {title: 'directionLight', icon: '', affix: true},
+                    },
+                    {
+                        path: 'codeFun',
+                        component: () => import('@/views/webgl/component/codeFun/index.vue'),
+                        name: 'Webgl-main-CodeFun',
+                        meta: {title: 'codeFun', icon: '', affix: true},
+                    },
                 ]
             }
         ]

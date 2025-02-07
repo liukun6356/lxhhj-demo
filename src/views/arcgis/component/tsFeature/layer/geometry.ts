@@ -70,7 +70,7 @@ export function simplePolygonArea(ring: number[][]) {
 }
 
 //extent向外扩张给定的距离
-export function calcExpandExtent({ xmin, ymin, xmax, ymax }: __esri.ExtentProperties, expandSize: number | number[]) {
+export function calcExpandExtent({xmin, ymin, xmax, ymax}: __esri.ExtentProperties, expandSize: number | number[]) {
     const [sizeX, sizeY] = typeof expandSize === 'number' ? [expandSize, expandSize] : expandSize;
     return {
         xmin: xmin - sizeX,
@@ -86,7 +86,7 @@ export function calcCoordsExtent(points: number[][]) {
         ymin = Infinity,
         xmax = -Infinity,
         ymax = -Infinity;
-    for (let i = points.length; i--; ) {
+    for (let i = points.length; i--;) {
         const [x, y] = points[i];
         xmin = Math.min(xmin, x);
         xmax = Math.max(xmax, x);
@@ -100,14 +100,15 @@ export function calcCoordsExtent(points: number[][]) {
         ymax,
     };
 }
+
 //计算多个点{x,y}[]的extent
 export function calcPointLikesExtent(points: PointLike[]) {
     let xmin = Infinity,
         ymin = Infinity,
         xmax = -Infinity,
         ymax = -Infinity;
-    for (let i = points.length - 1; i--; ) {
-        const { x, y } = points[i];
+    for (let i = points.length; i--;) {
+        const {x, y} = points[i];
         xmin = Math.min(xmin, x);
         xmax = Math.max(xmax, x);
         ymin = Math.min(ymin, y);
@@ -120,6 +121,7 @@ export function calcPointLikesExtent(points: PointLike[]) {
         ymax,
     };
 }
+
 //计算三角形的extent
 export function calcTriangleExtent(p1: number[], p2: number[], p3: number[]) {
     return {
