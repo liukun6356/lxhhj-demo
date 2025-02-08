@@ -50,6 +50,11 @@ export default [
             },
             {
                 id: 111,
+                label: '点光源',
+                name: "Webgl-main-PointLight"
+            },
+            {
+                id: 112,
                 label: '码少趣多',
                 name: "Webgl-main-CodeFun"
             }

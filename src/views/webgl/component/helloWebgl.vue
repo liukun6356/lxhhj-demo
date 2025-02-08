@@ -1,4 +1,15 @@
-<!--点，线，三角-->
+<!--点，线，三角
+  着色器获取数据的4种方法
+    Attributes  属性
+    Uniforms    全局变量
+    Textures    纹理
+    Varyings    可变量(片段着色器运行中获取不同的插值)
+
+  变量命名约定
+    a_ 代表属性
+    u_ 代表全局变量
+    v_ 代表可变量
+-->
 <template>
   <div class="helloWebgl-wrap">
     <ul>

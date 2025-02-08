@@ -207,6 +207,12 @@ export const constantRoutes = [
                         meta: {title: 'directionLight', icon: '', affix: true},
                     },
                     {
+                        path: 'pointLight',
+                        component: () => import('@/views/webgl/component/pointLight.vue'),
+                        name: 'Webgl-main-PointLight',
+                        meta: {title: 'pointLight', icon: '', affix: true},
+                    },
+                    {
                         path: 'codeFun',
                         component: () => import('@/views/webgl/component/codeFun/index.vue'),
                         name: 'Webgl-main-CodeFun',

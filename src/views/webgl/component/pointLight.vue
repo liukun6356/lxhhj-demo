@@ -1,4 +1,4 @@
-<!--三维方向光源
+<!--三维点光源
 
 -->
 <template>
@@ -14,10 +14,10 @@
                    :min="-360" :max="360" :step="1"></el-slider>
         <span style="margin-left: 3px">{{ formData.fRotation }}</span>
       </el-form-item>
-      <el-form-item label="scaleY:" prop="scaleY">
-        <el-slider style="width: 85%" v-model="formData.scaleY" @change="updateChange" :show-tooltip="false"
-                   :min="-5" :max="5" :step="0.1"></el-slider>
-        <span style="margin-left: 3px">{{ formData.scaleY }}</span>
+      <el-form-item label="shininess:" prop="shininess">
+        <el-slider style="width: 85%" v-model="formData.shininess" @change="updateChange" :show-tooltip="false"
+                   :min="1" :max="300" :step="1"></el-slider>
+        <span style="margin-left: 3px">{{ formData.shininess }}</span>
       </el-form-item>
     </el-form>
   </div>
@@ -31,7 +31,7 @@ import fData from "./fData.json"
 const model = reactive({
   formData: {
     fRotation: 0,
-    scaleY: 1
+    shininess: 150
   },
   activeValue: ""
 })
@@ -39,6 +39,7 @@ const {formData, activeValue} = toRefs(model)
 
 onMounted(async () => {
   clear()
+  console.log(23456)
 })
 
 onUnmounted(() => {
@@ -48,14 +49,17 @@ onUnmounted(() => {
 const updateChange = () => {
   clear()
   switch (model.activeValue) {
-    case "fixedLight":
-      drawFixedLight()
+    case "light":
+      drawLight()
       break
-    case "lightMatrix":
-      drawFixedLightMatrix()
+    case "specular":
+      drawSpecular()
       break
-    case "lightTranspose":
-      drawFixedLightTranspose()
+    case "shininess":
+      drawShininess()
+      break
+    case "shininessColor":
+      drawShininessColor()
       break
   }
 }
@@ -64,17 +68,16 @@ const itemClick = (row) => {
   clear()
   gl.deleteProgram(program);
   gl.deleteBuffer(positionBuffer);
-  gl.deleteBuffer(colorBuffer);
   model.activeValue = row
-  let positions, normals, matrix
+  let positions, matrix
   switch (row) {
-    case "fixedLight":
+    case "light":
       program = createProgram(vsGLSL1, fsGLSL1);
       positionLocation = gl.getAttribLocation(program, "a_position");
       positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      positions = new Float32Array(fData.positions)
-      matrix = m4.xRotation(Math.PI)
+      positions = new Float32Array(fData.positions);
+      matrix = m4.xRotation(Math.PI);
       matrix = m4.translate(matrix, -50, -75, -15);
       for (let ii = 0; ii < positions.length; ii += 3) {
         const vector = m4.transformPoint(matrix, [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]);
@@ -83,50 +86,26 @@ const itemClick = (row) => {
         positions[ii + 2] = vector[2];
       }
       gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-      normalLocation = gl.getAttribLocation(program, "a_normal");
-      normalBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(fData.normals), gl.STATIC_DRAW);
 
-      matrixLocation = gl.getUniformLocation(program, "u_matrix");
-      colorLocation = gl.getUniformLocation(program, "u_color");
-      reverseLightDirectionLocation = gl.getUniformLocation(program, "u_reverseLightDirection");
-
-      drawFixedLight()
-      break
-    case "lightMatrix":
-      program = createProgram(vsGLSL2, fsGLSL1);
-      positionLocation = gl.getAttribLocation(program, "a_position");
-      positionBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      positions = new Float32Array(fData.positions)
-      matrix = m4.xRotation(Math.PI)
-      matrix = m4.translate(matrix, -50, -75, -15);
-      for (let ii = 0; ii < positions.length; ii += 3) {
-        const vector = m4.transformPoint(matrix, [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]);
-        positions[ii + 0] = vector[0];
-        positions[ii + 1] = vector[1];
-        positions[ii + 2] = vector[2];
-      }
-      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
       normalLocation = gl.getAttribLocation(program, "a_normal");
       normalBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(fData.normals), gl.STATIC_DRAW);
 
       worldViewProjectionLocation = gl.getUniformLocation(program, "u_worldViewProjection");
+      worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose");
+      colorLocation = gl.getUniformLocation(program, "u_color");
+      lightWorldPositionLocation = gl.getUniformLocation(program, "u_lightWorldPosition");
       worldLocation = gl.getUniformLocation(program, "u_world");
-      colorLocation = gl.getUniformLocation(program, "u_color");
-      reverseLightDirectionLocation = gl.getUniformLocation(program, "u_reverseLightDirection");
-      drawFixedLightMatrix()
+      drawLight()
       break
-    case "lightTranspose":
-      program = createProgram(vsGLSL3, fsGLSL1);
+    case "specular":
+      program = createProgram(vsGLSL2, fsGLSL2);
       positionLocation = gl.getAttribLocation(program, "a_position");
       positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      positions = new Float32Array(fData.positions)
-      matrix = m4.xRotation(Math.PI)
+      positions = new Float32Array(fData.positions);
+      matrix = m4.xRotation(Math.PI);
       matrix = m4.translate(matrix, -50, -75, -15);
       for (let ii = 0; ii < positions.length; ii += 3) {
         const vector = m4.transformPoint(matrix, [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]);
@@ -135,37 +114,105 @@ const itemClick = (row) => {
         positions[ii + 2] = vector[2];
       }
       gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
       normalLocation = gl.getAttribLocation(program, "a_normal");
       normalBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(fData.normals), gl.STATIC_DRAW);
 
       worldViewProjectionLocation = gl.getUniformLocation(program, "u_worldViewProjection");
-      worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose")
+      worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose");
       colorLocation = gl.getUniformLocation(program, "u_color");
-      reverseLightDirectionLocation = gl.getUniformLocation(program, "u_reverseLightDirection");
-      drawFixedLightTranspose()
+      lightWorldPositionLocation = gl.getUniformLocation(program, "u_lightWorldPosition");
+      viewWorldPositionLocation = gl.getUniformLocation(program, "u_viewWorldPosition");
+      worldLocation = gl.getUniformLocation(program, "u_world");
+      drawSpecular()
+      break
+    case "shininess":
+      program = createProgram(vsGLSL2, fsGLSL3);
+      positionLocation = gl.getAttribLocation(program, "a_position");
+      positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      positions = new Float32Array(fData.positions);
+      matrix = m4.xRotation(Math.PI);
+      matrix = m4.translate(matrix, -50, -75, -15);
+      for (let ii = 0; ii < positions.length; ii += 3) {
+        const vector = m4.transformPoint(matrix, [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]);
+        positions[ii + 0] = vector[0];
+        positions[ii + 1] = vector[1];
+        positions[ii + 2] = vector[2];
+      }
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+      normalLocation = gl.getAttribLocation(program, "a_normal");
+      normalBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(fData.normals), gl.STATIC_DRAW);
+
+      worldViewProjectionLocation = gl.getUniformLocation(program, "u_worldViewProjection");
+      worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose");
+      colorLocation = gl.getUniformLocation(program, "u_color");
+      shininessLocation = gl.getUniformLocation(program, "u_shininess");
+      lightWorldPositionLocation = gl.getUniformLocation(program, "u_lightWorldPosition");
+      viewWorldPositionLocation = gl.getUniformLocation(program, "u_viewWorldPosition");
+      worldLocation = gl.getUniformLocation(program, "u_world");
+      drawShininess()
+      break
+    case "shininessColor":
+      program = createProgram(vsGLSL2, fsGLSL4);
+      positionLocation = gl.getAttribLocation(program, "a_position");
+      positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      positions = new Float32Array(fData.positions);
+      matrix = m4.xRotation(Math.PI);
+      matrix = m4.translate(matrix, -50, -75, -15);
+      for (let ii = 0; ii < positions.length; ii += 3) {
+        const vector = m4.transformPoint(matrix, [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]);
+        positions[ii + 0] = vector[0];
+        positions[ii + 1] = vector[1];
+        positions[ii + 2] = vector[2];
+      }
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+      normalLocation = gl.getAttribLocation(program, "a_normal");
+      normalBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(fData.normals), gl.STATIC_DRAW);
+
+      worldViewProjectionLocation = gl.getUniformLocation(program, "u_worldViewProjection");
+      worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose");
+      colorLocation = gl.getUniformLocation(program, "u_color");
+      shininessLocation = gl.getUniformLocation(program, "u_shininess");
+      lightColorLocation = gl.getUniformLocation(program, "u_lightColor");
+      specularColorLocation = gl.getUniformLocation(program, "u_specularColor");
+      lightWorldPositionLocation = gl.getUniformLocation(program, "u_lightWorldPosition");
+      viewWorldPositionLocation = gl.getUniformLocation(program, "u_viewWorldPosition");
+      worldLocation = gl.getUniformLocation(program, "u_world");
+      drawShininessColor()
       break
   }
 }
 
 const rules = {}
 
-const typelist = ["fixedLight", "lightMatrix", "lightTranspose"]
+const typelist = ["light", "specular", "shininess", "shininessColor"]
 // webgl逻辑
 const webglGlStore = usewebglGlStore()
 const gl = webglGlStore.getWebglGl()
 let program,
     positionLocation, positionBuffer,
-    colorLocation, colorBuffer,
     normalLocation, normalBuffer,
-    reverseLightDirectionLocation,
+    colorLocation,
+    shininessLocation,
+    lightColorLocation,
+    specularColorLocation,
     worldViewProjectionLocation,
     worldInverseTransposeLocation,
-    worldLocation,
-    matrixLocation
+    lightWorldPositionLocation,
+    viewWorldPositionLocation,
+    worldLocation
 
-const drawFixedLight = () => {
+const drawLight = () => {
   clear()
   gl.enable(gl.CULL_FACE);
   gl.enable(gl.DEPTH_TEST);
@@ -187,86 +234,12 @@ const drawFixedLight = () => {
   const camera = [100, 150, 200];
   const target = [0, 35, 0];
   const up = [0, 1, 0];
-  let cameraMatrix = m4.lookAt(camera, target, up);
+  const cameraMatrix = m4.lookAt(camera, target, up);
+
   // 通过相机矩阵计算视图矩阵
   const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
   const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
   const worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
-  const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
-  gl.uniformMatrix4fv(matrixLocation, false, worldViewProjectionMatrix);
-
-  gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
-  gl.uniform3fv(reverseLightDirectionLocation, m4.normalize([0.5, 0.7, 1]));
-
-  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
-}
-
-const drawFixedLightMatrix = () => {
-  clear()
-  gl.enable(gl.CULL_FACE);
-  gl.enable(gl.DEPTH_TEST);
-
-  gl.useProgram(program);
-
-  gl.enableVertexAttribArray(positionLocation);
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
-
-  gl.enableVertexAttribArray(normalLocation);
-  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
-
-  // 计算投影矩阵
-  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  const projectionMatrix = m4.perspective(degToRad(60), aspect, 1, 2000);
-  // 计算相机的矩阵
-  const camera = [100, 150, 200];
-  const target = [0, 35, 0];
-  const up = [0, 1, 0];
-  let cameraMatrix = m4.lookAt(camera, target, up);
-  // 通过相机矩阵计算视图矩阵
-  const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
-  const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
-  let worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
-  worldMatrix = m4.scale(worldMatrix, 1, model.formData.scaleY, 1);
-  const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
-  gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
-  gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
-
-  gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
-  gl.uniform3fv(reverseLightDirectionLocation, m4.normalize([0.5, 0.7, 1]));
-
-  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
-}
-
-const drawFixedLightTranspose = () => {
-  clear()
-  gl.enable(gl.CULL_FACE);
-  gl.enable(gl.DEPTH_TEST);
-
-  gl.useProgram(program);
-
-  gl.enableVertexAttribArray(positionLocation);
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
-
-  gl.enableVertexAttribArray(normalLocation);
-  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
-
-  // 计算投影矩阵
-  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  const projectionMatrix = m4.perspective(degToRad(60), aspect, 1, 2000);
-  // 计算相机的矩阵
-  const camera = [100, 150, 200];
-  const target = [0, 35, 0];
-  const up = [0, 1, 0];
-  let cameraMatrix = m4.lookAt(camera, target, up);
-  // 通过相机矩阵计算视图矩阵
-  const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
-  const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
-  let worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
-  worldMatrix = m4.scale(worldMatrix, 1, model.formData.scaleY, 1);
 
   const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
   const worldInverseMatrix = m4.inverse(worldMatrix); // 计算逆矩阵
@@ -274,9 +247,156 @@ const drawFixedLightTranspose = () => {
 
   gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
   gl.uniformMatrix4fv(worldInverseTransposeLocation, false, worldInverseTransposeMatrix);
+  gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
 
   gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
-  gl.uniform3fv(reverseLightDirectionLocation, m4.normalize([0.5, 0.7, 1]));
+  gl.uniform3fv(lightWorldPositionLocation, [20, 30, 60]);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
+}
+
+const drawSpecular = () => {
+  clear()
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  gl.useProgram(program);
+
+  gl.enableVertexAttribArray(positionLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+  gl.enableVertexAttribArray(normalLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
+
+  // 计算投影矩阵
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const projectionMatrix = m4.perspective(degToRad(60), aspect, 1, 2000);
+  // 计算相机的矩阵
+  const camera = [100, 150, 200];
+  const target = [0, 35, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(camera, target, up);
+
+  // 通过相机矩阵计算视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
+  const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+  const worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
+
+  const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
+  const worldInverseMatrix = m4.inverse(worldMatrix); // 计算逆矩阵
+  const worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
+
+  gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
+  gl.uniformMatrix4fv(worldInverseTransposeLocation, false, worldInverseTransposeMatrix);
+  gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
+
+  gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
+  gl.uniform3fv(lightWorldPositionLocation, [20, 30, 60]);
+
+  // 设置相机位置
+  gl.uniform3fv(viewWorldPositionLocation, camera);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
+}
+
+const drawShininess = () => {
+  clear()
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  gl.useProgram(program);
+
+  gl.enableVertexAttribArray(positionLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+  gl.enableVertexAttribArray(normalLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
+
+  // 计算投影矩阵
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const projectionMatrix = m4.perspective(degToRad(60), aspect, 1, 2000);
+  // 计算相机的矩阵
+  const camera = [100, 150, 200];
+  const target = [0, 35, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(camera, target, up);
+
+  // 通过相机矩阵计算视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
+  const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+  const worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
+
+  const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
+  const worldInverseMatrix = m4.inverse(worldMatrix); // 计算逆矩阵
+  const worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
+
+  gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
+  gl.uniformMatrix4fv(worldInverseTransposeLocation, false, worldInverseTransposeMatrix);
+  gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
+
+  gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
+  gl.uniform3fv(lightWorldPositionLocation, [20, 30, 60]);
+
+  // 设置相机位置
+  gl.uniform3fv(viewWorldPositionLocation, camera);
+  // 设置亮度
+  gl.uniform1f(shininessLocation, model.formData.shininess);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
+}
+
+const drawShininessColor = () => {
+  clear()
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  gl.useProgram(program);
+
+  gl.enableVertexAttribArray(positionLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+  gl.enableVertexAttribArray(normalLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
+
+  // 计算投影矩阵
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const projectionMatrix = m4.perspective(degToRad(60), aspect, 1, 2000);
+  // 计算相机的矩阵
+  const camera = [100, 150, 200];
+  const target = [0, 35, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(camera, target, up);
+
+  // 通过相机矩阵计算视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix); // 计算逆矩阵
+  const viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+  const worldMatrix = m4.yRotation(degToRad(model.formData.fRotation));
+
+  const worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
+  const worldInverseMatrix = m4.inverse(worldMatrix); // 计算逆矩阵
+  const worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
+
+  gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
+  gl.uniformMatrix4fv(worldInverseTransposeLocation, false, worldInverseTransposeMatrix);
+  gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
+
+  gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]); // green
+  gl.uniform3fv(lightWorldPositionLocation, [20, 30, 60]);
+
+  // 设置相机位置
+  gl.uniform3fv(viewWorldPositionLocation, camera);
+  // 设置亮度
+  gl.uniform1f(shininessLocation, model.formData.shininess);
+  // 设置光照颜色
+  gl.uniform3fv(lightColorLocation, m4.normalize([1, 0.6, 0.6]));// 红光
+  // 设置高光颜色
+  gl.uniform3fv(specularColorLocation, m4.normalize([1, 0.2, 0.2]));// 红光
 
   gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
 }
@@ -331,45 +451,15 @@ const vsGLSL1 = `
   attribute vec4 a_position;
   attribute vec3 a_normal;
 
-  uniform mat4 u_matrix;
+  uniform vec3 u_lightWorldPosition;
 
-  varying vec3 v_normal;
-
-  void main() {
-    // 将位置和矩阵相乘
-    gl_Position = u_matrix * a_position;
-
-    // 将法向量传到片段着色器
-    v_normal = a_normal;
-  }
-`
-
-const vsGLSL2 = `
-  attribute vec4 a_position;
-  attribute vec3 a_normal;
-
-  uniform mat4 u_worldViewProjection;
   uniform mat4 u_world;
-
-  varying vec3 v_normal;
-
-  void main() {
-    // 将位置和矩阵相乘
-    gl_Position = u_worldViewProjection * a_position;
-
-    // 重定向法向量并传递给片段着色器
-    v_normal = mat3(u_world) * a_normal;
-  }
-`
-
-const vsGLSL3 = `
-  attribute vec4 a_position;
-  attribute vec3 a_normal;
-
   uniform mat4 u_worldViewProjection;
   uniform mat4 u_worldInverseTranspose;
 
   varying vec3 v_normal;
+
+  varying vec3 v_surfaceToLight;
 
   void main() {
     // 将位置和矩阵相乘
@@ -377,6 +467,13 @@ const vsGLSL3 = `
 
     // 重定向法向量并传递给片段着色器
     v_normal = mat3(u_worldInverseTranspose) * a_normal;
+
+    // 计算表面的世界坐标
+    vec3 surfaceWorldPosition = (u_world * a_position).xyz;
+
+    // 计算表面到光源的方向
+    // 传递给片段着色器
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
   }
 `
 
@@ -385,24 +482,167 @@ const fsGLSL1 = `
 
   // 从顶点着色器中传入的值
   varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
 
-  uniform vec3 u_reverseLightDirection;
   uniform vec4 u_color;
 
   void main() {
-    // 由于 v_normal 是插值出来的，和有可能不是单位向量，
-    // 可以用 normalize 将其单位化。
+    // 由于 v_normal 是可变量，所以经过插值后不再是单位向量，
+    // 单位化后会成为单位向量
     vec3 normal = normalize(v_normal);
 
-    float light = dot(normal, u_reverseLightDirection);
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+
+    float light = dot(normal, surfaceToLightDirection);
 
     gl_FragColor = u_color;
 
-    // 将颜色部分（不包括 alpha）和 光照相乘
+    // 只将颜色部分（不包含 alpha） 和光照相乘
     gl_FragColor.rgb *= light;
   }
 `
 
+const vsGLSL2 = `
+  attribute vec4 a_position;
+  attribute vec3 a_normal;
+
+  uniform vec3 u_lightWorldPosition;
+  uniform vec3 u_viewWorldPosition;
+
+  uniform mat4 u_world;
+  uniform mat4 u_worldViewProjection;
+  uniform mat4 u_worldInverseTranspose;
+
+  varying vec3 v_normal;
+
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  void main() {
+    // 将位置和矩阵相乘
+    gl_Position = u_worldViewProjection * a_position;
+
+    // 重定向法向量并传递到片段着色器
+    v_normal = mat3(u_worldInverseTranspose) * a_normal;
+
+    // 计算表面的世界坐标
+    vec3 surfaceWorldPosition = (u_world * a_position).xyz;
+
+    // 计算表面到光源的方向
+    // 然后传递到片段着色器
+    v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+
+    // 计算表面到相机的方向
+    // 然后传递到片段着色器
+    v_surfaceToView = u_viewWorldPosition - surfaceWorldPosition;
+  }
+`
+
+const fsGLSL2 = `
+  precision mediump float;
+
+  // 从顶点着色器中传入的值
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+
+  void main() {
+    // 由于 v_normal 是可变量，所以经过插值后不再是单位向量，
+    // 单位化后会成为单位向量
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float light = dot(normal, surfaceToLightDirection);
+    float specular = dot(normal, halfVector);
+
+    gl_FragColor = u_color;
+
+    // 只将颜色部分（不包含 alpha） 和光照相乘
+    gl_FragColor.rgb *= light;
+
+    // 直接加上高光
+    gl_FragColor.rgb += specular;
+  }
+`
+
+const fsGLSL3 = `
+  precision mediump float;
+
+  // 从顶点着色器中传入的值
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+
+  void main() {
+    // 由于 v_normal 是可变量，所以经过插值后不再是单位向量，
+    // 单位化后会成为单位向量
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float light = dot(normal, surfaceToLightDirection);
+    float specular = 0.0;
+    if (light > 0.0) {
+        specular = pow(dot(normal, halfVector), u_shininess);
+    }
+
+    gl_FragColor = u_color;
+
+    // 只将颜色部分（不包含 alpha） 和光照相乘
+    gl_FragColor.rgb *= light;
+
+    // 直接加上高光
+    gl_FragColor.rgb += specular;
+  }
+`
+
+const fsGLSL4 = `
+  precision mediump float;
+
+  // 从顶点着色器中传入的值
+  varying vec3 v_normal;
+  varying vec3 v_surfaceToLight;
+  varying vec3 v_surfaceToView;
+
+  uniform vec4 u_color;
+  uniform float u_shininess;
+  uniform vec3 u_lightColor;
+  uniform vec3 u_specularColor;
+
+  void main() {
+    // 由于 v_normal 是可变量，所以经过插值后不再是单位向量，
+    // 单位化后会成为单位向量
+    vec3 normal = normalize(v_normal);
+
+    vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+    vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+
+    float light = dot(normal, surfaceToLightDirection);
+    float specular = 0.0;
+    if (light > 0.0) {
+        specular = pow(dot(normal, halfVector), u_shininess);
+    }
+
+    gl_FragColor = u_color;
+
+    // 只将颜色部分（不包含 alpha） 和光照相乘
+    gl_FragColor.rgb *= light * u_lightColor;
+
+    // 直接加上高光
+    gl_FragColor.rgb += specular * u_specularColor;
+  }
+`
 
 const m4 = {
   projection: (width, height, depth) => [
