@@ -29,7 +29,7 @@ const gui2Dom = ref(null)
 const model = reactive({
   geoDataName: "",
   seriesName: "",
-  showGrid: true,
+  showGrid: false,
   formData: {
     pointSize: 6,
     isUpright: false,
@@ -53,6 +53,8 @@ onMounted(() => {
     zoom: 13
   })
   gridLayer = new TileGridLayer()
+  viewer.map.add(gridLayer);
+  gridLayer.visible = false
   layer = new TimeSeriesFeatureLayer({
     graphics: [],
     tolerance: 0,
@@ -203,7 +205,7 @@ const handleToggleDataSource = async (name) => {
           }
       }
     });
-    console.log(name,123,gs)
+    console.log(name, 123, gs)
     meta.gs = gs;
     layer.graphics = gs;
   } else {
@@ -226,7 +228,7 @@ const handleToggleSeries = async () => {
   layer.source = {
     times: model.times,
     dataGetter: async (time, index) => {
-      console.log(time,index,21324)
+      console.log(time, index, 21324)
       return new Float32Array(data.buffer, count * 4 * index, count);
     },
   }
