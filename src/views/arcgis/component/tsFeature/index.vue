@@ -27,10 +27,10 @@ import YbPanl from "@/components/ybPanl.vue"
 const gui2Dom = ref(null)
 
 const model = reactive({
-  geoDataName: "",
-  seriesName: "",
-  showGrid: false,
   formData: {
+    geoDataName: "",
+    seriesName: "",
+    showGrid: false,
     pointSize: 6,
     isUpright: false,
     pointStyle: "circle",
@@ -44,7 +44,7 @@ const model = reactive({
   curColorMapping: {},
   selTimeRang: null
 })
-const {formData, valueRange, selTimeRang, curColorMapping} = toRefs(model)
+const {formData, selTimeRang, curColorMapping} = toRefs(model)
 
 onMounted(() => {
   initGui()
@@ -73,7 +73,6 @@ onMounted(() => {
     const result = await viewer.hitTest(e, {include: [layer]});
     viewer.graphics.removeAll();
     if (result.results.length) {
-      console.log(result.results.map(item => item.graphic.rawData.attributes.Name))
       const graphic = result.results[0].graphic
       switch (graphic.geometry.type) {
         case "point":
@@ -122,8 +121,10 @@ const timeChange = (timestamp) => {
 }
 
 const formDatachange = (k, v) => {
-
   switch (k) {
+    case "showGrid":
+      gridLayer.visible = v
+      break
     case "pointSize":
       layer.renderOpts.defaultPointSize = model.formData.pointSize
       break
@@ -156,10 +157,6 @@ const formDatachange = (k, v) => {
       layer.renderOpts.colorMapping = model.curColorMapping
       break
   }
-}
-
-const showGridChange = (bool) => {
-  gridLayer.visible = bool
 }
 
 // 地图逻辑
@@ -205,7 +202,6 @@ const handleToggleDataSource = async (name) => {
           }
       }
     });
-    console.log(name, 123, gs)
     meta.gs = gs;
     layer.graphics = gs;
   } else {
@@ -215,10 +211,10 @@ const handleToggleDataSource = async (name) => {
 }
 
 const handleToggleSeries = async () => {
-  const meta = typelist.find((i) => i.name === model.geoDataName);
+  const meta = typelist.find((i) => i.name === model.formData.geoDataName);
   if (!meta.gs) return
   const count = meta.gs.length;
-  const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${meta.name}/${meta.sPath}${model.seriesName}.bin`)
+  const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/timing-graphic/${meta.name}/${meta.sPath}${model.formData.seriesName}.bin`)
   const buffer = await res.arrayBuffer()
   const data = new Float32Array(buffer);
   let max = -Infinity;
@@ -228,7 +224,6 @@ const handleToggleSeries = async () => {
   layer.source = {
     times: model.times,
     dataGetter: async (time, index) => {
-      console.log(time, index, 21324)
       return new Float32Array(data.buffer, count * 4 * index, count);
     },
   }
@@ -239,13 +234,13 @@ const handleToggleSeries = async () => {
 let gui1, gui2, seriesControl
 const initGui = () => {
   gui1 = new GUI({title: "污染物过程模拟"});
-  gui1.add(model, "showGrid").onChange(showGridChange);
-  gui1.add(model, "geoDataName", typelist.map(item => item.name)).name("数据源").onChange(name => {
+  gui1.add(model.formData, "showGrid").onChange(showGrid => formDatachange("showGrid", showGrid));
+  gui1.add(model.formData, "geoDataName", typelist.map(item => item.name)).name("数据源").onChange(name => {
     handleToggleDataSource(name)
     gui2.show()
     seriesControl?.destroy()
     const seriesOption = typelist.find((i) => i.name === name).series;
-    seriesControl = gui1.add(model, "seriesName", seriesOption).name("系列").onChange(handleToggleSeries)
+    seriesControl = gui1.add(model.formData, "seriesName", seriesOption).name("系列").onChange(handleToggleSeries)
     seriesControl.setValue(seriesOption[0])
     gui2.children.forEach(controller => controller.hide())
     switch (name) {

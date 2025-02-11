@@ -125,6 +125,12 @@ export const constantRoutes = [
                         meta: {title: 'tsFeature', icon: '', affix: true},
                     },
                     {
+                        path: 'tsKriging',
+                        component: () => import('@/views/arcgis/component/tsKriging/index.vue'),
+                        name: 'Arcgis-main-TsKriging',
+                        meta: {title: 'tsKriging', icon: '', affix: true},
+                    },
+                    {
                         path: 'layerManage',
                         component: () => import('@/views/arcgis/component/layerManage/index.vue'),
                         name: 'Arcgis-main-LayerManage',

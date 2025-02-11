@@ -13,6 +13,11 @@ export default [
                 label: 'ts-feature',
                 name: "Arcgis-main-TsFeature"
             },
+            {
+                id: 13,
+                label: 'ts-kriging',
+                name: "Arcgis-main-TsKriging"
+            },
         ],
     },
 ];
