@@ -2279,6 +2279,11 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+arcgis-js-api@4.29.4:
+  version "4.29.4"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/arcgis-js-api/-/arcgis-js-api-4.29.4.tgz#0e39a29252bd5e406dd50b99c1a90a68ed63601d"
+  integrity sha512-zFClObmfwTIDF4iQ8Tn0ith2f4L6si65o+/cuboC7DnNEuh8jgECzAvTnLbHmkFAMTkQTHZZtaU8Oxzby3twXA==
+
 argparse@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
@@ -3007,6 +3012,11 @@ earcut@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/earcut/-/earcut-3.0.0.tgz#a8d5bf891224eaea8287201b5e787c6c0318af89"
   integrity sha512-41Fs7Q/PLq1SDbqjsgcY7GA42T0jvaCNGXgGtsNdvg+Yv8eIu06bxv4/PoREkZ9nMDNwnUSG9OFB9+yv8eKhDg==
+
+earcut@^3.0.1:
+  version "3.0.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/earcut/-/earcut-3.0.1.tgz#f60b3f671c5657cca9d3e131c5527c5dde00ef38"
+  integrity sha512-0l1/0gOjESMeQyYaK5IDiPNvFeu93Z/cO0TjZh9eZ1vyCtZnA7KMZ8rQggpsJHIbGSdrqYq9OhuveadOVHCshw==
 
 echarts@^5.2.2:
   version "5.5.1"

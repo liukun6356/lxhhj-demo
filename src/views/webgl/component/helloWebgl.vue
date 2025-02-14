@@ -1,4 +1,5 @@
 <!--点，线，三角
+  webgl 是强数据类型
   着色器获取数据的4种方法
     Attributes  属性
     Uniforms    全局变量

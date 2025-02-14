@@ -116,7 +116,7 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/arcgis/index.vue'),
                 name: 'Arcgis-main',
-                redirect: '/arcgis/main/tsFeature',
+                redirect: '/arcgis/main/tsKriging',
                 children: [
                     {
                         path: 'tsFeature',

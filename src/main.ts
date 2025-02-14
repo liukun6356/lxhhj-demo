@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from '@/router';
 import {setupStore} from '@/store/index.ts';
@@ -20,7 +20,14 @@ import "@/utils/projection"
 const app = createApp(App);
 
 // 全局使用Icon图标  <el-icon><Close/></el-icon>
-Object.entries(ElementPlusIconsVue).forEach(([key, component])=>app.component(key, component))
+Object.entries(ElementPlusIconsVue).forEach(([key, component]) => app.component(key, component))
+
+// 配置 arcgis 的 worker
+import config from "@arcgis/core/config";
+// config.assetsPath = "/@arcgis-core";
+config.workers.loaderUrl = "/worker/my-require.js";
+config.workers.workerPath = "/worker/RemoteClient.js";
+
 
 // 全局挂载
 setupStore(app);

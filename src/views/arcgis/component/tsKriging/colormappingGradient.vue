@@ -33,6 +33,8 @@ const props = defineProps<{
 const src = ref("");
 const valueRange = ref<number[]>();
 
+
+
 const createGradientColorMappingFromStops = (stopDef, width, height) => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -62,6 +64,8 @@ const createGradientColorMappingFromStops = (stopDef, width, height) => {
 }
 
 watch(()=>props.data,()=>{
+  console.log(props.data)
+  if(!props.data)return
   const d = props.data
   valueRange.value = d.valueRange;
   src.value = Array.isArray(d.stops) ? createGradientColorMappingFromStops(d.stops, 128, 32) : d.stops;
