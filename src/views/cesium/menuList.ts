@@ -1,5 +1,17 @@
 export default [
     {
+        id:4,
+        label:"流体模拟",
+        children: [
+            {
+                id: 41,
+                label:"模拟流体",
+                name:"Cesium-main-SimulateFluid"
+            }
+
+        ]
+    },
+    {
         id: 1,
         label: 'demo效果',
         children: [

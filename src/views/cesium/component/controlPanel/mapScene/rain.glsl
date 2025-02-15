@@ -1,5 +1,5 @@
 uniform sampler2D colorTexture;//输入的场景渲染照片
-varying vec2 v_textureCoordinates;
+in vec2 v_textureCoordinates;
 
 float hash(float x){
     return fract(sin(x*133.3)*13.13);

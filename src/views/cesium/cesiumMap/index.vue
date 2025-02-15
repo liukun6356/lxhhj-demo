@@ -110,7 +110,7 @@ const initMap = (domId) => new Promise((resolve) => {
         enableZoom: true
       },
       contextOptions: {
-        requestWebgl1: true
+        // requestWebgl1: true
       }
     },
     control: {
@@ -123,6 +123,7 @@ const initMap = (domId) => new Promise((resolve) => {
     contextOptions: {
       webgl: {
         preserveDrawingBuffer: true, //允许canvas 截图
+
       },
     }
   }).on(mars3d.EventType.load, async (e) => {

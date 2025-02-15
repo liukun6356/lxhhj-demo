@@ -16,7 +16,7 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-main',
-                redirect: '/cesium/main/sceneEdit',
+                redirect: '/cesium/main/SimulateFluid',
                 children: [
                     {
                         path: 'controlPanel',
@@ -73,6 +73,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/polylineFly/index.vue'),
                         name: 'Cesium-main-PolylineFly',
                         meta: {title: 'polylineFly', icon: '', affix: true},
+                    }, {
+                        path: 'simulateFluid',
+                        component: () => import('@/views/cesium/component/simulateFluid/index.vue'),
+                        name: 'Cesium-main-SimulateFluid',
+                        meta: {title: 'simulateFluid', icon: '', affix: true},
                     }
                 ]
             }
