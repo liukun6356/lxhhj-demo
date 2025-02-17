@@ -136,6 +136,12 @@ export const constantRoutes = [
                         meta: {title: 'tsKriging', icon: '', affix: true},
                     },
                     {
+                        path: 'tsRaster',
+                        component: () => import('@/views/arcgis/component/tsRaster/index.vue'),
+                        name: 'Arcgis-main-TsRaster',
+                        meta: {title: 'tsRaster', icon: '', affix: true},
+                    },
+                    {
                         path: 'layerManage',
                         component: () => import('@/views/arcgis/component/layerManage/index.vue'),
                         name: 'Arcgis-main-LayerManage',

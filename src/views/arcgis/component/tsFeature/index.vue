@@ -245,8 +245,7 @@ const initGui = () => {
     gui2.children.forEach(controller => controller.hide())
     switch (name) {
       case "node":
-        gui2.children.forEach(controller => ["pointSize", "isUpright", , "pointStyle", "colorMapping"].includes(controller.property) && controller.show())
-        gui2.children[0].property
+        gui2.children.forEach(controller => ["pointSize", "isUpright" , "pointStyle", "colorMapping"].includes(controller.property) && controller.show())
         break
       case "link":
         gui2.children.forEach(controller => ["lineWidth", "colorMapping"].includes(controller.property) && controller.show())

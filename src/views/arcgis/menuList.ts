@@ -18,6 +18,11 @@ export default [
                 label: 'ts-kriging',
                 name: "Arcgis-main-TsKriging"
             },
+            {
+                id: 13,
+                label: 'ts-raster',
+                name: "Arcgis-main-TsRaster"
+            },
         ],
     },
 ];

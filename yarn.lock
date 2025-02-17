@@ -441,6 +441,11 @@
   resolved "https://mirrors.huaweicloud.com/repository/npm/@open-wc/dedupe-mixin/-/dedupe-mixin-1.4.0.tgz#b3c58f8699b197bb5e923d624c720e67c9f324d6"
   integrity sha512-Sj7gKl1TLcDbF7B6KUhtvr+1UCxdhMbNY5KxdU5IfMFWqL8oy1ZeAcCANjoB1TL0AJTcPmcCFsCbHf8X2jGDUA==
 
+"@petamoriken/float16@^3.4.7":
+  version "3.9.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@petamoriken/float16/-/float16-3.9.1.tgz#f1239d6721f25c1bf921dde0d7d678efef9c1de2"
+  integrity sha512-j+ejhYwY6PeB+v1kn7lZFACUIG97u90WxMuGosILFsl9d4Ovi0sjk0GlPfoEcx+FzvXZDAfioD+NGnnPamXgMA==
+
 "@polymer/polymer@^3.0.0":
   version "3.5.2"
   resolved "https://mirrors.huaweicloud.com/repository/npm/@polymer/polymer/-/polymer-3.5.2.tgz#af0e7e13976df53ace6728e841121c36aca351de"
@@ -2331,6 +2336,13 @@ arraybuffer.prototype.slice@^1.0.3:
     is-array-buffer "^3.0.4"
     is-shared-array-buffer "^1.0.2"
 
+arrugator@^1.3.2:
+  version "1.3.2"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/arrugator/-/arrugator-1.3.2.tgz#0d1f95ba99edebc5c968b05eadf976927ad9cd91"
+  integrity sha512-Re8TXI+P/UeJnW40k14jeCQIEYWKjBlGS+UgV8o3XfSLd83Wcm6J2WcxFMCkkzaYj9qKmI9fVRmLTqp2RgdGDw==
+  dependencies:
+    tinyqueue "^2.0.3"
+
 assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
@@ -3565,6 +3577,20 @@ geojson-rbush@3.x:
     "@types/geojson" "7946.0.8"
     rbush "^3.0.1"
 
+geotiff@^2.1.3:
+  version "2.1.3"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/geotiff/-/geotiff-2.1.3.tgz#993f40f2aa6aa65fb1e0451d86dd22ca8e66910c"
+  integrity sha512-PT6uoF5a1+kbC3tHmZSUsLHBp2QJlHasxxxxPW47QIY1VBKpFB+FcDvX+MxER6UzgLQZ0xDzJ9s48B9JbOCTqA==
+  dependencies:
+    "@petamoriken/float16" "^3.4.7"
+    lerc "^3.0.0"
+    pako "^2.0.4"
+    parse-headers "^2.0.2"
+    quick-lru "^6.1.1"
+    web-worker "^1.2.0"
+    xml-utils "^1.0.2"
+    zstddec "^0.1.0"
+
 get-intrinsic@^1.1.3, get-intrinsic@^1.2.1, get-intrinsic@^1.2.3, get-intrinsic@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.2.4.tgz#e385f5a4b5227d449c3eabbad05494ef0abbeadd"
@@ -4198,6 +4224,11 @@ lerc@^2.0.0:
   resolved "https://registry.yarnpkg.com/lerc/-/lerc-2.0.0.tgz#82feca29ea6202799a815ca38f7b66a370e8cf9b"
   integrity sha512-7qo1Mq8ZNmaR4USHHm615nEW2lPeeWJ3bTyoqFbd35DLx0LUH7C6ptt5FDCTAlbIzs3+WKrk5SkJvw8AFDE2hg==
 
+lerc@^3.0.0:
+  version "3.0.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/lerc/-/lerc-3.0.0.tgz#36f36fbd4ba46f0abf4833799fff2e7d6865f5cb"
+  integrity sha512-Rm4J/WaHhRa93nCN2mwWDZFoRVF18G1f47C+kvQWyHGEZxFpTUi73p7lMVSAndyxGt6lJ2/CFbOcf9ra5p8aww==
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.4.1.tgz#ae4562c007473b932a6200d403268dd2fffc6ade"
@@ -4619,6 +4650,11 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
+parse-headers@^2.0.2:
+  version "2.0.5"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/parse-headers/-/parse-headers-2.0.5.tgz#069793f9356a54008571eb7f9761153e6c770da9"
+  integrity sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==
+
 pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
@@ -4810,6 +4846,11 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+quick-lru@^6.1.1:
+  version "6.1.2"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/quick-lru/-/quick-lru-6.1.2.tgz#e9a90524108629be35287d0b864e7ad6ceb3659e"
+  integrity sha512-AAFUA5O1d83pIHEhJwWCq/RQcRukCkn/NSm2QsTEMle5f2hP0ChI2+3Xb051PZCkLryI/Ir1MVKviT2FIloaTQ==
 
 quickselect@^1.0.1:
   version "1.1.1"
@@ -5731,6 +5772,11 @@ vue@^3.4.29:
     "@vue/server-renderer" "3.5.11"
     "@vue/shared" "3.5.11"
 
+web-worker@^1.2.0:
+  version "1.5.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/web-worker/-/web-worker-1.5.0.tgz#71b2b0fbcc4293e8f0aa4f6b8a3ffebff733dcc5"
+  integrity sha512-RiMReJrTAiA+mBjGONMnjVDP2u3p9R1vkcGz6gDIrOMT3oGuYwX2WRMYI9ipkphSuE5XKEhydbhNEJh4NY9mlw==
+
 webworkify-webpack@^2.1.5:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/webworkify-webpack/-/webworkify-webpack-2.1.5.tgz#bf4336624c0626cbe85cf1ffde157f7aa90b1d1c"
@@ -5823,6 +5869,11 @@ xlsx@^0.17.0:
     wmf "~1.0.1"
     word "~0.3.0"
 
+xml-utils@^1.0.2:
+  version "1.10.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/xml-utils/-/xml-utils-1.10.1.tgz#fa0c9b38545760532d4cf89003f90c3b24e7200f"
+  integrity sha512-Dn6vJ1Z9v1tepSjvnCpwk5QqwIPcEFKdgnjqfYOABv1ngSofuAhtlugcUC3ehS1OHdgDWSG6C5mvj+Qm15udTQ==
+
 xss@1.0.13:
   version "1.0.13"
   resolved "https://mirrors.huaweicloud.com/repository/npm/xss/-/xss-1.0.13.tgz#6e48f616128b39f366dfadc57411e1eb5b341c6c"
@@ -5842,3 +5893,8 @@ zrender@5.6.0:
   integrity sha512-uzgraf4njmmHAbEUxMJ8Oxg+P3fT04O+9p7gY+wJRVxo8Ge+KmYv0WJev945EH4wFuc4OY2NLXz46FZrWS9xJg==
   dependencies:
     tslib "2.3.0"
+
+zstddec@^0.1.0:
+  version "0.1.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/zstddec/-/zstddec-0.1.0.tgz#7050f3f0e0c3978562d0c566b3e5a427d2bad7ec"
+  integrity sha512-w2NTI8+3l3eeltKAdK8QpiLo/flRAr2p8AGeakfMZOXBxOg9HIu4LVDxBi81sYgVhFhdJjv1OrB5ssI8uFPoLg==

@@ -1,3 +1,4 @@
+<!--克里金实践-->
 <template>
   <div class="ts-kriging-wrap">
     <Teleport :to="gui2Dom" :disabled="!gui2Dom">
@@ -97,6 +98,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  gui1.destroy()
   viewer.map?.remove(layer);
   layer.destroy();
   viewer.map?.remove(gsLayer);
