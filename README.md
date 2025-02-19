@@ -14,7 +14,10 @@
 | arcgis | 二维GIS引擎 | https://developers.arcgis.com/javascript/latest/ |
 | Turf | 地理空间分析工具 | https://turfjs.fenxianglu.cn/ |
 | proj4 | 地理坐标转换 | http://proj4js.org/ |
-|geoserver|编辑和发布地理控件| https://geoserver.org
+| arrugator | GIS栅格图像重投影 | https://gitlab.com/IvanSanchez/arrugator/ |
+| geotiff | 解析和处理GeoTIFF文件 | https://geotiffjs.github.io/ |
+| gl-matrix | 矩阵和向量计算 | https://glmatrix.net/ |
+| geoserver |编辑和发布地理控件| https://geoserver.org/ |
 | Vue3 | 渐进式 JavaScript 框架 | https://v3.cn.vuejs.org/ |
 | TypeScript | JavaScript 的一个超集 | https://www.tslang.cn/ |
 | Vite | 前端开发与构建工具 | https://cn.vitejs.dev/ |
@@ -53,7 +56,7 @@
     yarn build:prod
     ```
 
-##  <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg!1" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒
+##  <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒
 https://blog.csdn.net/hr_beginner
 
 ```javascript                                                                              

@@ -8,7 +8,8 @@
     <Teleport :to="arrowDom" :disabled="!arrowDom">
       <img v-show="arrowDom" :src="curArrowImg" style="background-color: white;height:32px;display: block;"/>
     </Teleport>
-    <RasterSplitDebug :debug-data="debugData" :show-tile-split="formData.showTileSplit" :show-project-mesh="formData.showProjectMesh"/>
+    <RasterSplitDebug v-if="isActiveLayer" :debug-data="debugData" :show-tile-split="formData.showTileSplit"
+                      :show-project-mesh="formData.showProjectMesh"/>
     <yb-panl v-if="selTimeRang" :selTimeRang="selTimeRang" :defaultStartTime="selTimeRang.start"
              :defaultRange="defaultRange" timeType="m" @timeChange="timeChange"/>
   </div>
@@ -40,13 +41,14 @@ const arrowDom = ref(null)
 
 const mapStore = usearcgisMapStore()
 const model = reactive({
+  isActiveLayer: false,
   formData: {
     geoDataName: "",
     showGrid: false,
     opacity: 1,
     showDebugBorder: false,
     renderSampling: "linear",
-    showTileSplit: true,
+    showTileSplit: false,
     showProjectMesh: false,
     colorMapping: "gradient",
     colorSelect: "色带映射",
@@ -67,7 +69,16 @@ const model = reactive({
   debugData: null,
   // valueRange: [0, 0],// 数据区间 [min , max]
 })
-const {formData, curArrowImg, curTime, selTimeRang, defaultRange, curColorMapping, debugData} = toRefs(model)
+const {
+  isActiveLayer,
+  formData,
+  curArrowImg,
+  curTime,
+  selTimeRang,
+  defaultRange,
+  curColorMapping,
+  debugData
+} = toRefs(model)
 
 onMounted(() => {
   initGui()
@@ -84,6 +95,7 @@ onMounted(() => {
   layer.tileInfo = tileInfo;
   layer.debug = true;
   viewer.map.add(layer);
+  model.isActiveLayer = true
   debugDataWatch = reactiveUtils.watch(() => layer.debugData, v => model.debugData = markRaw(v))
 })
 
