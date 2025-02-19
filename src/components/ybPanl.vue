@@ -93,14 +93,32 @@ watch(() => model.curTime, (v) => {
   if (model.curTime % getTimeType(props.timeType) === 0) emits("timeChange", model.curTime)
 })
 
-onMounted(() => {
+watch(()=>props.defaultRange,()=>{
   // 如果 defaultStartTime不在数据时间区间，默认取数据时间区间的第一个时间点
   if (props.defaultStartTime && props.defaultStartTime >= props.selTimeRang.start && props.defaultStartTime <= props.selTimeRang.end) {
     model.formData.startTime = props.defaultStartTime
+    model.curTime = props.defaultStartTime
     model.maxTimeFrame = (props.selTimeRang.end - props.defaultStartTime) / (1e3 * 60 ** 2)
     model.formData.range = model.maxTimeFrame < props.defaultRange ? model.maxTimeFrame : props.defaultRange
   } else {
     model.formData.startTime = props.selTimeRang.start
+    model.curTime = props.selTimeRang.start
+    model.maxTimeFrame = (props.selTimeRang.end - props.selTimeRang.start) / (1e3 * 60 ** 2)
+    model.formData.range = model.maxTimeFrame < props.defaultRange ? model.maxTimeFrame : props.defaultRange
+  }
+  submit()
+})
+
+onMounted(() => {
+  // 如果 defaultStartTime不在数据时间区间，默认取数据时间区间的第一个时间点
+  if (props.defaultStartTime && props.defaultStartTime >= props.selTimeRang.start && props.defaultStartTime <= props.selTimeRang.end) {
+    model.formData.startTime = props.defaultStartTime
+    model.curTime = props.defaultStartTime
+    model.maxTimeFrame = (props.selTimeRang.end - props.defaultStartTime) / (1e3 * 60 ** 2)
+    model.formData.range = model.maxTimeFrame < props.defaultRange ? model.maxTimeFrame : props.defaultRange
+  } else {
+    model.formData.startTime = props.selTimeRang.start
+    model.curTime = props.selTimeRang.start
     model.maxTimeFrame = (props.selTimeRang.end - props.selTimeRang.start) / (1e3 * 60 ** 2)
     model.formData.range = model.maxTimeFrame < props.defaultRange ? model.maxTimeFrame : props.defaultRange
   }

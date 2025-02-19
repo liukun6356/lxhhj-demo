@@ -1,5 +1,5 @@
 import { TypedArray } from "geotiff";
-import DecodeWorker from "./decode-worker?worker";
+import DecodeWorker from "./decode-worker?worker"; // 导入脚本作为worker
 let ctx: ReturnType<typeof initWorker>;
 function initWorker() {
     const newTaskId = (() => {

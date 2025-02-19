@@ -15,7 +15,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/proj4": "^2.5.5",
     "arcgis-js-api": "4.29.4",
-    "arrugator": "^1.3.2",
+    "arrugator": "1.2.1",
     "axios": "^1.2.0",
     "d3-contour": "^4.0.2",
     "earcut": "^3.0.1",

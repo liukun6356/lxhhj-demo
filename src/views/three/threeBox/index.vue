@@ -22,7 +22,9 @@ onMounted(() => {
   const stats = new Stats(); // 性能监视器
   threeBoxRef.value.appendChild(stats.dom);
   threeBoxStore.setPerformanceState(markRaw(stats))
-  stats.dom.style.marginTop = "15px"
+  stats.setMode(0) // 0: fps, 1: ms, 2: mb
+  stats.dom.style.top = "calc(100vh - 53px)"
+  stats.dom.style.left = "5px"
 })
 
 onUnmounted(() => {

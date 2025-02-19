@@ -1,31 +1,27 @@
-import { property, subclass } from "@arcgis/core/core/accessorSupport/decorators";
+import {property, subclass} from "@arcgis/core/core/accessorSupport/decorators";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils";
 import Extent from "@arcgis/core/geometry/Extent";
 import Layer from "@arcgis/core/layers/Layer";
 import TileInfo from "@arcgis/core/layers/support/TileInfo";
 import BaseLayerViewGL2D from "@arcgis/core/views/2d/layers/BaseLayerViewGL2D";
 import MapView from "@arcgis/core/views/MapView";
-import { ArrugatorOutput } from "arrugator";
-import { WorkerPathConfig } from "lib/config";
-import { PromiseResult, WorkerMethodParam } from "lib/global";
-import {
-    VectorFieldRenderOpts,
-    VectorFieldRenderOptsProperties,
-} from "lib/layers/common/vector-field/vector-field-render-opts";
-import { LRUCache } from "lib/utils/LRU";
-import { showImageBitmap } from "lib/utils/debug-utils";
-import { diffAscArrays, findIntervalIndexThatValueIn, rafThrottle } from "lib/utils/misc";
-import { downSamplingImageBitmap } from "lib/utils/raster/down-sampling";
-import { RasterProjectSplitTileResult } from "lib/utils/raster/reproject-split";
-import { VTileNode, createVTileTreeWithScheme, getChildrenTiles, getTileId } from "lib/utils/vector-tile/tile";
-import { openCustomArcgisWorker } from "lib/utils/worker";
+import {WorkerPathConfig} from "./config";
+import {PromiseResult, WorkerMethodParam} from "./global";
+import {VectorFieldRenderOpts, VectorFieldRenderOptsProperties} from "./vector-field-render-opts";
+import {LRUCache} from "./LRU";
+import {showImageBitmap} from "./debug-utils";
+import {diffAscArrays, findIntervalIndexThatValueIn, rafThrottle} from "./misc";
+import {downSamplingImageBitmap} from "./down-sampling";
+import {RasterProjectSplitTileResult} from "./reproject-split";
+import {VTileNode, createVTileTreeWithScheme, getChildrenTiles, getTileId} from "./tile";
+import {openCustomArcgisWorker} from "./worker";
 import {
     RasterTileSplitResult,
     createRasterReprojectContext,
     rasterReprojectExtentSplit,
-} from "lib/worker/raster.worker";
-import { clamp, isNil } from "lodash-es";
-import { CanvasTexture, ClampToEdgeWrapping, NearestFilter } from "three";
+} from "./raster.worker";
+import {clamp, isNil} from "lodash-es";
+import {CanvasTexture, ClampToEdgeWrapping, NearestFilter} from "three";
 import {
     AbortError,
     EnumTaskStatus,
@@ -38,8 +34,8 @@ import {
     idleSyncTaskScheduler,
     isAbortError,
     resolveViewRenderExtent,
-} from "../common";
-import { attachRenderer, detachRenderer } from "../three-misc";
+} from "./common";
+import {attachRenderer, detachRenderer} from "./three-misc";
 import {
     RasterSimpleRenderOpts,
     TsRasterError,
@@ -49,12 +45,19 @@ import {
     findMinLevel,
     resolveEmptyTileIdInBounds,
 } from "./misc";
-import { initRasterWorker } from "./raster-worker-initial";
-import { SimpleRenderOptsData, createRasterSimpleRenderer, watchSimpleRenderOpts } from "./renderer/simple";
-import { VFRenderOptsData, createRasterVectorFieldRenderer, watchVectorFieldRenderOpts } from "./renderer/vector-field";
-import { RasterTileProjectedData, RasterTileRecord, RasterTileRenderResource, TimeSeriesRasterSource } from "./types";
+import {initRasterWorker} from "./raster-worker-initial";
+import {SimpleRenderOptsData, createRasterSimpleRenderer, watchSimpleRenderOpts} from "./simple";
+import {VFRenderOptsData, createRasterVectorFieldRenderer, watchVectorFieldRenderOpts} from "./vector-field";
+import {RasterTileProjectedData, RasterTileRecord, RasterTileRenderResource, TimeSeriesRasterSource} from "./types";
 
 const TILE_SIZE = 256;
+
+interface ArrugatorOutput {
+    unprojected: number[][];
+    projected: number[][];
+    uv: number[][];
+    trigs: number[][];
+}
 
 //取消均会抛出一个DOMException(name='AbortError');
 const ReasonMap = {
@@ -70,19 +73,22 @@ class CustomLayerView extends BaseLayerViewGL2D {
     private _handlers: IHandle[] = [];
     private _render: (params: __esri.BaseLayerViewGL2DRenderRenderParameters) => void;
     private _tilesVersion = 0;
+
     tilesChanged(): void {
         this._tilesVersion++;
     }
+
     getLoadStat: (time: number) => number;
+
     attach() {
-        const { view, _handlers: handlers } = this;
+        const {view, _handlers: handlers} = this;
         const self = this,
             layer = this.layer as TimeSeriesRasterLayer;
         const useLocal = true;
         const layerLog = (...args: any[]) => layer.debug && console.log(...args);
 
-        const tileSplitWorker = openCustomArcgisWorker(WorkerPathConfig.raster, { strategy: "distributed" });
-        const projectFactory = openCustomArcgisWorker(WorkerPathConfig.raster, { strategy: "distributed" });
+        const tileSplitWorker = openCustomArcgisWorker(WorkerPathConfig.raster, {strategy: "distributed"});
+        const projectFactory = openCustomArcgisWorker(WorkerPathConfig.raster, {strategy: "distributed"});
 
         const getTileSplit = (
             opts: WorkerMethodParam<typeof rasterReprojectExtentSplit>
@@ -97,7 +103,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 : projectFactory.broadcast<typeof createRasterReprojectContext>("createRasterReprojectContext", null);
         };
 
-        const { getRenderer, destroy: destroyRenderer } = (() => {
+        const {getRenderer, destroy: destroyRenderer} = (() => {
             const threeRenderer = attachRenderer(self.context, layer);
             const renderCtxMap = {
                 "vector-field": null as ReturnType<typeof createRasterVectorFieldRenderer>,
@@ -156,9 +162,10 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         newInstances.start();
                     });
                 },
-                { initial: true }
+                {initial: true}
             )
         );
+
         async function createRenderInstances(sourceOpts: TimeSeriesRasterSource, tileScheme: TileInfo) {
             const viewCrs = view.spatialReference.toJSON();
             /** 1. 数据源 */
@@ -209,9 +216,11 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 minLevel,
                 maxLevel: baseLevel,
             });
+
             function getKey(tileId: string, time: number) {
                 return [tileId, time].join(":");
             }
+
             const emptyKeySet = new Set<string>(); //某个tile在某个时间无数据
             //金字塔内空tile(仅bound范围内), 在任意时间均无数据,
             const boundsEmptyTileIdSet = resolveEmptyTileIdInBounds({
@@ -242,7 +251,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 tiles: ReturnType<typeof getCurRenderTileResources>;
             };
             const tileResourceManager = initTileResourceManager();
-            const { getResource, clearData, startLoad, stopLoad, toggleUniqueCodeMapping } = tileResourceManager;
+            const {getResource, clearData, startLoad, stopLoad, toggleUniqueCodeMapping} = tileResourceManager;
             const requestNewFrame = (() => {
                 let requested = false;
                 return (force = true) => {
@@ -274,13 +283,13 @@ class CustomLayerView extends BaseLayerViewGL2D {
             })();
             const getCurRenderTileResources = () => {
                 if (!timeState || !tileState) return null;
-                const { curTime, beforeIndex, afterIndex } = timeState;
-                const { curRenderLevelTileIds, actuallyRenderExtent: renderExtent } = tileState;
+                const {curTime, beforeIndex, afterIndex} = timeState;
+                const {curRenderLevelTileIds, actuallyRenderExtent: renderExtent} = tileState;
                 if (isNil(beforeIndex) || isNaN(beforeIndex) || isNil(afterIndex) || isNaN(afterIndex)) return null;
                 if (!curRenderLevelTileIds?.length) return null;
                 const curVTiles = curRenderLevelTileIds.map((i) => getTileNode(i));
                 const EPSILON = 0.01;
-                const { times, isSingle } = source;
+                const {times, isSingle} = source;
                 const beforeTime = times[beforeIndex],
                     afterTime = times[afterIndex];
                 const percent = isSingle ? 0 : (curTime - beforeTime) / (afterTime - beforeTime);
@@ -288,6 +297,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     .map((vt) => {
                         const res = recursionFind(vt);
                         return res;
+
                         function recursionFind(vt: VTileNode): {
                             vTileNode: VTileNode;
                             data1: RasterTileRenderResource;
@@ -296,7 +306,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             key2: string;
                             id: string;
                         }[] {
-                            const { z, id } = vt;
+                            const {z, id} = vt;
                             const s1 = getResource(id, beforeTime);
                             const s2 = getResource(id, afterTime);
                             const key1 = getKey(id, beforeTime);
@@ -318,17 +328,17 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             } else {
                                 if (s1.ready && s2.ready) {
                                     return s1.data || s2.data
-                                        ? [{ id: vt.id, vTileNode: vt, data1: s1.data, data2: s2.data, key1, key2 }]
+                                        ? [{id: vt.id, vTileNode: vt, data1: s1.data, data2: s2.data, key1, key2}]
                                         : [];
                                 } else {
                                     if (s1.ready && s1.data && percent < EPSILON)
-                                        return [{ id: vt.id, vTileNode: vt, data1: s1.data, data2: null, key1, key2 }];
+                                        return [{id: vt.id, vTileNode: vt, data1: s1.data, data2: null, key1, key2}];
                                     if (s2.ready && s2.data && 1 - percent < EPSILON)
-                                        return [{ id: vt.id, vTileNode: vt, data1: null, data2: s2.data, key1, key2 }];
+                                        return [{id: vt.id, vTileNode: vt, data1: null, data2: s2.data, key1, key2}];
                                 }
                             }
                             if (z < baseLevel) {
-                                const { children } = getTileNode(vt.id);
+                                const {children} = getTileNode(vt.id);
                                 //继续找子节点
                                 return children.map((child) => recursionFind(child)).flat();
                             } else {
@@ -380,7 +390,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 render: (state: __esri.ViewState) => {
                     if (!curRenderResource) return;
                     if (!fullExtent.intersects(curRenderResource.tiles.renderExtent)) return;
-                    const { viewport, framebuffer } = self.getRenderTarget();
+                    const {viewport, framebuffer} = self.getRenderTarget();
                     const renderer = getRenderer(source.type);
                     renderer.render({
                         state,
@@ -395,12 +405,12 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 },
                 loadStat: (t: number) => {
                     if (!timeState || !tileState) return 0;
-                    const { minTime, maxTime, times } = source;
+                    const {minTime, maxTime, times} = source;
                     t = clamp(t, minTime, maxTime);
                     const [beforeIndex, afterIndex] = findIntervalIndexThatValueIn(times, t);
                     const beforeTime = times[beforeIndex],
                         afterTime = times[afterIndex];
-                    const { curRenderLevel, curRenderLevelTileIds } = tileState;
+                    const {curRenderLevel, curRenderLevelTileIds} = tileState;
                     if (!curRenderLevelTileIds.length) return 0;
                     const total = curRenderLevelTileIds.length * weightMap[curRenderLevel];
                     let ready = 0;
@@ -420,6 +430,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     return ready / total;
                 },
             };
+
             function initTileResourceManager() {
                 type DownSamplingTaskDesc = { tileId: string; time: number; key: string };
                 const reusePool = createReusePool<CanvasTexture>({
@@ -452,7 +463,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     const scheduler = asyncTaskScheduler<RasterTileRecord, RasterTileProjectedData>({
                         invoke: (record) => {
                             record.status = EnumTaskStatus.pending;
-                            const { key, tileId, time } = record;
+                            const {key, tileId, time} = record;
                             if (!baseTileIdSet.has(tileId) || emptyKeySet.has(key)) {
                                 return Promise.resolve({
                                     imagebitmap: null,
@@ -463,7 +474,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             }
                         },
                         onSuccess(rawResult, record) {
-                            const { tileId, time, key } = record;
+                            const {tileId, time, key} = record;
                             const w = rawResult.worker;
                             record.status = EnumTaskStatus.finish;
                             if (rawResult?.imagebitmap) {
@@ -487,11 +498,11 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                 emptyKeySet.add(key);
                             }
                             if (!buildPyramid) return;
-                            const { curRenderLevel } = tileState;
+                            const {curRenderLevel} = tileState;
                             if (curRenderLevel < baseLevel) {
-                                const { z, x, y } = getTileNode(tileId);
+                                const {z, x, y} = getTileNode(tileId);
                                 const parentId = getTileId(z - 1, Math.floor(x / 2), Math.floor(y / 2));
-                                pyramidScheduler.addTask({ tileId: parentId, time, key: getKey(parentId, time) });
+                                pyramidScheduler.addTask({tileId: parentId, time, key: getKey(parentId, time)});
                             }
                         },
                         onError(error, record) {
@@ -510,7 +521,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         getResource: (tileId: string, time: number, reinsert = false) => {
                             const key = getKey(tileId, time);
                             if (boundsEmptyTileIdSet.has(tileId) || emptyKeySet.has(key))
-                                return { ready: true, data: null };
+                                return {ready: true, data: null};
                             const record = recordMap.get(key);
                             const ready = record?.status === EnumTaskStatus.finish;
                             if (ready) {
@@ -519,7 +530,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                     data: baseCache.get(key, reinsert),
                                 };
                             } else {
-                                return { ready: false, data: null as RasterTileRenderResource };
+                                return {ready: false, data: null as RasterTileRenderResource};
                             }
                         },
                         scheduleTask: (
@@ -540,9 +551,8 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                         allTimes = [...eagerTimes, ...restTimes],
                                         i = allTimes.length;
                                     i--;
-
                                 ) {
-                                    for (let j = tileIds.length; j--; ) {
+                                    for (let j = tileIds.length; j--;) {
                                         const key = getKey(tileIds[j], allTimes[i]);
                                         if (emptyKeySet.has(key) || ignoreKeys.has(key)) continue; //空
                                         const loaded = baseCache.get(key, i <= eagerIndex);
@@ -570,7 +580,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                         }
                                     }
                                 }
-                                running.forEach(({ desc, cancel }) => {
+                                running.forEach(({desc, cancel}) => {
                                     if (runningMap[desc.key] === 0) {
                                         cancel && cancel(ReasonMap.lowPriorityTask);
                                     }
@@ -589,8 +599,8 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 const pyramidScheduler = buildPyramid ? initPyramidScheduler() : null;
                 const scheduleFetch = rafThrottle(() => {
                     if (!timeState || !tileState) return;
-                    const { eagerTimes, restTimes } = timeState;
-                    const { curRenderLevel, curRenderLevelTileIds, curBaseLevelTileIds } = tileState;
+                    const {eagerTimes, restTimes} = timeState;
+                    const {curRenderLevel, curRenderLevelTileIds, curBaseLevelTileIds} = tileState;
                     if (!eagerTimes.length && !restTimes.length) return;
                     if (!curRenderLevelTileIds.length && !curBaseLevelTileIds.length) return;
 
@@ -624,7 +634,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 });
                 //for debug
                 const debugShowImageBitmap = (tileId: string, time: number) => {
-                    const { z } = getTileNode(tileId);
+                    const {z} = getTileNode(tileId);
                     const resource =
                         z === baseLevel
                             ? baseLevelScheduler.getResource(tileId, time)
@@ -632,6 +642,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     if (!resource.data) return;
                     showImageBitmap(resource.data.imagebitmap);
                 };
+
                 //初始化非baselevel金字塔
                 function initPyramidScheduler() {
                     const pyramidCache = {} as Record<number /* level */, LRUCache<RasterTileRenderResource, string>>;
@@ -648,13 +659,13 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     const getResource = (tileId: string, time: number, reinsert = false) => {
                         const key = getKey(tileId, time);
                         if (boundsEmptyTileIdSet.has(tileId) || emptyKeySet.has(key))
-                            return { ready: true, data: null };
-                        const { z } = getTileNode(tileId);
+                            return {ready: true, data: null};
+                        const {z} = getTileNode(tileId);
                         const data = pyramidCache[z].get(key, reinsert);
-                        return data ? { ready: true, data } : { ready: false, data: null };
+                        return data ? {ready: true, data} : {ready: false, data: null};
                     };
                     const checkTileChildren = (parentId: string, time: number) => {
-                        const { children } = getTileNode(parentId);
+                        const {children} = getTileNode(parentId);
                         const resources = children.map((child) => {
                             if (child.z === baseLevel) {
                                 return baseLevelScheduler.getResource(child.id, time);
@@ -664,9 +675,9 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         });
                         const allReady = resources.every((i) => i.ready);
                         if (!allReady) {
-                            return { ready: false, data: null };
+                            return {ready: false, data: null};
                         } else {
-                            return { ready: true, data: resources.map((i) => i.data) };
+                            return {ready: true, data: resources.map((i) => i.data)};
                         }
                     };
                     const isReady = (level: number, key: string) => {
@@ -676,8 +687,8 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         beforeRun: (state) => {
                             state.done = 0;
                         },
-                        invoke: ({ tileId, time, key }, state) => {
-                            const { z, parent } = getTileNode(tileId);
+                        invoke: ({tileId, time, key}, state) => {
+                            const {z, parent} = getTileNode(tileId);
                             // if (boundsEmptyTileIdSet.has(tileId)) {
                             //     debugger;
                             // }
@@ -703,7 +714,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                 });
                                 state.done++;
                             }
-                            const { curRenderLevel } = tileState;
+                            const {curRenderLevel} = tileState;
                             //例如z = 11, 当前渲染第10级, 4个11级合并成一个10级
                             if (z > curRenderLevel) {
                                 idleScheduler.add([
@@ -718,12 +729,12 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         afterRun: (state) => {
                             state.done && requestNewFrame(false);
                         },
-                        idleRequestOptions: { timeout: 300 },
+                        idleRequestOptions: {timeout: 300},
                     });
                     return {
                         cancelTaskInTimes: (times: Set<number> | Array<number>) => {
                             const cancels = Array.isArray(times) ? new Set(times) : times;
-                            idleScheduler.applyFilter(({ time }) => cancels.has(time));
+                            idleScheduler.applyFilter(({time}) => cancels.has(time));
                         },
                         scheduleTask: (
                             level: number, //安排任务的等级
@@ -731,7 +742,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             eagerTimes: number[],
                             restTimes: number[]
                         ) => {
-                            idleScheduler.applyFilter(({ tileId }) => getTileNode(tileId).z < level);
+                            idleScheduler.applyFilter(({tileId}) => getTileNode(tileId).z < level);
 
                             //已经完成的或者空瓦片, 用于剔除baseLevel子节点
                             const readyMap = new Map<string /*tileId*/, number[] /*times*/>();
@@ -742,7 +753,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
 
                             const curTaskList = [] as DownSamplingTaskDesc[];
                             //eagers 立刻需要渲染的瓦片
-                            for (let i = tileIds.length, before = eagerTimes[0], after = eagerTimes[1]; i--; ) {
+                            for (let i = tileIds.length, before = eagerTimes[0], after = eagerTimes[1]; i--;) {
                                 const id = tileIds[i];
                                 const key1 = getKey(id, before);
                                 const key2 = getKey(id, after);
@@ -754,13 +765,13 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                     markReady(id, before);
                                     markReady(id, after);
                                 } else {
-                                    !ready1 && curTaskList.push({ tileId: id, time: after, key: key2 });
-                                    !ready2 && curTaskList.push({ tileId: id, time: before, key: key1 });
+                                    !ready1 && curTaskList.push({tileId: id, time: after, key: key2});
+                                    !ready2 && curTaskList.push({tileId: id, time: before, key: key1});
                                 }
                             }
                             //rest 后续可能渲染的瓦片
-                            for (let i = restTimes.length; i--; ) {
-                                for (let j = tileIds.length; j--; ) {
+                            for (let i = restTimes.length; i--;) {
+                                for (let j = tileIds.length; j--;) {
                                     const id = tileIds[j],
                                         time = restTimes[i],
                                         key = getKey(id, time);
@@ -768,7 +779,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                         //不是立即渲染, 对于完成的tile, 子tile无需加载
                                         markReady(id, time);
                                     } else {
-                                        curTaskList.push({ tileId: id, time, key });
+                                        curTaskList.push({tileId: id, time, key});
                                     }
                                 }
                             }
@@ -776,12 +787,12 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             return Array.from(readyMap.entries());
                         },
                         addTask: (desc: DownSamplingTaskDesc) => {
-                            const { tileId, key } = desc;
+                            const {tileId, key} = desc;
                             // if (boundsEmptyTileIdSet.has(tileId)) {
                             //     debugger;
                             // }
                             if (emptyKeySet.has(key)) return;
-                            const { z } = getTileNode(tileId);
+                            const {z} = getTileNode(tileId);
                             const data = pyramidCache[z].get(key, false);
                             if (data) return;
                             idleScheduler.add([desc]);
@@ -795,18 +806,22 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         getResource,
                     };
                 }
+
                 function buildTexture(imagebitmap: ImageBitmap) {
                     const tex = reusePool.get();
                     tex.image = imagebitmap;
                     tex.needsUpdate = true;
                     return tex;
                 }
+
                 function disposeResource(item: RasterTileRenderResource) {
                     item.imagebitmap.close();
                     item.tex.image = null;
                     reusePool.push(item.tex);
                 }
+
                 let delayTimer: NodeJS.Timeout;
+
                 function handleTimeChange() {
                     if (!source.isSingle && (isNaN(layer.curTime) || isNil(layer.curTime))) {
                         timeState = null;
@@ -837,7 +852,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     const restTimes = Array.from(timeIndexSet)
                         .sort((a, b) => a - b)
                         .map((i) => times[i]);
-                    const { only1, both, only2 } = diffAscArrays(
+                    const {only1, both, only2} = diffAscArrays(
                         [...oldEagerTimes, ...oldRestTimes],
                         [...eagerTimes, ...restTimes]
                     );
@@ -866,6 +881,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         !delayTimer && scheduleFetch();
                     }
                 }
+
                 function handleTilesChange() {
                     if (!self.tiles?.length) return;
                     const tilesChange = tileState?.version !== self._tilesVersion;
@@ -885,7 +901,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                     }
                     actuallyRenderExtent = resolveViewRenderExtent(view);
 
-                    const { x, y } = actuallyRenderExtent.center;
+                    const {x, y} = actuallyRenderExtent.center;
                     const dirCache = {} as Record<string, number>;
                     curRenderLevelTileIds = curRenderLevelTileIds.sort((a, b) => {
                         const na = getTileNode(a);
@@ -930,16 +946,16 @@ class CustomLayerView extends BaseLayerViewGL2D {
                         const [xmin, xmax, ymin, ymax] = tileBoundsMap[inputLevel].bounds;
                         const rawInBounds = rawTiles
                             .map((i) => {
-                                return { x: i.col, y: i.row, z: i.level };
+                                return {x: i.col, y: i.row, z: i.level};
                             })
-                            .filter(({ x, y }) => {
+                            .filter(({x, y}) => {
                                 return x >= xmin && x <= xmax && y >= ymin && y <= ymax;
                             });
                         if (!rawInBounds.length) return [];
                         //
                         let outIds: string[];
                         if (inputLevel === targetLevel) {
-                            outIds = rawInBounds.map(({ z, x, y }) => getTileId(z, x, y));
+                            outIds = rawInBounds.map(({z, x, y}) => getTileId(z, x, y));
                         } else if (inputLevel < targetLevel) {
                             outIds = [];
                             while (rawInBounds.length) {
@@ -970,6 +986,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             : outIds;
                     }
                 }
+
                 let stopHandle: () => void;
                 const startLoad = () => {
                     if (stopHandle) return;
@@ -981,7 +998,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                                 handleTimeChange();
                                 requestNewFrame();
                             },
-                            { initial: true }
+                            {initial: true}
                         );
                     const tilesHandle = reactiveUtils.watch(
                         () => view.extent,
@@ -989,7 +1006,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
                             handleTilesChange();
                             requestNewFrame();
                         },
-                        { initial: true }
+                        {initial: true}
                     );
                     stopHandle = () => {
                         timeHandle && timeHandle.remove();
@@ -1025,11 +1042,12 @@ class CustomLayerView extends BaseLayerViewGL2D {
                 };
             }
         }
+
         self.getLoadStat = (t: number) => {
             if (!renderInstances) return 0;
             return renderInstances.loadStat(t);
         };
-        self._render = ({ state }) => {
+        self._render = ({state}) => {
             if (!renderInstances) return;
             renderInstances.render(state);
         };
@@ -1045,10 +1063,12 @@ class CustomLayerView extends BaseLayerViewGL2D {
             },
         });
     }
+
     detach() {
         this._handlers.forEach((f) => f.remove());
         this._handlers = null;
     }
+
     render(params: __esri.BaseLayerViewGL2DRenderRenderParameters) {
         this._render?.(params);
     }
@@ -1058,7 +1078,7 @@ class CustomLayerView extends BaseLayerViewGL2D {
 export class TimeSeriesRasterLayer extends Layer {
     private [ILayerIdKey]: number = getLayerUID();
     private _layerView: CustomLayerView;
-    preload: PreloadOpts = { frame: 5 };
+    preload: PreloadOpts = {frame: 5};
     debug: boolean;
 
     @property()
@@ -1122,8 +1142,8 @@ export class TimeSeriesRasterLayer extends Layer {
         if (!this.tileInfo) {
             const viewCrs = (view as __esri.MapView).spatialReference;
             if (
-                !viewCrs.equals({ wkid: 4326 } as __esri.SpatialReference) &&
-                !viewCrs.equals({ wkid: 3857 } as __esri.SpatialReference)
+                !viewCrs.equals({wkid: 4326} as __esri.SpatialReference) &&
+                !viewCrs.equals({wkid: 3857} as __esri.SpatialReference)
             ) {
                 console.warn("mapView.spatialReference非4326/3857坐标系时,必须指定 TimeSeriesRasterLayer.tileInfo");
             } else {

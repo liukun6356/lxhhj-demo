@@ -2336,10 +2336,10 @@ arraybuffer.prototype.slice@^1.0.3:
     is-array-buffer "^3.0.4"
     is-shared-array-buffer "^1.0.2"
 
-arrugator@^1.3.2:
-  version "1.3.2"
-  resolved "https://mirrors.huaweicloud.com/repository/npm/arrugator/-/arrugator-1.3.2.tgz#0d1f95ba99edebc5c968b05eadf976927ad9cd91"
-  integrity sha512-Re8TXI+P/UeJnW40k14jeCQIEYWKjBlGS+UgV8o3XfSLd83Wcm6J2WcxFMCkkzaYj9qKmI9fVRmLTqp2RgdGDw==
+arrugator@1.2.1:
+  version "1.2.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/arrugator/-/arrugator-1.2.1.tgz#bc9f0b11fe60898518e19db750f77a75532cc7c8"
+  integrity sha512-3H2x98iDcXc6R2tbCIWdBeq5Ejuz84OlSUAUjeOQDi5/1kg8FxrUPncrGNfxWqVsWgvIuWIQ1Esj9kDmY9/84Q==
   dependencies:
     tinyqueue "^2.0.3"
 
