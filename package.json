@@ -14,6 +14,7 @@
     "@turf/turf": "^6.5.0",
     "@types/nprogress": "^0.2.3",
     "@types/proj4": "^2.5.5",
+    "@types/three": "^0.173.0",
     "arcgis-js-api": "4.29.4",
     "arrugator": "1.2.1",
     "axios": "^1.2.0",
@@ -48,10 +49,13 @@
     "vue3-seamless-scroll": "^2.0.1",
     "x2js": "^3.4.4",
     "xlsx": "^0.17.0",
-    "xlsx-style-vite": "^0.0.2"
+    "xlsx-style-vite": "^0.0.2",
+    "leaflet": "^1.0.3",
+    "leaflet-draw": "^1.0.4"
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@types/leaflet": "^1.0.3",
     "@types/cesium": "^1.70.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "eslint": "^8.14.0",

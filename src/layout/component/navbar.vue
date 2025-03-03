@@ -46,6 +46,7 @@ const menus = [
   {label: 'cesium', name: 'Cesium'},
   {label: 'three', name: 'Three'},
   {label: 'arcgis', name: 'Arcgis'},
+  {label: 'leaflet', name: 'Leaflet'},
   {label: 'webGl', name: 'Webgl'},
   // {label:"webGpu",name:"Webgpu"},
   {label: 'ui', name: 'Ui'},

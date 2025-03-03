@@ -93,13 +93,13 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/three/index.vue'),
                 name: 'Three-main',
-                redirect: '/three/main/instancingBillboards',
+                redirect: '/three/main/3dBuilding',
                 children: [
                     {
-                        path: 'building',
-                        component: () => import('@/views/three/component/building/index.vue'),
-                        name: 'Three-main-Building',
-                        meta: {title: 'building', icon: '', affix: true},
+                        path: '3dBuilding',
+                        component: () => import('@/views/three/component/3dBuilding/index.vue'),
+                        name: 'Three-main-3dBuilding',
+                        meta: {title: '3dBuilding', icon: '', affix: true},
                     },
                     {
                         path: 'instancingBillboards',
@@ -121,7 +121,7 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/arcgis/index.vue'),
                 name: 'Arcgis-main',
-                redirect: '/arcgis/main/tsKriging',
+                redirect: '/arcgis/main/tsFeature',
                 children: [
                     {
                         path: 'tsFeature',
@@ -262,10 +262,10 @@ export const constantRoutes = [
         ]
     },
     {
+        name: "Ui",
         path: '/ui',
         component: () => import('@/layout/index.vue'),
         redirect: '/ui/main',
-        name: "Ui",
         children: [
             {
                 path: 'main',
@@ -278,6 +278,28 @@ export const constantRoutes = [
                         component: () => import('@/views/ui/component/dragSort.vue'),
                         name: 'Ui-main-DragSort',
                         meta: {title: 'dragSort', icon: '', affix: true},
+                    },
+                ]
+            }
+        ]
+    },
+    {
+        name: "Leaflet",
+        path: '/leaflet',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/leaflet/main',
+        children: [
+            {
+                path: 'main',
+                component: () => import('@/views/leaflet/index.vue'),
+                name: 'Leaflet-main',
+                redirect: '/leaflet/main/mapSelectLine',
+                children: [
+                    {
+                        path: 'mapSelectLine',
+                        component: () => import('@/views/leaflet/component/mapSelectLine.vue'),
+                        name: 'Leaflet-main-MapSelectLine',
+                        meta: {title: 'mapSelectLine', icon: '', affix: true},
                     },
                 ]
             }

@@ -6,7 +6,7 @@ export default [
             {
                 id: 11,
                 label: '3d楼栋',
-                name: "Three-main-Building"
+                name: "Three-main-3dBuilding"
             },
         ],
     },

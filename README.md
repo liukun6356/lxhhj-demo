@@ -14,6 +14,7 @@
 | arcgis | 二维GIS引擎 | https://developers.arcgis.com/javascript/latest/ |
 | Turf | 地理空间分析工具 | https://turfjs.fenxianglu.cn/ |
 | proj4 | 地理坐标转换 | http://proj4js.org/ |
+| earcut | 多边形三角剖分库 | https://github.com/mapbox/earcut/ |
 | arrugator | GIS栅格图像重投影 | https://gitlab.com/IvanSanchez/arrugator/ |
 | geotiff | 解析和处理GeoTIFF文件 | https://geotiffjs.github.io/ |
 | gl-matrix | 矩阵和向量计算 | https://glmatrix.net/ |
