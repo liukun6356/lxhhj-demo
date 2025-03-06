@@ -132,7 +132,7 @@ const addPolygon = (latLng) => {
 
   .leafletMap {
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 32px);
 
     &.isFullScreen {
       position: fixed;
@@ -148,6 +148,10 @@ const addPolygon = (latLng) => {
     right: 0;
     top: 50px;
     z-index: 999;
+  }
+
+  :deep(.el-form-item--default) {
+    margin-bottom: 0;
   }
 }
 </style>

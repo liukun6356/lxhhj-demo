@@ -169,7 +169,7 @@ const updateMarkers = () => {
 
   .leafletMap {
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 32px);
 
     &.isFullScreen {
       position: fixed;
