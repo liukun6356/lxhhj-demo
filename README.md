@@ -12,6 +12,8 @@
 | mars3d | 开源三维SDK | http://mars3d.cn/project/vue/jcxm.html |
 | three | 3D 图形渲染库 | https://threejs.org |
 | arcgis | 二维GIS引擎 | https://developers.arcgis.com/javascript/latest/ |
+| leaflet | 轻量级交互式地图 | https://leafletjs.cn/ |
+| leaflet-draw | 轻量级交互式地图绘制 | https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html |
 | Turf | 地理空间分析工具 | https://turfjs.fenxianglu.cn/ |
 | proj4 | 地理坐标转换 | http://proj4js.org/ |
 | earcut | 多边形三角剖分库 | https://github.com/mapbox/earcut/ |

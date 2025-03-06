@@ -5,9 +5,15 @@ export default [
         children: [
             {
                 id: 11,
-                label: '点位选取线路',
-                name: "Leaflet-main-MapSelectLine"
+                label: '点位连接线路',
+                name: "Leaflet-main-MapSelectLine",
+
             },
+            {
+                id: 12,
+                label: '选取点位',
+                name: "Leaflet-main-MapSelectPoint"
+            }
         ],
     },
 ];

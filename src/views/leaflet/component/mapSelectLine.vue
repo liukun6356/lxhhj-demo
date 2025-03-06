@@ -116,7 +116,7 @@ const addEntity = () => {
     const className = 'leaflet-div-icon' + item.id
     const myIcon = L.divIcon({
       className,
-      iconSize: [20, 32],
+      iconSize: [24, 32],
       iconAnchor: [10, 32]
     });
     const popup = L.popup({
@@ -135,8 +135,8 @@ const addEntity = () => {
     })
         .bindPopup(popup)
         .on('click', (e) => {
-          const {id, name, index, longitude, latitude} = e.target.options
-          if (index) return
+          const {id, name, longitude, latitude} = e.target.options
+          if (lineArr.value.find(item=>item.id === id)) return
           e.target.options.index = lineArr.value.length + 1
           lineArr.value.push({id, name, longitude, latitude, index: lineArr.value.length + 1})
           updateMarkers()
@@ -189,14 +189,12 @@ const updateMarkers = () => {
 
 <style lang="scss">
 .leaflet-marker-icon {
-  width: 20px;
-  height: 30px;
   cursor: pointer;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 14px;
+  line-height: 24px;
   text-align: center;
   color: #000;
-  background: url("@/assets/images/icons/marker-icon.png") no-repeat center/cover;
+  background: url("@/assets/images/icons/marker-icon.png") no-repeat center/contain;
 }
 
 .leaflet-div-icon-popup {
