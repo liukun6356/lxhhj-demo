@@ -6,7 +6,7 @@
 <template>
   <div class="leafletMapSelect-wrap">
     <el-form-item label="坐标" prop="geom">
-      <el-tag v-for="(item,index) in formData.posData" :key="index" style="margin:5px 0 5px 0">
+      <el-tag v-for="(item,index) in formData.posData" :key="index" style="margin:0 5px 5px 0">
         <span class="index">{{ index + 1 }}</span>
         <span>{{ item + "" }}</span>
       </el-tag>
@@ -147,6 +147,9 @@ const addPolygon = (latlngs) => {
   .index {
     color: blue;
     margin-right: 5px;
+  }
+  :deep(.el-form-item--default){
+    margin-bottom: 0;
   }
 }
 </style>

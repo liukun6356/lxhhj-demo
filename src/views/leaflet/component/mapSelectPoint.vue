@@ -164,7 +164,8 @@ const addPolygon = (latLng) => {
 }
 
 .leaflet-div-icon-popup {
-  margin-bottom: 50px;
+  margin-bottom: 52px;
+  margin-left: 3px;
 
   .leaflet-popup-content-wrapper {
     border-radius: 5px;

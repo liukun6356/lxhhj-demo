@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, toRefs, onMounted, ref, defineEmits, computed,watch, defineProps, defineExpose,nextTick} from "vue";
+import {reactive, toRefs, onMounted, ref, defineEmits, computed, watch, defineProps, defineExpose, nextTick} from "vue";
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import 'leaflet-draw/dist/leaflet.draw.css'
@@ -38,13 +38,13 @@ const leafletMapRef = ref(null)
 
 const model = reactive({
   posData: [
-    {id: "efdcb5294c7e46059d0367e8f81c18d9",name:"站点1", longitude: 112.276154, latitude: 30.09151},
-    {id: "957ecf37afbe45ae87d236e0b221c71e",name:"站点2", longitude: 112.307053, latitude: 30.116229},
-    {id: "25c7176818bf442e8a7f1aa31d944ebb",name:"站点3", longitude: 112.183456, latitude: 30.07503},
-    {id: "11b18ecc9d3048a9bab0973de277405d",name:"站点4", longitude: 112.127838, latitude: 30.107989}
+    {id: "efdcb5294c7e46059d0367e8f81c18d9", name: "站点1", longitude: 112.276154, latitude: 30.09151},
+    {id: "957ecf37afbe45ae87d236e0b221c71e", name: "站点2", longitude: 112.307053, latitude: 30.116229},
+    {id: "25c7176818bf442e8a7f1aa31d944ebb", name: "站点3", longitude: 112.183456, latitude: 30.07503},
+    {id: "11b18ecc9d3048a9bab0973de277405d", name: "站点4", longitude: 112.127838, latitude: 30.107989}
   ],
   moveIndex: 0,
-  lineArr:[]
+  lineArr: []
 })
 const {lineArr} = toRefs(model)
 
@@ -136,7 +136,7 @@ const addEntity = () => {
         .bindPopup(popup)
         .on('click', (e) => {
           const {id, name, longitude, latitude} = e.target.options
-          if (lineArr.value.find(item=>item.id === id)) return
+          if (lineArr.value.find(item => item.id === id)) return
           e.target.options.index = lineArr.value.length + 1
           lineArr.value.push({id, name, longitude, latitude, index: lineArr.value.length + 1})
           updateMarkers()
@@ -184,6 +184,10 @@ const updateMarkers = () => {
     color: blue;
     margin-right: 5px;
   }
+
+  :deep(.el-form-item--default) {
+    margin-bottom: 0;
+  }
 }
 </style>
 
@@ -198,7 +202,8 @@ const updateMarkers = () => {
 }
 
 .leaflet-div-icon-popup {
-  margin-bottom: 50px;
+  margin-bottom: 52px;
+  margin-left: 3px;
 
   .leaflet-popup-content-wrapper {
     border-radius: 5px;
