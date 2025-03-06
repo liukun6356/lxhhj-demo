@@ -13,6 +13,11 @@ export default [
                 id: 12,
                 label: '选取点位',
                 name: "Leaflet-main-MapSelectPoint"
+            },
+            {
+                id: 13,
+                label: '选取区域',
+                name: "Leaflet-main-MapSelectArea"
             }
         ],
     },

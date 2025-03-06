@@ -307,6 +307,12 @@ export const constantRoutes = [
                         name: 'Leaflet-main-MapSelectPoint',
                         meta: {title: 'mapSelectPoint', icon: '', affix: true},
                     },
+                    {
+                        path: 'mapSelectArea',
+                        component: () => import('@/views/leaflet/component/mapSelectArea.vue'),
+                        name: 'Leaflet-main-MapSelectArea',
+                        meta: {title: 'mapSelectArea', icon: '', affix: true},
+                    },
                 ]
             }
         ]
