@@ -16,14 +16,13 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, toRefs, onMounted, onUnmounted, ref, computed, nextTick} from "vue";
+import {reactive, toRefs, onMounted, ref, nextTick} from "vue";
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import 'leaflet-draw/dist/leaflet.draw.css'
 import 'leaflet-draw'
 import 'leaflet-fullscreen'
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
-import {generateUUID} from "@/utils/dictionary";
 
 // ref
 const leafletMapRef = ref(null)
