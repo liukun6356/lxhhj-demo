@@ -8,6 +8,11 @@ export default [
                 label: '3d楼栋',
                 name: "Three-main-3dBuilding"
             },
+            {
+                id: 12,
+                label: '3d厂区',
+                name: "Three-main-3dFactory"
+            },
         ],
     },
     {

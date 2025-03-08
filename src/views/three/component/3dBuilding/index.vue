@@ -1,3 +1,4 @@
+<!--3d楼栋-->
 <template>
   <div class="building-wrap">
     <div class="three-floor-details" ref="threeFloorDetailsRef">
@@ -127,6 +128,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   renderer.dispose()
+  cancelAnimationFrame(animationFrameId)
 })
 
 const setCamera = (item) => { // 切换视角
@@ -469,6 +471,7 @@ const animate = () => {
   renderer.render(scene, camera);
   controls.update();
   composer.render();
+  threeBoxStore.performanceState.update()
 }
 
 const handleMouseMove = (event) => {

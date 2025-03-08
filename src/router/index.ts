@@ -102,6 +102,12 @@ export const constantRoutes = [
                         meta: {title: '3dBuilding', icon: '', affix: true},
                     },
                     {
+                        path: '3dFactory',
+                        component: () => import('@/views/three/component/3dFactory/index.vue'),
+                        name: 'Three-main-3dFactory',
+                        meta: {title: '3dFactory', icon: '', affix: true},
+                    },
+                    {
                         path: 'instancingBillboards',
                         component: () => import('@/views/three/component/instancingBillboards/index.vue'),
                         name: 'Three-main-InstancingBillboards',

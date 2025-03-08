@@ -8,7 +8,6 @@ import {ref, onMounted, onUnmounted, markRaw} from "vue"
 import Stats from 'three/addons/libs/stats.module.js';
 import {PerspectiveCamera, Scene, WebGLRenderer,} from "three";
 import {usethreeBoxStore} from "@/store/modules/threeBox"
-import * as three from 'three';
 // Refs
 const threeBoxRef = ref(null)
 
@@ -17,7 +16,6 @@ onMounted(() => {
   camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
   camera.position.z = 1400;
   scene = new Scene();
-  scene.background = new three.Color("#212121");
   const renderer = new WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(threeBoxRef.value.offsetWidth, threeBoxRef.value.offsetHeight);
