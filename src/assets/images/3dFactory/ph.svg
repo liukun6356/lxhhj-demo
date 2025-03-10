@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>平衡</title>
+    <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-304.000000, -35.000000)" stroke="#00CFA4">
+            <g id="平衡" transform="translate(304.000000, 35.000000)">
+                <g id="供热平衡" transform="translate(2.000000, 1.000000)">
+                    <g id="编组" transform="translate(1.000000, -0.449977)">
+                        <line x1="18" y1="15.879831" x2="0" y2="15.879831" id="路径" stroke-width="1.5" stroke-linecap="round"></line>
+                        <polyline id="路径" stroke-width="3" transform="translate(9.267767, 5.656854) rotate(-45.000000) translate(-9.267767, -5.656854) " points="14.267767 8.65685425 4.26776695 8.65685425 4.26776695 2.65685425"></polyline>
+                        <line x1="14" y1="19.379831" x2="4" y2="19.379831" id="路径" stroke-width="1.5" stroke-linecap="round"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

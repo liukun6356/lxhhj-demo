@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>过供</title>
+    <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-78.000000, -35.000000)">
+            <g id="1" transform="translate(78.000000, 35.000000)">
+                <g id="供热平衡" transform="translate(2.000000, 2.000000)">
+                    <g id="编组" transform="translate(1.000000, 1.000000)">
+                        <polygon id="路径" fill="#EA6C01" transform="translate(8.999975, 5.749998) scale(1, -1) translate(-8.999975, -5.749998) " points="8.99995 11.499995 3 5.499995 6.99995 5.499995 6.99995 0 10.99995 0 10.99995 5.499995 14.99995 5.499995"></polygon>
+                        <line x1="18" y1="14.499945" x2="0" y2="14.499945" id="路径" stroke="#EA6C01" stroke-width="1.5" stroke-linecap="round"></line>
+                        <line x1="14" y1="17.999945" x2="4" y2="17.999945" id="路径" stroke="#EA6C01" stroke-width="1.5" stroke-linecap="round"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

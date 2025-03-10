@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>EI2</title>
+    <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-191.000000, -85.000000)">
+            <g id="ei2" transform="translate(191.000000, 85.000000)">
+                <g id="EI模型" transform="translate(2.000000, 2.000000)">
+                    <polygon id="矩形" fill="#5B5B5B" points="10 1 19 10 10 19 1 10"></polygon>
+                    <path d="M10.0416968,1.3404344 L12.1742666,10 L10.0416968,18.1023392 L10.0409405,10.4974344 L2.90875005,10.4978782 C2.6516016,10.4978782 2.43773176,10.3125804 2.3933798,10.0682241 L2.38494053,9.97406863 C2.38494053,9.68477662 2.61945804,9.45025911 2.90875005,9.45025911 L10.0409405,9.4494344 L10.0416968,1.3404344 Z" id="形状结合" fill="#151515"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

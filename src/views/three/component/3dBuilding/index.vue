@@ -152,7 +152,6 @@ const setCamera = (item) => { // 切换视角
 // 场景逻辑
 let scene, ctx, texture, camera, raycaster, controls, outlinePass, animationFrameId, building = [], composer,
     ellipse
-
 const renderer = threeBoxStore.getRenderer()
 
 const initControls = () => { // 轨道控制器
@@ -204,6 +203,12 @@ const init = () => {
   setupCameraAndControls()
   setCamera(null)
   initEvent()
+  controls.update();
+  renderer.setAnimationLoop(() => {//每个可用帧都会调用的函数
+    renderer.render(scene, camera);
+    composer.render();
+    threeBoxStore.performanceState.update()
+  });
 }
 
 const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
@@ -327,8 +332,6 @@ const initEvent = () => {
   renderer.domElement.addEventListener('click', event => {
     handleClick(event);
   });
-  // 开始动画循环
-  animate();
 }
 
 const buildOhter = (groupWidth, groupDepth, zPosition, houseCount, floorCount, houseHeight, houseDepth) => {
@@ -464,14 +467,6 @@ const createTextMesh = (text, frontSignMesh) => {
     frontSignMesh.add(textMesh);
     scene.add(frontSignMesh);
   });
-}
-
-const animate = () => {
-  animationFrameId = requestAnimationFrame(() => animate());
-  renderer.render(scene, camera);
-  controls.update();
-  composer.render();
-  threeBoxStore.performanceState.update()
 }
 
 const handleMouseMove = (event) => {
