@@ -523,6 +523,7 @@ const createListener = () => {// 创建时间
     const intersects = raycaster.intersectObject(scene, true);
     if (intersects.length === 0) return;
     let selectedObject = intersects[0].object;
+    console.log(selectedObject.systemId, 222, selectedObject.p_name)
     const objName = selectedObject.p_name;
     switch (objName) {
       case "gltf":
@@ -543,6 +544,7 @@ const createListener = () => {// 创建时间
           selectedObject.showBillboard(labelRendererArr);
           lastLabelGltfMesh = selectedObject;
         }
+        console.log(selectedObject.modelInfo,333)
         model.isSelectState = true
         model.baseModelContentShow = false
         break
