@@ -463,7 +463,7 @@ const createSystem = (initData) => {
         position: {x: 10 + 60 * i, y: 0, z: 10.5 + 9 * j},
         options: item,
         systemClick: function (obj) {
-          console.log(obj.options, 666)
+          console.log(obj.options.system_name, 111)
         }
       })
       systemMeshArr.push(mesh)
@@ -544,7 +544,7 @@ const createListener = () => {// 创建时间
           selectedObject.showBillboard(labelRendererArr);
           lastLabelGltfMesh = selectedObject;
         }
-        console.log(selectedObject.modelInfo,333)
+        console.log(selectedObject.modelInfo.type,333)
         model.isSelectState = true
         model.baseModelContentShow = false
         break
