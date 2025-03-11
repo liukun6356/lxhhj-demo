@@ -249,7 +249,7 @@ const getColorForLatency = (ms) => {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 3px 0;
+  padding: 3px 10px;
   font-size: 13px;
   color: #e9e9e9;
   text-shadow: 2px 2px 2px #000;

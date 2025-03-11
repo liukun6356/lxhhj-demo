@@ -12,7 +12,7 @@ export default defineConfig({
         vitePluginMars3d(),
         glsl(),
     ],
-
+    worker: {format: 'es'},
     resolve: {// Vite路径别名配置
         alias: {
             '@': path.resolve('./src'),
