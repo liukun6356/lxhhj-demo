@@ -78,6 +78,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/simulateFluid/index.vue'),
                         name: 'Cesium-main-SimulateFluid',
                         meta: {title: 'simulateFluid', icon: '', affix: true},
+                    }, {
+                        path: 'mapSplit',
+                        component: () => import('@/views/cesium/component/mapSplit/index.vue'),
+                        name: 'Cesium-tool-MapSplit',
+                        meta: {title: 'mapSplit', icon: '', affix: true},
                     }
                 ]
             }

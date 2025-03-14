@@ -83,6 +83,17 @@ export default [
                 name: "Cesium-monomer-FloorsStacking"
             },
         ]
+    },
+    {
+        id: 4,
+        label: "工具控件",
+        children: [
+            {
+                id: 31,
+                label: '卷帘',
+                name: "Cesium-tool-MapSplit"
+            }
+        ]
     }
-
+    // mapSplit
 ];

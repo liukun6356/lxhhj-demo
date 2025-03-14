@@ -119,11 +119,10 @@ const addEntity = () => {
       iconSize: [24, 32],
       iconAnchor: [10, 32]
     });
-    const popup = L.popup({
+    const tooltip = L.tooltip({
       minWidth: 30,
-      autoPanPadding: [1, 1],
-      className: 'leaflet-div-icon-popup',
-      closeButton: false
+      offset: [2, -33],
+      direction:'top'
     }).setContent(item.name)
     return L.marker([+item.latitude, +item.longitude], {
       id: item.id,
@@ -133,7 +132,7 @@ const addEntity = () => {
       icon: myIcon,
       divIconClassName: className
     })
-        .bindPopup(popup)
+        .bindTooltip(tooltip)
         .on('click', (e) => {
           const {id, name, longitude, latitude} = e.target.options
           if (lineArr.value.find(item => item.id === id)) return
@@ -199,20 +198,5 @@ const updateMarkers = () => {
   text-align: center;
   color: #000;
   background: url("@/assets/images/icons/marker-icon.png") no-repeat center/contain;
-}
-
-.leaflet-div-icon-popup {
-  margin-bottom: 52px;
-  margin-left: 3px;
-
-  .leaflet-popup-content-wrapper {
-    border-radius: 5px;
-
-    .leaflet-popup-content {
-      margin: 5px;
-      text-align: center;
-    }
-  }
-
 }
 </style>
