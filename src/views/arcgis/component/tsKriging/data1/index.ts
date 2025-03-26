@@ -1,40 +1,30 @@
+// 湖北省荆州市公安县
 import { ClassBreakColorMapping, GradientColorMapping } from "./layer/color-mapping";
 import moment from "moment";
+import PolygonGeometry from "@arcgis/core/geometry/Polygon";
+import pointJson from "./gonganpoint20240326.json"
+import gonganCountyJson from "./gonganCounty20250312.json"
+import gridJson from "./grid20240326.json"
+
+
+const center = {
+    center: [112.193601, 30.033268],
+    zoom: 11
+}
+
 //位置
-const points = [
-    { x: 112.399200289, y: 36.9491050183 },
-    { x: 112.549136249, y: 37.1006417175 },
-    { x: 112.549669829, y: 37.199354004 },
-    { x: 112.350644516, y: 36.9987279515 },
-    { x: 112.550203409, y: 37.0499516245 },
-    { x: 112.449890382, y: 37.1001081376 },
-    { x: 112.601427082, y: 37.2004211638 },
-    { x: 112.499513316, y: 37.1497310708 },
-    { x: 112.501647635, y: 36.9997951113 },
-    { x: 112.449890382, y: 36.9507057581 },
-    { x: 112.500046896, y: 37.0995745577 },
-    { x: 112.399733869, y: 37.0494180445 },
-    { x: 112.599292762, y: 37.0995745577 },
-    { x: 112.651583595, y: 37.2009547438 },
-    { x: 112.548602669, y: 37.1497310708 },
-    { x: 112.600893502, y: 37.1491974909 },
-    { x: 112.450957542, y: 36.9997951113 },
-    { x: 112.649982855, y: 37.1491974909 },
-    { x: 112.450423962, y: 37.0494180445 },
-    { x: 112.448823223, y: 37.1502646507 },
-    { x: 112.500046896, y: 37.1998875839 },
-    { x: 112.500580476, y: 37.0499516245 },
-    { x: 112.450423962, y: 37.1998875839 },
-];
+const points = gridJson.features.map(item=>({x:item.properties.longitude,y:item.properties.latitude}))
+
+const grids =gridJson.features.map(item=>item.geometry.coordinates[0][0])
 
 const pointsExtent = {
     spatialReference: {
-        wkid: 3857,
+        wkid: 4326,
     },
-    xmin: 12506816.537817214,
-    ymin: 4432015.055451693,
-    xmax: 12540316.92285129,
-    ymax: 4467154.425233481,
+    xmin: Math.min.apply(null,pointJson.features.map(item=>item.geometry.coordinates[0])),
+    ymin: Math.min.apply(null,pointJson.features.map(item=>item.geometry.coordinates[1])),
+    xmax: Math.max.apply(null,pointJson.features.map(item=>item.geometry.coordinates[0])),
+    ymax: Math.max.apply(null,pointJson.features.map(item=>item.geometry.coordinates[1])),
 };
 const startTime = moment("2020-01-01 08:00:00").valueOf();
 const endTime = moment("2020-01-04 08:00:00").valueOf();
@@ -79,6 +69,14 @@ const colorMap2 = {
     ],
     valueRange: [0, 11],
 } as GradientColorMapping;
+
+const polygons = gonganCountyJson.features.map((i) => {
+    return new PolygonGeometry({
+        spatialReference: {wkid: 4326},
+        rings: i.geometry.coordinates[0],
+    });
+});
+
 export const KrigingDataMeta = {
     startTime,
     endTime,
@@ -87,4 +85,7 @@ export const KrigingDataMeta = {
     colorMap: [colorMap, colorMap2],
     pointsExtent,
     interval,
+    polygons,
+    center,
+    grids
 };

@@ -7,9 +7,8 @@
     </Teleport>
     <teleport to="body">
       <label class="tsKriging-label" v-for="item in showListData" :key="item.index"
-             :style="{ '--x': item.screenX + 'px', '--y': item.screenY + 'px' }">{{
-          showPopup ? item.value.toFixed(1) : ''
-        }}</label>
+             :style="{ '--x': item.screenX + 'px', '--y': item.screenY + 'px' }" v-if="showPopup">
+        {{ item.value.toFixed(1) }}</label>
     </teleport>
     <yb-panl v-if="selTimeRang" :selTimeRang="selTimeRang" :defaultStartTime="selTimeRang.start"
              timeType="m" @timeChange="timeChange"/>
@@ -19,15 +18,17 @@
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
-import {KrigingDataMeta} from "./data"
+import {KrigingDataMeta} from "./data/index.ts"
 import {TimeSeriesKrigingLayer} from "./layer";
 import {usearcgisMapStore} from "@/store/modules/arcgisMap";
-import PolygonGeometry from "@arcgis/core/geometry/Polygon";
+import Polygon from "@arcgis/core/geometry/Polygon";
 import Extent from "@arcgis/core/geometry/Extent";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import Graphic from "@arcgis/core/Graphic";
 import {MathUtils} from "three";
+import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils";
+import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
@@ -39,7 +40,7 @@ const gui2Dom = ref(null)
 const mapStore = usearcgisMapStore()
 const model = reactive({
   formData: {
-    label:true,
+    label: true,
     clip: true,
     splitCount: 50,
     colorMapping: 'class-break',
@@ -64,11 +65,7 @@ const {formData, selTimeRang, curColorMapping, showPopup, showListData} = toRefs
 
 onMounted(() => {
   initGui()
-  viewer.goTo({
-    center: [112.536014, 37.061309],
-    zoom: 11
-  })
-  getlist()
+  viewer.goTo(KrigingDataMeta.center)
   layer = new TimeSeriesKrigingLayer({
     source: {
       points: KrigingDataMeta.points,
@@ -82,10 +79,14 @@ onMounted(() => {
       krigingOpts: {splitCount: 50}
     },
   });
+  getlist()
   addRect()
+  if (KrigingDataMeta.grids) addGrid()
   viewer.map.add(layer);
   viewer.map.layers.reorder(gsLayer, viewer.map.layers.length - 1);
-  layer.debug = true;
+  viewer.map.layers.reorder(gridlayer, viewer.map.layers.length - 1);
+  viewer.map.layers.reorder(labelLayer, viewer.map.layers.length - 1);
+  // layer.debug = true;
 
   model.times = KrigingDataMeta.data.map(i => i.time);
   const start = model.times[0]
@@ -103,26 +104,39 @@ onUnmounted(() => {
   layer.destroy();
   viewer.map?.remove(gsLayer);
   gsLayer.destroy();
+  viewer.map?.remove(gridlayer);
+  gridlayer.destroy();
+  viewer.map?.remove(labelLayer);
+  labelLayer.destroy();
   labelWatch.remove()
 })
 
 
 const getlist = async () => {
-  const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/kriging-clip-polygon.json`)
-  const jsonData = await res.json()
-  const polygons = jsonData.features.map((i) => {
-    return new PolygonGeometry({
-      spatialReference: {wkid: 4326},
-      rings: i.geometry.coordinates,
-    });
-  });
-  layer.renderOpts.clipPolygon = polygons;
+  layer.renderOpts.clipPolygon = KrigingDataMeta.polygons;
   showPopupBox()
   labelWatch = reactiveUtils.watch(() => viewer.extent, showPopupBox, {initial: true});
 }
 
 const timeChange = (timestamp) => {
   layer.curTime = timestamp
+  let afterIndex = KrigingDataMeta.data.findIndex((i) => i.time > layer.curTime);
+  if (afterIndex === -1) afterIndex = KrigingDataMeta.data.length - 1;
+  const beforeIndex = Math.max(afterIndex - 1, 0);
+  const beforeData = KrigingDataMeta.data[beforeIndex];
+  const afterData = KrigingDataMeta.data[afterIndex];
+  const per = afterIndex === beforeIndex ? 1 : (layer.curTime - beforeData.time) / (afterData.time - beforeData.time);
+  if (KrigingDataMeta.grids) labelLayer.graphics.items.forEach((graphic, index) => {
+    graphic.symbol = new TextSymbol({
+      text: MathUtils.lerp(beforeData.value[index], afterData.value[index], per).toFixed(1), // 标签文字
+      color: 'white', // 文字颜色，可调整
+      yoffset: -5,
+      font: {
+        size: 16, // 字体大小（单位：像素）
+        family: 'Arial', // 字体类型
+      },
+    })
+  })
   showPopupBox()
 }
 
@@ -170,11 +184,54 @@ const showPopupBox = () => {
     item.screenX = screen.x;
     item.screenY = screen.y;
   });
+
+
 }
 
 // 地图逻辑
 const viewer = mapStore.getArcgisViewer();
-let layer, gsLayer, labelWatch
+let layer, gsLayer, labelWatch, gridlayer, labelLayer
+
+const addGrid = () => {
+  gridlayer = new GraphicsLayer({
+    graphics: KrigingDataMeta.grids.map(rings => new Graphic({
+      geometry: new Polygon({
+        spatialReference: {wkid: 4326},
+        rings,
+      }),
+      symbol: new SimpleFillSymbol({
+        color: 'transparent',
+        outline: {
+          width: 1,
+          color: 'white'
+        }
+      }),
+    }))
+  })
+  labelLayer = new GraphicsLayer({
+    graphics: KrigingDataMeta.grids.map(rings => {
+      const polygon = new Polygon({
+        spatialReference: {wkid: 4326},
+        rings,
+      });
+      const centroid = polygon.centroid;
+      return new Graphic({
+        geometry: centroid, // 使用中心点作为几何位置
+        symbol: new TextSymbol({
+          text: '1', // 标签文字
+          color: 'white', // 文字颜色，可调整
+          yoffset: 13,
+          font: {
+            size: 20, // 字体大小（单位：像素）
+            family: 'Arial', // 字体类型
+          },
+        }),
+      })
+    })
+  })
+  viewer.map.add(labelLayer)
+  viewer.map.add(gridlayer)
+}
 
 const addRect = () => {
   const originExtent = new Extent(KrigingDataMeta.pointsExtent);
@@ -245,7 +302,7 @@ const initGui = () => {
   left: 0;
   top: 0;
   color: white;
-  line-height:30px;
+  line-height: 30px;
   transform: translate(var(--x), var(--y)) translateX(-50%);
   --b: 4px;
   text-shadow: 1px 1px var(--b) black, 1px -1px var(--b) black, -1px 1px var(--b) black, -1px -1px var(--b) black;
