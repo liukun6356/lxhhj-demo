@@ -9,83 +9,126 @@ export const constantRoutes = [
     {
         path: '/cesium',
         component: () => import('@/layout/index.vue'),
-        redirect: '/cesium/main',
+        redirect: '/cesium/fluid',
         name: "Cesium",
         children: [
+            {
+                path: 'fluid',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Fluid',
+                redirect: '/cesium/fluid/simulateFluid',
+                meta: {title: '流体', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'simulateFluid',
+                        component: () => import('@/views/cesium/component/fluid/simulateFluid/index.vue'),
+                        name: 'Cesium-Fluid-SimulateFluid',
+                        meta: {title: '模拟流体', icon: '', affix: true},
+                    }, {
+                        path: 'triangularMesh',
+                        component: () => import('@/views/cesium/component/fluid/triangularMesh/index.vue'),
+                        name: 'Cesium-Fluid-TriangularMesh',
+                        meta: {title: '水动力三角网渲染', icon: '', affix: true},
+                    },
+                ]
+            },
             {
                 path: 'main',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-main',
                 redirect: '/cesium/main/SimulateFluid',
+                meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
                         path: 'controlPanel',
-                        component: () => import('@/views/cesium/component/controlPanel/index.vue'),
-                        name: 'Cesium-main-ControlPanel',
-                        meta: {title: 'controlPanel', icon: '', affix: true},
+                        component: () => import('@/views/cesium/component/main/controlPanel/index.vue'),
+                        name: 'Cesium-Main-ControlPanel',
+                        meta: {title: '地图工具栏(图层管理)', icon: '', affix: true},
                     }, {
                         path: 'lengendShow',
-                        component: () => import('@/views/cesium/component/lengendShow/index.vue'),
-                        name: 'Cesium-main-LengendShow',
-                        meta: {title: 'lengendShow', icon: '', affix: true},
-                    }, {
-                        path: 'rangeSearch',
-                        component: () => import('@/views/cesium/component/rangeSearch/index.vue'),
-                        name: 'Cesium-analyse-RangeSearch',
-                        meta: {title: 'rangeSearch', icon: '', affix: true},
+                        component: () => import('@/views/cesium/component/main/lengendShow/index.vue'),
+                        name: 'Cesium-Main-LengendShow',
+                        meta: {title: '图例展示+点聚合(base64)', icon: '', affix: true},
                     }, {
                         path: 'sceneEdit',
-                        component: () => import('@/views/cesium/component/sceneEdit/index.vue'),
-                        name: 'Cesium-main-SceneEdit',
-                        meta: {title: 'sceneEdit', icon: '', affix: true},
+                        component: () => import('@/views/cesium/component/main/sceneEdit/index.vue'),
+                        name: 'Cesium-Main-SceneEdit',
+                        meta: {title: '场景编辑+粒子特效', icon: '', affix: true},
                     }, {
                         path: 'buildingProgression',
-                        component: () => import('@/views/cesium/component/buildingProgression/index.vue'),
-                        name: 'Cesium-main-BuildingProgression',
-                        meta: {title: 'buildingProgression', icon: '', affix: true},
-                    }, {
-                        path: 'terrainClipPlan',
-                        component: () => import('@/views/cesium/component/terrainClipPlan/index.vue'),
-                        name: 'Cesium-analyse-TerrainClipPlan',
-                        meta: {title: 'terrainClipPlan', icon: '', affix: true},
-                    }, {
-                        path: 'skyline',
-                        component: () => import('@/views/cesium/component/skyline/index.vue'),
-                        name: 'Cesium-analyse-Skyline',
-                        meta: {title: 'skyline', icon: '', affix: true},
-                    }, {
-                        path: 'tilesetOnlyEntity',
-                        component: () => import('@/views/cesium/component/tilesetOnlyEntity/index.vue'),
-                        name: 'Cesium-monomer-TilesetOnlyEntity',
-                        meta: {title: 'tilesetOnlyEntity', icon: '', affix: true},
-                    }, {
-                        path: 'floorsStacking',
-                        component: () => import('@/views/cesium/component/floorsStacking/index.vue'),
-                        name: 'Cesium-monomer-FloorsStacking',
-                        meta: {title: 'floorsStacking', icon: '', affix: true},
+                        component: () => import('@/views/cesium/component/main/buildingProgression/index.vue'),
+                        name: 'Cesium-Main-BuildingProgression',
+                        meta: {title: '楼宇管线场景递进', icon: '', affix: true},
                     }, {
                         path: 'sceneRehearsal',
-                        component: () => import('@/views/cesium/component/sceneRehearsal/index.vue'),
-                        name: 'Cesium-main-SceneRehearsal',
-                        meta: {title: 'sceneRehearsal', icon: '', affix: true},
+                        component: () => import('@/views/cesium/component/main/sceneRehearsal/index.vue'),
+                        name: 'Cesium-Main-SceneRehearsal',
+                        meta: {title: '救援场景演练(czml)', icon: '', affix: true},
                     }, {
                         path: 'polylineFly',
-                        component: () => import('@/views/cesium/component/polylineFly/index.vue'),
-                        name: 'Cesium-main-PolylineFly',
-                        meta: {title: 'polylineFly', icon: '', affix: true},
-                    }, {
-                        path: 'simulateFluid',
-                        component: () => import('@/views/cesium/component/simulateFluid/index.vue'),
-                        name: 'Cesium-main-SimulateFluid',
-                        meta: {title: 'simulateFluid', icon: '', affix: true},
-                    }, {
-                        path: 'mapSplit',
-                        component: () => import('@/views/cesium/component/mapSplit/index.vue'),
-                        name: 'Cesium-tool-MapSplit',
-                        meta: {title: 'mapSplit', icon: '', affix: true},
-                    }
+                        component: () => import('@/views/cesium/component/main/polylineFly/index.vue'),
+                        name: 'Cesium-Main-PolylineFly',
+                        meta: {title: '无人机轨道飞行(clock)', icon: '', affix: true},
+                    },
                 ]
-            }
+            }, {
+                path: 'monomer',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Monomer',
+                redirect: '/cesium/monomer/rangeSearch',
+                meta: {title: '单体化', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'tilesetOnlyEntity',
+                        component: () => import('@/views/cesium/component/monomer/tilesetOnlyEntity/index.vue'),
+                        name: 'Cesium-Monomer-TilesetOnlyEntity',
+                        meta: {title: '模型单体化(entity)', icon: '', affix: true},
+                    }, {
+                        path: 'floorsStacking',
+                        component: () => import('@/views/cesium/component/monomer/floorsStacking/index.vue'),
+                        name: 'Cesium-Monomer-FloorsStacking',
+                        meta: {title: '楼层叠加', icon: '', affix: true},
+                    },
+                ]
+            }, {
+                path: 'analysis',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Analysis',
+                redirect: '/cesium/analysis/rangeSearch',
+                meta: {title: '空间分析', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'rangeSearch',
+                        component: () => import('@/views/cesium/component/analysis/rangeSearch/index.vue'),
+                        name: 'Cesium-Analysis-RangeSearch',
+                        meta: {title: '范围查询(wkt)', icon: '', affix: true},
+                    }, {
+                        path: 'terrainClipPlan',
+                        component: () => import('@/views/cesium/component/analysis/terrainClipPlan/index.vue'),
+                        name: 'Cesium-Analysis-TerrainClipPlan',
+                        meta: {title: '挖方分析(dom+dem)', icon: '', affix: true},
+                    }, {
+                        path: 'skyline',
+                        component: () => import('@/views/cesium/component/analysis/skyline/index.vue'),
+                        name: 'Cesium-Analysis-Skyline',
+                        meta: {title: '天际线分析', icon: '', affix: true},
+                    },
+                ]
+            },{
+                path: 'tools',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Tools',
+                redirect: '/cesium/tools/rangeSearch',
+                meta: {title: '工具控件', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'mapSplit',
+                        component: () => import('@/views/cesium/component/tools/mapSplit/index.vue'),
+                        name: 'Cesium-Tools-MapSplit',
+                        meta: {title: '卷帘', icon: '', affix: true},
+                    },
+                ]
+            },
         ]
     },
     {
@@ -97,26 +140,36 @@ export const constantRoutes = [
             {
                 path: 'main',
                 component: () => import('@/views/three/index.vue'),
-                name: 'Three-main',
+                name: 'Three-Main',
                 redirect: '/three/main/3dBuilding',
+                meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
                         path: '3dBuilding',
-                        component: () => import('@/views/three/component/3dBuilding/index.vue'),
-                        name: 'Three-main-3dBuilding',
-                        meta: {title: '3dBuilding', icon: '', affix: true},
+                        component: () => import('@/views/three/component/main/3dBuilding/index.vue'),
+                        name: 'Three-Main-3dBuilding',
+                        meta: {title: '3d楼栋', icon: '', affix: true},
                     },
                     {
                         path: '3dFactory',
-                        component: () => import('@/views/three/component/3dFactory/index.vue'),
-                        name: 'Three-main-3dFactory',
-                        meta: {title: '3dFactory', icon: '', affix: true},
+                        component: () => import('@/views/three/component/main/3dFactory/index.vue'),
+                        name: 'Three-Main-3dFactory',
+                        meta: {title: '3d厂区', icon: '', affix: true},
                     },
+                ]
+            },
+            {
+                path: 'demo',
+                component: () => import('@/views/three/index.vue'),
+                name: 'Three-Demo',
+                redirect: '/three/main/instancingBillboards',
+                meta: {title: '案例效果', icon: '', affix: true},
+                children: [
                     {
                         path: 'instancingBillboards',
-                        component: () => import('@/views/three/component/instancingBillboards/index.vue'),
-                        name: 'Three-main-InstancingBillboards',
-                        meta: {title: 'instancingBillboards', icon: '', affix: true},
+                        component: () => import('@/views/three/component/demo/instancingBillboards/index.vue'),
+                        name: 'Three-Demo-InstancingBillboards',
+                        meta: {title: '柏林噪声', icon: '', affix: true},
                     }
                 ]
             }
@@ -133,30 +186,31 @@ export const constantRoutes = [
                 component: () => import('@/views/arcgis/index.vue'),
                 name: 'Arcgis-main',
                 redirect: '/arcgis/main/tsFeature',
+                meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
+                    {
+                        path: 'layerManage',
+                        component: () => import('@/views/arcgis/component/layerManage/index.vue'),
+                        name: 'Arcgis-Main-LayerManage',
+                        meta: {title: '图层管理', icon: '', affix: true},
+                    },
                     {
                         path: 'tsFeature',
                         component: () => import('@/views/arcgis/component/tsFeature/index.vue'),
-                        name: 'Arcgis-main-TsFeature',
+                        name: 'Arcgis-Main-TsFeature',
                         meta: {title: 'tsFeature', icon: '', affix: true},
                     },
                     {
                         path: 'tsKriging',
                         component: () => import('@/views/arcgis/component/tsKriging/index.vue'),
-                        name: 'Arcgis-main-TsKriging',
+                        name: 'Arcgis-Main-TsKriging',
                         meta: {title: 'tsKriging', icon: '', affix: true},
                     },
                     {
                         path: 'tsRaster',
                         component: () => import('@/views/arcgis/component/tsRaster/index.vue'),
-                        name: 'Arcgis-main-TsRaster',
+                        name: 'Arcgis-Main-TsRaster',
                         meta: {title: 'tsRaster', icon: '', affix: true},
-                    },
-                    {
-                        path: 'layerManage',
-                        component: () => import('@/views/arcgis/component/layerManage/index.vue'),
-                        name: 'Arcgis-main-LayerManage',
-                        meta: {title: 'layerManage', icon: '', affix: true},
                     },
                 ]
             }
@@ -173,78 +227,88 @@ export const constantRoutes = [
                 component: () => import('@/views/webgl/index.vue'),
                 name: 'Webgl-main',
                 redirect: '/webgl/main/helloWebgl',
+                meta: {title: '案例效果', icon: '', affix: true},
                 children: [
                     {
                         path: 'helloWebgl',
-                        component: () => import('@/views/webgl/component/helloWebgl.vue'),
-                        name: 'Webgl-main-HelloWebgl',
-                        meta: {title: 'helloWebgl', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/helloWebgl.vue'),
+                        name: 'Webgl-Main-HelloWebgl',
+                        meta: {title: '点，线，三角', icon: '', affix: true},
                     },
                     {
                         path: 'spinEditing',
-                        component: () => import('@/views/webgl/component/spinEditing.vue'),
-                        name: 'Webgl-main-SpinEditing',
-                        meta: {title: 'spinEditing', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/spinEditing.vue'),
+                        name: 'Webgl-Main-SpinEditing',
+                        meta: {title: '旋转编辑', icon: '', affix: true},
                     },
                     {
                         path: 'imageProcessing',
-                        component: () => import('@/views/webgl/component/imageProcessing.vue'),
-                        name: 'Webgl-main-ImageProcessing',
-                        meta: {title: 'imageProcessing', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/imageProcessing.vue'),
+                        name: 'Webgl-Main-ImageProcessing',
+                        meta: {title: '图像处理', icon: '', affix: true},
                     },
                     {
                         path: 'transform2d',
-                        component: () => import('@/views/webgl/component/transform2d.vue'),
-                        name: 'Webgl-main-Transform2d',
-                        meta: {title: 'transform2d', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/transform2d.vue'),
+                        name: 'Webgl-Main-Transform2d',
+                        meta: {title: '二维平移', icon: '', affix: true},
                     },
                     {
                         path: 'transform2dmatrix',
-                        component: () => import('@/views/webgl/component/transform2dmatrix.vue'),
-                        name: 'Webgl-main-Transform2dmatrix',
-                        meta: {title: 'transform2dmatrix', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/transform2dmatrix.vue'),
+                        name: 'Webgl-Main-Transformtwodmatrix',
+                        meta: {title: '二维平移(矩阵)', icon: '', affix: true},
                     },
                     {
                         path: 'transform3d',
-                        component: () => import('@/views/webgl/component/transform3d.vue'),
-                        name: 'Webgl-main-Transform3d',
-                        meta: {title: 'transform3d', icon: '', affix: true},
-                    },
-                    {
-                        path: 'tsFeatureGrid',
-                        component: () => import('@/views/webgl/component/tsFeatureGrid.vue'),
-                        name: 'Webgl-main-TsFeatureGrid',
-                        meta: {title: 'tsFeatureGrid', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/transform3d.vue'),
+                        name: 'Webgl-Main-Transform3d',
+                        meta: {title: '三维投影(正射)', icon: '', affix: true},
                     },
                     {
                         path: 'transform3dPerspective',
-                        component: () => import('@/views/webgl/component/transform3dPerspective.vue'),
-                        name: 'Webgl-main-Transform3dPerspective',
-                        meta: {title: 'transform3dPerspective', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/transform3dPerspective.vue'),
+                        name: 'Webgl-Main-TransformthreedPerspective',
+                        meta: {title: '三维投影(透视)', icon: '', affix: true},
                     },
                     {
                         path: 'cameraAngle',
-                        component: () => import('@/views/webgl/component/cameraAngle/index.vue'),
-                        name: 'Webgl-main-CameraAngle',
-                        meta: {title: 'cameraAngle', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/cameraAngle/index.vue'),
+                        name: 'Webgl-Main-CameraAngle',
+                        meta: {title: '三维相机', icon: '', affix: true},
                     },
                     {
                         path: 'directionLight',
-                        component: () => import('@/views/webgl/component/directionLight.vue'),
-                        name: 'Webgl-main-DirectionLight',
-                        meta: {title: 'directionLight', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/directionLight.vue'),
+                        name: 'Webgl-Main-DirectionLight',
+                        meta: {title: '方向光源', icon: '', affix: true},
                     },
                     {
                         path: 'pointLight',
-                        component: () => import('@/views/webgl/component/pointLight.vue'),
-                        name: 'Webgl-main-PointLight',
-                        meta: {title: 'pointLight', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/pointLight.vue'),
+                        name: 'Webgl-Main-PointLight',
+                        meta: {title: '点光源', icon: '', affix: true},
                     },
                     {
                         path: 'codeFun',
-                        component: () => import('@/views/webgl/component/codeFun/index.vue'),
-                        name: 'Webgl-main-CodeFun',
-                        meta: {title: 'codeFun', icon: '', affix: true},
+                        component: () => import('@/views/webgl/component/main/codeFun/index.vue'),
+                        name: 'Webgl-Main-CodeFun',
+                        meta: {title: '码少趣多', icon: '', affix: true},
+                    },
+                ]
+            },
+            {
+                path: 'main',
+                component: () => import('@/views/webgl/index.vue'),
+                name: 'Webgl-Project',
+                redirect: '/webgl/main/helloWebgl',
+                meta: {title: '项目shader', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'ts-featureGrid',
+                        component: () => import('@/views/webgl/component/project/tsFeatureGrid.vue'),
+                        name: 'Webgl-Project-TsFeatureGrid',
+                        meta: {title: 'tsFeatureGrid', icon: '', affix: true},
                     },
                 ]
             }
@@ -261,11 +325,12 @@ export const constantRoutes = [
                 component: () => import('@/views/webgpu/index.vue'),
                 name: 'Webgpu-main',
                 redirect: '/webgpu/main/helloWebgpu',
+                meta: {title: '案例效果', icon: '', affix: true},
                 children: [
                     {
                         path: 'helloWebgpu',
-                        component: () => import('@/views/webgpu/component/hellowebgpu.vue'),
-                        name: 'Webgpu-main-HelloWebgpu',
+                        component: () => import('@/views/webgpu/component/main/hellowebgpu.vue'),
+                        name: 'Webgpu-Main-HelloWebgpu',
                         meta: {title: 'helloWebgpu', icon: '', affix: true},
                     },
                 ]
@@ -283,12 +348,13 @@ export const constantRoutes = [
                 component: () => import('@/views/ui/index.vue'),
                 name: 'Ui-main',
                 redirect: '/ui/main/dragSort',
+                meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
                         path: 'dragSort',
-                        component: () => import('@/views/ui/component/dragSort.vue'),
-                        name: 'Ui-main-DragSort',
-                        meta: {title: 'dragSort', icon: '', affix: true},
+                        component: () => import('@/views/ui/component/main/dragSort.vue'),
+                        name: 'Ui-Main-DragSort',
+                        meta: {title: '拖拽排序', icon: '', affix: true},
                     },
                 ]
             }
@@ -305,24 +371,25 @@ export const constantRoutes = [
                 component: () => import('@/views/leaflet/index.vue'),
                 name: 'Leaflet-main',
                 redirect: '/leaflet/main/mapSelectLine',
+                meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
                         path: 'mapSelectLine',
-                        component: () => import('@/views/leaflet/component/mapSelectLine.vue'),
-                        name: 'Leaflet-main-MapSelectLine',
-                        meta: {title: 'mapSelectLine', icon: '', affix: true},
+                        component: () => import('@/views/leaflet/component/main/mapSelectLine.vue'),
+                        name: 'Leaflet-Main-MapSelectLine',
+                        meta: {title: '点位连接线路', icon: '', affix: true},
                     },
                     {
                         path: 'mapSelectPoint',
-                        component: () => import('@/views/leaflet/component/mapSelectPoint.vue'),
-                        name: 'Leaflet-main-MapSelectPoint',
-                        meta: {title: 'mapSelectPoint', icon: '', affix: true},
+                        component: () => import('@/views/leaflet/component/main/mapSelectPoint.vue'),
+                        name: 'Leaflet-Main-MapSelectPoint',
+                        meta: {title: '选取点位', icon: '', affix: true},
                     },
                     {
                         path: 'mapSelectArea',
-                        component: () => import('@/views/leaflet/component/mapSelectArea.vue'),
-                        name: 'Leaflet-main-MapSelectArea',
-                        meta: {title: 'mapSelectArea', icon: '', affix: true},
+                        component: () => import('@/views/leaflet/component/main/mapSelectArea.vue'),
+                        name: 'Leaflet-Main-MapSelectArea',
+                        meta: {title: '选取区域', icon: '', affix: true},
                     },
                 ]
             }

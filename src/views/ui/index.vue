@@ -3,9 +3,14 @@
     <div class="showContainer">
       <div class="head_title_arrow">MenuList</div>
       <div class="content">
-        <el-tree :data="treeData" accordion default-expand-all @node-click="handleNodeClick">
-          <template #default="{data}">
-            <span :style="{color:route.name ===data.name?'#FFBB1F':''}">{{ data.label }}</span>
+        <el-tree :data="route.matched[0].children"
+                 :filter-node-method="(_,data)=>!data.meta.noShow"
+                 :props="{ children: 'children', label: 'name' }"
+                 accordion
+                 default-expand-all
+                 @node-click="handleNodeClick">
+          <template #default="{ data }">
+            <span :style="{color:route.name.includes(data.name)?'rgb(255, 187, 31)':''}">{{ data.meta.title }}</span>
           </template>
         </el-tree>
       </div>
@@ -23,28 +28,21 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, reactive, toRefs} from "vue";
-import treeDataJson from "./menuList";
 import {useRouter, useRoute} from "vue-router";
 
 // Refs
 const router = useRouter()
 const route = useRoute()
-const model = reactive({
-  treeData: [],
-})
-
-const {treeData} = toRefs(model)
 
 const handleNodeClick = (row) => {
+  if (row.children) {
+    handleNodeClick(row.children[0])
+    return
+  }
   const {name} = row
   if (!name) return
   router.push({name})
 }
-
-onMounted(async () => {
-  model.treeData = treeDataJson as any
-})
 </script>
 
 <style lang="scss" scoped>

@@ -22,7 +22,7 @@ import moment from "moment";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
-import YbPanl from "@/components/ybPanl.vue"
+import YbPanl from "@/components/ybPanl/index.vue"
 // Refs
 const gui2Dom = ref(null)
 

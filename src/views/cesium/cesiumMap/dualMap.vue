@@ -28,14 +28,14 @@ import {ElMessage} from "element-plus";
 import {Viewer} from "cesium";
 
 // Components
-import Boundary from "@/views/cesium/component/controlPanel/boundary/index.vue"
-import Tdt_img_d from "@/views/cesium/component/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Boundary from "@/views/cesium/component/main/controlPanel/boundary/index.vue"
+import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import CountyBoundaries
-  from "@/views/cesium/component/controlPanel/layerManagement/administrativeDivision/countyBoundaries.vue"
-import DrainageLine from "@/views/cesium/component/controlPanel/layerManagement/drainage/drainageLine.vue"
+  from "@/views/cesium/component/main/controlPanel/layerManagement/administrativeDivision/countyBoundaries.vue"
+import DrainageLine from "@/views/cesium/component/main/controlPanel/layerManagement/drainage/drainageLine.vue"
 
-import NumericalValue from "@/views/cesium/component/controlPanel/numericalValue/index.vue"
-import Simulation from "@/views/cesium/component/controlPanel/simulation/index.vue"
+import NumericalValue from "@/views/cesium/component/main/controlPanel/numericalValue/index.vue"
+import Simulation from "@/views/cesium/component/main/controlPanel/simulation/index.vue"
 
 const mapStore = usemapStore()
 const isActiveDualMap = ref(false)

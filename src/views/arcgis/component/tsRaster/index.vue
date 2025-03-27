@@ -31,7 +31,7 @@ import arrowImg1 from '@/assets/images/tsRaster/arrow-1.svg';
 import arrowImg2 from '@/assets/images/tsRaster/arrow-2.png';
 import arrowImg3 from '@/assets/images/tsRaster/arrow-3.png';
 // Component
-import YbPanl from "@/components/ybPanl.vue"
+import YbPanl from "@/components/ybPanl/index.vue"
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
 import RasterSplitDebug from "./raster-split-debug.vue"

@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
-import {KrigingDataMeta} from "./data/index.ts"
+import {KrigingDataMeta} from "./data1/index.ts"
 import {TimeSeriesKrigingLayer} from "./layer";
 import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import Polygon from "@arcgis/core/geometry/Polygon";
@@ -32,7 +32,7 @@ import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 // Component
 import ColormappingGradient from "./colormappingGradient.vue"
 import ColormappingClassbreak from "./colormappingClassbreak.vue"
-import YbPanl from "@/components/ybPanl.vue"
+import YbPanl from "@/components/ybPanl/index.vue"
 
 // Refs
 const gui2Dom = ref(null)
@@ -41,6 +41,7 @@ const mapStore = usearcgisMapStore()
 const model = reactive({
   formData: {
     label: true,
+    grid:true,
     clip: true,
     splitCount: 50,
     colorMapping: 'class-break',
@@ -144,6 +145,10 @@ const formDatachange = (k, v) => {
   switch (k) {
     case "label":
       model.showPopup = v
+      break
+    case "grid":
+      if(gridlayer)gridlayer.visible = v
+      if(labelLayer)labelLayer.visible = v
       break
     case "clip":
       layer.renderOpts.useClip = v
@@ -279,6 +284,7 @@ let gui1, gui2, seriesControl
 const initGui = () => {
   gui1 = new GUI({title: "Controls"});
   gui1.add(model.formData, "label").onChange(label => formDatachange("label", label));
+  gui1.add(model.formData, "grid").onChange(grid => formDatachange("grid", grid));
   gui1.add(model.formData, "clip").onChange(clip => formDatachange("clip", clip));
   gui2 = new GUI({parent: gui1, title: "kriging"});
   gui2Dom.value = gui2.domElement

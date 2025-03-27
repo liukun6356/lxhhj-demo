@@ -48,7 +48,7 @@ const menus = [
   {label: 'arcgis', name: 'Arcgis'},
   {label: 'leaflet', name: 'Leaflet'},
   {label: 'webGl', name: 'Webgl'},
-  // {label:"webGpu",name:"Webgpu"},
+  {label:"webGpu",name:"Webgpu"},
   {label: 'ui', name: 'Ui'},
 ];
 </script>
