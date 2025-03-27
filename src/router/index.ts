@@ -190,25 +190,25 @@ export const constantRoutes = [
                 children: [
                     {
                         path: 'layerManage',
-                        component: () => import('@/views/arcgis/component/layerManage/index.vue'),
+                        component: () => import('@/views/arcgis/component/main/layerManage/index.vue'),
                         name: 'Arcgis-Main-LayerManage',
                         meta: {title: '图层管理', icon: '', affix: true},
                     },
                     {
                         path: 'tsFeature',
-                        component: () => import('@/views/arcgis/component/tsFeature/index.vue'),
+                        component: () => import('@/views/arcgis/component/main/tsFeature/index.vue'),
                         name: 'Arcgis-Main-TsFeature',
                         meta: {title: 'tsFeature', icon: '', affix: true},
                     },
                     {
                         path: 'tsKriging',
-                        component: () => import('@/views/arcgis/component/tsKriging/index.vue'),
+                        component: () => import('@/views/arcgis/component/main/tsKriging/index.vue'),
                         name: 'Arcgis-Main-TsKriging',
                         meta: {title: 'tsKriging', icon: '', affix: true},
                     },
                     {
                         path: 'tsRaster',
-                        component: () => import('@/views/arcgis/component/tsRaster/index.vue'),
+                        component: () => import('@/views/arcgis/component/main/tsRaster/index.vue'),
                         name: 'Arcgis-Main-TsRaster',
                         meta: {title: 'tsRaster', icon: '', affix: true},
                     },
