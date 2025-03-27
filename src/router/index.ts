@@ -114,7 +114,7 @@ export const constantRoutes = [
                         meta: {title: '天际线分析', icon: '', affix: true},
                     },
                 ]
-            },{
+            }, {
                 path: 'tools',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-Tools',
@@ -211,6 +211,41 @@ export const constantRoutes = [
                         component: () => import('@/views/arcgis/component/tsRaster/index.vue'),
                         name: 'Arcgis-Main-TsRaster',
                         meta: {title: 'tsRaster', icon: '', affix: true},
+                    },
+                ]
+            }
+        ]
+    },
+    {
+        name: "Leaflet",
+        path: '/leaflet',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/leaflet/main',
+        children: [
+            {
+                path: 'main',
+                component: () => import('@/views/leaflet/index.vue'),
+                name: 'Leaflet-main',
+                redirect: '/leaflet/main/mapSelectLine',
+                meta: {title: 'demo效果', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'mapSelectLine',
+                        component: () => import('@/views/leaflet/component/main/mapSelectLine.vue'),
+                        name: 'Leaflet-Main-MapSelectLine',
+                        meta: {title: '点位连接线路', icon: '', affix: true},
+                    },
+                    {
+                        path: 'mapSelectPoint',
+                        component: () => import('@/views/leaflet/component/main/mapSelectPoint.vue'),
+                        name: 'Leaflet-Main-MapSelectPoint',
+                        meta: {title: '选取点位', icon: '', affix: true},
+                    },
+                    {
+                        path: 'mapSelectArea',
+                        component: () => import('@/views/leaflet/component/main/mapSelectArea.vue'),
+                        name: 'Leaflet-Main-MapSelectArea',
+                        meta: {title: '选取区域', icon: '', affix: true},
                     },
                 ]
             }
@@ -319,6 +354,7 @@ export const constantRoutes = [
         component: () => import('@/layout/index.vue'),
         redirect: '/webgpu/main',
         name: "Webgpu",
+        noShow: true,
         children: [
             {
                 path: 'main',
@@ -360,41 +396,7 @@ export const constantRoutes = [
             }
         ]
     },
-    {
-        name: "Leaflet",
-        path: '/leaflet',
-        component: () => import('@/layout/index.vue'),
-        redirect: '/leaflet/main',
-        children: [
-            {
-                path: 'main',
-                component: () => import('@/views/leaflet/index.vue'),
-                name: 'Leaflet-main',
-                redirect: '/leaflet/main/mapSelectLine',
-                meta: {title: 'demo效果', icon: '', affix: true},
-                children: [
-                    {
-                        path: 'mapSelectLine',
-                        component: () => import('@/views/leaflet/component/main/mapSelectLine.vue'),
-                        name: 'Leaflet-Main-MapSelectLine',
-                        meta: {title: '点位连接线路', icon: '', affix: true},
-                    },
-                    {
-                        path: 'mapSelectPoint',
-                        component: () => import('@/views/leaflet/component/main/mapSelectPoint.vue'),
-                        name: 'Leaflet-Main-MapSelectPoint',
-                        meta: {title: '选取点位', icon: '', affix: true},
-                    },
-                    {
-                        path: 'mapSelectArea',
-                        component: () => import('@/views/leaflet/component/main/mapSelectArea.vue'),
-                        name: 'Leaflet-Main-MapSelectArea',
-                        meta: {title: '选取区域', icon: '', affix: true},
-                    },
-                ]
-            }
-        ]
-    },
+
     { // 匹配不到跳到首页
         path: "/:pathMatch(.*)*",
         redirect: "/404",
@@ -402,7 +404,6 @@ export const constantRoutes = [
     {
         path: '/404',
         component: () => import('@/views/404.vue'),
-        name: "404",
     }
 ];
 

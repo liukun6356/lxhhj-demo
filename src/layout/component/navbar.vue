@@ -5,11 +5,11 @@
       <span>{{ curMenu }}</span>
     </div>
     <div class="menu-area">
-      <div class="menu-item" v-for="(item,index) in menus" :key="index"
+      <div class="menu-item" v-for="(item,index) in constantRoutes.filter(x=>x.name && !x.noShow)" :key="index"
            :class="{ active:new RegExp(item.name).test(curMenu)}"
            @click="changeActiveId(item)">
         <div class="menu-item-inner">
-          <span>{{ item.label }}</span>
+          <span>{{ item.name }}</span>
         </div>
       </div>
     </div>
@@ -26,8 +26,9 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive, toRefs} from 'vue'
+import {computed, onMounted, reactive, toRefs} from 'vue'
 import {useRoute, useRouter} from "vue-router"
+import {constantRoutes} from "@/router/index"
 // Component
 const route = useRoute()
 const router = useRouter()
@@ -41,6 +42,10 @@ const {arrowType} = toRefs(model)
 const changeActiveId = ({name}) => {
   router.push({name})
 }
+
+onMounted(()=>{
+  console.log(constantRoutes,12321)
+})
 
 const menus = [
   {label: 'cesium', name: 'Cesium'},
@@ -72,7 +77,7 @@ const menus = [
   transition: all 0.5s ease-in-out;
 
   .top-title {
-    width: 1100px;
+    width: 950px;
     font-size: 40px;
     line-height: 80px;
     font-family: PangMenZhengDao;
