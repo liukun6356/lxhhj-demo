@@ -32,7 +32,7 @@ const init = () => {
 
   // 添加物体 Mesh
   const geometry = new THREE.BoxGeometry(100, 100, 100); // 长100宽100高100
-  const material = new THREE.MeshLambertMaterial(({
+  const material = new THREE.MeshLambertMaterial(({ // Lambert网格材质
     color: new THREE.Color('orange')
   }));
   mesh = new THREE.Mesh(geometry, material);
@@ -46,6 +46,7 @@ const init = () => {
   scene.add(pointLight);
 
   // 添加坐标系工具 AxesHelper
+  // 红色代表 X 轴. 绿色代表 Y 轴. 蓝色代表 Z 轴.
   axesHelper = new THREE.AxesHelper(200);
   scene.add(axesHelper);
 
