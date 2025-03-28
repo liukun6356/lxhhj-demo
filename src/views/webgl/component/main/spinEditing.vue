@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import {reactive, toRefs, onMounted} from "vue";
 import {usewebglGlStore} from "@/store/modules/webglGl";
-import m3 from "../lib/m3.js"
+import m3 from "@/views/webgl/lib/m3.js"
 
 const model = reactive({
   formData: {
