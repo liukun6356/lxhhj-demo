@@ -4,7 +4,7 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 export const constantRoutes = [
     {
         path: '/',
-        redirect: '/webgl',
+        redirect: '/three',
     },
     {
         path: '/cesium',
@@ -134,7 +134,7 @@ export const constantRoutes = [
     {
         path: '/three',
         component: () => import('@/layout/index.vue'),
-        redirect: '/three/main',
+        redirect: '/three/course',
         name: "Three",
         children: [
             {
@@ -162,7 +162,7 @@ export const constantRoutes = [
                 path: 'demo',
                 component: () => import('@/views/three/index.vue'),
                 name: 'Three-Demo',
-                redirect: '/three/main/instancingBillboards',
+                redirect: '/three/demo/instancingBillboards',
                 meta: {title: '案例效果', icon: '', affix: true},
                 children: [
                     {
@@ -170,6 +170,25 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/demo/instancingBillboards/index.vue'),
                         name: 'Three-Demo-InstancingBillboards',
                         meta: {title: '柏林噪声', icon: '', affix: true},
+                    }
+                ]
+            }, {
+                path: 'course',
+                component: () => import('@/views/three/index.vue'),
+                name: 'Three-Course',
+                redirect: '/three/course/pointLight',
+                meta: {title: '教程学习', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'pointLight',
+                        component: () => import('@/views/three/component/course/pointLight/index.vue'),
+                        name: 'Three-Course-PointLight',
+                        meta: {title: '点光源', icon: '', affix: true},
+                    }, {
+                        path: 'bufferGeometry',
+                        component: () => import('@/views/three/component/course/bufferGeometry/index.vue'),
+                        name: 'Three-Course-BufferGeometry',
+                        meta: {title: '顶点生产几何体', icon: '', affix: true},
                     }
                 ]
             }

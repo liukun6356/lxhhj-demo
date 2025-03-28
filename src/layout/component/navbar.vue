@@ -43,10 +43,6 @@ const changeActiveId = ({name}) => {
   router.push({name})
 }
 
-onMounted(()=>{
-  console.log(constantRoutes,12321)
-})
-
 const menus = [
   {label: 'cesium', name: 'Cesium'},
   {label: 'three', name: 'Three'},
