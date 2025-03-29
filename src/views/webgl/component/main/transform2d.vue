@@ -6,63 +6,49 @@
         <el-tag :type="activeValue===str?'success':'info'">{{ str }}</el-tag>
       </li>
     </ul>
-    <el-form class="transform2d-form" :model="formData" :rules="rules" label-width="60">
-      <el-form-item label="x:" prop="x">
-        <el-slider style="width: 85%" v-model="formData.x" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="gl.canvas.width"></el-slider>
-        <span style="margin-left: 8px">{{ formData.x }}</span>
-      </el-form-item>
-      <el-form-item label="y:" prop="y">
-        <el-slider style="width: 85%" v-model="formData.y" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="gl.canvas.height"></el-slider>
-        <span style="margin-left: 8px">{{ formData.y }}</span>
-      </el-form-item>
-      <el-form-item label="angle:" prop="angle">
-        <el-slider style="width: 85%" v-model="formData.angle" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="360"></el-slider>
-        <span style="margin-left: 8px">{{ formData.angle }}</span>
-      </el-form-item>
-      <el-form-item label="scaleX:" prop="scaleX">
-        <el-slider style="width: 85%" v-model="formData.scaleX" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleX }}</span>
-      </el-form-item>
-      <el-form-item label="scaleY:" prop="scaleY">
-        <el-slider style="width: 85%" v-model="formData.scaleY" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleY }}</span>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, toRefs} from "vue"
 import {usewebglGlStore} from "@/store/modules/webglGl";
+import GUI from "lil-gui";
 
 const model = reactive({
-  formData: {
-    x: 200,
-    y: 150,
-    angle: 0,
-    scaleX:1,
-    scaleY:1
-  },
   typelist: ["矩形", "F"],
   activeValue: ""
 })
 
-const {formData, typelist, activeValue} = toRefs(model)
+const {typelist, activeValue} = toRefs(model)
+
+// lil-gui逻辑
+const formData = {
+  x: 200,
+  y: 150,
+  angle: 0,
+  scaleX: 1,
+  scaleY: 1,
+}
 
 onMounted(() => {
+  initGui()
   clear()
 })
 
 onUnmounted(() => {
+  gui.destroy()
   gl.deleteProgram(program);
 })
+
+let gui
+const initGui = () => {
+  gui = new GUI({title: "controls"});
+  gui.add(formData, "x",0,500,1).onChange(()=>updateChange())
+  gui.add(formData, "y",0,500,1).onChange(()=>updateChange())
+  gui.add(formData, "angle",0,360,1).onChange(()=>updateChange())
+  gui.add(formData, "scaleX",-5,5,0.1).onChange(()=>updateChange())
+  gui.add(formData, "scaleY",-5,5,0.1).onChange(()=>updateChange())
+}
 
 const updateChange = () => {
   clear()
@@ -113,8 +99,6 @@ const itemClick = (row) => {
   }
 }
 
-const rules = {}
-
 // webgl逻辑
 const webglGlStore = usewebglGlStore()
 const gl = webglGlStore.getWebglGl()
@@ -133,11 +117,11 @@ const drawF = () => {
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
   gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
   gl.uniform4fv(colorLocation, [0.5, 0.3, 0.1, 1]);
-  gl.uniform2fv(translationLocation, [model.formData.x, model.formData.y]);
-  const angleInDegrees = 360 - model.formData.angle;
+  gl.uniform2fv(translationLocation, [formData.x, formData.y]);
+  const angleInDegrees = 360 - formData.angle;
   const angleInRadians = angleInDegrees * Math.PI / 180;
   gl.uniform2fv(rotationLocation, [Math.sin(angleInRadians),Math.cos(angleInRadians)]);
-  gl.uniform2fv(scaleLocation, [model.formData.scaleX,model.formData.scaleY]);
+  gl.uniform2fv(scaleLocation, [formData.scaleX,formData.scaleY]);
   gl.drawArrays(gl.TRIANGLES, 0, 18);
 }
 
@@ -145,10 +129,10 @@ const drawRect = () => {
   gl.useProgram(program);
   gl.enableVertexAttribArray(positionLocation);
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  const x1 = model.formData.x;
-  const x2 = model.formData.x + 100;
-  const y1 = model.formData.y;
-  const y2 = model.formData.y + 30;
+  const x1 = formData.x;
+  const x2 = formData.x + 100;
+  const y1 = formData.y;
+  const y2 = formData.y + 30;
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2,]), gl.STATIC_DRAW);
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
   gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height)
@@ -277,11 +261,6 @@ const fsGLSL = `
     }
   }
 
-  .transform2d-form {
-    position: fixed;
-    top: 135px;
-    left: 280px;
-  }
 
   :deep(.el-form) {
     width: 300px;

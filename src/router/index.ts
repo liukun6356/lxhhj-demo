@@ -194,6 +194,16 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/pointLineMesh/index.vue'),
                         name: 'Three-Course-PointLineMesh',
                         meta: {title: '点线网格模型', icon: '', affix: true},
+                    }, {
+                        path: 'noiseTerrain',
+                        component: () => import('@/views/three/component/course/noiseTerrain/index.vue'),
+                        name: 'Three-Course-NoiseTerrain',
+                        meta: {title: '噪声地形', icon: '', affix: true},
+                    }, {
+                        path: 'materialTexture',
+                        component: () => import('@/views/three/component/course/materialTexture/index.vue'),
+                        name: 'Three-Course-MaterialTexture',
+                        meta: {title: '材质纹理', icon: '', affix: true},
                     }
                 ]
             }

@@ -7,6 +7,9 @@ import glsl from 'vite-plugin-glsl';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    optimizeDeps: {
+        include: ['simplex-noise'], // 强制包含 simplex-noise
+    },
     plugins: [
         vue(),
         vitePluginMars3d(),

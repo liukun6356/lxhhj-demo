@@ -13,54 +13,64 @@
 -->
 <template>
   <div class="helloWebgl-wrap">
-    <ul>
-      <li v-for="str in typelist" :key="str" @click="itemClick(str)">
-        <el-tag :type="activeValue===str?'success':'info'">{{ str }}</el-tag>
-      </li>
-    </ul>
+
   </div>
 </template>
 
 <script lang="ts" setup>
 import {usewebglGlStore} from "@/store/modules/webglGl"
-import {onMounted, reactive, toRefs} from "vue";
-
-const model = reactive({
-  typelist: ["点", "线条", "闭合线圈", "线段", "三角带", "三角扇", "三角形",],
-  activeValue: ""
-})
-const {typelist, activeValue} = toRefs(model)
+import {onMounted, onUnmounted} from "vue";
+import GUI from "lil-gui";
 
 onMounted(() => {
+  initGui()
   clear()
 })
+onUnmounted(()=>{
+  gui.destroy()
+})
 
-const itemClick = (row) => {
+
+const formDatachange = (k, v) => {
   clear()
-  model.activeValue = row
-  switch (row) {
-    case "点":
-      drawPoint()
-      break
-    case "线条":
-      drawLineStrip()
-      break
-    case "闭合线圈":
-      drawLineLoop()
-      break
-    case "线段":
-      drawLine()
-      break
-    case "三角带":
-      drawTriangleStrip()
-      break
-    case "三角扇":
-      drawTriangleFan()
-      break
-    case "三角形":
-      drawTriangle()
+  switch (k) {
+    case "type":
+      switch (v) {
+        case "点":
+          drawPoint()
+          break
+        case "线条":
+          drawLineStrip()
+          break
+        case "闭合线圈":
+          drawLineLoop()
+          break
+        case "线段":
+          drawLine()
+          break
+        case "三角带":
+          drawTriangleStrip()
+          break
+        case "三角扇":
+          drawTriangleFan()
+          break
+        case "三角形":
+          drawTriangle()
+          break
+      }
       break
   }
+}
+
+// lil-gui逻辑
+const formData = {
+  activeValue: 200,
+}
+
+let gui
+const initGui = () => {
+  gui = new GUI({title: "controls"});
+  gui.add(formData, "type", ["点", "线条", "闭合线圈", "线段", "三角带", "三角扇", "三角形"]).onChange(type => formDatachange("type", type))
 }
 // webgl逻辑
 const webglGlStore = usewebglGlStore()

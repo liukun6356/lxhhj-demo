@@ -1,67 +1,49 @@
-<!--旋转编辑
-
-
--->
+<!--旋转编辑-->
 <template>
-  <div class="spinEditing-wrap">
-    <el-form class="spinEditing-form" :model="formData" :rules="rules" label-width="60">
-      <el-form-item label="x:" prop="x">
-        <el-slider style="width: 85%" v-model="formData.x" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="500"></el-slider>
-        <span style="margin-left: 8px">{{ formData.x }}</span>
-      </el-form-item>
-      <el-form-item label="y:" prop="y">
-        <el-slider style="width: 85%" v-model="formData.y" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="500"></el-slider>
-        <span style="margin-left: 8px">{{ formData.y }}</span>
-      </el-form-item>
-      <el-form-item label="angle:" prop="angle">
-        <el-slider style="width: 85%" v-model="formData.angle" @change="updateChange" :show-tooltip="false" :min="0"
-                   :max="360"></el-slider>
-        <span style="margin-left: 8px">{{ formData.angle }}</span>
-      </el-form-item>
-      <el-form-item label="scaleX:" prop="scaleX">
-        <el-slider style="width: 85%" v-model="formData.scaleX" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleX }}</span>
-      </el-form-item>
-      <el-form-item label="scaleY:" prop="scaleY">
-        <el-slider style="width: 85%" v-model="formData.scaleY" @change="updateChange" :show-tooltip="false" :step="0.1"
-                   :min="-5"
-                   :max="5"></el-slider>
-        <span style="margin-left: 8px">{{ formData.scaleY }}</span>
-      </el-form-item>
-    </el-form>
-  </div>
+  <div class="spinEditing-wrap"></div>
 </template>
 
 <script lang="ts" setup>
-import {reactive, toRefs, onMounted} from "vue";
+import { onMounted, onUnmounted} from "vue";
 import {usewebglGlStore} from "@/store/modules/webglGl";
 import m3 from "@/views/webgl/lib/m3.js"
-
-const model = reactive({
-  formData: {
-    x: 200,
-    y: 150,
-    angle: 0,
-    scaleX: 1,
-    scaleY: 1,
-  }
-})
-
-const {formData} = toRefs(model)
+import GUI from "lil-gui";
 
 onMounted(() => {
   init()
+  initGui()
   drawScence()
+})
+
+onUnmounted(() => {
+  gui.destroy()
 })
 
 const updateChange = () => {
   drawScence()
 }
 const rules = {}
+
+
+// lil-gui逻辑
+const formData = {
+  x: 200,
+  y: 150,
+  angle: 0,
+  scaleX: 1,
+  scaleY: 1,
+}
+
+let gui
+const initGui = () => {
+  gui = new GUI({title: "controls"});
+  gui.add(formData, "x",0,500,1).onChange(()=>drawScence())
+  gui.add(formData, "y",0,500,1).onChange(()=>drawScence())
+  gui.add(formData, "angle",0,360,1).onChange(()=>drawScence())
+  gui.add(formData, "scaleX",-5,5,0.1).onChange(()=>drawScence())
+  gui.add(formData, "scaleY",-5,5,0.1).onChange(()=>drawScence())
+}
+
 // webgl逻辑
 const webglGlStore = usewebglGlStore()
 const gl = webglGlStore.getWebglGl()
@@ -111,11 +93,11 @@ const drawScence = () => {
 
   matrixLocation = gl.getUniformLocation(program, "u_matrix");
   let matrix = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
-  matrix = m3.translate(matrix, model.formData.x, model.formData.y);
-  const angleInDegrees = 360 - model.formData.angle
+  matrix = m3.translate(matrix, formData.x, formData.y);
+  const angleInDegrees = 360 - formData.angle
   const angleInRadians = angleInDegrees * Math.PI / 180;
   matrix = m3.rotate(matrix, angleInRadians);
-  matrix = m3.scale(matrix, model.formData.scaleX, model.formData.scaleY);
+  matrix = m3.scale(matrix, formData.scaleX, formData.scaleY);
   gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
   gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -186,17 +168,5 @@ const FSHADER_SOURCE = `
 <style lang="scss" scoped>
 .spinEditing-wrap {
   pointer-events: auto;
-
-  .spinEditing-form {
-    position: fixed;
-    top: 100px;
-    left: 280px;
-  }
-
-  :deep(.el-form) {
-    width: 300px;
-    background: rgba(0, 0, 0, .6);
-    border-radius: 4px;
-  }
 }
 </style>
