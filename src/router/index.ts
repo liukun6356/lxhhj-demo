@@ -183,12 +183,17 @@ export const constantRoutes = [
                         path: 'pointLight',
                         component: () => import('@/views/three/component/course/pointLight/index.vue'),
                         name: 'Three-Course-PointLight',
-                        meta: {title: '点光源', icon: '', affix: true},
+                        meta: {title: '场景', icon: '', affix: true},
                     }, {
                         path: 'bufferGeometry',
                         component: () => import('@/views/three/component/course/bufferGeometry/index.vue'),
                         name: 'Three-Course-BufferGeometry',
-                        meta: {title: '顶点生产几何体', icon: '', affix: true},
+                        meta: {title: 'bufferGeometry', icon: '', affix: true},
+                    }, {
+                        path: 'pointLineMesh',
+                        component: () => import('@/views/three/component/course/pointLineMesh/index.vue'),
+                        name: 'Three-Course-PointLineMesh',
+                        meta: {title: '点线网格模型', icon: '', affix: true},
                     }
                 ]
             }

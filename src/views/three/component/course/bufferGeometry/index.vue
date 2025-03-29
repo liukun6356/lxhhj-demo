@@ -75,6 +75,7 @@ const formDatachange = (k, v) => {
   switch (k) {
     case "planeGeometry":
       scene.remove(mesh)
+      // mesh.position = {x: 0, y: 0, z: 0}
       let geometry, vertices, indexes, attribute
       switch (v) {
         case "2个三角形":
