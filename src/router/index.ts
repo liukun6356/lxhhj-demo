@@ -184,6 +184,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/pointLight/index.vue'),
                         name: 'Three-Course-PointLight',
                         meta: {title: '场景', icon: '', affix: true},
+                    },{
+                        path: 'perspectiveCamera',
+                        component: () => import('@/views/three/component/course/perspectiveCamera/index.vue'),
+                        name: 'Three-Course-PerspectiveCamera',
+                        meta: {title: '透视相机(视锥体)', icon: '', affix: true},
                     }, {
                         path: 'bufferGeometry',
                         component: () => import('@/views/three/component/course/bufferGeometry/index.vue'),

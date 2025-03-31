@@ -11,7 +11,6 @@ import {onMounted, reactive, toRefs} from "vue"
 import {usemapStore} from "@/store/modules/cesiumMap";
 import {createFloodPrimitive} from './flood-primitives';
 import proj4 from 'proj4'
-import jsonData from "./data.json"
 
 // Component
 import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
@@ -29,7 +28,9 @@ onMounted(() => {
   addVerticesPromitive()
 })
 
-const addVerticesPromitive = () => {
+const addVerticesPromitive = async () => {
+  const res = await fetch(import.meta.env.VITE_APP_MODELDATA + `/2dFluidModel.json`)
+  const jsonData = await res.json()
   let { vertices, triangles} = jsonData
   vertices = new Float64Array(JSON.parse(vertices).map((item) => proj4('EPSG:4547', 'EPSG:4326', item)).flat());
   triangles = new Uint32Array(JSON.parse(triangles).flat())
