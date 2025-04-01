@@ -136,8 +136,8 @@ const formDatachange = (k, v) => {
           material = new THREE.MeshBasicMaterial(({
             color: new THREE.Color('orange')
           }));
-          console.log(material.color.getHexString(),"hex")
-          console.log(material.color.getStyle(),"css")
+          console.log(material.color.getHexString(), "hex")
+          console.log(material.color.getStyle(), "css")
           material.color.setStyle("rgb(255,255,0)")
           mesh = new THREE.Mesh(geometry, material);
           break
@@ -183,11 +183,12 @@ const formData = {
 const initGui = () => {
   gui = new GUI({title: "controls"});
   pointFolder = gui.addFolder('point');
-  pointFolder.add(formData, "pointType", ["PointsMaterial"]).onChange(pointType => formDatachange("pointType", pointType))
+  const pointTypeControl = pointFolder.add(formData, "pointType", ["PointsMaterial"]).onChange(pointType => formDatachange("pointType", pointType))
   lineFolder = gui.addFolder('line');
   lineFolder.add(formData, "lineType", ["LineBasicMaterial", "LineDashedMaterial"]).onChange(lineType => formDatachange("lineType", lineType))
   gridFolder = gui.addFolder('gird');
   gridFolder.add(formData, "gridType", ["材质", "地球", "砖"]).onChange(gridType => formDatachange("gridType", gridType))
+  pointTypeControl.setValue("PointsMaterial")
 }
 
 </script>

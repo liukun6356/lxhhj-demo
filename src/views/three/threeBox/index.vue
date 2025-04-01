@@ -1,5 +1,5 @@
 <template>
-  <div id="three-box"  ref="threeBoxRef"></div>
+  <div id="three-box" ref="threeBoxRef"></div>
 </template>
 
 
@@ -7,14 +7,16 @@
 import {ref, onMounted, onUnmounted, markRaw} from "vue"
 import Stats from 'three/addons/libs/stats.module.js';
 import {CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer.js";
-import { WebGLRenderer,} from "three";
+import {WebGLRenderer,} from "three";
 import {usethreeBoxStore} from "@/store/modules/threeBox"
 // Refs
 const threeBoxRef = ref(null)
 
 const threeBoxStore = usethreeBoxStore()
 onMounted(() => {
-  const renderer = new WebGLRenderer();
+  const renderer = new WebGLRenderer({
+    logarithmicDepthBuffer:true
+  });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(threeBoxRef.value.offsetWidth, threeBoxRef.value.offsetHeight);
   threeBoxRef.value.appendChild(renderer.domElement)
@@ -33,6 +35,9 @@ onMounted(() => {
   threeBoxStore.setLabelRenderer(labelRenderer)
 
   addPerformance()
+  window.addEventListener('resize', () => {
+    renderer.setSize(threeBoxRef.value.offsetWidth, threeBoxRef.value.offsetHeight)
+  }, {passive: true});
 })
 
 onUnmounted(() => {

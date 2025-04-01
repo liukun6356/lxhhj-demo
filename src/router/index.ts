@@ -173,6 +173,30 @@ export const constantRoutes = [
                     }
                 ]
             }, {
+                path: 'stagDemo',
+                component: () => import('@/views/three/index.vue'),
+                name: 'Three-StagDemo',
+                redirect: '/three/course/pointLight',
+                meta: {title: 'demo', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'noiseTerrain',
+                        component: () => import('@/views/three/component/stagDemo/noiseTerrain/index.vue'),
+                        name: 'Three-StagDemo-NoiseTerrain',
+                        meta: {title: '噪声地形', icon: '', affix: true},
+                    },{
+                        path: 'tubeTravel',
+                        component: () => import('@/views/three/component/stagDemo/tubeTravel/index.vue'),
+                        name: 'Three-StagDemo-TubeTravel',
+                        meta: {title: '隧道穿梭', icon: '', affix: true},
+                    },{
+                        path: 'house',
+                        component: () => import('@/views/three/component/stagDemo/house/index.vue'),
+                        name: 'Three-StagDemo-House',
+                        meta: {title: '盖房子', icon: '', affix: true},
+                    }
+                ]
+            }, {
                 path: 'course',
                 component: () => import('@/views/three/index.vue'),
                 name: 'Three-Course',
@@ -184,7 +208,7 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/pointLight/index.vue'),
                         name: 'Three-Course-PointLight',
                         meta: {title: '场景', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'perspectiveCamera',
                         component: () => import('@/views/three/component/course/perspectiveCamera/index.vue'),
                         name: 'Three-Course-PerspectiveCamera',
@@ -200,16 +224,26 @@ export const constantRoutes = [
                         name: 'Three-Course-PointLineMesh',
                         meta: {title: '点线网格模型', icon: '', affix: true},
                     }, {
-                        path: 'noiseTerrain',
-                        component: () => import('@/views/three/component/course/noiseTerrain/index.vue'),
-                        name: 'Three-Course-NoiseTerrain',
-                        meta: {title: '噪声地形', icon: '', affix: true},
-                    }, {
                         path: 'materialTexture',
                         component: () => import('@/views/three/component/course/materialTexture/index.vue'),
                         name: 'Three-Course-MaterialTexture',
                         meta: {title: '材质纹理', icon: '', affix: true},
-                    }
+                    }, {
+                        path: 'textureUv',
+                        component: () => import('@/views/three/component/course/textureUv/index.vue'),
+                        name: 'Three-Course-TextureUv',
+                        meta: {title: 'uv坐标', icon: '', affix: true},
+                    }, {
+                        path: 'curve',
+                        component: () => import('@/views/three/component/course/curve/index.vue'),
+                        name: 'Three-Course-Curve',
+                        meta: {title: '各种曲线', icon: '', affix: true},
+                    }, {
+                        path: 'generateGeometry',
+                        component: () => import('@/views/three/component/course/generateGeometry/index.vue'),
+                        name: 'Three-Course-GenerateGeometry',
+                        meta: {title: '各种几何体', icon: '', affix: true},
+                    },
                 ]
             }
         ]

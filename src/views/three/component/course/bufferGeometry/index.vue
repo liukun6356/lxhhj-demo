@@ -165,7 +165,7 @@ const formData = {
 }
 const initGui = () => {
   gui = new GUI({title: "controls"});
-  gui.add(formData, "planeGeometry", ["2个三角形", "1个三角形", "正方形", "优化顶点存储", "planeGeometry", "boxGeometry"]).onChange(planeGeometry => formDatachange("planeGeometry", planeGeometry))
+  const planeGeometryControl =  gui.add(formData, "planeGeometry", ["2个三角形", "1个三角形", "正方形", "优化顶点存储", "planeGeometry", "boxGeometry"]).onChange(planeGeometry => formDatachange("planeGeometry", planeGeometry))
   const meshFolder = gui.addFolder('Mesh');
   meshFolder.addColor(mesh.material, 'color');
   meshFolder.add(mesh.position, 'x', 0, 50, 1).name("X").onChange(x => formDatachange("x", x))
@@ -173,6 +173,7 @@ const initGui = () => {
   meshFolder.add(mesh.position, 'z', 0, 50, 1).name("Z").onChange(z => formDatachange("z", z))
   const materialFolder = gui.addFolder('MeshBasicMaterial');
   materialFolder.add(meshBasicMaterial, "wireframe")
+  planeGeometryControl.setValue("2个三角形")
 }
 
 </script>

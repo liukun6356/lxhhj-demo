@@ -230,7 +230,7 @@ const formData = {
 }
 const initGui = () => {
   gui = new GUI({title: "controls"});
-  gui.add(formData, "geometry", ["点模型", "线模型", "线模型(loop)", "线模型(LineSegments)", "网格模型", "PlaneGeometry", "CylinderGeometry"]).onChange(geometry => formDatachange("geometry", geometry))
+  const geometryControl =  gui.add(formData, "geometry", ["点模型", "线模型", "线模型(loop)", "线模型(LineSegments)", "网格模型", "PlaneGeometry", "CylinderGeometry"]).onChange(geometry => formDatachange("geometry", geometry))
   gui.add(formData, "axesHelper").onChange(axesHelper => formDatachange("axesHelper", axesHelper))
   const meshFolder = gui.addFolder('Mesh');
   meshFolder.addColor(mesh.material, 'color');
@@ -244,7 +244,7 @@ const initGui = () => {
   SegmentsFolder.add(formData, "widthSegments", 1, 30, 1).onChange(widthSegments => formDatachange("widthSegments", widthSegments))
   SegmentsFolder.add(formData, "heightSegments", 1, 30, 1).onChange(heightSegments => formDatachange("heightSegments", heightSegments))
   SegmentsFolder.add(formData, "radiusSegments", 1, 64, 1).onChange(radiusSegments => formDatachange("radiusSegments", radiusSegments))
-
+  geometryControl.setValue("点模型")
 }
 </script>
 

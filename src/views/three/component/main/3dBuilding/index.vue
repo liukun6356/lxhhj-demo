@@ -55,7 +55,7 @@
 
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, toRefs, ref} from "vue";
-import * as three from 'three';
+import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer';
 import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass';
@@ -113,9 +113,9 @@ const {bottomData, info} = toRefs(model)
 
 onMounted(() => {
   console.log("3d楼栋")
-  scene = new three.Scene()
-  scene.background = new three.Color("#212121");
-  camera = new three.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000)
+  scene = new THREE.Scene()
+  scene.background = new THREE.Color("#212121");
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000)
   renderer.setClearColor(0x000000, 0);
 
   initControls()
@@ -162,7 +162,7 @@ const initControls = () => { // 轨道控制器
 }
 
 const initLight = () => { // 环境光
-  const ambLight = new three.AmbientLight('#ffffff', 2); // 基本光源
+  const ambLight = new THREE.AmbientLight('#ffffff', 2); // 基本光源
   scene.add(ambLight);
 }
 
@@ -171,7 +171,7 @@ const initComposer = () => {
   const renderPass = new RenderPass(scene, camera); // 后期处理中的一个 Pass，用于将场景进行基本的渲染
   composer.addPass(renderPass)
 
-  outlinePass = new OutlinePass(new three.Vector2(window.innerWidth, window.innerHeight), scene, camera);
+  outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera);
   outlinePass.resolution.set(window.innerWidth * 2, window.innerHeight * 2);
   composer.addPass(outlinePass)
   const outputPass = new OutputPass();
@@ -195,8 +195,8 @@ const initCamera = () => {
 }
 
 const init = () => {
-  raycaster = new three.Raycaster();
-  const textureLoader = new three.TextureLoader()
+  raycaster = new THREE.Raycaster();
+  const textureLoader = new THREE.TextureLoader()
   texture = [T1, T1, T2, T2, T3, T3].map(path => textureLoader.load(path))
 
   createBuilding(model.houseData.floorCount, model.houseData.houseCount, model.houseData.unitCount);
@@ -236,7 +236,7 @@ const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
       if (j > 0)
         unitOffset = -j * (houseWidth + 0.3) * Math.ceil(houseCount / 2) - (houseWidth * j) / 2;
       for (let i = 0; i < houseCount; i++) {
-        const boxGeometry = new three.BoxGeometry(houseDepth, houseHeight, houseWidth);
+        const boxGeometry = new THREE.BoxGeometry(houseDepth, houseHeight, houseWidth);
 
         let material = null;
         let outlineOpacity = false;
@@ -245,7 +245,7 @@ const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
         if (temperature > 18) {
           color = temperature ? buildColor(temperature) : '0xffffff';
           if (color != 0xffffff) {
-            material = new three.MeshPhysicalMaterial({
+            material = new THREE.MeshPhysicalMaterial({
               color: color,
               metalness: 0.3,
               roughness: 0.1,
@@ -253,7 +253,7 @@ const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
               emissiveIntensity: 0
             });
           } else {
-            material = new three.MeshPhongMaterial({
+            material = new THREE.MeshPhongMaterial({
               color: color,
               refractionRatio: 0.6,
               reflectivity: 0.95,
@@ -263,11 +263,11 @@ const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
             outlineOpacity = true;
           }
         } else {
-          material = texture.map(texture => new three.MeshBasicMaterial({map: texture}));
+          material = texture.map(texture => new THREE.MeshBasicMaterial({map: texture}));
           outlineOpacity = true;
         }
 
-        const boxMesh = new three.Mesh(boxGeometry, material);
+        const boxMesh = new THREE.Mesh(boxGeometry, material);
         boxMesh._name = 'build';
         boxMesh.info = {
           id: `${(j + 1).toString().padStart(2, '0')}-${(k + 1).toString().padStart(2, '0')}${(i + 1).toString().padStart(2, '0')}`,
@@ -301,18 +301,18 @@ const createBuilding = (floorCount = 25, houseCount = 5, unitCount = 3) => {
 }
 
 const setupCameraAndControls = () => {
-  const boundingBox = new three.Box3();
+  const boundingBox = new THREE.Box3();
   for (const boxMesh of scene.children) {
-    if (boxMesh instanceof three.Mesh) {
+    if (boxMesh instanceof THREE.Mesh) {
       boxMesh.updateMatrixWorld(); // 更新矩阵
       boundingBox.expandByObject(boxMesh);
     }
   }
 
-  const modelCenter = new three.Vector3();
+  const modelCenter = new THREE.Vector3();
   boundingBox.getCenter(modelCenter);
 
-  const modelSize = boundingBox.getSize(new three.Vector3()).length();
+  const modelSize = boundingBox.getSize(new THREE.Vector3()).length();
   const distance =
       modelSize / Math.tan((Math.PI * camera.fov) / 360);
 
@@ -336,22 +336,22 @@ const initEvent = () => {
 
 const buildOhter = (groupWidth, groupDepth, zPosition, houseCount, floorCount, houseHeight, houseDepth) => {
   // 创建上方的模型
-  const upperBoxGeometry = new three.BoxGeometry(groupWidth + 6, 0.8, groupDepth + 10);
-  const upperBoxMaterial = new three.MeshStandardMaterial({color: '#606060', metalness: 0.8, roughness: 0.6});
-  const upperBoxMesh = new three.Mesh(upperBoxGeometry, upperBoxMaterial);
+  const upperBoxGeometry = new THREE.BoxGeometry(groupWidth + 6, 0.8, groupDepth + 10);
+  const upperBoxMaterial = new THREE.MeshStandardMaterial({color: '#606060', metalness: 0.8, roughness: 0.6});
+  const upperBoxMesh = new THREE.Mesh(upperBoxGeometry, upperBoxMaterial);
   upperBoxMesh.position.set(houseCount > 1 ? houseDepth / 2 : 0, (floorCount + 1) * (houseHeight + 0.3) + 1, groupWidth / 2 - 3);
   upperBoxMesh.rotateY(Math.PI / 2);
   scene.add(upperBoxMesh);
   // ----------2----------------
-  const upperBoxGeometry2 = new three.BoxGeometry(groupWidth + 6 + 4, 1, groupDepth + 10 + 2);
-  const upperBoxMesh2 = new three.Mesh(upperBoxGeometry2,
-      new three.MeshStandardMaterial({color: '#606060', metalness: 0.9, roughness: 0.6}));
+  const upperBoxGeometry2 = new THREE.BoxGeometry(groupWidth + 6 + 4, 1, groupDepth + 10 + 2);
+  const upperBoxMesh2 = new THREE.Mesh(upperBoxGeometry2,
+      new THREE.MeshStandardMaterial({color: '#606060', metalness: 0.9, roughness: 0.6}));
   upperBoxMesh2.position.set(houseCount > 1 ? houseDepth / 2 : 0, (floorCount + 1) * (houseHeight + 0.3) + 1.8, groupWidth / 2 - 3);
   upperBoxMesh2.rotateY(Math.PI / 2);
   scene.add(upperBoxMesh2);
   // ----------3----------------
-  const upperBoxGeometry3 = new three.BoxGeometry(groupWidth + 6 + 8, 1, groupDepth + 10 + 4);
-  const upperBoxMesh3 = new three.Mesh(upperBoxGeometry3, new three.MeshStandardMaterial({
+  const upperBoxGeometry3 = new THREE.BoxGeometry(groupWidth + 6 + 8, 1, groupDepth + 10 + 4);
+  const upperBoxMesh3 = new THREE.Mesh(upperBoxGeometry3, new THREE.MeshStandardMaterial({
     color: '#606060',
     metalness: 0.95,
     roughness: 0
@@ -369,7 +369,7 @@ const buildOhter = (groupWidth, groupDepth, zPosition, houseCount, floorCount, h
 }
 
 const buildEllipse = (groupWidth, groupDepth, x, y, z) => {
-  ellipse = new three.Shape();
+  ellipse = new THREE.Shape();
 
   const xRadius = groupWidth - 10;
   const yRadius = groupDepth + 20;
@@ -389,10 +389,10 @@ const buildEllipse = (groupWidth, groupDepth, x, y, z) => {
     }
   }
 
-  const geometry = new three.ShapeGeometry(ellipse);
-  const material = new three.MeshBasicMaterial({color: 0x00ff00, transparent: true, opacity: 0});
+  const geometry = new THREE.ShapeGeometry(ellipse);
+  const material = new THREE.MeshBasicMaterial({color: 0x00ff00, transparent: true, opacity: 0});
 
-  const ellipseMesh = new three.Mesh(geometry, material);
+  const ellipseMesh = new THREE.Mesh(geometry, material);
   ellipseMesh.rotateX(Math.PI / 2);
   ellipseMesh.rotateZ(Math.PI / 2);
   ellipseMesh.position.set(x, y, groupWidth / 2 - 3);
@@ -403,19 +403,19 @@ const buildEllipse = (groupWidth, groupDepth, x, y, z) => {
 
 const floorTip = (x, y, z, k) => {
   // 创建牌子
-  const signGeometry = new three.PlaneGeometry(4, 1.5); // 牌子的宽度和高度
-  const signMaterial = new three.MeshBasicMaterial({
+  const signGeometry = new THREE.PlaneGeometry(4, 1.5); // 牌子的宽度和高度
+  const signMaterial = new THREE.MeshBasicMaterial({
     color: 0x292929,
-    side: three.DoubleSide
+    side: THREE.DoubleSide
   });
   // 创建牌子正前方的 mesh
-  const frontSignMesh = new three.Mesh(signGeometry, signMaterial);
+  const frontSignMesh = new THREE.Mesh(signGeometry, signMaterial);
   frontSignMesh.position.set(x - 0.1, y, z - 2);
   frontSignMesh.rotateY(-Math.PI / 2); // 使牌子面向场景内部
   createTextMesh(`${k + 1}F`, frontSignMesh); // 创建牌子上的文字
 
   // 创建牌子正后方的 mesh
-  const backSignMesh = new three.Mesh(signGeometry, signMaterial);
+  const backSignMesh = new THREE.Mesh(signGeometry, signMaterial);
   backSignMesh.position.set(x + 0.1, y, z - 2);
   backSignMesh.rotateY(Math.PI / 2); // 使牌子面向场景内部
   createTextMesh(`${k + 1}F`, backSignMesh); // 创建牌子上的文字
@@ -432,8 +432,8 @@ const buildOutline = (boxMesh, color, boxGeometry, opacity) => {// build的描�
     transparent: opacity,
     opacity: 0.05
   };
-  const outlineMaterial = new three.LineBasicMaterial(option);
-  const edgesGeometry = new three.EdgesGeometry(boxGeometry);
+  const outlineMaterial = new THREE.LineBasicMaterial(option);
+  const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
 
   // 创建多个线条来模拟加宽的描边效果
   for (let s = 0; s < outlineSegments; s++) {
@@ -441,7 +441,7 @@ const buildOutline = (boxMesh, color, boxGeometry, opacity) => {// build的描�
     const xOffset = Math.cos(angle) * outlineWidth;
     const yOffset = Math.sin(angle) * outlineWidth;
 
-    const outlineEdges = new three.LineSegments(
+    const outlineEdges = new THREE.LineSegments(
         edgesGeometry,
         outlineMaterial
     );
@@ -460,8 +460,8 @@ const createTextMesh = (text, frontSignMesh) => {
       height: 0.01 // 文字的厚度
     });
 
-    const textMaterial = new three.MeshBasicMaterial({color: 0xffffff});
-    const textMesh = new three.Mesh(textGeometry, textMaterial);
+    const textMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 
     textMesh.position.set(-1, -0.5, 0.01); // 文字的位置
     frontSignMesh.add(textMesh);
@@ -470,10 +470,10 @@ const createTextMesh = (text, frontSignMesh) => {
 }
 
 const handleMouseMove = (event) => {
-  const container = renderer.domElement; // 获取Three.js场景容器
+  const container = renderer.domElement; // 获取THREE.js场景容器
   const rect = container.getBoundingClientRect(); // 获取容器的边界信息
 
-  const mouse = new three.Vector2();
+  const mouse = new THREE.Vector2();
   mouse.x = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
   mouse.y = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
@@ -501,7 +501,7 @@ const handleClick = () => {
     const selectedMesh = intersects[0].object; // 后处理
     if (selectedMesh.parent && selectedMesh.parent._name === 'build') {
       const build = selectedMesh.parent
-      ElMessage.success(build.info.title)
+      ElMessage.success("点击了"+build.info.title)
     }
   }
 }
