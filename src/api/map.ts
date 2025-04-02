@@ -8,3 +8,12 @@ export function getDrive(params): AxiosPromise {
         params
     });
 }
+
+// 调取wfs GetFeaturei
+export function wfsGetFeaturei(params): AxiosPromise {
+    return axios({
+        url:import.meta.env.VITE_APP_GEOSERVE_URL + "/geoserver/zhsw/ows",
+        method: 'get',
+        params
+    });
+}

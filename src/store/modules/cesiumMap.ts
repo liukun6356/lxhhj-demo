@@ -14,7 +14,7 @@ export interface mapStore {
     allPointPosList: Object
     waterPrimitiveCollection: PrimitiveCollection | null
     isActivewaterPrimitiveCollection: boolean,
-    krigingWorker: Worker,
+    // krigingWorker: Worker,
 }
 
 //用于存储全局Cesium->Viewer对象，在挂载前注意使用markRaw解除vue响应式劫持
@@ -32,7 +32,7 @@ export const usemapStore = defineStore({
         allPointPosList: allPointPosList, // 所有点高程信息
         waterPrimitiveCollection: null,// "功能" primitive集合
         isActivewaterPrimitiveCollection: false,// "功能" primitive集合 是否加载完成
-        krigingWorker: new Worker('/worker/worker.js'),//克里金计算线程
+        // krigingWorker: new Worker('/worker/worker.js'),//克里金计算线程
     }),
     actions: {
         setCesiumViewer(viewer: Viewer) {

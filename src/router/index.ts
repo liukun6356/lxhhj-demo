@@ -184,12 +184,12 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/noiseTerrain/index.vue'),
                         name: 'Three-StagDemo-NoiseTerrain',
                         meta: {title: '噪声地形', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'tubeTravel',
                         component: () => import('@/views/three/component/stagDemo/tubeTravel/index.vue'),
                         name: 'Three-StagDemo-TubeTravel',
                         meta: {title: '隧道穿梭', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'house',
                         component: () => import('@/views/three/component/stagDemo/house/index.vue'),
                         name: 'Three-StagDemo-House',
@@ -243,6 +243,16 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/generateGeometry/index.vue'),
                         name: 'Three-Course-GenerateGeometry',
                         meta: {title: '各种几何体', icon: '', affix: true},
+                    }, {
+                        path: 'sceneGroup',
+                        component: () => import('@/views/three/component/course/sceneGroup/index.vue'),
+                        name: 'Three-Course-SceneGroup',
+                        meta: {title: '场景遍历及坐标', icon: '', affix: true},
+                    }, {
+                        path: 'lightHelper',
+                        component: () => import('@/views/three/component/course/lightHelper/index.vue'),
+                        name: 'Three-Course-LightHelper',
+                        meta: {title: '各种灯光', icon: '', affix: true},
                     },
                 ]
             }

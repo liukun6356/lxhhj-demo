@@ -44,19 +44,17 @@ onUnmounted(() => {
   mapStore.setIsActiveMap(false)
 })
 
-const ImageryProvider = new WebTileLayer({
-  layer: 'img_d',
-  urlTemplate: `http://{subDomain}.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&tk=${import.meta.env.VITE_APP_TDT_KEY}`,
-  subDomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-})
 const initMap = (domId) => new Promise((resolve) => {
   const viewer = new MapView({
     container: domId,
     center: [100.586029, 30.889587],
     zoom: 7,
     map: new Map({
-      layers: [ImageryProvider]
+      basemap:'satellite',
     }),
+    constraints: {
+      maxZoom: 18 // 限制最大缩放级别为 18
+    }
   })
   reactiveUtils.when(() => viewer.ready, () => {
     console.log("Truthy", viewer.ready)
