@@ -27,6 +27,14 @@ export default [
                 id: 21,
                 label: '管网(万级)',
                 type: 'multPipline',
+            }, {
+                id: 22,
+                label: '节点(万级)',
+                type: 'multNode',
+            }, {
+                id: 23,
+                label: '水厂(万级)',
+                type: 'multWaterWork',
             }
         ]
     }

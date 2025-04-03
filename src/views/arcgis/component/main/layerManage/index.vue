@@ -13,19 +13,22 @@
           show-checkbox
           @check-change="checkChange"
           :default-expanded-keys="[2]"
-          :default-checked-keys="[11,21]"
+          :default-checked-keys="[11]"
           node-key="id"/>
     </div>
     <Tdt_img_d v-if="showTypeList.includes('img_d')"/>
     <Tdt_img_z v-if="showTypeList.includes('img_z')"/>
     <Tdt_vec_d v-if="showTypeList.includes('vec_d')"/>
+
     <mult-pipeline  v-if="showTypeList.includes('multPipline')"/>
+    <mult-node v-if="showTypeList.includes('multNode')"/>
+    <mul-waterwork v-if="showTypeList.includes('multWaterWork')"/>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
-import {usemapStore} from "@/store/modules/cesiumMap.ts";
+import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import mittBus from "@/utils/mittBus";
 import {useRoute} from 'vue-router';
 // 基础图层树
@@ -37,20 +40,27 @@ import Tdt_img_z from "./basicMap/tdt_img_z.vue"
 import Tdt_vec_d from "./basicMap/tdt_vec_d.vue"
 
 import MultPipeline from "./water/multPipeline.vue"
+import MultNode from "./water/multNode.vue"
+import MulWaterwork from "./water/mulWaterwork.vue"
+
 
 // Refs
 const treeRef = ref(null)
 
-const mapStore = usemapStore()
+const mapStore = usearcgisMapStore()
 const route = useRoute()
 const model = reactive({
   treeData: [],
-  showTypeList: ['img_d', 'multPipline'],
+  showTypeList: ['img_d'],
 })
 
 const {treeData, showTypeList} = toRefs(model)
 
 onMounted(async () => {
+  viewer.goTo({
+    center: [109.217583, 23.733192], // 示例经纬度（广州）
+    zoom: 13
+  })
   model.treeData = treeDataJson as any
   mittBus.on('toggleLayer', mittBusFn)
 })
@@ -76,6 +86,9 @@ const checkChange = (node) => {
 }
 
 const setChecked = (key, bool) => treeRef.value && treeRef.value.setChecked(key, bool, true)
+
+// 地图逻辑
+const viewer = mapStore.getArcgisViewer();
 </script>
 
 <style lang="scss" scoped>

@@ -2,18 +2,19 @@
   <teleport to="body">
     <ul v-show="showPopup" class="surveyStation-popup" ref="popupRef"
         :style="{ transform: `translate(${popupPos.x }px, ${popupPos.y}px)`}">
-      <li>管线 {{ curName }}</li>
+      <li>水厂 {{ curName }}</li>
     </ul>
   </teleport>
 </template>
 
 <script lang="ts" setup>
-import {onMounted, onUnmounted, reactive, toRefs, ref} from "vue";
+import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
 import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import {wfsGetFeaturei} from "@/api/map"
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
 import Point from "@arcgis/core/geometry/Point.js";
 import mittBus from "@/utils/mittBus";
+import * as turf from '@turf/turf'
 
 // Ref
 const popupRef = ref(null)
@@ -21,32 +22,30 @@ const popupRef = ref(null)
 const mapStore = usearcgisMapStore()
 const model = reactive({
   curId: null,
-  curName: "",
+  curName:"",
   showPopup: false,
   popupPos: {
     x: 0,
     y: 0,
-    width: 0,
-    height: 0
+    width:0,
+    height:0
   },
 })
-const {curId, curName, showPopup, popupPos} = toRefs(model)
+const {curId,curName, showPopup, popupPos} = toRefs(model)
 
 onMounted(() => {
-  createPipelines()
-  mittBus.on("pipelineOnMouseClick", onMouseClick)
-  mittBus.on("pipelineOnMouseMove", onMouseMove)
-  mittBus.on("pipelineOnMouseRender", showPopupBox)
+  createwaterWork()
+  mittBus.on("waterWorkOnMouseClick", onMouseClick)
+  mittBus.on("waterWorkOnMouseMove", onMouseMove)
+  mittBus.on("waterWorkOnMouseRender", showPopupBox)
 })
 
 onUnmounted(() => {
-  // layer.destroy();
-  // viewer.map?.remove(layer);
   layer.visible = false
   if (highlightHandle) highlightHandle.remove()
-  mittBus.off("pipelineOnMouseClick", onMouseClick)
-  mittBus.off("pipelineOnMouseMove", onMouseMove)
-  mittBus.off("pipelineOnMouseRender", showPopupBox)
+  mittBus.off("waterWorkOnMouseClick", onMouseClick)
+  mittBus.off("waterWorkOnMouseMove", onMouseMove)
+  mittBus.on("waterWorkOnMouseRender", showPopupBox)
 })
 
 const showPopupBox = () => {
@@ -54,30 +53,27 @@ const showPopupBox = () => {
     model.showPopup = false
     return
   }
-  const path = preGraphic.geometry.paths[0];
-  const [startX, startY] = path[0];
-  const [endX, endY] = path[1];
-  const midX = (startX + endX) / 2;
-  const midY = (startY + endY) / 2;
+  const polygon = turf.polygon([[...preGraphic.geometry.rings[0],preGraphic.geometry.rings[0][0]]]);
+  const center = turf.centerOfMass(polygon);
   const point = new Point({
-    x: midX,
-    y: midY,
+    x: center.geometry.coordinates[0],
+    y: center.geometry.coordinates[1],
     spatialReference: preGraphic.geometry.spatialReference
   })
   const {x, y} = viewer.toScreen(point)
   model.showPopup = true
-  const {width, height} = model.popupPos
+  const {width,height} = model.popupPos
   model.popupPos.x = x - (width / 2) - 15
   model.popupPos.y = y - height - 32
 }
 
 // 地图逻辑
-let layer, layerView, highlightHandle, preGraphic
+let layer, layerView, highlightHandle,preGraphic
 const viewer = mapStore.getArcgisViewer();
 
-const createPipelines = async () => {
-  if (viewer.map.layers.find((result) => result.customType === "pipeline")) {
-    layer = viewer.map.layers.find((result) => result.customType === "pipeline")
+const createwaterWork = async () => {
+  if (viewer.map.layers.find((result) => result.customType === "waterWork")) {
+    layer = viewer.map.layers.find((result) => result.customType === "waterWork")
     layer.visible = true
     viewer.map.layers.reorder(layer, viewer.map.layers.length);
     return
@@ -88,7 +84,7 @@ const createPipelines = async () => {
     request: "GetFeature",
     outputFormat: "application/json",
     srs: "EPSG:4326",
-    typeName: "zhsw:basic_pipeline",
+    typeName: "zhsw:basic_waterwork",
     viewparams: "planId:84;regionId:451300"
   }
   const {data} = await wfsGetFeaturei(params)
@@ -98,24 +94,24 @@ const createPipelines = async () => {
   const url = URL.createObjectURL(blob);
   layer = new GeoJSONLayer({
     url,
-    renderer: {
-      type: "simple",
-      symbol: {
-        type: "simple-line",
-        color: "blue",
-        width: 2
-      }
-    },
+    // renderer: {
+    //   type: 'simple',
+    //   symbol: {
+    //     type: 'picture-marker', // 使用图片作为图标
+    //     url: rainTextBg, // 替换为你的图标 URL
+    //     width: '24px', // 图标宽度
+    //     height: '24px' // 图标高度
+    //   }
+    // },
     fields: [
       {name: "element_id", type: "string"},
       {name: "name", type: "string"},
     ],
-    outFields: ["*"],
-    spatialReference: {wkid: 4326}
+    outFields: ["*"]
   });
-  layer.customType = 'pipeline'
+  layer.customType = 'waterWork'
   layer.editingEnabled = true
-  viewer.map.layers.add(layer);
+  viewer.map.layers.add(layer)
 }
 
 const onMouseClick = (graphic) => {
@@ -125,18 +121,19 @@ const onMouseClick = (graphic) => {
   preGraphic = graphic
   showPopupBox()
   model.curId = graphic.attributes.element_id
+
   // 删除
   // layer.applyEdits({deleteFeatures: [{objectId: movement.results[0].graphic.attributes.__OBJECTID}]})
   // model.curId = ""
 }
 
-const onMouseMove = async (graphic?: any) => {
+const onMouseMove = async (graphic) => {
   try {
-    if (model.curId) return
+    if (model.curId)return
     if (!layerView) {
       layerView = await viewer.whenLayerView(layer)
       layerView.highlightOptions = {
-        color: "rgba(182,93,93,1)", // 高亮颜色，例如红色
+        color: "rgb(155,24,78)", // 高亮颜色，例如红色
         haloOpacity: 0.9, // 光晕透明度
         fillOpacity: 0.2  // 填充透明度
       }
@@ -160,9 +157,3 @@ const onMouseMove = async (graphic?: any) => {
 }
 
 </script>
-
-<style lang="scss" scoped>
-.multPipeline-wrap {
-
-}
-</style>

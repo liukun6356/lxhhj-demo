@@ -22,13 +22,6 @@ const app = createApp(App);
 // 全局使用Icon图标  <el-icon><Close/></el-icon>
 Object.entries(ElementPlusIconsVue).forEach(([key, component]) => app.component(key, component))
 
-// 配置 arcgis 的 worker
-import * as workers from "@arcgis/core/core/workers.js"
-import config from "@arcgis/core/config";
-config.assetsPath = "http://192.168.60.34:6060/arcgis/arcgis-core-es/assets";
-config.workers.loaderUrl = "http://192.168.60.34:6060/arcgis/worker/system.min.js";
-config.workers.workerPath = "http://192.168.60.34:6060/arcgis/worker/RemoteClient.js";
-
 
 // 全局挂载
 setupStore(app);

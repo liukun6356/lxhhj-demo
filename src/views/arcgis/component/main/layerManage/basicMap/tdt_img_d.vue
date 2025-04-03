@@ -9,7 +9,7 @@ import WebTileLayer from "@arcgis/core/layers/WebTileLayer";
 const mapStore = usearcgisMapStore()
 const viewer = mapStore.getArcgisViewer();
 
-let ImageryProvider
+let ImageryProvider, watchFn
 onMounted(() => {
   ImageryProvider = new WebTileLayer({
     layer: 'img_d',
@@ -18,14 +18,16 @@ onMounted(() => {
     style: 'default',
     format: 'image/jpeg',
     tileMatrixSetID: 'GoogleMapsCompatible',
-    maximumLevel: 18
+    maximumLevel: 22,
   })
   viewer.map.add(ImageryProvider)
   viewer.map.layers.reorder(ImageryProvider, 0);
+  watchFn = viewer.watch("zoom", zoom => ImageryProvider.visible = zoom <= 18 ? true : false)
 })
 
 onUnmounted(() => {
   ImageryProvider.destroy();
   viewer.map?.remove(ImageryProvider);
+  watchFn.remove()
 })
 </script>
