@@ -160,9 +160,3 @@ const onMouseMove = async (graphic?: any) => {
 }
 
 </script>
-
-<style lang="scss" scoped>
-.multPipeline-wrap {
-
-}
-</style>

@@ -276,25 +276,36 @@ export const constantRoutes = [
                         component: () => import('@/views/arcgis/component/main/layerManage/index.vue'),
                         name: 'Arcgis-Main-LayerManage',
                         meta: {title: '图层管理', icon: '', affix: true},
-                    },
-                    {
+                    }, {
                         path: 'tsFeature',
                         component: () => import('@/views/arcgis/component/main/tsFeature/index.vue'),
                         name: 'Arcgis-Main-TsFeature',
                         meta: {title: 'tsFeature', icon: '', affix: true},
-                    },
-                    {
+                    }, {
                         path: 'tsKriging',
                         component: () => import('@/views/arcgis/component/main/tsKriging/index.vue'),
                         name: 'Arcgis-Main-TsKriging',
                         meta: {title: 'tsKriging', icon: '', affix: true},
-                    },
-                    {
+                    }, {
                         path: 'tsRaster',
                         component: () => import('@/views/arcgis/component/main/tsRaster/index.vue'),
                         name: 'Arcgis-Main-TsRaster',
                         meta: {title: 'tsRaster', icon: '', affix: true},
-                    },
+                    }
+                ]
+            },{
+            path:"analysis",
+                component: () => import('@/views/arcgis/index.vue'),
+                name: 'Arcgis-analysis',
+                redirect: '/arcgis/main/rangeSearch',
+                meta: {title: '空间分析', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'rangeSearch',
+                        component: () => import('@/views/arcgis/component/analysis/rangeSearch/index.vue'),
+                        name: 'Arcgis-Analysis-RangeSearch',
+                        meta: {title: '范围查询', icon: '', affix: true},
+                    }
                 ]
             }
         ]

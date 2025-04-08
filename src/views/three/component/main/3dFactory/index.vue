@@ -254,7 +254,7 @@ const initControls = () => {// 创建轨道控制器
 }
 
 const initLight = () => {// 创建光源
-  const ambLight = new three.AmbientLight('#ffffff', 1) // 基本光源
+  const ambLight = new three.AmbientLight('#ffffff', 6) // 基本光源
   scene.add(ambLight)
   const rectLight = new three.RectAreaLight(0xffffff, 500, 10, 10);
   rectLight.position.set(5, 40, -20);

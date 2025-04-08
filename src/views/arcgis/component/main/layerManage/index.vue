@@ -20,9 +20,12 @@
     <Tdt_img_z v-if="showTypeList.includes('img_z')"/>
     <Tdt_vec_d v-if="showTypeList.includes('vec_d')"/>
 
-    <mult-pipeline  v-if="showTypeList.includes('multPipline')"/>
+    <mult-pipeline v-if="showTypeList.includes('multPipline')"/>
     <mult-node v-if="showTypeList.includes('multNode')"/>
     <mul-waterwork v-if="showTypeList.includes('multWaterWork')"/>
+    <teleport to="body">
+      <scene-editing/>
+    </teleport>
   </div>
 </template>
 
@@ -42,6 +45,8 @@ import Tdt_vec_d from "./basicMap/tdt_vec_d.vue"
 import MultPipeline from "./water/multPipeline.vue"
 import MultNode from "./water/multNode.vue"
 import MulWaterwork from "./water/mulWaterwork.vue"
+
+import SceneEditing from "./water/sceneEditing.vue"
 
 
 // Refs

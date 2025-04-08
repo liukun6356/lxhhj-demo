@@ -97,7 +97,7 @@ const onMouseMove = async (event) => {
   model.locationData.longitude = formatToFixed(p.longitude, 6);
   model.locationData.latitude = formatToFixed(p.latitude, 6);
   const movement = await viewer.hitTest(event);
-  const result = movement.results.find((result) => result.layer.customType);
+  const result = movement.results.find((result) => result.layer?.customType);
   if (!result) {
     if (preType) {
       triggerMove(preType)
@@ -112,7 +112,7 @@ const onMouseMove = async (event) => {
 
 const onMouseClick = async (event) => {
   const movement = await viewer.hitTest(event)
-  const result = movement.results.find((result) => result.layer.customType);
+  const result = movement.results.find((result) => result.layer?.customType);
   if (!result) return
   triggerClick(result.layer.customType, result.graphic)
 }
