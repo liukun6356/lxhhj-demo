@@ -73,9 +73,6 @@ const draw = new Draw({
   view: viewer
 });
 
-
-import Point from "@arcgis/core/geometry/Point.js";
-
 const measureLine = (evt) => {
   graphicsLayer.removeAll();
   const {vertices, type} = evt
