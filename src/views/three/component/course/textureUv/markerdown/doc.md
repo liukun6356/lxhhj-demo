@@ -1,4 +1,4 @@
-## uv 坐标和 uv 动画
+## `geometry.attributes.uv`
 ### uv 坐标
 颜色贴图是根据 `uv坐标`来取纹理图片中的对应位置的颜色
 ![img_1.png](img_1.png)

@@ -237,7 +237,7 @@ export const constantRoutes = [
                         path: 'textureUv',
                         component: () => import('@/views/three/component/course/textureUv/index.vue'),
                         name: 'Three-Course-TextureUv',
-                        meta: {title: 'uv坐标', icon: '', affix: true},
+                        meta: {title: '顶点uv坐标', icon: '', affix: true},
                     }, {
                         path: 'curve',
                         component: () => import('@/views/three/component/course/curve/index.vue'),
@@ -262,7 +262,12 @@ export const constantRoutes = [
                         path: 'vertexNormal',
                         component: () => import('@/views/three/component/course/vertexNormal/index.vue'),
                         name: 'Three-Course-VertexNormal',
-                        meta: {title: '顶点发现反射', icon: '', affix: true},
+                        meta: {title: '顶点法线反射', icon: '', affix: true},
+                    },{
+                        path: 'geometryColor',
+                        component: () => import('@/views/three/component/course/geometryColor/index.vue'),
+                        name: 'Three-Course-GeometryColor',
+                        meta: {title: '顶点颜色渐变', icon: '', affix: true},
                     },
                 ]
             }
