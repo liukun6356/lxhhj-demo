@@ -34,6 +34,10 @@ import {usemapStore} from "@/store/modules/cesiumMap";
 import FogEffect from "./fogEffect.ts"
 import rainGlsl from "./rain.glsl"
 import snowGlsl from "./snow.glsl"
+import LineFlowMaterial from "@/utils/material/LineFlowMaterial.glsl";
+import ArrowOpacityPng from "@/assets/images/cesiumMap/controlPanel/ArrowOpacity.png"
+import windpoint from "@/assets/data/windpoint.json"
+import {midpoint} from "@turf/turf";
 
 let lastStage, fogEffect
 
@@ -72,6 +76,9 @@ const weatherClick = (index) => {
     case 3:
       showfogEffect();
       break;
+    case 4:
+      showWindField()
+      break
   }
 }
 // 地图逻辑
@@ -92,9 +99,100 @@ const shadowSliderChange = (val) => {
   time.setHours(val);
   viewer.clock.currentTime = Cesium.JulianDate.fromIso8601(time.toISOString())// iso8601String
 }
+
+const showWindField = () => {
+  const radius = 12000;
+  const geometryInstances = [];
+  windpoint.forEach(item => {
+    const position = Cesium.Cartesian3.fromDegrees(item.x, item.y, 0);
+    let pt1 = getPositionByDirectionAndLen(position, item.dir, radius);
+    pt1 = setPositionsHeight(pt1, 1e4);
+    const polylineinstance = new Cesium.GeometryInstance({
+      geometry: new Cesium.PolylineGeometry({
+        positions: [position, pt1],
+        width: 8
+      }),
+      vertexFormat: Cesium.PolylineMaterialAppearance.VERTEX_FORMAT,
+    });
+    geometryInstances.push(polylineinstance);
+  })
+  Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlowType, {
+    fabric: {
+      type: "LineFlow",
+      uniforms: {
+        image: Cesium.Material.DefaultImageId,
+        color: new Cesium.Color(1, 0, 0, 1.0),
+        repeat: new Cesium.Cartesian2(1.0, 1.0),
+        axisY: false,
+        speed: 10.0,
+        hasImage2: false,
+        image2: Cesium.Material.DefaultImageId,
+        color2: new Cesium.Color(1, 1, 1)
+      },
+      source: LineFlowMaterial
+    },
+    translucent: true
+  });
+  const primitive = new Cesium.Primitive({
+    geometryInstances: geometryInstances,
+    appearance: new Cesium.PolylineMaterialAppearance({
+      material: Cesium.Material.fromType("LineFlow", {
+        image: ArrowOpacityPng,
+        color: Cesium.Color.fromCssColorString("#00ff00"),
+        speed: 20,
+        //速度，建议取值范围1-100
+      }),
+    }),
+  });
+  viewer.scene.primitives.add(primitive)
+}
+
 const removeStage = () => {
   viewer.scene.postProcessStages.remove(lastStage);
   fogEffect.show = false;
+}
+
+/**
+ * 根据 距离方向 和 观察点 计算 目标点
+ * @param {Object} viewPoint 观察点
+ * @param {Object} direction 方向(正北方向为0)
+ * @param {Object} radius 可视距离
+ */
+const getPositionByDirectionAndLen = (position, angle, radius) => {
+  const matrix = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+  //旋转
+  const mz = Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(angle || 0));
+  const rotationZ = Cesium.Matrix4.fromRotationTranslation(mz);
+  Cesium.Matrix4.multiply(matrix, rotationZ, matrix);
+  const result = Cesium.Matrix4.multiplyByPoint(
+      matrix,
+      new Cesium.Cartesian3(0, radius, 0),
+      new Cesium.Cartesian3()
+  );
+  return result;
+}
+
+/**
+ * 设置坐标中海拔高度为指定的高度值
+ * @param {Array} positions Cartesian3类型的数组
+ * @param {Number} height 高度值
+ * @return {Array} Cartesian3类型的数组
+ */
+const setPositionsHeight = (positions, height) => {
+  height = Number(height) || 0;
+
+  if (positions instanceof Array) {
+    var arr = [];
+    for (var i = 0, len = positions.length; i < len; i++) {
+      let car = Cesium.Cartographic.fromCartesian(positions[i]);
+      let point = Cesium.Cartesian3.fromRadians(car.longitude, car.latitude, height);
+      arr.push(point);
+    }
+    return arr;
+  } else {
+    let car = Cesium.Cartographic.fromCartesian(positions);
+    return Cesium.Cartesian3.fromRadians(car.longitude, car.latitude, height);
+  }
 }
 </script>
 

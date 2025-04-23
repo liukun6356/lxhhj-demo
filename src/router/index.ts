@@ -258,6 +258,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/lightHelper/index.vue'),
                         name: 'Three-Course-LightHelper',
                         meta: {title: '各种灯光', icon: '', affix: true},
+                    }, {
+                        path: 'vertexNormal',
+                        component: () => import('@/views/three/component/course/vertexNormal/index.vue'),
+                        name: 'Three-Course-VertexNormal',
+                        meta: {title: '顶点发现反射', icon: '', affix: true},
                     },
                 ]
             }

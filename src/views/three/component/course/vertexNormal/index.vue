@@ -1,6 +1,6 @@
 <template>
-  <div class="infiniteTunnel-wrap">
-    1234
+  <div class="vertexNormal-wrap">
+
   </div>
 </template>
 
@@ -10,7 +10,6 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {usethreeBoxStore} from "@/store/modules/threeBox"
 import {onMounted, onUnmounted} from "vue";
 import GUI from "lil-gui";
-import stormPNG from "@/assets/images/three/storm.png"
 
 const threeBoxStore = usethreeBoxStore()
 
@@ -24,6 +23,7 @@ onUnmounted(() => {
   gui.destroy()
   cancelAnimationFrame(timer)
 })
+
 
 // 场景逻辑
 let scene, material, mesh, pointLight, axesHelper, camera, orbitControls, timer
@@ -51,35 +51,22 @@ const init = () => {
   // 创建轨道控制器 OrbitControls
   orbitControls = new OrbitControls(camera, renderer.domElement);
   // 添加管道
-  const geometry = new THREE.CylinderGeometry(30, 50, 1000, 32, 32, true);
-  const loader = new THREE.TextureLoader()
-  const texture = loader.load(stormPNG)
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.wrapT = THREE.RepeatWrapping
-  texture.repeat.set(1, 2)
-  const material = new THREE.MeshBasicMaterial({
-    // map: texture,
-    alphaMap: texture, // 黑白图
-    transparent: true,
-    side: THREE.BackSide
+  const p1 = new THREE.Vector3(-100, 0, 0);
+  const p2 = new THREE.Vector3(50, 100, 0);
+  const p3 = new THREE.Vector3(100, 0, 100);
+  const p4 = new THREE.Vector3(100, 0, 0);
+
+  const curve = new THREE.CubicBezierCurve3(p1, p2, p3, p4);
+
+  const geometry = new THREE.TubeGeometry(curve, 50, 10, 20);
+
+  const material = new THREE.MeshLambertMaterial({
+    color: new THREE.Color('white')
   });
 
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh)
-
-  let H = 0;
-  const clock = new THREE.Clock();
   const render = () => {
-    const delta = clock.getDelta();
-    H += 0.002;
-    if (H > 1) {
-      H = 0;
-    }
-    if (formData.colorChange) mesh.material.color.setHSL(H, 0.5, 0.5);
-    if (formData.animation) {
-      mesh.material.alphaMap.offset.y += 0.01;
-      mesh.rotation.y += delta * 0.5;
-    }
     //  Renderer把 Scene 渲染到canvas上,把 camera 看到的场景 scene 的样子渲染出来
     renderer.render(scene, camera);
     // 渲染循环,requestAnimationFrame的调用频率和显示器刷新率一致
@@ -102,19 +89,18 @@ let gui
 const formData = {
   axesHelper: false,
   animation: false,
-  colorChange: false
 }
 
 const initGui = () => {
   gui = new GUI({title: "controls"});
   gui.add(formData, "axesHelper").onChange(axesHelper => formDatachange("axesHelper", axesHelper))
   gui.add(formData, "animation")
-  gui.add(formData, "colorChange")
 }
+
 </script>
 
 <style lang="scss" scoped>
-.infiniteTunnel-wrap {
+.vertexNormal-wrap {
 
 }
 </style>
