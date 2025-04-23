@@ -91,7 +91,6 @@ const formDatachange = (k, v) => {
       break
     case "type":
       reset()
-      console.log(LightFolder)
       LightFolder?.hide()
       switch (v) {
         case "DirectionalLight":

@@ -155,5 +155,4 @@ const onMouseMove = async (graphic) => {
   } catch (e) {
   }
 }
-
 </script>
