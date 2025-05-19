@@ -110,7 +110,7 @@ const initMap = (domId) => new Promise((resolve) => {
         enableZoom: true
       },
       contextOptions: {
-        requestWebgl1: true
+        // requestWebgl1: true
       }
     },
     control: {

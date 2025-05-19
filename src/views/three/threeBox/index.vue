@@ -15,7 +15,8 @@ const threeBoxRef = ref(null)
 const threeBoxStore = usethreeBoxStore()
 onMounted(() => {
   const renderer = new WebGLRenderer({
-    logarithmicDepthBuffer:true
+    // logarithmicDepthBuffer:true, // 是否使用对数深度缓存
+    antialias: true,// 是否执行抗锯齿
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(threeBoxRef.value.offsetWidth, threeBoxRef.value.offsetHeight);

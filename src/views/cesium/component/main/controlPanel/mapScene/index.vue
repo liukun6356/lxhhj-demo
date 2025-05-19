@@ -10,11 +10,12 @@
       <span>天气模拟</span>
     </div>
     <div class="map_scene-content">
-      <div @click="weatherClick(0)" :class="{ select: weatherItemSelectIndex === 0 }">晴天</div>
+<!--      <div @click="weatherClick(0)" :class="{ select: weatherItemSelectIndex === 0 }">晴天</div>-->
       <div @click="weatherClick(1)" :class="{ select: weatherItemSelectIndex === 1 }">下雨</div>
       <div @click="weatherClick(2)" :class="{ select: weatherItemSelectIndex === 2 }">下雪</div>
       <div @click="weatherClick(3)" :class="{ select: weatherItemSelectIndex === 3 }">大雾</div>
-      <div @click="weatherClick(4)" :class="{ select: weatherItemSelectIndex === 4 }">风场</div>
+      <div @click="weatherClick(4)" :class="{ select: weatherItemSelectIndex === 4 }">风1</div>
+      <div @click="weatherClick(5)" :class="{ select: weatherItemSelectIndex === 5 }">风2</div>
     </div>
     <div class="second-level-heading">
       <span>日照模拟</span>
@@ -37,6 +38,7 @@ import snowGlsl from "./snow.glsl"
 import LineFlowMaterial from "@/utils/material/LineFlowMaterial.glsl";
 import ArrowOpacityPng from "@/assets/images/cesiumMap/controlPanel/ArrowOpacity.png"
 import windpoint from "@/assets/data/windpoint.json"
+import {CanvasWindy} from "./canvasWindy"
 import {midpoint} from "@turf/turf";
 
 let lastStage, fogEffect
@@ -79,6 +81,9 @@ const weatherClick = (index) => {
     case 4:
       showWindField()
       break
+    case 5:
+      showWind()
+      break
   }
 }
 // 地图逻辑
@@ -98,6 +103,21 @@ const shadowSliderChange = (val) => {
   const time = new Date(new Date().setHours(Number(val)) - 8 * 60 * 60 * 1e3);
   time.setHours(val);
   viewer.clock.currentTime = Cesium.JulianDate.fromIso8601(time.toISOString())// iso8601String
+}
+
+const showWind = () =>{
+  new CanvasWindy({
+    viewer: viewer,
+    color: "#ffffff",
+    //颜色
+    frameRate: 30,
+    //每秒刷新次数
+    speedRate: 100,
+    //风前进速率
+    particlesNumber: 3000,
+    maxAge: 120,
+    lineWidth: 1,
+  });
 }
 
 const showWindField = () => {
