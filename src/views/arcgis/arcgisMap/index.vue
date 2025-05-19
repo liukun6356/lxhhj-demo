@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts" setup>
+
 import MapView from "@arcgis/core/views/MapView.js";
 import Map from "@arcgis/core/Map.js";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
