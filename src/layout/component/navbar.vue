@@ -49,7 +49,7 @@ const menus = [
   {label: 'arcgis', name: 'Arcgis'},
   {label: 'leaflet', name: 'Leaflet'},
   {label: 'webGl', name: 'Webgl'},
-  {label:"webGpu",name:"Webgpu"},
+  {label: "webGpu", name: "Webgpu"},
   {label: 'ui', name: 'Ui'},
 ];
 </script>
@@ -77,6 +77,14 @@ const menus = [
     font-size: 40px;
     line-height: 80px;
     font-family: PangMenZhengDao;
+
+    span {
+      display: inline-block;
+      width: 600px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .menu-area {

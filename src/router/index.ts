@@ -273,7 +273,18 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/geometryColor/index.vue'),
                         name: 'Three-Course-GeometryColor',
                         meta: {title: '顶点颜色渐变', icon: '', affix: true},
+                    },{
+                        path: 'gltfStructure',
+                        component: () => import('@/views/three/component/course/gltfStructure/index.vue'),
+                        name: 'Three-Course-GltfStructure',
+                        meta: {title: 'GLTF的三种文件结构', icon: '', affix: true},
+                    },{
+                        path: 'orthographicCameraShadow',
+                        component: () => import('@/views/three/component/course/orthographicCameraShadow/index.vue'),
+                        name: 'Three-Course-OrthographicCameraShadow',
+                        meta: {title: '正投影相机和三种灯光的阴影', icon: '', affix: true},
                     },
+
                 ]
             }
         ]
