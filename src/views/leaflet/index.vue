@@ -67,6 +67,7 @@ const handleNodeClick = (row) => {
     position: fixed;
     top: 100px;
     left: 20px;
+    max-height: 50vh;
     font-size: 12px;
     padding: 10px;
     display: flex;

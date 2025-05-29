@@ -283,6 +283,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/orthographicCameraShadow/index.vue'),
                         name: 'Three-Course-OrthographicCameraShadow',
                         meta: {title: '正投影相机和三种灯光的阴影', icon: '', affix: true},
+                    },{
+                        path: 'orbitControls',
+                        component: () => import('@/views/three/component/course/orbitControls/index.vue'),
+                        name: 'Three-Course-OrbitControls',
+                        meta: {title: 'OrbitControls 的常用属性方法', icon: '', affix: true},
                     },
 
                 ]

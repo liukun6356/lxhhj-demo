@@ -431,7 +431,6 @@ export function createFloodPrimitive(mesh: {
     }
 
     function update(frameState: any) {
-        // debugger
         if (!_initialized) {
             init(frameState.context);
             _initialized = true;

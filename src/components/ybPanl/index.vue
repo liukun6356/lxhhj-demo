@@ -6,44 +6,66 @@
 <template>
   <teleport to="body">
     <div :class="'ybPanl-area ' + props.class">
-      <div class="ctrl-row">
-        <el-form-item label="开始时间">
-          <el-date-picker v-model="formData.startTime" type="datetime" placeholder="开始时间"
-                          :disabled-date="disabledDateFn"
-                          format="YYYY-MM-DD HH:mm" :clearable="false" popper-class="hour-picker-popper"
-                          @change="startTimeChange"/>
-        </el-form-item>
-        <el-form-item label="时段">
-          <el-input-number v-model="formData.range" :min="1" :max="maxTimeFrame"/>
-          &nbsp h
-        </el-form-item>
-        <el-form-item label="">
-          <el-button class="submitBtn" type="primary" @click="submit">确定</el-button>
-        </el-form-item>
+      <div class="left-area">
+        <el-row style="width: 100%;height: 100%">
+          <el-col :span="24">
+            <el-form-item label="">
+              <el-checkbox v-model="gridShow" size="small" style="position: relative;top:-5px;margin-right: 20px"
+                           @change="gridShowChange">
+                <span style="font-size: 14px;color: #fff">数值</span>
+              </el-checkbox>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="">
+              <el-radio-group v-model="formData.type">
+                <el-radio-button value="h">小时雨量</el-radio-button>
+                <el-radio-button value="total">累计雨量</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </div>
-      <div class="time-player">
-        <span class="play-icon" @click="togglePlay" :class="playFlag ? 'icon-pause' : 'icon-play'"/>
-        <el-slider v-model="curTime" :disabled="playFlag"
-                   :show-tooltip="false" :min="sliderTimeRang[0]" :max="sliderTimeRang[1]" tooltip-class="toolTip"
-                   :step="60*60*1e3" style="width: 800px;margin-left: 10px"/>
-        <div class="tip-area">
-          <div class="tip" ref="tipRef">
-            <span>{{ moment(curTime).format(`YYYY-MM-DD HH:mm:ss`) }}</span>
+      <div class="right-area">
+        <!--        <div class="ctrl-row">-->
+        <!--          <el-form-item label="开始时间">-->
+        <!--            <el-date-picker v-model="formData.startTime" type="datetime" placeholder="开始时间"-->
+        <!--                            :disabled-date="disabledDateFn"-->
+        <!--                            format="YYYY-MM-DD HH:mm" :clearable="false" popper-class="hour-picker-popper"-->
+        <!--                            @change="startTimeChange"/>-->
+        <!--          </el-form-item>-->
+        <!--          <el-form-item label="时段">-->
+        <!--            <el-input-number v-model="formData.range" :min="1" :max="maxTimeFrame"/>-->
+        <!--            &nbsp h-->
+        <!--          </el-form-item>-->
+        <!--          <el-form-item label="">-->
+        <!--            <el-button class="submitBtn" type="primary" @click="submit">确定</el-button>-->
+        <!--          </el-form-item>-->
+        <!--        </div>-->
+        <div class="time-player">
+          <span class="play-icon" @click="togglePlay" :class="playFlag ? 'icon-pause' : 'icon-play'"/>
+          <el-slider v-model="curTime" :disabled="playFlag"
+                     :show-tooltip="false" :min="sliderTimeRang[0]" :max="sliderTimeRang[1]" tooltip-class="toolTip"
+                     :step="60*60*1e3" style="width:720px;margin-left: 10px"/>
+          <div class="tip-area">
+            <div class="tip" ref="tipRef">
+              <span>{{ moment(curTime).format(`YYYY-MM-DD HH:mm`) }}</span>
+            </div>
+            <div class="min-val">{{ moment(sliderTimeRang[0]).format(`YYYY-MM-DD HH:mm`) }}</div>
+            <div class="max-val">{{ moment(sliderTimeRang[1]).format(`YYYY-MM-DD HH:mm`) }}</div>
           </div>
-          <div class="min-val">{{ moment(sliderTimeRang[0]).format(`YYYY-MM-DD HH:mm:ss`) }}</div>
-          <div class="max-val">{{ moment(sliderTimeRang[1]).format(`YYYY-MM-DD HH:mm:ss`) }}</div>
+          <el-select class="tip-area-select" v-model="speedType" size="small" style="width: 35px" :disabled="playFlag"
+                     @change="playFlag = false">
+            <el-option v-for="item in speedOptions" :key="item.value" :label="item.label" :value="item.value"/>
+          </el-select>
         </div>
-        <el-select class="tip-area-select" v-model="speedType" size="small" style="width: 35px" :disabled="playFlag"
-                   @change="playFlag = false">
-          <el-option v-for="item in speedOptions" :key="item.value" :label="item.label" :value="item.value"/>
-        </el-select>
       </div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts" setup>
-import {reactive, toRefs, onMounted, watch, ref, withDefaults} from "vue";
+import {reactive, toRefs, onMounted, watch, ref, withDefaults, computed} from "vue";
 import moment from "moment"
 import {ElMessage} from "element-plus";
 
@@ -69,13 +91,17 @@ const props = withDefaults(defineProps<Props>(), {
 // Emits
 const emits = defineEmits<{
   (e: "timeChange", timestamp: number): void // 时间段变化(过滤器所需格式，如小时级，分钟级)
+  (e: "gridShowChange", gridShow: boolean): void
 }>()
 
 // Refs
 const tipRef = ref(null)
 
+const gridShow = ref(true)
+
 const model = reactive({
   formData: {
+    type: 'h',//显示类型
     startTime: 0, // 开始时间
     range: 0,// 时段数
   },
@@ -93,7 +119,7 @@ watch(() => model.curTime, (v) => {
   if (model.curTime % getTimeType(props.timeType) === 0) emits("timeChange", model.curTime)
 })
 
-watch(()=>props.defaultRange,()=>{
+watch(() => props.defaultRange, () => {
   // 如果 defaultStartTime不在数据时间区间，默认取数据时间区间的第一个时间点
   if (props.defaultStartTime && props.defaultStartTime >= props.selTimeRang.start && props.defaultStartTime <= props.selTimeRang.end) {
     model.formData.startTime = props.defaultStartTime
@@ -124,6 +150,10 @@ onMounted(() => {
   }
   submit()
 })
+
+const gridShowChange = (bool) => {
+  emits('gridShowChange', bool)
+}
 
 const disabledDateFn = (time: any) => time.getTime() < props.selTimeRang.start - 24 * 60 * 60 * 1e3 || time.getTime() > props.selTimeRang.end
 
@@ -182,108 +212,159 @@ const speedOptions = [
 
 <style lang="scss" scoped>
 .ybPanl-area {
+  display: flex;
   position: fixed;
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   width: 930px;
-  height: 90px;
+  height: 85px;
   background-color: rgba(0, 31, 50, 0.50);
-  padding: 10px 5px 0;
+  padding: 10px 5px;
   box-sizing: border-box;
 
-  .ctrl-row {
+  .left-area {
     display: flex;
     align-items: center;
-    padding-left: 5px;
+    justify-content: space-evenly;
+    width: 100px;
+    padding: 0 10px;
     box-sizing: border-box;
 
-    .submitBtn {
+    :deep(.el-form-item) {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      .el-radio-group {
+        label {
+          width: 80px;
+          height: 20px;
+          margin-bottom: 5px;
+
+          .el-radio-button__inner {
+            --el-fill-color-blank: rgba(46, 165, 255, 0.3);
+            --el-border: #235e8e;
+            --el-text-color-regular: #fff;
+            --el-font-size-base: 12px;
+            width: 100%;
+            height: 100%;
+            padding: 3px;
+            border: 1px solid var(--el-border);
+            border-radius: 0;
+            border-left: 0;
+            margin-top: -20px;
+          }
+        }
+      }
+    }
+
+    .aabtn {
       width: 80px;
-      background: rgba(51, 173, 183, 1);
     }
   }
 
-  .time-player {
+  .right-area {
     display: flex;
-    align-items: center;
-    position: relative;
+    flex-direction: column;
+    justify-content: center;
 
-    .play-icon {
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      margin-left: 10px;
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      padding-left: 5px;
+      box-sizing: border-box;
 
-      &.icon-play {
-        background: url("@/assets/images/playeCircle.png") no-repeat center/cover;
-      }
-
-      &.icon-pause {
-        background: url("@/assets/images/pauseCircle.png") no-repeat center/cover;
+      .submitBtn {
+        width: 80px;
+        background: rgba(51, 173, 183, 1);
       }
     }
 
-    .tip-area {
-      position: absolute;
-      top: 16px;
-      left: 42px;
-      height: 1px;
-      width: 800px;
-      font-size: 12px;
+    .time-player {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 5px;
 
-      .tip {
-        position: absolute;
-        top: 46px;
-        left: 0;
-        z-index: 1;
-        pointer-events: none;
-        padding: 0px 3px;
-        transform: translate(-50%, calc(-100% - 20px));
-        white-space: nowrap;
-        background: rgba(46, 165, 255, 1);
-        filter: drop-shadow(0 0 2px black);
-        font-size: 12px;
-        color: #fff;
-        border-radius: 50px;
+      .play-icon {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        margin-left: 10px;
 
-        &::before {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: -18px;
-          width: 0px;
-          height: 0px;
-          border: 10px solid transparent;
-          border-right-color: rgba(46, 165, 255, 1);
-          border-bottom-color: rgba(46, 165, 255, 1);
-          transform: translate(-50%, 50%) rotate(-135deg) scale(0.5);
+        &.icon-play {
+          background: url("@/assets/images/playeCircle.png") no-repeat center/cover;
+        }
+
+        &.icon-pause {
+          background: url("@/assets/images/pauseCircle.png") no-repeat center/cover;
         }
       }
 
-      .min-val {
+      .tip-area {
         position: absolute;
-        top: 10px;
-        left: 0;
+        top: 16px;
+        left: 42px;
+        height: 1px;
+        width: 720px;
+        font-size: 12px;
+
+        .tip {
+          position: absolute;
+          top: 46px;
+          left: 0;
+          z-index: 1;
+          pointer-events: none;
+          padding: 0px 3px;
+          transform: translate(-50%, calc(-100% - 20px));
+          white-space: nowrap;
+          background: rgba(46, 165, 255, 1);
+          filter: drop-shadow(0 0 2px black);
+          font-size: 12px;
+          color: #fff;
+          border-radius: 50px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -18px;
+            width: 0px;
+            height: 0px;
+            border: 10px solid transparent;
+            border-right-color: rgba(46, 165, 255, 1);
+            border-bottom-color: rgba(46, 165, 255, 1);
+            transform: translate(-50%, 50%) rotate(-135deg) scale(0.5);
+          }
+        }
+
+        .min-val {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          color: #fff;
+        }
+
+        .max-val {
+          position: absolute;
+          top: 10px;
+          right: 0;
+          color: #fff;
+        }
       }
 
-      .max-val {
-        position: absolute;
-        top: 10px;
-        right: 0;
-      }
-    }
+      .tip-area-select {
+        margin-left: 15px;
 
-    .tip-area-select {
-      margin-left: 15px;
-
-      :deep(.el-select__wrapper) {
-        .el-select__suffix {
-          display: none;
+        :deep(.el-select__wrapper) {
+          .el-select__suffix {
+            display: none;
+          }
         }
       }
     }
   }
+
 }
 
 :deep(.el-slider) {

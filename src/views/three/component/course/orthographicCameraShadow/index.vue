@@ -101,12 +101,12 @@ const formDatachange = (k, v) => {
       }
       directionalLight.castShadow = true
       directionalLight.position.set(1000, 1000, 500)
-      directionalLight.shadow.camera.left = -500;
-      directionalLight.shadow.camera.right = 500;
-      directionalLight.shadow.camera.top = 500;
-      directionalLight.shadow.camera.bottom = -500;
+      directionalLight.shadow.camera.left = -1500;
+      directionalLight.shadow.camera.right = 1500;
+      directionalLight.shadow.camera.top = 1500;
+      directionalLight.shadow.camera.bottom = -1500;
       directionalLight.shadow.camera.near = 0.1;
-      directionalLight.shadow.camera.far = 3000;
+      directionalLight.shadow.camera.far = 30000;
       camerHelper1 = new THREE.CameraHelper(directionalLight.shadow.camera)
       scene.add(camerHelper1)
       break
@@ -196,7 +196,7 @@ const formDatachange = (k, v) => {
           mesh = new THREE.Group();
           mesh.add(plane);
           mesh.add(box);
-          mesh.add(box2);
+          // mesh.add(box2);
           break
       }
       scene.add(mesh)
