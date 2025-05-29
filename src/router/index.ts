@@ -69,7 +69,12 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/main/polylineFly/index.vue'),
                         name: 'Cesium-Main-PolylineFly',
                         meta: {title: '无人机轨道飞行(clock)', icon: '', affix: true},
-                    },
+                    },{
+                        path: 'flyDemo',
+                        component: () => import('@/views/cesium/component/main/flyDemo/index.vue'),
+                        name: 'Cesium-Main-flyDemo',
+                        meta: {title: '实时轨迹demo', icon: '', affix: true},
+                    }
                 ]
             }, {
                 path: 'monomer',
