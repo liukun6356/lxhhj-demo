@@ -194,6 +194,7 @@ const initMap = (domId) => new Promise((resolve) => {
 
 const coordinateChange = () => {
   const viewer = mapStore.getCesiumViewer();
+  if (!viewer) return
   const positionCartographic = viewer.camera.positionCartographic;
   model.locationData.longitude = formatToFixed(Cesium.Math.toDegrees(positionCartographic.longitude), 6);
   model.locationData.latitude = formatToFixed(Cesium.Math.toDegrees(positionCartographic.latitude), 6);

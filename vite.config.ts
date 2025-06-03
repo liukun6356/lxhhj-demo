@@ -40,12 +40,12 @@ export default defineConfig({
                 rewrite: (p) => p.replace(/^\/geoserve-api/, ""),
             },
             "/modelview-api":{
-                target: "http://192.168.31.37:6060/modelView", // dsy内网geoserver地址
+                target: "http://192.168.60.34:6060/modelView", // dsy内网geoserver地址
                 changeOrigin: true,
                 rewrite: (p) => p.replace(/^\/modelview-api/, ""),
             },
             "/modelData-api":{
-                target: "http://192.168.31.37:6060/modelData", // dsy内网geoserver地址
+                target: "http://192.168.60.34:6060/modelData", // dsy内网geoserver地址
                 changeOrigin: true,
                 rewrite: (p) => p.replace(/^\/modelData-api/, ""),
             },

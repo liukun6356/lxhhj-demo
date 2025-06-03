@@ -116,6 +116,7 @@ const onMouseClick = (movement) => {
       min2i = i
     }
   }
+  if (!min1i) return
   for (let i = 0; i < triangles.length; i += 3) {
     const triangleIds = [triangles[i], triangles[i + 1], triangles[i + 2]]
     if (triangleIds.includes(Math.round(min1i / 3)) && triangleIds.includes(Math.round(min2i / 3))) {

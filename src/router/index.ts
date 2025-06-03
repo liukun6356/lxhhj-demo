@@ -24,7 +24,14 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/fluid/simulateFluid/index.vue'),
                         name: 'Cesium-Fluid-SimulateFluid',
                         meta: {title: '模拟流体', icon: '', affix: true},
-                    }, {
+                    },
+                    {
+                        path: 'heightMap',
+                        component: () => import('@/views/cesium/component/fluid/heightMap/index.vue'),
+                        name: 'Cesium-Fluid-HeightMap',
+                        meta: {title: '高度图', icon: '', affix: true},
+                    },
+                    {
                         path: 'triangularMesh',
                         component: () => import('@/views/cesium/component/fluid/triangularMesh/index.vue'),
                         name: 'Cesium-Fluid-TriangularMesh',
@@ -69,7 +76,7 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/main/polylineFly/index.vue'),
                         name: 'Cesium-Main-PolylineFly',
                         meta: {title: '无人机轨道飞行(clock)', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'flyDemo',
                         component: () => import('@/views/cesium/component/main/flyDemo/index.vue'),
                         name: 'Cesium-Main-flyDemo',
@@ -273,22 +280,22 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/vertexNormal/index.vue'),
                         name: 'Three-Course-VertexNormal',
                         meta: {title: '顶点法线反射', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'geometryColor',
                         component: () => import('@/views/three/component/course/geometryColor/index.vue'),
                         name: 'Three-Course-GeometryColor',
                         meta: {title: '顶点颜色渐变', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'gltfStructure',
                         component: () => import('@/views/three/component/course/gltfStructure/index.vue'),
                         name: 'Three-Course-GltfStructure',
                         meta: {title: 'GLTF的三种文件结构', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'orthographicCameraShadow',
                         component: () => import('@/views/three/component/course/orthographicCameraShadow/index.vue'),
                         name: 'Three-Course-OrthographicCameraShadow',
                         meta: {title: '正投影相机和三种灯光的阴影', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'orbitControls',
                         component: () => import('@/views/three/component/course/orbitControls/index.vue'),
                         name: 'Three-Course-OrbitControls',

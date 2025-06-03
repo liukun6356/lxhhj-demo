@@ -518,6 +518,7 @@ void main( )
    out_FragColor = nOutFlow;
 }
 `;
+
 const renderShaderSource = `
 // Created by David Gallardo - xjorma/2021
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0
