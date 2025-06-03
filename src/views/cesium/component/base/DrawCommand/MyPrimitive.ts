@@ -69,7 +69,9 @@ export class MyPrimitive {
             },
             depthTest: {
                 enabled: true
-            }
+            },
+            depthMask: true,
+            blending: Cesium.BlendingState.ALPHA_BLEND // 可选加上试试
         })
 
         this.drawCommand = new Cesium.DrawCommand({

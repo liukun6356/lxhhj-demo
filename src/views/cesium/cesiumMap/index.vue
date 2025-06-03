@@ -130,11 +130,11 @@ const initMap = (domId) => new Promise((resolve) => {
     const rawViewer = markRaw(viewer);
     resolve(rawViewer)
     // 默认加载郴州地形
-    const terrainProvider = await mars3d.LayerUtil.createTerrainProvider({
-      url: import.meta.env.VITE_APP_GISDATA + "/cz/dem/chenzhouDem",
-    })
-    viewer.scene.terrainProvider = terrainProvider;
-    viewer.scene.terrainProvider.isFlag = true
+    // const terrainProvider = await mars3d.LayerUtil.createTerrainProvider({
+    //   url: import.meta.env.VITE_APP_GISDATA + "/cz/dem/chenzhouDem",
+    // })
+    // viewer.scene.terrainProvider = terrainProvider;
+    // viewer.scene.terrainProvider.isFlag = true
     // 鼠标经纬度提示控件
     coordinateChange()
     // viewer.scene.camera.moveStart.addEventListener(coordinateChange);

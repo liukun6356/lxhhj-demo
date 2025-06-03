@@ -154,8 +154,14 @@ export const constantRoutes = [
                     {
                         path: 'DrawCommand',
                         component: () => import('@/views/cesium/component/base/DrawCommand/index.vue'),
-                        name: 'Cesium-Tools-DrawCommand',
+                        name: 'Cesium-Base-DrawCommand',
                         meta: {title: 'DrawCommand', icon: '', affix: true},
+                    },
+                    {
+                        path: 'drawFlood',
+                        component: () => import('@/views/cesium/component/base/drawFlood/index.vue'),
+                        name: 'Cesium-Base-drawFlood',
+                        meta: {title: '画水动力三角形', icon: '', affix: true},
                     },
                 ]
             },
