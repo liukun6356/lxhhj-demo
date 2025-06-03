@@ -109,9 +109,9 @@ const initMap = (domId) => new Promise((resolve) => {
         enableRotate: true,
         enableZoom: true
       },
-      contextOptions: {
-        // requestWebgl1: true
-      }
+      // contextOptions: {
+      //   requestWebgl2: true
+      // }
     },
     control: {
       baseLayerPicker: false, // basemaps底图切换按钮
@@ -123,7 +123,6 @@ const initMap = (domId) => new Promise((resolve) => {
     contextOptions: {
       webgl: {
         // preserveDrawingBuffer: true, //允许canvas 截图
-
       },
     }
   }).on(mars3d.EventType.load, async (e) => {

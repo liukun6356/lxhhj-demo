@@ -9,7 +9,7 @@ export const constantRoutes = [
     {
         path: '/cesium',
         component: () => import('@/layout/index.vue'),
-        redirect: '/cesium/fluid',
+        redirect: '/cesium/base',
         name: "Cesium",
         children: [
             {
@@ -148,7 +148,7 @@ export const constantRoutes = [
                 path: 'base',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-Base',
-                redirect: '/cesium/tools/DrawCommand',
+                redirect: '/cesium/base/DrawCommand',
                 meta: {title: '原理', icon: '', affix: true},
                 children: [
                     {
