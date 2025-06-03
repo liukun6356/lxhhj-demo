@@ -14,9 +14,7 @@ import {FluidRenderer} from "./fluidDemo"
 // Component
 import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
-
 const mapStore = usemapStore()
-
 onMounted(async () => {
   initGui()
   handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);

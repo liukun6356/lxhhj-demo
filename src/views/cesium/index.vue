@@ -8,7 +8,8 @@
                  :filter-node-method="(_,data)=>!data.meta.noShow"
                  :props="{ children: 'children', label: 'name' }"
                  accordion
-                 default-expand-all
+                 :default-expanded-keys="[route.matched[0].children[0].name]"
+                 node-key="name"
                  @node-click="handleNodeClick">
           <template #default="{ data }">
             <span :style="{color:route.name.includes(data.name)?'rgb(255, 187, 31)':''}">{{ data.meta.title }}</span>
@@ -21,7 +22,7 @@
 
 <script lang="ts" setup>
 import CesiumMap from "@/views/cesium/cesiumMap/index.vue"
-import {useRouter,useRoute} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 
 // Refs
 const router = useRouter()

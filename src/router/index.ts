@@ -83,7 +83,8 @@ export const constantRoutes = [
                         meta: {title: '实时轨迹demo', icon: '', affix: true},
                     }
                 ]
-            }, {
+            },
+            {
                 path: 'monomer',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-Monomer',
@@ -102,7 +103,8 @@ export const constantRoutes = [
                         meta: {title: '楼层叠加', icon: '', affix: true},
                     },
                 ]
-            }, {
+            },
+            {
                 path: 'analysis',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-Analysis',
@@ -126,7 +128,8 @@ export const constantRoutes = [
                         meta: {title: '天际线分析', icon: '', affix: true},
                     },
                 ]
-            }, {
+            },
+            {
                 path: 'tools',
                 component: () => import('@/views/cesium/index.vue'),
                 name: 'Cesium-Tools',
@@ -138,6 +141,21 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/tools/mapSplit/index.vue'),
                         name: 'Cesium-Tools-MapSplit',
                         meta: {title: '卷帘', icon: '', affix: true},
+                    },
+                ]
+            },
+            {
+                path: 'base',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Base',
+                redirect: '/cesium/tools/DrawCommand',
+                meta: {title: '原理', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'DrawCommand',
+                        component: () => import('@/views/cesium/component/base/DrawCommand/index.vue'),
+                        name: 'Cesium-Tools-DrawCommand',
+                        meta: {title: 'DrawCommand', icon: '', affix: true},
                     },
                 ]
             },
