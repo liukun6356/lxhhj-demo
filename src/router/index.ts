@@ -329,6 +329,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/postProcessing/index.vue'),
                         name: 'Three-Course-PostProcessing',
                         meta: {title: '后处理', icon: '', affix: true},
+                    },{
+                        path: 'sprite',
+                        component: () => import('@/views/three/component/course/sprite/index.vue'),
+                        name: 'Three-Course-Sprite',
+                        meta: {title: '点精灵模型', icon: '', affix: true},
                     },
 
                 ]

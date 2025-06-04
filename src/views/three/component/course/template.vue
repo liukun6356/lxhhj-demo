@@ -8,6 +8,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {usethreeBoxStore} from "@/store/modules/threeBox"
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {onMounted, onUnmounted} from "vue";
 import GUI from "lil-gui";
 
@@ -24,7 +26,7 @@ onUnmounted(() => {
 })
 
 // 场景逻辑
-let scene, material, mesh, pointLight, axesHelper, camera, orbitControls, timer
+let scene, material, mesh, directionalLight, ambientLight, axesHelper, camera, orbitControls, timer,composer
 
 const renderer = threeBoxStore.getRenderer()
 
@@ -32,11 +34,12 @@ const init = () => {
   // 创建场景scene
   scene = new THREE.Scene();
 
-  // 添加灯光 Light
-  pointLight = new THREE.PointLight(0xffffff, 1e4); // 颜色白色#ffffff， 光照强度 1e4
-  // pointLight.intensity = 1e4
-  pointLight.position.set(80, 80, 80);// 80,80,80 的位置，默认照向 0,0,0 的方向
-  scene.add(pointLight);
+  directionalLight = new THREE.DirectionalLight(0xffffff);
+  directionalLight.position.set(300, 200, 400);
+  scene.add(directionalLight);
+
+  ambientLight = new THREE.AmbientLight(0xffffff);
+  scene.add(ambientLight);
 
   // 添加坐标系工具 AxesHelper
   axesHelper = new THREE.AxesHelper(200);
@@ -47,12 +50,17 @@ const init = () => {
   camera.position.set(200, 200, 200);// 在200,200,200的位置
   camera.lookAt(0, 0, 0); // 看向 0,0,0
 
+  composer = new EffectComposer(renderer);
+  const renderPass = new RenderPass(scene, camera); // 渲染 3D 场景
+  composer.addPass(renderPass);
+
   // 创建轨道控制器 OrbitControls
   orbitControls = new OrbitControls(camera, renderer.domElement);
 
   const render = () => {
+    composer.render();
     //  Renderer把 Scene 渲染到canvas上,把 camera 看到的场景 scene 的样子渲染出来
-    renderer.render(scene, camera);
+    // renderer.render(scene, camera);
     // 渲染循环,requestAnimationFrame的调用频率和显示器刷新率一致
     timer = requestAnimationFrame(render);
     threeBoxStore.performanceState.update()
