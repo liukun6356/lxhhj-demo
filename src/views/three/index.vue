@@ -7,7 +7,7 @@
                  :filter-node-method="(_,data)=>!data.meta.noShow"
                  :props="{ children: 'children', label: 'name' }"
                  accordion
-                 :default-expanded-keys="[route.matched[0].children[0].name]"
+                 :default-expanded-keys="[route.matched[1].name]"
                  node-key="name"
                  @node-click="handleNodeClick">
           <template #default="{ data }">
@@ -34,11 +34,17 @@ import {useRouter, useRoute} from "vue-router";
 import {usethreeBoxStore} from "@/store/modules/threeBox";
 // Component
 import ThreeBox from "./threeBox/index.vue"
+import {onMounted} from "vue";
 
 // Refs
 const router = useRouter()
 const route = useRoute()
 const threeBoxStore = usethreeBoxStore()
+
+onMounted(()=>{
+  console.log(route)
+
+})
 
 const handleNodeClick = (row) => {
   if (row.children) {

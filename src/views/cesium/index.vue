@@ -8,7 +8,7 @@
                  :filter-node-method="(_,data)=>!data.meta.noShow"
                  :props="{ children: 'children', label: 'name' }"
                  accordion
-                 :default-expanded-keys="[route.matched[0].children[0].name]"
+                 :default-expanded-keys="[route.matched[1].name]"
                  node-key="name"
                  @node-click="handleNodeClick">
           <template #default="{ data }">

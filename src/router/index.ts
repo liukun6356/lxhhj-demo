@@ -324,6 +324,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/orbitControls/index.vue'),
                         name: 'Three-Course-OrbitControls',
                         meta: {title: 'OrbitControls 的常用属性方法', icon: '', affix: true},
+                    }, {
+                        path: 'postProcessing',
+                        component: () => import('@/views/three/component/course/postProcessing/index.vue'),
+                        name: 'Three-Course-PostProcessing',
+                        meta: {title: '后处理', icon: '', affix: true},
                     },
 
                 ]
