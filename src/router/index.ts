@@ -320,6 +320,11 @@ export const constantRoutes = [
                         name: 'Three-Course-GltfStructure',
                         meta: {title: 'GLTF的三种文件结构', icon: '', affix: true},
                     }, {
+                        path: 'box3',
+                        component: () => import('@/views/three/component/course/box3/index.vue'),
+                        name: 'Three-Course-Box3',
+                        meta: {title: '包围盒与模型大小计算', icon: '', affix: true},
+                    },{
                         path: 'orthographicCameraShadow',
                         component: () => import('@/views/three/component/course/orthographicCameraShadow/index.vue'),
                         name: 'Three-Course-OrthographicCameraShadow',

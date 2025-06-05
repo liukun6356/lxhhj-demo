@@ -34,17 +34,11 @@ import {useRouter, useRoute} from "vue-router";
 import {usethreeBoxStore} from "@/store/modules/threeBox";
 // Component
 import ThreeBox from "./threeBox/index.vue"
-import {onMounted} from "vue";
 
 // Refs
 const router = useRouter()
 const route = useRoute()
 const threeBoxStore = usethreeBoxStore()
-
-onMounted(()=>{
-  console.log(route)
-
-})
 
 const handleNodeClick = (row) => {
   if (row.children) {

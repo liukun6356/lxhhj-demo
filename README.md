@@ -48,8 +48,7 @@
     yarn dev
     ```
 3. 访问测试
-
-   浏览器访问： [--](--)
+   浏览器访问： [链接](localhost:60219)
 4. 测试环境打包
     ```bash
     yarn build:staging
