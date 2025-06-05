@@ -340,7 +340,12 @@ const infos = [
   {
     name: "三维模型",
     types: [
-      {label: "树木", img: png1, drawType: "model", style: {scale: 10, url: "/tree.glb"}},
+      {
+        label: "树木",
+        img: png1,
+        drawType: "model",
+        style: {scale: 10, url: import.meta.env.VITE_APP_MODELVIEW + "/tree.glb"}
+      },
       {label: "草地", img: png2, drawType: ""},
       {label: "建筑", img: png3, drawType: ""},
       {label: "道路", img: png4, drawType: ""},

@@ -56,6 +56,7 @@ export class MyPrimitive {
             const ib = this.triangles[i3 + 1];
             const ic = this.triangles[i3 + 2];
             const i6 = i * 6;
+            // 相当于花了 ab,ac,bc 三条线
             gridLineIndexArr[i6] = ia;
             gridLineIndexArr[i6 + 1] = ib;
             gridLineIndexArr[i6 + 2] = ia;
@@ -153,7 +154,7 @@ export class MyPrimitive {
             uniformMap: uniformMap,
             renderState: renderState,
             pass: Cesium.Pass.OPAQUE,
-            primitiveType: Cesium.PrimitiveType.LINES,// 三角形
+            primitiveType: Cesium.PrimitiveType.LINES,// 线
         })
     }
     doubleToTwoFloats(v: number) {

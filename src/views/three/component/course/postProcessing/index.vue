@@ -156,7 +156,7 @@ const addModel = () => {
   const loader = new GLTFLoader();
   group = new THREE.Group();
   group.customType = 'Horse'
-  loader.load("/data/gltf/gltf/Horse.gltf", function (gltf) {
+  loader.load(import.meta.env.VITE_APP_MODELVIEW + "/gltf/gltf/Horse.gltf", function (gltf) {
     group.add(gltf.scene);
 
     gltf.scene.scale.set(50, 50, 50);

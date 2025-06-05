@@ -453,7 +453,7 @@ const buildOutline = (boxMesh, color, boxGeometry, opacity) => {// build的描�
 
 const createTextMesh = (text, frontSignMesh) => {
   const fontLoader = new FontLoader();
-  fontLoader.load("./data/PingFangSC-Medium_Medium.json", font => {
+  fontLoader.load(import.meta.env.VITE_APP_MODELVIEW + "/PingFangSC-Medium_Medium.json", font => {
     const textGeometry = new TextGeometry(text, {
       font: font,
       size: 1,
@@ -501,7 +501,7 @@ const handleClick = () => {
     const selectedMesh = intersects[0].object; // 后处理
     if (selectedMesh.parent && selectedMesh.parent._name === 'build') {
       const build = selectedMesh.parent
-      ElMessage.success("点击了"+build.info.title)
+      ElMessage.success("点击了" + build.info.title)
     }
   }
 }

@@ -43,7 +43,7 @@ export function getObjectByUuid(uuid, node) {
 }
 
 export function loadeGLTF(name, offset, that, modelInfo, wraningType) {
-    const loader = new GLTFLoader().setPath('./data/');
+    const loader = new GLTFLoader().setPath(import.meta.env.VITE_APP_MODELVIEW + '/');
     return new Promise(function (resolve, reject) {
         loader.load(name, function (gltf) {
             offset.y = offset.y + 0.5;
@@ -75,7 +75,7 @@ export function loadeGLTF(name, offset, that, modelInfo, wraningType) {
                     }
                     if (child.material.name.indexOf("发光") > -1 && wraningType) {
                         child.material = Material;
-                      child.material.name = '发光'
+                        child.material.name = '发光'
                     }
                 }
                 child.p_name = "gltf";
@@ -152,8 +152,8 @@ export function createGradientPlane(parentObj, x, y, z, colorStart, colorEnd, wi
 
     const gradientMaterial = new THREE.ShaderMaterial({
         uniforms: {
-            colorStart: { value: colorStart }, // 转换为数组
-            colorEnd: { value: colorEnd } // 转换为数组
+            colorStart: {value: colorStart}, // 转换为数组
+            colorEnd: {value: colorEnd} // 转换为数组
         },
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
@@ -213,7 +213,7 @@ let font = null;
 function loadFont() {
     if (!fontPromise) {
         fontPromise = new Promise((resolve, reject) => {
-            loader.load('./data/PingFangSC-Medium_Medium.json', function (response) {
+            loader.load(import.meta.env.VITE_APP_MODELVIEW + '/PingFangSC-Medium_Medium.json', function (response) {
                 font = response;
                 resolve();
             }, undefined, reject);
@@ -221,7 +221,6 @@ function loadFont() {
     }
     return fontPromise;
 }
-
 
 
 // 定义函数，使用加载字体后创建textMesh

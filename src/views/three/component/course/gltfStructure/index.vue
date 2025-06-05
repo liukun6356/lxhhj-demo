@@ -55,7 +55,7 @@ const init = () => {
   loader = new GLTFLoader();
 
   //  .gltf：所有纹理图片、顶点信息都是 base64 内联在一个文件里
-  loader.load("/data/gltf/CesiumMan.gltf", function (gltf) {
+  loader.load(import.meta.env.VITE_APP_MODELVIEW + "/gltf/CesiumMan.gltf", function (gltf) {
     console.log(gltf);
     group.add(gltf.scene);
     gltf.scene.scale.set(50, 50, 50)
@@ -69,7 +69,7 @@ const init = () => {
     })
   })
   //  .gltf + .bin + .jpg/.png：图片单独存在文件，顶点信息放在 .bin
-  loader.load("/data/gltf/gltf/CesiumMan.gltf", function (gltf) {
+  loader.load(import.meta.env.VITE_APP_MODELVIEW + "/gltf/gltf/CesiumMan.gltf", function (gltf) {
     group.add(gltf.scene);
 
     gltf.scene.scale.set(50, 50, 50);
@@ -85,7 +85,7 @@ const init = () => {
   });
 
   //  .glb：也是内联所有资源，但是二进制形式体积更小
-  loader.load("/data/gltf/CesiumMan.glb", function (gltf) {
+  loader.load(import.meta.env.VITE_APP_MODELVIEW + "/gltf/CesiumMan.glb", function (gltf) {
     group.add(gltf.scene);
 
     gltf.scene.scale.set(50, 50, 50);

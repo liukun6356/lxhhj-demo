@@ -240,7 +240,12 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/gradientColorBarChart/index.vue'),
                         name: 'Three-StagDemo-GradientColorBarChart',
                         meta: {title: '颜色渐变柱状图', icon: '', affix: true},
-                    }
+                    },{
+                        path: 'snowyForest',
+                        component: () => import('@/views/three/component/stagDemo/snowyForest/index.vue'),
+                        name: 'Three-StagDemo-SnowyForest',
+                        meta: {title: '林海雪原', icon: '', affix: true},
+                    },
                 ]
             }, {
                 path: 'course',
@@ -335,7 +340,6 @@ export const constantRoutes = [
                         name: 'Three-Course-Sprite',
                         meta: {title: '点精灵模型', icon: '', affix: true},
                     },
-
                 ]
             }
         ]

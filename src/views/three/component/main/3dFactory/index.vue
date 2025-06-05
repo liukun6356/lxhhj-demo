@@ -347,7 +347,7 @@ const createBasePanel = () => {// 创建地板
 
 const addFactoryModel = () => {// 添加工厂模型
   const loader = new GLTFLoader()
-  loader.load('./data/gc.glb', function (gltf) {
+  loader.load(import.meta.env.VITE_APP_MODELVIEW +'/gc.glb', function (gltf) {
     const obj = gltf.scene;
     obj.scale.set(0.05, 0.05, 0.05);
     obj.position.set(20, 0, -40);
