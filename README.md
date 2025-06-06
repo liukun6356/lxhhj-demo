@@ -4,8 +4,8 @@
 | --- | --- 
 | 源代码 | https://github.com/liukun6356/lxhhj-demo
 
-
 ## 技术栈
+
 | 技术栈 | 描述 | 官网 |
 | --- | --- | --- |
 | Cesium | 三维GIS引擎 | https://sandcastle.cesium.com/ |
@@ -20,6 +20,8 @@
 | arrugator | GIS栅格图像重投影 | https://gitlab.com/IvanSanchez/arrugator/ |
 | geotiff | 解析和处理GeoTIFF文件 | https://geotiffjs.github.io/ |
 | gl-matrix | 矩阵和向量计算 | https://glmatrix.net/ |
+| simplex-noise | Simplex噪声库 | https://github.com/jwagner/simplex-noise.js |
+| @tweenjs/tween.js | 补间动画库 | https://www.npmjs.com/package/@tweenjs/tween.js |
 | geoserver |编辑和发布地理控件| https://geoserver.org/ |
 | Vue3 | 渐进式 JavaScript 框架 | https://v3.cn.vuejs.org/ |
 | TypeScript | JavaScript 的一个超集 | https://www.tslang.cn/ |
@@ -31,12 +33,11 @@
 
 ## 环境要求
 
-- Node 环境
-  版本：18.0.0
-- 开发工具
-  Webstorm
+- Node 环境 版本：18.0.0
+- 开发工具 Webstorm
 
 ## 项目启动
+
 1. 安装依赖
 
     ```bash
@@ -47,8 +48,7 @@
     ```bash
     yarn dev
     ```
-3. 访问测试
-   浏览器访问： [链接](localhost:60219)
+3. 访问测试 浏览器访问： [链接](localhost:60219)
 4. 测试环境打包
     ```bash
     yarn build:staging
@@ -58,7 +58,8 @@
     yarn build:prod
     ```
 
-##  <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒
+## <img src="https://profile-avatar.csdnimg.cn/0b75e2e590014770956b95dd23ef9a41_hr_beginner.jpg" width="50" height="50" alt="描述图片的文字" style="position:relative;top:15px"> 柳晓黑胡椒
+
 https://blog.csdn.net/hr_beginner
 
 ```javascript                                                                              

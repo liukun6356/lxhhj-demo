@@ -349,6 +349,16 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/materialShare/index.vue'),
                         name: 'Three-Course-MaterialShare',
                         meta: {title: '几何体材质共用clone,copy', icon: '', affix: true},
+                    },{
+                        path: 'tweenAnimation',
+                        component: () => import('@/views/three/component/course/tweenAnimation/index.vue'),
+                        name: 'Three-Course-TweenAnimation',
+                        meta: {title: '动画库Tween', icon: '', affix: true},
+                    },{
+                        path: 'keyframesAnimation',
+                        component: () => import('@/views/three/component/course/keyframesAnimation/index.vue'),
+                        name: 'Three-Course-KeyframesAnimation',
+                        meta: {title: '关键帧动画和模型动画播放', icon: '', affix: true},
                     },
                 ]
             }

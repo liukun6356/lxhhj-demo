@@ -8,7 +8,7 @@ import glsl from 'vite-plugin-glsl';
 // https://vitejs.dev/config/
 export default defineConfig({
     optimizeDeps: {
-        include: ['simplex-noise'], // 强制包含 simplex-noise
+        include: ['simplex-noise', '@tweenjs/tween.js'], // 强制包含 simplex-noise
     },
     plugins: [
         vue(),
@@ -37,12 +37,12 @@ export default defineConfig({
                 rewrite: (p) => p.replace(/^\/geoserve-api/, ""),
             },
             "/modelview-api":{
-                target: "http://192.168.60.34:6060/modelView", // dsy内网geoserver地址
+                target: "http://127.0.0.1:6060/modelView", // dsy内网geoserver地址
                 changeOrigin: true,
                 rewrite: (p) => p.replace(/^\/modelview-api/, ""),
             },
             "/modelData-api":{
-                target: "http://192.168.60.34:6060/modelData", // dsy内网geoserver地址
+                target: "http://127.0.0.1:6060/modelData", // dsy内网geoserver地址
                 changeOrigin: true,
                 rewrite: (p) => p.replace(/^\/modelData-api/, ""),
             },
