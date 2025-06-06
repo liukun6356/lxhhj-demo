@@ -364,6 +364,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/keyframesAnimation/index.vue'),
                         name: 'Three-Course-KeyframesAnimation',
                         meta: {title: '关键帧动画和模型动画播放', icon: '', affix: true},
+                    },{
+                        path: 'morphAnimation',
+                        component: () => import('@/views/three/component/course/morphAnimation/index.vue'),
+                        name: 'Three-Course-MorphAnimation',
+                        meta: {title: '改变顶点的变形动画', icon: '', affix: true},
                     },
                 ]
             }
