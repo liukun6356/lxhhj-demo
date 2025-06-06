@@ -144,15 +144,20 @@ const addTree = async () => {
   const gltf = await loader.loadAsync(import.meta.env.VITE_APP_MODELVIEW + '/gltf/tree.gltf')
   gltf.scene.scale.set(10, 10, 10);
   tree.add(gltf.scene);
+  // gltf.scene.traverse(obj => {
+  //   obj.castShadow = true;
+  //   if (obj.isMesh) {
+  //     if (obj.name === "leaves001") {
+  //       obj.material.color.set('green');
+  //     } else {
+  //       obj.material.color.set('brown');
+  //     }
+  //   }
+  // })
+  tree.getObjectByName('leaves001').material.color.set('green');
+  tree.getObjectByName('tree001').material.color.set('brown');
   gltf.scene.traverse(obj => {
     obj.castShadow = true;
-    if (obj.isMesh) {
-      if (obj.name === "leaves001") {
-        obj.material.color.set('green');
-      } else {
-        obj.material.color.set('brown');
-      }
-    }
   })
   let i = 0;
   while (i < positions.count) {

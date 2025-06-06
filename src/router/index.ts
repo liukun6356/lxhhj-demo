@@ -344,6 +344,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/sprite/index.vue'),
                         name: 'Three-Course-Sprite',
                         meta: {title: '点精灵模型', icon: '', affix: true},
+                    },{
+                        path: 'materialShare',
+                        component: () => import('@/views/three/component/course/materialShare/index.vue'),
+                        name: 'Three-Course-MaterialShare',
+                        meta: {title: '几何体材质共用clone,copy', icon: '', affix: true},
                     },
                 ]
             }
