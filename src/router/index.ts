@@ -245,6 +245,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/snowyForest/index.vue'),
                         name: 'Three-StagDemo-SnowyForest',
                         meta: {title: '林海雪原', icon: '', affix: true},
+                    },{
+                        path: 'tubeEntryAnimation',
+                        component: () => import('@/views/three/component/stagDemo/tubeEntryAnimation/index.vue'),
+                        name: 'Three-StagDemo-TubeEntryAnimation',
+                        meta: {title: '丝滑入场动画', icon: '', affix: true},
                     },
                 ]
             }, {

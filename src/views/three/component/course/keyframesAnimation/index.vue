@@ -106,6 +106,7 @@ const addModel = async () => {
   const group = new THREE.Group();
   group.customType = "111"
   gltf = await loader.loadAsync(import.meta.env.VITE_APP_MODELVIEW + "/gltf/gltf/Horse.gltf")
+  console.log(gltf, 123)
   group.add(gltf.scene);
   gltf.scene.scale.set(30, 30, 30);
   group.getObjectByName('Cylinder').material.color.set('white');
@@ -156,7 +157,7 @@ const initGui = () => {
   })
   const animationFolder = gui.addFolder('模型动画');
   animationFolder.hide()
-  animationFolder.add(formData, "anmationType", [0, 1, 2, 3, 4]).onChange(index => {
+  animationFolder.add(formData, "anmationType", {Jump: 0, WalkSlow: 1, Death: 2, Walk: 3, Idle: 4}).onChange(index => {
     animationMixer.uncacheRoot(gltf.scene)
     const clipAction = animationMixer.clipAction(gltf.animations[index]);
     clipAction.play();
