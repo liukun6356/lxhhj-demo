@@ -250,6 +250,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/tubeEntryAnimation/index.vue'),
                         name: 'Three-StagDemo-TubeEntryAnimation',
                         meta: {title: '丝滑入场动画', icon: '', affix: true},
+                    },{
+                        path: 'numberRain',
+                        component: () => import('@/views/three/component/stagDemo/numberRain/index.vue'),
+                        name: 'Three-StagDemo-NumberRain',
+                        meta: {title: '数字雨', icon: '', affix: true},
                     },
                 ]
             }, {

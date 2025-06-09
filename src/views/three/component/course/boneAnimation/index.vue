@@ -158,7 +158,7 @@ const addMeshAnimation = async () => {
   gltf.scene.scale.set(100, 100, 100);
 
   animationMixer = new THREE.AnimationMixer(group);
-  const clipAction = animationMixer.clipAction(gltf.animations[1]);
+  const clipAction = animationMixer.clipAction(gltf.animations[0]);
   clipAction.play();
 
   const helper = new THREE.SkeletonHelper(gltf.scene);
