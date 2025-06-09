@@ -369,6 +369,16 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/morphAnimation/index.vue'),
                         name: 'Three-Course-MorphAnimation',
                         meta: {title: '改变顶点的变形动画', icon: '', affix: true},
+                    },{
+                        path: 'boneAnimation',
+                        component: () => import('@/views/three/component/course/boneAnimation/index.vue'),
+                        name: 'Three-Course-BoneAnimation',
+                        meta: {title: '骨骼动画:顶点运动', icon: '', affix: true},
+                    },{
+                        path: 'cssAnnotation',
+                        component: () => import('@/views/three/component/course/cssAnnotation/index.vue'),
+                        name: 'Three-Course-CssAnnotation',
+                        meta: {title: 'dom标签及canvas标签', icon: '', affix: true},
                     },
                 ]
             }

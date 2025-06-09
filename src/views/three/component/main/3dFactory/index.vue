@@ -187,13 +187,13 @@ const mapOperationClick = (item) => {
 
 // 地图逻辑
 let scene, camera, grid, controls, directionalLight, composer, outlinePass, effectFXAA, animationFrameId,
-    systemMeshArr = [], systemAnimateArr = [], labelRendererArr = [],// 广告牌数组
+    systemMeshArr = [], systemAnimateArr = [], css2DRendererArr = [],// 广告牌数组
     lastLabelGltfMesh,//上一个选中的广告牌
     preSystem//上一个选中的系统
 
 const dom = document.getElementById("three-box")
 const renderer = threeBoxStore.getRenderer()
-const labelRenderer = threeBoxStore.getLabelRenderer()
+const css2DRenderer = threeBoxStore.getCss2DRenderer()
 const mouse = new three.Vector2();
 const raycaster = new three.Raycaster();
 const defaultCameraPosition = {x: 42.70363028585678, y: 57.06887828250089, z: 78.20262412839936}//默认相机位置
@@ -312,10 +312,10 @@ const init = () => {
     for (let i = 0; i < systemAnimateArr.length; i++) {
       systemAnimateArr[i](systemMeshArr[i])
     }
-    for (let i = 0; i < labelRendererArr.length; i++) {
-      labelRendererArr[i].render(scene, camera);
+    for (let i = 0; i < css2DRendererArr.length; i++) {
+      css2DRendererArr[i].render(scene, camera);
     }
-    labelRenderer.render(scene, camera);
+    css2DRenderer.render(scene, camera);
     TWEEN.update();
     controls.update();
     renderer.render(scene, camera);
@@ -459,7 +459,7 @@ const createSystem = (initData) => {
         scene: scene,
         camera: camera,
         outlinePass: outlinePass,
-        labelRenderer: labelRenderer,
+        css2DRenderer: css2DRenderer,
         position: {x: 10 + 60 * i, y: 0, z: 10.5 + 9 * j},
         options: item,
         systemClick: function (obj) {
@@ -541,7 +541,7 @@ const createListener = () => {// 创建时间
         if (lastLabelGltfMesh) lastLabelGltfMesh.deleteBillboard();
         if (preSystem) preSystem.gltfArrarr.forEach(gltf => gltf.obj.deleteBillboard())
         if (selectedObject.showBillboard) {
-          selectedObject.showBillboard(labelRendererArr);
+          selectedObject.showBillboard(css2DRendererArr);
           lastLabelGltfMesh = selectedObject;
         }
         console.log(selectedObject.modelInfo.type,333)
@@ -555,7 +555,7 @@ const createListener = () => {// 创建时间
         model.baseModelContentShow = false
         if (lastLabelGltfMesh) lastLabelGltfMesh.deleteBillboard();
         if (preSystem) preSystem.gltfArrarr.forEach(gltf => gltf.obj.deleteBillboard())
-        selectedObject.clickEvent(outlinePass, labelRendererArr);
+        selectedObject.clickEvent(outlinePass, css2DRendererArr);
         const curSys = systemMeshArr.find(sys => sys.options.id === selectedObject.options.id)
         preSystem = curSys
         break

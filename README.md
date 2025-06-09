@@ -22,6 +22,7 @@
 | gl-matrix | 矩阵和向量计算 | https://glmatrix.net/ |
 | simplex-noise | Simplex噪声库 | https://github.com/jwagner/simplex-noise.js |
 | @tweenjs/tween.js | 补间动画库 | https://www.npmjs.com/package/@tweenjs/tween.js |
+| three-spritetext | three文本库 | https://www.npmjs.com/package/@tweenjs/tween.js |
 | geoserver |编辑和发布地理控件| https://geoserver.org/ |
 | Vue3 | 渐进式 JavaScript 框架 | https://v3.cn.vuejs.org/ |
 | TypeScript | JavaScript 的一个超集 | https://www.tslang.cn/ |

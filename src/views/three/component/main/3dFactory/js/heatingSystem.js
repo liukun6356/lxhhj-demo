@@ -24,8 +24,8 @@ class heatingSystem {
         this._id = this.defaultValue(options.id, this.guid());
         this._name = this.defaultValue(options.name, "xxx");
         this._camera = options.camera;
-        this.labelRendererArr = options.labelRendererArr;
-        this.labelRenderer = options.labelRenderer;
+        this.css2DRendererArr = options.css2DRendererArr;
+        this.css2DRenderer = options.css2DRenderer;
         this.floorPanelMesh = null
         this.systemInfo = null
         this.systemWarningTags = null
@@ -137,7 +137,7 @@ class heatingSystem {
                     gltf.tipsTytpe = false;
                 }
             }
-            gltf.showBillboard = function (labelRendererArr) {
+            gltf.showBillboard = function (css2DRendererArr) {
                 if (!gltf.BillboardTytpe) {
                     var str = `
                 <div>
@@ -153,7 +153,7 @@ class heatingSystem {
     </div>
     <div>.</div>
   </div> `
-                    that.CreateBillboard(labelRendererArr, {x: -23 + offset.x, y: 0.3 + offset.y, z: 0 + offset.z}, str)
+                    that.CreateBillboard(css2DRendererArr, {x: -23 + offset.x, y: 0.3 + offset.y, z: 0 + offset.z}, str)
                     gltf.BillboardTytpe = true;
                 }
             }
@@ -203,7 +203,7 @@ class heatingSystem {
 
                 }
             }
-            gltf.showBillboard = function (labelRendererArr) {
+            gltf.showBillboard = function (css2DRendererArr) {
                 if (!gltf.BillboardTytpe) {
                     var str = `
                 <div>
@@ -221,7 +221,7 @@ class heatingSystem {
   </div> `
 
 
-                    that.CreateBillboard(labelRendererArr, {x: offset.x - 1, y: 0.5 + offset.y, z: 0 + offset.z}, str)
+                    that.CreateBillboard(css2DRendererArr, {x: offset.x - 1, y: 0.5 + offset.y, z: 0 + offset.z}, str)
                     gltf.BillboardTytpe = true;
                 }
             }
@@ -257,7 +257,7 @@ class heatingSystem {
             })
             gltf.position.set(20 + offset.x, 0.5 + offset.y, 0.5 + offset.z);
             gltf.rotation.y = -Math.PI;
-            gltf.showBillboard = function (labelRendererArr) {
+            gltf.showBillboard = function (css2DRendererArr) {
                 if (!gltf.BillboardTytpe) {
                     var str = `
       <div>
@@ -276,7 +276,7 @@ class heatingSystem {
     <div>.</div>
   </div>
 `
-                    that.CreateBillboard(labelRendererArr, {x: 20 + offset.x, y: 0.5 + offset.y, z: 0 + offset.z}, str)
+                    that.CreateBillboard(css2DRendererArr, {x: 20 + offset.x, y: 0.5 + offset.y, z: 0 + offset.z}, str)
                     gltf.BillboardTytpe = true;
                 }
             }
@@ -428,13 +428,13 @@ class heatingSystem {
             outlinePass.selectedObjects = [that.FloorPanelMesh];
             //that.CreateBillboard(floorMesh.position)
         }
-        var clickEvent = function (outlinePass, labelRendererArr) {
+        var clickEvent = function (outlinePass, css2DRendererArr) {
             outlinePass.selectedObjects = [that.FloorPanelMesh];
             if (that.systemClick) {
                 that.systemClick(that.FloorPanelMesh);
             }
             that.gltfArr.forEach((item) => {
-                item.obj.showBillboard(labelRendererArr)
+                item.obj.showBillboard(css2DRendererArr)
             })
 
         }
@@ -690,11 +690,11 @@ class heatingSystem {
 
     /**
      * 创建广告牌
-     * @param {array} labelRendererArr 保存广告牌的数组
+     * @param {array} css2DRendererArr 保存广告牌的数组
      * @param {Vector3} position  广告牌位置
      * @param {string} htmlStr  html 拼接字符串
      */
-    CreateBillboard(labelRendererArr, position, htmlStr) {
+    CreateBillboard(css2DRendererArr, position, htmlStr) {
         //  var obj3d = new THREE.Object3D(); //存储对象
 
         const chinaDiv = document.createElement('div');
@@ -717,7 +717,7 @@ class heatingSystem {
         this.LabelObj3d.add(chinaLabel)
 
 
-        labelRendererArr.push(this.labelRenderer);
+        css2DRendererArr.push(this.css2DRenderer);
         return chinaLabel
     }
 
@@ -804,9 +804,9 @@ class heatingSystem {
                 that.RollMatArr[i].uniforms.resolution.value.y = window.innerHeight;
             }
         }
-        if (that.labelRendererArr) {
-            for (var i = 0; i < that.labelRendererArr.length; i++) {
-                that.labelRendererArr[i].render(that._scene, that._camera);
+        if (that.css2DRendererArr) {
+            for (var i = 0; i < that.css2DRendererArr.length; i++) {
+                that.css2DRendererArr[i].render(that._scene, that._camera);
             }
         }
     }
