@@ -54,7 +54,7 @@ const init = () => {
 
   camera.position.set(window.innerWidth / 2, window.innerHeight / 2, 500);
   camera.lookAt(window.innerWidth / 2, window.innerHeight / 2, 0);
-  // camera.updateProjectionMatrix();
+  camera.updateProjectionMatrix();
 
   composer = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera); // 渲染 3D 场景

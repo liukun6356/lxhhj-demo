@@ -258,13 +258,14 @@ const add3dMesh = () => {
   });
 
   group = new THREE.Mesh(geometry, material);
+  group.position.y = 200
   group.customType = "1111"
 
   const ele = document.createElement('div');
-  ele.innerHTML = `<div style="background:#ccc;width:700px;height:400px;pointer-events: none">
+  ele.innerHTML = `<div style="background:#ccc;width:100%;height:400px;pointer-events: none">
     <h1>这是网页</h1>
     <div style="display:flex;">
-        <img src="https://wx4.sinaimg.cn/mw690/001wNYJjly1huwhn2t7x3j61401wgtp502.jpg" style="max-height:300px"/>
+        <img src="${heartPng}" style="max-height:300px"/>
         <div>
             <p>这是一条新闻</p>
             <p>这是一条新闻</p>
@@ -371,7 +372,7 @@ const addCanvasSpriteMesh = async () => {
   scene.add(group)
 }
 
-const addSpritetext = () =>{
+const addSpritetext = () => {
   group = new THREE.Group();
   group.customType = "1111"
   const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
@@ -392,6 +393,7 @@ const addSpritetext = () =>{
   box2.position.x = 200;
 
   const spriteText = new SpriteText('aaa测试', 21); // [文本，文本高度，颜色]
+  spriteText.customType = "111"
   spriteText.padding = 5;
   // spriteText.strokeWidth = 1;
   // spriteText.strokeColor = '#fff';
@@ -401,7 +403,7 @@ const addSpritetext = () =>{
   spriteText.borderWidth = 1;
   spriteText.borderRadius = 1;
   spriteText.backgroundColor = '#ccc';
-  spriteText.position.set(200,70,0)
+  spriteText.position.set(200, 70, 0)
 
   scene.add(spriteText)
 
@@ -455,12 +457,10 @@ const loadImageAsync = (src) => new Promise((resolve, reject) => {
 
 const reset = () => {
   scene.children.forEach(child => {
-    if (child.customType) {
-      child.traverse(obj => {
-        if (obj instanceof CSS2DObject || obj instanceof CSS3DObject) obj.name === 'tag' && obj?.element?.parentNode?.removeChild(obj.element);
-      });
-      scene.remove(child)
-    }
+    if (child.customType) scene.remove(child)
+    child.traverse(obj => {
+      if (obj instanceof CSS2DObject || obj instanceof CSS3DObject) obj.name === 'tag' && obj?.element?.parentNode?.removeChild(obj.element);
+    });
   });
 }
 
@@ -484,7 +484,7 @@ const initGui = () => {
   gui.add(formData, "axesHelper").onChange(axesHelper => formDatachange("axesHelper", axesHelper))
   typeControl = gui.add(formData, "type",
       ["CSS2DObject", "CSS3DObject1", "CSS3DObject(正反)", "3dMesh", "spriteMesh", "canvasSpriteMesh", "spritetext"]
-  ).name("类型").onChange(type => {
+  ).name("类型").onChange(async (type) => {
     reset()
     if (canvasTypeFolder) canvasTypeFolder.destroy()
     formData.canvasType = ""
@@ -524,7 +524,7 @@ const initGui = () => {
         break
     }
   })
-  typeControl.setValue("spritetext")
+  typeControl.setValue("CSS2DObject")
 }
 
 </script>

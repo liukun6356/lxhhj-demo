@@ -255,6 +255,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/numberRain/index.vue'),
                         name: 'Three-StagDemo-NumberRain',
                         meta: {title: '数字雨', icon: '', affix: true},
+                    },{
+                        path: 'pieChart',
+                        component: () => import('@/views/three/component/stagDemo/pieChart/index.vue'),
+                        name: 'Three-StagDemo-PieChart',
+                        meta: {title: '3D饼图', icon: '', affix: true},
                     },
                 ]
             }, {
