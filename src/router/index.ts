@@ -185,12 +185,23 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/main/3dBuilding/index.vue'),
                         name: 'Three-Main-3dBuilding',
                         meta: {title: '3d楼栋', icon: '', affix: true},
+                    }, {
+                        path: 'newBuild',
+                        component: () => import('@/views/three/component/main/3dBuild/index.vue'),
+                        name: 'Three-Main-NewBuild',
+                        meta: {title: '3d楼栋New', icon: '', affix: true},
                     },
                     {
                         path: '3dFactory',
                         component: () => import('@/views/three/component/main/3dFactory/index.vue'),
                         name: 'Three-Main-3dFactory',
                         meta: {title: '3d厂区', icon: '', affix: true},
+                    },
+                    {
+                        path: 'new3dFactory',
+                        component: () => import('@/views/three/component/main/3dFactoryNew/index.vue'),
+                        name: 'Three-Main-New3dFactory',
+                        meta: {title: '3d厂区New', icon: '', affix: true},
                     },
                 ]
             },
@@ -612,7 +623,7 @@ export const constantRoutes = [
             {
                 path: 'main',
                 component: () => import('@/views/ui/index.vue'),
-                name: 'Ui-main',
+                name: 'Ui-Main',
                 redirect: '/ui/main/dragSort',
                 meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
@@ -621,6 +632,12 @@ export const constantRoutes = [
                         component: () => import('@/views/ui/component/main/dragSort.vue'),
                         name: 'Ui-Main-DragSort',
                         meta: {title: '拖拽排序', icon: '', affix: true},
+                    },
+                    {
+                        path: 'gradientBtn',
+                        component: () => import('@/views/ui/component/main/gradientBtn.vue'),
+                        name: 'Ui-Main-GradientBtn',
+                        meta: {title: '渐近伸缩抽屉按钮', icon: '', affix: true},
                     },
                 ]
             }

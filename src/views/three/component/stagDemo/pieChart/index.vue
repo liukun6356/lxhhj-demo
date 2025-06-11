@@ -47,6 +47,7 @@ const init = () => {
   scene.add(axesHelper);
 
   // 创建透视相机
+  camera.fov = 60
   camera.near = 0.1
   camera.far = 1e4
   camera.updateProjectionMatrix();

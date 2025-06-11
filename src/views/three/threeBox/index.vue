@@ -7,7 +7,7 @@
 import {ref, onMounted, onUnmounted, markRaw} from "vue"
 import Stats from 'three/addons/libs/stats.module.js';
 import {CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer.js";
-import { CSS3DRenderer } from 'three/examples/jsm/Addons.js';
+import {CSS3DRenderer} from 'three/examples/jsm/Addons.js';
 import {WebGLRenderer,} from "three";
 import {usethreeBoxStore} from "@/store/modules/threeBox"
 import * as THREE from "three";
@@ -16,7 +16,7 @@ const threeBoxRef = ref(null)
 
 const threeBoxStore = usethreeBoxStore()
 onMounted(() => {
-  const renderer = new WebGLRenderer({
+  renderer = new WebGLRenderer({
     // logarithmicDepthBuffer:true, // 是否使用对数深度缓存
     // antialias: true,// 是否执行抗锯齿
   });
@@ -63,11 +63,14 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  renderer.dispose()
+  renderer.domElement?.remove()
   threeBoxStore.setIsActiveRenderer(false)
   threeBoxStore.setRenderer(null)
 })
 
 // 场景逻辑
+let renderer
 const addPerformance = () => {
   const stats = new Stats(); // 性能监视器
   threeBoxRef.value.appendChild(stats.dom);
