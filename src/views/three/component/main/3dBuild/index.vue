@@ -1,21 +1,24 @@
 <template>
-  <teleport to="body">
-    <ul v-show="showPopup" class="floor-details" :style="{ transform: `translate(${popupPos.x }px, ${popupPos.y}px)`}">
-      <div class="content">
-        <div class="title">{{ info.title }}</div>
-        <div class="info">
-          <div class="info-item">
-            <span class="temperature">{{ info.temperature }}</span>℃
-            <div class="tips">当前室温</div>
-          </div>
-          <div class="info-item">
-            <span class="temperature">{{ info.temperature }}</span>℃
-            <div class="tips">24小时均温</div>
+  <div>
+    <teleport to="body">
+      <ul v-show="showPopup" class="floor-details"
+          :style="{ transform: `translate(${popupPos.x }px, ${popupPos.y}px)`}">
+        <div class="content">
+          <div class="title">{{ info.title }}</div>
+          <div class="info">
+            <div class="info-item">
+              <span class="temperature">{{ info.temperature }}</span>℃
+              <div class="tips">当前室温</div>
+            </div>
+            <div class="info-item">
+              <span class="temperature">{{ info.temperature }}</span>℃
+              <div class="tips">24小时均温</div>
+            </div>
           </div>
         </div>
-      </div>
-    </ul>
-  </teleport>
+      </ul>
+    </teleport>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -119,13 +122,12 @@ const init = () => {
   renderer.domElement.addEventListener('click', onMouseClick);
   renderer.domElement.addEventListener('mousemove', onMouseMove);
 
-  const render = () => {
+  ;(function render() {
     composer.render();
     css3DRenderer.render(scene, camera)
     timer = requestAnimationFrame(render);
     threeBoxStore.performanceState.update()
-  };
-  render()
+  })()
 }
 
 const createBuilding = async (floorCount = 25, houseCount = 5, unitCount = 3) => {
@@ -264,10 +266,10 @@ const addHouse = async (floorCount, houseCount, unitCount, houseWidth, houseDept
 
         let material = null;
         let outlineOpacity = false;
-        let color;
+        let color = '#fff';
         const temperature = Math.random() * 17 + 10
         if (temperature > 18) {
-          color = temperature ? buildColor(temperature) : '#fff';
+          if (temperature) color = buildColor(temperature)
           if (color != '#fff') {
             material = new THREE.MeshPhysicalMaterial({
               color: color,
@@ -334,7 +336,7 @@ const addTip = async (x, y, z, k) => {
   const group = new THREE.Group();
   const fontLoader = new FontLoader();
   const font = await fontLoader.loadAsync(import.meta.env.VITE_APP_MODELVIEW + "/PingFangSC-Medium_Medium.json")
-  const textGeometry = new TextGeometry(`${k + 1}F`, {font: font, size: 1, height: 0.01});
+  const textGeometry = new TextGeometry(`${k + 1}F`, {font: font, size: 1, depth: 0.01});
   const textMaterial = new THREE.MeshBasicMaterial({color: "#fff"});
   const textMesh = new THREE.Mesh(textGeometry, textMaterial);
   textMesh.position.set(-1, -0.5, 0.01); // 文字的位置
@@ -400,7 +402,7 @@ const initGui = () => {
         camera.position.set(-40, 47, 26); //高区
         break
       case "中":
-        camera.position.set(-45, 20, 26.5); //中区
+        camera.position.set(-110, 48, 48); //中区
         break
       case "低":
         camera.position.set(-58, 10, 26.5); //低区

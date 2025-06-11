@@ -316,10 +316,14 @@ class heatingSystem {
         // ItemLabel.rotation.z = Math.PI * 0.5;
         // that.obj3d.add(ItemLabel);
 
-        var statusBarLeft = util.createPlane(that.obj3d, this._position.x + 25.5, this._position.y + 0.5, this._position.z + 3 / 2, this.options.warningSum > 0 ? '#FFBF00' : '#484848', 3, 0.2);
+        var statusBarLeft = util.createPlane(that.obj3d,
+            this._position.x + 25.5, this._position.y + 0.5, this._position.z + 3 / 2,
+            this.options.warningSum > 0 ? '#FFBF00' : '#484848', 3, 0.2);
         statusBarLeft.rotation.z = Math.PI * 0.5;
 
-        var statusBarRight = util.createPlane(that.obj3d, this._position.x + 25.5, this._position.y + 0.5, this._position.z - 3 / 2, this.options.supplyType == 0 ? '#2978FF' : this.options.supplyType == 2 ? '#EA6C01' : '#484848', 3, 0.2);
+        var statusBarRight = util.createPlane(that.obj3d,
+            this._position.x + 25.5, this._position.y + 0.5, this._position.z - 3 / 2,
+            this.options.supplyType == 0 ? '#2978FF' : this.options.supplyType == 2 ? '#EA6C01' : '#484848', 3, 0.2);
         statusBarRight.rotation.z = Math.PI * 0.5;
 
         var RollMat1 = new dasRollMat({
@@ -703,12 +707,6 @@ class heatingSystem {
         chinaDiv.innerHTML = htmlStr;
         var chinaLabel = new CSS2DObject(chinaDiv);
         chinaLabel.position.set(position.x - 2, position.y + 0, position.z);//三维位置xyz
-
-
-        const lineEndPosition = new THREE.Vector3(-3, -25, 0); // 根据需要调整坐标
-        const lineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3, -3, 0), lineEndPosition]);
-        const lineMaterial = new THREE.LineBasicMaterial({color: 0xffffff});
-        const line = new THREE.Line(lineGeometry, lineMaterial);
 
         // 将 line 添加到 chinaLabel 中
         // chinaLabel.add(line);

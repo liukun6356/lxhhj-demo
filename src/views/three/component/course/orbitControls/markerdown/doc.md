@@ -7,3 +7,4 @@
 - `zoom`  缩放
 - `maxPolarAngle`  旋转角度上限
 - `controls.target.set`  设置焦点位置
+- `maxDistance`  能够将相机向外移动多少

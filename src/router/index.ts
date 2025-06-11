@@ -177,19 +177,14 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/three/index.vue'),
                 name: 'Three-Main',
-                redirect: '/three/main/3dBuilding',
+                redirect: '/three/main/3dBuild',
                 meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
-                        path: '3dBuilding',
-                        component: () => import('@/views/three/component/main/3dBuilding/index.vue'),
-                        name: 'Three-Main-3dBuilding',
-                        meta: {title: '3d楼栋', icon: '', affix: true},
-                    }, {
-                        path: 'newBuild',
+                        path: '3dBuild',
                         component: () => import('@/views/three/component/main/3dBuild/index.vue'),
-                        name: 'Three-Main-NewBuild',
-                        meta: {title: '3d楼栋New', icon: '', affix: true},
+                        name: 'Three-Main-3dBuild',
+                        meta: {title: '3d楼栋', icon: '', affix: true},
                     },
                     {
                         path: '3dFactory',
@@ -251,22 +246,22 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/gradientColorBarChart/index.vue'),
                         name: 'Three-StagDemo-GradientColorBarChart',
                         meta: {title: '颜色渐变柱状图', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'snowyForest',
                         component: () => import('@/views/three/component/stagDemo/snowyForest/index.vue'),
                         name: 'Three-StagDemo-SnowyForest',
                         meta: {title: '林海雪原', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'tubeEntryAnimation',
                         component: () => import('@/views/three/component/stagDemo/tubeEntryAnimation/index.vue'),
                         name: 'Three-StagDemo-TubeEntryAnimation',
                         meta: {title: '丝滑入场动画', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'numberRain',
                         component: () => import('@/views/three/component/stagDemo/numberRain/index.vue'),
                         name: 'Three-StagDemo-NumberRain',
                         meta: {title: '数字雨', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'pieChart',
                         component: () => import('@/views/three/component/stagDemo/pieChart/index.vue'),
                         name: 'Three-StagDemo-PieChart',
@@ -350,7 +345,7 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/box3/index.vue'),
                         name: 'Three-Course-Box3',
                         meta: {title: '包围盒与模型大小计算', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'orthographicCameraShadow',
                         component: () => import('@/views/three/component/course/orthographicCameraShadow/index.vue'),
                         name: 'Three-Course-OrthographicCameraShadow',
@@ -365,37 +360,37 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/postProcessing/index.vue'),
                         name: 'Three-Course-PostProcessing',
                         meta: {title: '后处理', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'sprite',
                         component: () => import('@/views/three/component/course/sprite/index.vue'),
                         name: 'Three-Course-Sprite',
                         meta: {title: '点精灵模型', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'materialShare',
                         component: () => import('@/views/three/component/course/materialShare/index.vue'),
                         name: 'Three-Course-MaterialShare',
                         meta: {title: '几何体材质共用clone,copy', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'tweenAnimation',
                         component: () => import('@/views/three/component/course/tweenAnimation/index.vue'),
                         name: 'Three-Course-TweenAnimation',
                         meta: {title: '动画库Tween', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'keyframesAnimation',
                         component: () => import('@/views/three/component/course/keyframesAnimation/index.vue'),
                         name: 'Three-Course-KeyframesAnimation',
                         meta: {title: '关键帧动画和模型动画播放', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'morphAnimation',
                         component: () => import('@/views/three/component/course/morphAnimation/index.vue'),
                         name: 'Three-Course-MorphAnimation',
                         meta: {title: '改变顶点的变形动画', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'boneAnimation',
                         component: () => import('@/views/three/component/course/boneAnimation/index.vue'),
                         name: 'Three-Course-BoneAnimation',
                         meta: {title: '骨骼动画:顶点运动', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'cssAnnotation',
                         component: () => import('@/views/three/component/course/cssAnnotation/index.vue'),
                         name: 'Three-Course-CssAnnotation',
