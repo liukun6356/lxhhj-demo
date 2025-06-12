@@ -949,6 +949,7 @@ const resetCamera = (cameraPosition = defaultCameraPosition, controlsTarget = de
       .to(cameraEndPosition, 500)
       .onUpdate((obj) => {
         camera.position.copy(cameraStartPosition)
+        camera.lookAt(controlsStartTarget.x, controlsStartTarget.y, controlsStartTarget.z)
       })
       .repeat(0)
       .easing(Easing.Quadratic.Out)
@@ -956,7 +957,7 @@ const resetCamera = (cameraPosition = defaultCameraPosition, controlsTarget = de
   const tween2 = new Tween(controlsStartTarget)
       .to(controlsEndTarget, 500)
       .onUpdate(() => {
-        camera.position.copy(cameraStartPosition);
+        orbitControls.target.set(controlsStartTarget.x, controlsStartTarget.y, controlsStartTarget.z);
       })
       .repeat(0)
       .easing(Easing.Quadratic.Out)
@@ -1049,6 +1050,7 @@ const initGui = () => {
 <style lang="scss" scoped>
 .factory-wrap {
   pointer-events: auto;
+
   .three_miniMap {
     position: absolute;
     right: 20px;
