@@ -343,6 +343,7 @@ const onMouseMove = (e) => {
   model.showPopup = false
   if (!intersections.length) return
   let mesh = intersections[0]?.object
+  if (mesh.target) mesh = mesh.target
   switch (mesh.customType) {
     case "floorPanel": // 系统底板
       outlinePass.visibleEdgeColor.set("#fff");
@@ -472,7 +473,7 @@ const createSystem = () => {
       addHotSourceModel(row, position, floorPanelMesh)
       addUnitModel(row, position, floorPanelMesh)
       addFloorModel(row, position, floorPanelMesh)
-      addIndicatorBar(row, position)
+      addIndicatorBar(row, position, floorPanelMesh)
       addRollMat(floorPanelMesh)
       addSystemPanel(row, floorPanelMesh)
     })
@@ -645,7 +646,7 @@ const addFloorModel = async (data, position, floorPanelMesh) => {
 }
 
 // 添加指示条
-const addIndicatorBar = (data, position) => {
+const addIndicatorBar = (data, position, floorPanelMesh) => {
   const geometry = new THREE.BoxGeometry(3, 0.2, 0.1)
   const material = new THREE.MeshStandardMaterial({
     color: data.warningSum > 0 ? '#FFBF00' : '#484848',
@@ -653,12 +654,14 @@ const addIndicatorBar = (data, position) => {
     roughness: 0.6
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.rotateX(-Math.PI / 2);
+  // mesh.rotateX(-Math.PI / 2);
   mesh.rotateZ(Math.PI / 2)
   mesh.receiveShadow = true;
   mesh.castShadow = false;
-  mesh.position.set(position.x + 25.5, position.y + 0.5, position.z + 3 / 2);
-  meshGroup.add(mesh)
+  // mesh.position.set(position.x + 25.5, position.y + 0.5, position.z + 3 / 2);
+  mesh.position.set(25.5, -3 / 2, 0)
+  floorPanelMesh.add(mesh)
+  mesh.target = floorPanelMesh
 
   const mesh2 = mesh.clone()
   mesh2.material = mesh2.material.clone();
@@ -666,8 +669,11 @@ const addIndicatorBar = (data, position) => {
   mesh2.rotation.copy(mesh.rotation)
   mesh2.receiveShadow = true;
   mesh2.castShadow = false;
-  mesh2.position.set(position.x + 25.5, position.y + 0.5, position.z - 3 / 2);
-  meshGroup.add(mesh2)
+  mesh2.position.set(25.5, 3 / 2, 0)
+  mesh2.target = floorPanelMesh
+
+  // mesh2.position.set(position.x + 25.5, position.y + 0.5, position.z - 3 / 2);
+  floorPanelMesh.add(mesh2)
 }
 
 // 添加呼吸灯带
@@ -755,6 +761,7 @@ const addRollMat = (floorPanelMesh) => {
   });
   const geometry = new THREE.PlaneGeometry(8, 0.6)
   const mesh = new THREE.Mesh(geometry, material1);
+  mesh.target = floorPanelMesh
   mesh.rotateZ(Math.PI);
   mesh.position.set(-10, -1, 0.5);
   floorPanelMesh.add(mesh)
@@ -777,14 +784,17 @@ const addRollMat = (floorPanelMesh) => {
   mesh.rotateZ(Math.PI);
   mesh2.material = material2;
   mesh2.position.set(-10, 1, 0.5);
+  mesh2.target = floorPanelMesh
   floorPanelMesh.add(mesh2)
 
   const mesh3 = mesh.clone()
   mesh3.position.set(13, -1, 0.5)
+  mesh3.target = floorPanelMesh
   floorPanelMesh.add(mesh3)
 
   const mesh4 = mesh2.clone()
   mesh4.position.set(13, 1, 0.5)
+  mesh4.target = floorPanelMesh
   floorPanelMesh.add(mesh4)
 }
 

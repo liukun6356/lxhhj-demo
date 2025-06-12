@@ -112,10 +112,10 @@ const init = () => {
   orbitControls = new OrbitControls(camera, renderer.domElement);
   orbitControls.minPolarAngle = Math.PI / 4;// 禁止上下旋转
   orbitControls.maxPolarAngle = (Math.PI / 4) * 3; // 禁止上下旋转
-  // orbitControls.addEventListener('change', () => {
-  //   console.log(camera.position)
-  //   console.log(camera, 1234)
-  // })
+  orbitControls.addEventListener('change', () => {
+    console.log(camera.position)
+    console.log(camera, 1234)
+  })
 
   createBuilding(model.houseData.floorCount, model.houseData.houseCount, model.houseData.unitCount)
 
@@ -399,15 +399,16 @@ const initGui = () => {
   gui.add(formData, "cameraType", ["高", "中", "低"]).onChange(type => {
     switch (type) {
       case "高":
-        camera.position.set(-40, 47, 26); //高区
+        camera.position.set(-73, 34, 23); //高区
         break
       case "中":
-        camera.position.set(-110, 48, 48); //中区
+        camera.position.set(-90, 16, 32); //中区
         break
       case "低":
-        camera.position.set(-58, 10, 26.5); //低区
+        camera.position.set(-65, 10, 30); //低区
         break
     }
+    camera.lookAt(orbitControls.target.x,orbitControls.target.y,orbitControls.target.z)
   })
 }
 

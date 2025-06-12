@@ -10,6 +10,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {usethreeBoxStore} from "@/store/modules/threeBox"
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {Tween, Easing, Group} from '@tweenjs/tween.js';
 import {onMounted, onUnmounted} from "vue";
 import GUI from "lil-gui";
 
@@ -22,11 +23,14 @@ onMounted(() => {
 onUnmounted(() => {
   gui.destroy()
   cancelAnimationFrame(timer)
+  renderer.domElement.removeEventListener('click', onMouseClick);
   renderer.clear()
+  orbitControls.dispose()
 })
 
 // 场景逻辑
-let scene, material, directionalLight, ambientLight, axesHelper, orbitControls, timer, composer, group
+let scene, material, directionalLight, ambientLight, axesHelper, orbitControls, timer, composer, group,
+    tweenGroup
 
 const renderer = threeBoxStore.getRenderer()
 const camera = threeBoxStore.getCamera()
@@ -62,15 +66,44 @@ const init = () => {
   // 创建轨道控制器 OrbitControls
   orbitControls = new OrbitControls(camera, renderer.domElement);
 
-  const render = () => {
+  renderer.domElement.addEventListener('click', onMouseClick);
+  tweenGroup = new Group()
+
+  ;(function render(time) {
+    tweenGroup.update(time)
     composer.render();
-    //  Renderer把 Scene 渲染到canvas上,把 camera 看到的场景 scene 的样子渲染出来
-    // renderer.render(scene, camera);
-    // 渲染循环,requestAnimationFrame的调用频率和显示器刷新率一致
     timer = requestAnimationFrame(render);
     threeBoxStore.performanceState.update()
+  })()
+}
+
+const onMouseClick = (e) => {
+  const y = -((e.offsetY / window.innerHeight) * 2 - 1);
+  const x = (e.offsetX / window.innerWidth) * 2 - 1;
+
+  const rayCaster = new THREE.Raycaster();
+  rayCaster.setFromCamera(new THREE.Vector2(x, y), camera);
+
+  const intersections = rayCaster.intersectObjects(group.children);
+  if (intersections.length) {
+    const obj = intersections[0].object.target;
+    group.traverse(obj => {
+      if (!obj.customType) return
+      obj.position.x = 0;
+      obj.position.y = 0;
+    });
+    const tween = new Tween(obj.position).to({
+      x: 100 * Math.cos(obj.angle),
+      y: 100 * Math.sin(obj.angle)
+    }, 500)
+        .easing(Easing.Quadratic.InOut)
+        .repeat(0)
+        .onComplete(() => {
+          tweenGroup.remove(tween)
+        })
+        .start();
+    if (obj.customType) tweenGroup.add(tween);
   }
-  render()
 }
 
 const createPieChart = () => {
@@ -142,11 +175,47 @@ const createPieChart = () => {
     });
 
     const mesh = new THREE.Mesh(geometry, material);
+
     group.add(mesh);
+    mesh.customType = "111"
+    mesh.angle = (endAngle + startAngle) / 2;
+
+    const label = createLabel(data[i].name + ' ' + data[i].value);
+    label.position.x = 150 * Math.cos(mesh.angle);
+    label.position.y = 150 * Math.sin(mesh.angle);
+    label.position.z = 150;
+    mesh.add(label);
+
+    mesh.target = mesh
+    label.target = mesh
 
     startAngle += rad;
   })
   group.rotateX(-Math.PI / 2)
+}
+
+const createLabel = (text) => {
+  const textWidth = text.length * 30
+  const canvas = document.createElement("canvas");
+  const dpr = window.devicePixelRatio;
+  const w = canvas.width = textWidth * dpr;
+  const h = canvas.height = 50 * dpr;
+
+  const c = canvas.getContext('2d');
+  c.translate(w / 2, h / 2);
+  c.fillStyle = "#ffffff";
+  c.font = "normal 14px 微软雅黑";
+  c.textBaseline = "middle";
+  c.textAlign = "center";
+  c.fillText(text, 0, 0);
+  const texture = new THREE.CanvasTexture(canvas);
+
+  const spriteMaterial = new THREE.SpriteMaterial({
+    map: texture
+  });
+  const sprite = new THREE.Sprite(spriteMaterial);
+  sprite.scale.set(textWidth, 50);
+  return sprite
 }
 
 const addMesh = () => {
@@ -204,7 +273,7 @@ const formData = {
 const initGui = () => {
   gui = new GUI({title: "controls"});
   gui.add(formData, "axesHelper").onChange(axesHelper => formDatachange("axesHelper", axesHelper))
-  typeControl = gui.add(formData, "type",["mesh","pieChat"]).onChange(type => {
+  typeControl = gui.add(formData, "type", ["mesh", "pieChat"]).onChange(type => {
     reset()
     switch (type) {
       case "mesh":
@@ -215,7 +284,7 @@ const initGui = () => {
         break
     }
   })
-  typeControl.setValue("mesh")
+  typeControl.setValue("pieChat")
 }
 
 </script>
