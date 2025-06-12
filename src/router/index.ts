@@ -192,12 +192,6 @@ export const constantRoutes = [
                         name: 'Three-Main-3dFactory',
                         meta: {title: '3d厂区', icon: '', affix: true},
                     },
-                    {
-                        path: 'new3dFactory',
-                        component: () => import('@/views/three/component/main/3dFactoryNew/index.vue'),
-                        name: 'Three-Main-New3dFactory',
-                        meta: {title: '3d厂区New', icon: '', affix: true},
-                    },
                 ]
             },
             {

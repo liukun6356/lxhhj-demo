@@ -21,6 +21,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   gui.destroy()
+  orbitControls.dispose()
   cancelAnimationFrame(timer)
   renderer.clear()
   scene.clear()

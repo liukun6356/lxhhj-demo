@@ -64,7 +64,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   renderer.dispose()
-  renderer.domElement?.remove()
+  // renderer.domElement?.remove()
   threeBoxStore.setIsActiveRenderer(false)
   threeBoxStore.setRenderer(null)
 })
