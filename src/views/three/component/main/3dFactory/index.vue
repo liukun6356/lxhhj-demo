@@ -43,7 +43,6 @@
 
 <script lang="ts" setup>
 import * as THREE from 'three';
-
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {usethreeBoxStore} from "@/store/modules/threeBox"
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';

@@ -64,15 +64,11 @@ const init = () => {
   // 创建轨道控制器 OrbitControls
   orbitControls = new OrbitControls(camera, renderer.domElement);
 
-  const render = () => {
+  ;(function render() {
     composer.render();
-    //  Renderer把 Scene 渲染到canvas上,把 camera 看到的场景 scene 的样子渲染出来
-    // renderer.render(scene, camera);
-    // 渲染循环,requestAnimationFrame的调用频率和显示器刷新率一致
     timer = requestAnimationFrame(render);
     threeBoxStore.performanceState.update()
-  }
-  render()
+  })()
 }
 
 const formDatachange = (k, v) => {

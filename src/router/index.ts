@@ -389,6 +389,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/cssAnnotation/index.vue'),
                         name: 'Three-Course-CssAnnotation',
                         meta: {title: 'dom标签及canvas标签', icon: '', affix: true},
+                    },{
+                        path: 'audioApi',
+                        component: () => import('@/views/three/component/course/audioApi/index.vue'),
+                        name: 'Three-Course-AudioApi',
+                        meta: {title: '3d场景音乐', icon: '', affix: true},
                     },
                 ]
             }
