@@ -71,6 +71,12 @@ const init = () => {
   })()
 }
 
+const reset = () => {
+  scene.children.forEach(child => {
+    if (child.customType) scene.remove(child)
+  });
+}
+
 const formDatachange = (k, v) => {
   switch (k) {
     case "axesHelper":

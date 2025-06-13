@@ -260,6 +260,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/pieChart/index.vue'),
                         name: 'Three-StagDemo-PieChart',
                         meta: {title: '3D饼图', icon: '', affix: true},
+                    }, {
+                        path: 'carConfig',
+                        component: () => import('@/views/three/component/stagDemo/carConfig/index.vue'),
+                        name: 'Three-StagDemo-CarConfig',
+                        meta: {title: '汽车选配', icon: '', affix: true},
                     },
                 ]
             }, {
@@ -394,6 +399,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/audioApi/index.vue'),
                         name: 'Three-Course-AudioApi',
                         meta: {title: '3d场景音乐', icon: '', affix: true},
+                    },{
+                        path: 'pbrMaterial',
+                        component: () => import('@/views/three/component/course/pbrMaterial/index.vue'),
+                        name: 'Three-Course-PbrMaterial',
+                        meta: {title: 'pbr材质', icon: '', affix: true},
                     },
                 ]
             }
