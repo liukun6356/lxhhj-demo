@@ -270,6 +270,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/dancingMirror/index.vue'),
                         name: 'Three-StagDemo-DancingMirror',
                         meta: {title: '练舞房', icon: '', affix: true},
+                    }, {
+                        path: 'musicPlayer',
+                        component: () => import('@/views/three/component/stagDemo/musicPlayer/index.vue'),
+                        name: 'Three-StagDemo-MusicPlayer',
+                        meta: {title: '音乐播放器', icon: '', affix: true},
                     },
                 ]
             }, {
@@ -414,6 +419,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/reflectorMirror/index.vue'),
                         name: 'Three-Course-ReflectorMirror',
                         meta: {title: '镜子', icon: '', affix: true},
+                    },{
+                        path: 'allControls',
+                        component: () => import('@/views/three/component/course/allControls/index.vue'),
+                        name: 'Three-Course-AllControls',
+                        meta: {title: '各种控制器', icon: '', affix: true},
                     },
                 ]
             }
