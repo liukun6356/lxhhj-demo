@@ -265,6 +265,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/carConfig/index.vue'),
                         name: 'Three-StagDemo-CarConfig',
                         meta: {title: '汽车选配', icon: '', affix: true},
+                    }, {
+                        path: 'dancingMirror',
+                        component: () => import('@/views/three/component/stagDemo/dancingMirror/index.vue'),
+                        name: 'Three-StagDemo-DancingMirror',
+                        meta: {title: '练舞房', icon: '', affix: true},
                     },
                 ]
             }, {
@@ -404,6 +409,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/pbrMaterial/index.vue'),
                         name: 'Three-Course-PbrMaterial',
                         meta: {title: 'pbr材质', icon: '', affix: true},
+                    },{
+                        path: 'reflectorMirror',
+                        component: () => import('@/views/three/component/course/reflectorMirror/index.vue'),
+                        name: 'Three-Course-ReflectorMirror',
+                        meta: {title: '镜子', icon: '', affix: true},
                     },
                 ]
             }
