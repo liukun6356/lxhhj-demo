@@ -17,7 +17,7 @@ const threeBoxRef = ref(null)
 const threeBoxStore = usethreeBoxStore()
 onMounted(() => {
   renderer = new WebGLRenderer({
-    // logarithmicDepthBuffer:true, // 是否使用对数深度缓存
+    // logarithmicDepthBuffer:true, // 是否使用对数深度缓存，可解决贴合问题
     // antialias: true,// 是否执行抗锯齿
   });
   renderer.setPixelRatio(window.devicePixelRatio);
