@@ -256,7 +256,7 @@ const addAnalyser = () => {
   analyserGroup.rotateX(-Math.PI / 2);
   analyserGroup.position.y = -200;
   analyserGroup.scale.z = 0.5;
-  analyserGroup.rotateX(Math.PI /8);
+  analyserGroup.rotateX(Math.PI / 8);
 
   group.add(analyserGroup)
 }
@@ -358,7 +358,7 @@ const addNote = () => {
 
 let time = 0
 const updateNote = () => {
-  if(!audio.isPlaying)return
+  if (!audio.isPlaying) return
   noteGroup.children.forEach(sprite => {
     const {x, y, z} = sprite.position;
     const x2 = x + noise2D(x, time) * 100;

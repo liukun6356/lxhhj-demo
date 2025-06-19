@@ -424,6 +424,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/allControls/index.vue'),
                         name: 'Three-Course-AllControls',
                         meta: {title: '各种控制器', icon: '', affix: true},
+                    },{
+                        path: 'decalGeometry',
+                        component: () => import('@/views/three/component/course/decalGeometry/index.vue'),
+                        name: 'Three-Course-DecalGeometry',
+                        meta: {title: '贴花几何体', icon: '', affix: true},
                     },
                 ]
             }
@@ -656,12 +661,16 @@ export const constantRoutes = [
                         component: () => import('@/views/ui/component/main/dragSort.vue'),
                         name: 'Ui-Main-DragSort',
                         meta: {title: '拖拽排序', icon: '', affix: true},
-                    },
-                    {
+                    }, {
                         path: 'gradientBtn',
                         component: () => import('@/views/ui/component/main/gradientBtn.vue'),
                         name: 'Ui-Main-GradientBtn',
                         meta: {title: '渐近伸缩抽屉按钮', icon: '', affix: true},
+                    },{
+                        path: 'recursionTree',
+                        component: () => import('@/views/ui/component/main/recursionTree/index.vue'),
+                        name: 'Ui-Main-RecursionTree',
+                        meta: {title: '递归家谱数', icon: '', affix: true},
                     },
                 ]
             }
