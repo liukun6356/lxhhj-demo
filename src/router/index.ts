@@ -275,6 +275,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/musicPlayer/index.vue'),
                         name: 'Three-StagDemo-MusicPlayer',
                         meta: {title: '音乐播放器', icon: '', affix: true},
+                    },{
+                        path: 'tShirtDesign',
+                        component: () => import('@/views/three/component/stagDemo/tShirtDesign/index.vue'),
+                        name: 'Three-StagDemo-TShirtDesign',
+                        meta: {title: 'T恤贴花', icon: '', affix: true},
                     },
                 ]
             }, {
