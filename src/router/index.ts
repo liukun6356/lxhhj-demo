@@ -439,6 +439,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/decalGeometry/index.vue'),
                         name: 'Three-Course-DecalGeometry',
                         meta: {title: '贴花几何体', icon: '', affix: true},
+                    },{
+                        path: 'cannonWorld',
+                        component: () => import('@/views/three/component/course/cannonWorld/index.vue'),
+                        name: 'Three-Course-CannonWorld',
+                        meta: {title: '物理引擎cannon', icon: '', affix: true},
                     }
                 ]
             }

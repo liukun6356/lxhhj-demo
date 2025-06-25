@@ -21,6 +21,7 @@
     "arcgis-js-api": "4.29.4",
     "arrugator": "1.2.1",
     "axios": "^1.2.0",
+    "cannon-es": "^0.20.0",
     "d3-contour": "^4.0.2",
     "earcut": "^3.0.1",
     "echarts": "^5.2.2",
