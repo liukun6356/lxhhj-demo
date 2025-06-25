@@ -280,6 +280,11 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/tShirtDesign/index.vue'),
                         name: 'Three-StagDemo-TShirtDesign',
                         meta: {title: 'T恤贴花', icon: '', affix: true},
+                    },{
+                        path: 'threejsEditor',
+                        component: () => import('@/views/three/component/stagDemo/threejsEditor/index.vue'),
+                        name: 'Three-StagDemo-ThreejsEditor',
+                        meta: {title: 'three编辑器', icon: '', affix: true},
                     },
                 ]
             }, {
@@ -434,7 +439,7 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/decalGeometry/index.vue'),
                         name: 'Three-Course-DecalGeometry',
                         meta: {title: '贴花几何体', icon: '', affix: true},
-                    },
+                    }
                 ]
             }
         ]

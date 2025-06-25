@@ -76,6 +76,7 @@ const handleNodeClick = (row) => {
     overflow: auto;
     width: 220px;
     border-radius: 4px;
+    z-index: 9;
     pointer-events: auto;
 
     .content {
