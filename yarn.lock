@@ -5207,6 +5207,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
+quarks.core@^0.16.0:
+  version "0.16.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/quarks.core/-/quarks.core-0.16.0.tgz#05cf028f28bc89df2cb9867f14e97b762e4f4b18"
+  integrity sha512-F46WeRCmv+HJaFvSOurfTbnR9Ri9SbqyiWKFVplmVmMU+2njI9YZ6oKkflZfwWAFTbHbbReL6LSXj248oNFC7w==
+
 query-string@^4.3.2:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
@@ -5835,6 +5840,13 @@ three-spritetext@^1.9.6:
   version "1.9.6"
   resolved "https://mirrors.huaweicloud.com/repository/npm/three-spritetext/-/three-spritetext-1.9.6.tgz#f6e89dfbc158ad2f04392fc012ef390a7d7f7f99"
   integrity sha512-+O5hGi6u4nWLefY8+Hlufd0aysWZhS2Ex61LCQVSixbYbykdPUOYYA+V+4xG4mKNDm1AsC0yHINRQS5NQb6mSg==
+
+three.quarks@^0.16.0:
+  version "0.16.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/three.quarks/-/three.quarks-0.16.0.tgz#c199732df22a84a38db99f2249edb1a1acbe0d72"
+  integrity sha512-j9hDNjTUurbrZltd/XXAw+6SEyQl2uYmNfhRnFkUXEGcqMJoJAfJSDKzIW1GrLljUkAzYK9MIBn53RSyaW1XWQ==
+  dependencies:
+    quarks.core "^0.16.0"
 
 three@0.169.0:
   version "0.169.0"

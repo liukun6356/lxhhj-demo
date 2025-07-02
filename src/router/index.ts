@@ -275,16 +275,22 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/stagDemo/musicPlayer/index.vue'),
                         name: 'Three-StagDemo-MusicPlayer',
                         meta: {title: '音乐播放器', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'tShirtDesign',
                         component: () => import('@/views/three/component/stagDemo/tShirtDesign/index.vue'),
                         name: 'Three-StagDemo-TShirtDesign',
                         meta: {title: 'T恤贴花', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'threejsEditor',
                         component: () => import('@/views/three/component/stagDemo/threejsEditor/index.vue'),
                         name: 'Three-StagDemo-ThreejsEditor',
                         meta: {title: 'three编辑器', icon: '', affix: true},
+                    },
+                    {
+                        path: 'pigHeartEmmiter',
+                        component: () => import('@/views/three/component/stagDemo/pigHeartEmmiter/index.vue'),
+                        name: 'Three-StagDemo-PigHeartEmmiter',
+                        meta: {title: '爱心发射器', icon: '', affix: true},
                     },
                 ]
             }, {
@@ -414,36 +420,41 @@ export const constantRoutes = [
                         component: () => import('@/views/three/component/course/cssAnnotation/index.vue'),
                         name: 'Three-Course-CssAnnotation',
                         meta: {title: 'dom标签及canvas标签', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'audioApi',
                         component: () => import('@/views/three/component/course/audioApi/index.vue'),
                         name: 'Three-Course-AudioApi',
                         meta: {title: '3d场景音乐', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'pbrMaterial',
                         component: () => import('@/views/three/component/course/pbrMaterial/index.vue'),
                         name: 'Three-Course-PbrMaterial',
                         meta: {title: 'pbr材质', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'reflectorMirror',
                         component: () => import('@/views/three/component/course/reflectorMirror/index.vue'),
                         name: 'Three-Course-ReflectorMirror',
                         meta: {title: '镜子', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'allControls',
                         component: () => import('@/views/three/component/course/allControls/index.vue'),
                         name: 'Three-Course-AllControls',
                         meta: {title: '各种控制器', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'decalGeometry',
                         component: () => import('@/views/three/component/course/decalGeometry/index.vue'),
                         name: 'Three-Course-DecalGeometry',
                         meta: {title: '贴花几何体', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'cannonWorld',
                         component: () => import('@/views/three/component/course/cannonWorld/index.vue'),
                         name: 'Three-Course-CannonWorld',
                         meta: {title: '物理引擎cannon', icon: '', affix: true},
+                    }, {
+                        path: 'quarksTest',
+                        component: () => import('@/views/three/component/course/quarksTest/index.vue'),
+                        name: 'Three-Course-QuarksTest',
+                        meta: {title: '粒子效果', icon: '', affix: true},
                     }
                 ]
             }
@@ -681,7 +692,7 @@ export const constantRoutes = [
                         component: () => import('@/views/ui/component/main/gradientBtn.vue'),
                         name: 'Ui-Main-GradientBtn',
                         meta: {title: '渐近伸缩抽屉按钮', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'recursionTree',
                         component: () => import('@/views/ui/component/main/recursionTree/index.vue'),
                         name: 'Ui-Main-RecursionTree',
