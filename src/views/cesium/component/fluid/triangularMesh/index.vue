@@ -60,6 +60,7 @@ const getlist = async () => {
   model.curTime = start
 }
 
+
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer()
 let primitive, preEntity, handler, vertices, triangles, timeData = {}
@@ -83,9 +84,10 @@ const addVerticesPromitive = async () => {
   primitive.changeSource({
     times: model.times.map(Number),
     dataGetter: async (time) => {
-      const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/2dFluidModel/timeData/${time}.json`)
-      timeData[time] = new Float32Array(data)
-      return new Float32Array(data);
+      const {data: res} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/2dFluidModel/timeData/filename-${time}.gzip`, {responseType: "blob"})
+      const temp = await res.arrayBuffer()
+      timeData[time] = new Int32Array(temp)
+      return new Int32Array(temp)
     }
   })
   viewer.camera.setView({
@@ -143,7 +145,7 @@ const onMouseClick = (movement) => {
       outlineWidth: 2
     },
     label: {
-      text: formatToFixed(preTriangleIds.reduce((sum, i) => sum + (timeData[model.curTime]?.[i] || 0), 0) / 3),
+      text: formatToFixed(preTriangleIds.reduce((sum, i) => sum + (timeData[model.curTime]?.[i] / 1e4 || 0), 0) / 3, 3),
       font: '14px PingFangSC-Regular, PingFang SC',
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       pixelOffset: new Cesium.Cartesian2(0, 0),

@@ -245,7 +245,7 @@ export function createFloodPrimitive(mesh: {
                     if(v <= 0.0){
                         v_color = vec4(0);
                     }else{
-                        float ux = (v - u_mappingRange.x) / (u_mappingRange.y - u_mappingRange.x);
+                        float ux = (v - u_mappingRange.x) / (u_mappingRange.y - u_mappingRange.x) / 1e4;
                         v_color = texture2D(u_colorstop, vec2(ux, 0.5));
                     }
                 }`,

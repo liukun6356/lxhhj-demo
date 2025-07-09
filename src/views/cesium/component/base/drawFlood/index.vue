@@ -10,6 +10,7 @@ import {usemapStore} from "@/store/modules/cesiumMap";
 import {MyPrimitive} from "./MyPrimitive"
 import {onMounted, onUnmounted} from "vue";
 import GUI from "lil-gui";
+import axios from "axios"
 // Component
 import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import proj4 from "proj4";
@@ -18,11 +19,26 @@ const mapStore = usemapStore()
 onMounted(async () => {
   initGui()
   addVerticesPromitive()
+  viewer.camera.flyTo({
+    destination:  new Cesium.Cartesian3.fromDegrees(113.041846, 25.776040, 5211.91),
+    orientation: {
+      heading: Cesium.Math.toRadians(350),
+      pitch: Cesium.Math.toRadians(-57.4),
+      roll: Cesium.Math.toRadians(0),
+    },
+    duration: 2,
+  })
 })
 
 onUnmounted(() => {
   gui.destroy()
 })
+
+const getlist = async () => {
+  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/2dFluidModel/timeData/filename-1187913000000.gzip`, {responseType: "blob"})
+  const temp = await data.arrayBuffer()
+  const aa = new Int32Array(temp)
+}
 
 const doClick = () => {
   prePrimitive = new MyPrimitive(vertices, triangles)
