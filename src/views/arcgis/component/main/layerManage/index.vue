@@ -45,9 +45,7 @@ import Tdt_vec_d from "./basicMap/tdt_vec_d.vue"
 import MultPipeline from "./water/multPipeline.vue"
 import MultNode from "./water/multNode.vue"
 import MulWaterwork from "./water/mulWaterwork.vue"
-
 import SceneEditing from "./water/sceneEditing.vue"
-
 
 // Refs
 const treeRef = ref(null)

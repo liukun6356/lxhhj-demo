@@ -109,9 +109,9 @@ const initMap = (domId) => new Promise((resolve) => {
         enableRotate: true,
         enableZoom: true
       },
-      // contextOptions: {
-      //   requestWebgl2: true
-      // }
+      contextOptions: {
+        requestWebgl1: true
+      }
     },
     control: {
       baseLayerPicker: false, // basemaps底图切换按钮

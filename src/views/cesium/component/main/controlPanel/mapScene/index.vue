@@ -10,12 +10,12 @@
       <span>天气模拟</span>
     </div>
     <div class="map_scene-content">
-<!--      <div @click="weatherClick(0)" :class="{ select: weatherItemSelectIndex === 0 }">晴天</div>-->
+      <!--      <div @click="weatherClick(0)" :class="{ select: weatherItemSelectIndex === 0 }">晴天</div>-->
       <div @click="weatherClick(1)" :class="{ select: weatherItemSelectIndex === 1 }">下雨</div>
       <div @click="weatherClick(2)" :class="{ select: weatherItemSelectIndex === 2 }">下雪</div>
       <div @click="weatherClick(3)" :class="{ select: weatherItemSelectIndex === 3 }">大雾</div>
       <div @click="weatherClick(4)" :class="{ select: weatherItemSelectIndex === 4 }">风1</div>
-      <div @click="weatherClick(5)" :class="{ select: weatherItemSelectIndex === 5 }">风2</div>
+      <!--      <div @click="weatherClick(5)" :class="{ select: weatherItemSelectIndex === 5 }">风2</div>-->
     </div>
     <div class="second-level-heading">
       <span>日照模拟</span>
@@ -88,6 +88,7 @@ const weatherClick = (index) => {
 }
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer();
+let primitive
 const showSnow = () => {
   lastStage = viewer.scene.postProcessStages.add(new Cesium.PostProcessStage({fragmentShader: snowGlsl}));
 }
@@ -105,7 +106,7 @@ const shadowSliderChange = (val) => {
   viewer.clock.currentTime = Cesium.JulianDate.fromIso8601(time.toISOString())// iso8601String
 }
 
-const showWind = () =>{
+const showWind = () => {
   new CanvasWindy({
     viewer: viewer,
     color: "#ffffff",
@@ -153,7 +154,7 @@ const showWindField = () => {
     },
     translucent: true
   });
-  const primitive = new Cesium.Primitive({
+  primitive = new Cesium.Primitive({
     geometryInstances: geometryInstances,
     appearance: new Cesium.PolylineMaterialAppearance({
       material: Cesium.Material.fromType("LineFlow", {
@@ -170,6 +171,10 @@ const showWindField = () => {
 const removeStage = () => {
   viewer.scene.postProcessStages.remove(lastStage);
   fogEffect.show = false;
+  if (primitive) {
+    viewer.scene.primitives.remove(primitive)
+    primitive = null
+  }
 }
 
 /**

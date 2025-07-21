@@ -81,6 +81,11 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/main/flyDemo/index.vue'),
                         name: 'Cesium-Main-flyDemo',
                         meta: {title: '实时轨迹demo', icon: '', affix: true},
+                    }, {
+                        path: 'dxgw',
+                        component: () => import('@/views/cesium/component/main/dxgw/index.vue'),
+                        name: 'Cesium-Main-dxgw',
+                        meta: {title: '地下官网', icon: '', affix: true},
                     }
                 ]
             },
@@ -152,6 +157,18 @@ export const constantRoutes = [
                 meta: {title: '原理', icon: '', affix: true},
                 children: [
                     {
+                        path: 'primitive',
+                        component: () => import('@/views/cesium/component/base/primitive/index.vue'),
+                        name: 'Cesium-Base-Primitive',
+                        meta: {title: 'primitive', icon: '', affix: true},
+                    },
+                    {
+                        path: 'geometryPrimitive',
+                        component: () => import('@/views/cesium/component/base/geometryPrimitive/index.vue'),
+                        name: 'Cesium-Base-GeometryPrimitive',
+                        meta: {title: '自定义Primitive', icon: '', affix: true},
+                    },
+                    {
                         path: 'DrawCommand',
                         component: () => import('@/views/cesium/component/base/DrawCommand/index.vue'),
                         name: 'Cesium-Base-DrawCommand',
@@ -160,7 +177,7 @@ export const constantRoutes = [
                     {
                         path: 'drawFlood',
                         component: () => import('@/views/cesium/component/base/drawFlood/index.vue'),
-                        name: 'Cesium-Base-drawFlood',
+                        name: 'Cesium-Base-DrawFlood',
                         meta: {title: '画水动力三角形', icon: '', affix: true},
                     },
                 ]
