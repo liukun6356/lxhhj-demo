@@ -11,7 +11,6 @@ import {usemapStore} from "@/store/modules/cesiumMap";
 // Component
 import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
-
 const mapStore = usemapStore()
 onMounted(() => {
   handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -21,6 +20,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
   viewer.scene.primitives.remove(primitiveCollection);
+  gui.destroy()
 })
 
 const addSingleGeometry = () => {
@@ -122,7 +122,7 @@ const addBoxGeometry = () => {
       })
     })
   }));
-  // 获取局部的boundingSphere
+  // 获取局部的boundingSphere,  简称 ENU,局部坐标系
   const localBoundingSphere = geometry.boundingSphere;
   // 转化到世界坐标    将 4x4 仿射变换矩阵应用于边界球体
   const worldBoundingSphere = Cesium.BoundingSphere.transform(localBoundingSphere, modelMatrix, new Cesium.BoundingSphere());
@@ -554,58 +554,58 @@ const addCustomCylinderPrimitive = () => {
   viewer.camera.flyToBoundingSphere(worldBoundingSphere);
 }
 
-const addCustomNormalCylinderPrimitive = () =>{
+const addCustomNormalCylinderPrimitive = () => {
   reset()
   const vertices = new Float64Array([
     // 前
-    0, 0, - 100, // E点
-     100, - 100,  100, //A点
-    - 100, - 100,  100, //B点
+    0, 0, -100, // E点
+    100, -100, 100, //A点
+    -100, -100, 100, //B点
     // 后
-    0, 0, - 100, // E点
-    - 100,  100,  100, //C点
-     100,  100,  100, //D点
+    0, 0, -100, // E点
+    -100, 100, 100, //C点
+    100, 100, 100, //D点
     // 左
-    0, 0, - 100, // E点
-    - 100, - 100,  100, //B点
-    - 100,  100,  100, //C点
+    0, 0, -100, // E点
+    -100, -100, 100, //B点
+    -100, 100, 100, //C点
     // 右
-    0, 0, - 100, // E点
-     100,  100,  100, //D点
-     100, - 100,  100, //A点
+    0, 0, -100, // E点
+    100, 100, 100, //D点
+    100, -100, 100, //A点
     // 上
-     100, - 100,  100, //A点
-    - 100, - 100,  100, //B点
-     100,  100,  100, //D点      // 上
-    - 100, - 100,  100,//B点
-     100,  100,  100, //D点
-    - 100,  100,  100, //C点
+    100, -100, 100, //A点
+    -100, -100, 100, //B点
+    100, 100, 100, //D点      // 上
+    -100, -100, 100,//B点
+    100, 100, 100, //D点
+    -100, 100, 100, //C点
   ])
   let normals = []
-  let c_0 = new Cesium.Cartesian3(0, 0, - 100)
-  let c_1 = new Cesium.Cartesian3( 100, - 100,  100)
-  let c_2 = new Cesium.Cartesian3(- 100, - 100,  100)
+  let c_0 = new Cesium.Cartesian3(0, 0, -100)
+  let c_1 = new Cesium.Cartesian3(100, -100, 100)
+  let c_2 = new Cesium.Cartesian3(-100, -100, 100)
   let d1 = Cesium.Cartesian3.subtract(c_1, c_0, new Cesium.Cartesian3())
   let d2 = Cesium.Cartesian3.subtract(c_2, c_0, new Cesium.Cartesian3())
   let normal = Cesium.Cartesian3.cross(d1, d2, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.normalize(normal, new Cesium.Cartesian3())
   normals.push(normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z)
-  c_1 = new Cesium.Cartesian3( 100, - 100,  100)
-  c_2 = new Cesium.Cartesian3( 100,  100,  100)
+  c_1 = new Cesium.Cartesian3(100, -100, 100)
+  c_2 = new Cesium.Cartesian3(100, 100, 100)
   d1 = Cesium.Cartesian3.subtract(c_1, c_0, new Cesium.Cartesian3())
   d2 = Cesium.Cartesian3.subtract(c_2, c_0, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.cross(d1, d2, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.normalize(normal, new Cesium.Cartesian3())
   normals.push(normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z)
-  c_1 = new Cesium.Cartesian3( 100,  100,  100)
-  c_2 = new Cesium.Cartesian3(- 100,  100,  100)
+  c_1 = new Cesium.Cartesian3(100, 100, 100)
+  c_2 = new Cesium.Cartesian3(-100, 100, 100)
   d1 = Cesium.Cartesian3.subtract(c_1, c_0, new Cesium.Cartesian3())
   d2 = Cesium.Cartesian3.subtract(c_2, c_0, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.cross(d1, d2, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.normalize(normal, new Cesium.Cartesian3())
   normals.push(normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z)
-  c_1 = new Cesium.Cartesian3(- 100,  100,  100)
-  c_2 = new Cesium.Cartesian3(- 100, - 100,  100)
+  c_1 = new Cesium.Cartesian3(-100, 100, 100)
+  c_2 = new Cesium.Cartesian3(-100, -100, 100)
   d1 = Cesium.Cartesian3.subtract(c_1, c_0, new Cesium.Cartesian3())
   d2 = Cesium.Cartesian3.subtract(c_2, c_0, new Cesium.Cartesian3())
   normal = Cesium.Cartesian3.cross(d1, d2, new Cesium.Cartesian3())

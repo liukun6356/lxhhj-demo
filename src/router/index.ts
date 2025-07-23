@@ -163,6 +163,12 @@ export const constantRoutes = [
                         meta: {title: 'primitive', icon: '', affix: true},
                     },
                     {
+                        path: 'appearance',
+                        component: () => import('@/views/cesium/component/base/appearance/index.vue'),
+                        name: 'Cesium-Base-Appearance',
+                        meta: {title: 'appearance', icon: '', affix: true},
+                    },
+                    {
                         path: 'geometryPrimitive',
                         component: () => import('@/views/cesium/component/base/geometryPrimitive/index.vue'),
                         name: 'Cesium-Base-GeometryPrimitive',
