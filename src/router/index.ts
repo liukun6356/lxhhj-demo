@@ -30,13 +30,23 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/fluid/heightMap/index.vue'),
                         name: 'Cesium-Fluid-HeightMap',
                         meta: {title: '高度图', icon: '', affix: true},
+                    },{
+                        path: 'dxgw2',
+                        component: () => import('@/views/cesium/component/fluid/dxgw2/index.vue'),
+                        name: 'Cesium-Fluid-dxgw2',
+                        meta: {title: '地下管网2', icon: '', affix: true},
+                    }, {
+                        path: 'dxgw3',
+                        component: () => import('@/views/cesium/component/fluid/dxgw3/index.vue'),
+                        name: 'Cesium-Fluid-dxgw3',
+                        meta: {title: '地下管网3', icon: '', affix: true},
                     },
                     {
                         path: 'triangularMesh',
                         component: () => import('@/views/cesium/component/fluid/triangularMesh/index.vue'),
                         name: 'Cesium-Fluid-TriangularMesh',
-                        meta: {title: '水动力三角网渲染', icon: '', affix: true},
-                    },
+                        meta: {title: '二维水动力模型渲染', icon: '', affix: true},
+                    }
                 ]
             },
             {
@@ -81,11 +91,6 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/main/flyDemo/index.vue'),
                         name: 'Cesium-Main-flyDemo',
                         meta: {title: '实时轨迹demo', icon: '', affix: true},
-                    }, {
-                        path: 'dxgw',
-                        component: () => import('@/views/cesium/component/main/dxgw/index.vue'),
-                        name: 'Cesium-Main-dxgw',
-                        meta: {title: '地下官网', icon: '', affix: true},
                     }
                 ]
             },
@@ -167,12 +172,6 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/base/appearance/index.vue'),
                         name: 'Cesium-Base-Appearance',
                         meta: {title: 'appearance', icon: '', affix: true},
-                    },
-                    {
-                        path: 'geometryPrimitive',
-                        component: () => import('@/views/cesium/component/base/geometryPrimitive/index.vue'),
-                        name: 'Cesium-Base-GeometryPrimitive',
-                        meta: {title: '自定义Primitive', icon: '', affix: true},
                     },
                     {
                         path: 'DrawCommand',

@@ -375,7 +375,7 @@ const addMaterialAppearanceDot = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addMaterialAppearanceWater = () => {
+const addEllipsoidSurfaceAppearanceWater = () => {
   reset()
   const positions = [[120.1111, 30.1111, 500], [120.1111, 30.2222, 500], [120.3333, 30.1111, 500]]
   const circle = new Cesium.RectangleGeometry({
@@ -387,13 +387,13 @@ const addMaterialAppearanceWater = () => {
   const instance = new Cesium.GeometryInstance({geometry: geometry})
   primitiveCollection.add(new Cesium.Primitive({
     geometryInstances: instance,
-    appearance: new Cesium.MaterialAppearance({
+    appearance: new Cesium.EllipsoidSurfaceAppearance({
       material: new Cesium.Material({
         fabric: {
           type: 'Water',
           uniforms: {
-            baseWaterColor: new Cesium.Color.fromCssColorString('#ffeb6a').withAlpha(0.9),// 水的基色。
-            blendColor: new Cesium.Color.fromCssColorString('#b65d5d').withAlpha(0.9),//从水混合到非水区域时使用的 rgba 颜色对象
+            baseWaterColor: new Cesium.Color.fromCssColorString('#7B8773').withAlpha(0.9),// 水的基色。
+            blendColor:  new Cesium.Color.fromCssColorString('#7B8773').withAlpha(0.9),//从水混合到非水区域时使用的 rgba 颜色对象
             // specularMap:"",//用于指示水域的单通道纹理
             normalMap: waterNormalsJpg,//水法线扰动的法线贴图
             frequency: 9000.0,// 控制波数
@@ -465,7 +465,7 @@ const addMaterialAppearancFade = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addMaterialAppearancPolylineArrow = () => {
+const addPolylineMaterialAppearanceArrow = () => {
   reset()
   let positions = [[120.1111, 30.1111, 1000], [120.1111, 30.2222, 2000], [120.3333, 30.1111, 3000], [120.3333, 30.2222, 4000], [120.4444, 30.2222, 5000]]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
@@ -489,7 +489,7 @@ const addMaterialAppearancPolylineArrow = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addMaterialAppearancPolylineDash = () => {
+const addPolylineMaterialAppearanceDash = () => {
   reset()
   let positions = [[120.1111, 30.1111, 1000], [120.1111, 30.2222, 2000], [120.3333, 30.1111, 3000], [120.3333, 30.2222, 4000], [120.4444, 30.2222, 5000]]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
@@ -518,7 +518,7 @@ const addMaterialAppearancPolylineDash = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addMaterialAppearancPolylineGlow = () => {
+const addPolylineMaterialAppearanceGlow = () => {
   reset()
   let positions = [[120.1111, 30.1111, 1000], [120.1111, 30.2222, 2000], [120.3333, 30.1111, 3000], [120.3333, 30.2222, 4000], [120.4444, 30.2222, 5000]]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
@@ -546,7 +546,7 @@ const addMaterialAppearancPolylineGlow = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addMaterialAppearancPolylineOutline = () => {
+const addPolylineMaterialAppearanceOutline = () => {
   reset()
   let positions = [[120.1111, 30.1111, 1000], [120.1111, 30.2222, 2000], [120.3333, 30.1111, 3000], [120.3333, 30.2222, 4000], [120.4444, 30.2222, 5000]]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
@@ -578,13 +578,13 @@ const addMaterialAppearanceElevationContour = () => {
   reset()
   const globe = viewer.scene.globe
   let material = Cesium.Material.fromType("ElevationContour");
- let  contourUniforms = material.uniforms;
+  let contourUniforms = material.uniforms;
   // 线宽2.0px
   contourUniforms.width = 2.0;
   // 高度间隔为150米
   contourUniforms.spacing = 150;
   contourUniforms.color = Cesium.Color.RED;
-  globe.material =material
+  globe.material = material
   // const positions = [[120.1111, 30.1111, 500], [120.1111, 30.2222, 500], [120.3333, 30.1111, 500]]
   // const circle = new Cesium.RectangleGeometry({
   //   rectangle: Cesium.Rectangle.fromCartesianArray(Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())),
@@ -612,6 +612,30 @@ const addMaterialAppearanceElevationContour = () => {
   // viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
+const addPolylineColorAppearanceOutline = () =>{
+  reset()
+  let positions = [[120.1111, 30.1111, 1000], [120.1111, 30.2222, 2000], [120.3333, 30.1111, 3000], [120.3333, 30.2222, 4000], [120.4444, 30.2222, 5000]]
+  positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
+  const polygon = new Cesium.PolylineGeometry({
+    positions: positions,
+    width: 1,
+  })
+  const geometry = Cesium.PolylineGeometry.createGeometry(polygon)
+  const instance = new Cesium.GeometryInstance({
+    geometry: geometry,
+    attributes: {
+      color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED.withAlpha(0.8))
+    }
+  })
+  primitiveCollection.add(new Cesium.Primitive({
+    geometryInstances: instance,
+    appearance:new Cesium.PolylineColorAppearance({
+      translucent: true
+    })
+  }))
+  viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
+}
+
 const reset = () => {
   primitiveCollection.removeAll()
 }
@@ -627,7 +651,9 @@ const onMouseClick = (movement) => {
 }
 
 // lil-gui逻辑
-let gui, materialAppearanceFolder
+let gui, materialAppearanceFolder,
+    EllipsoidSurfaceAppearanceFolder, PerInstanceColorAppearanceFolder,
+    PolylineMaterialAppearanceFolder, PolylineColorAppearanceFolder
 const formData = {
   addMaterialAppearanceColor,
   addMaterialAppearanceImage,
@@ -641,19 +667,20 @@ const formData = {
   addMaterialAppearanceStripe,
   addMaterialAppearanceCheckerboard,
   addMaterialAppearanceDot,
-  addMaterialAppearanceWater,
+  addEllipsoidSurfaceAppearanceWater,
   addMaterialAppearancRimLighting,
   addMaterialAppearancFade,
-  addMaterialAppearancPolylineArrow,
-  addMaterialAppearancPolylineDash,
-  addMaterialAppearancPolylineGlow,
-  addMaterialAppearancPolylineOutline,
+  addPolylineMaterialAppearanceArrow,
+  addPolylineMaterialAppearanceDash,
+  addPolylineMaterialAppearanceGlow,
+  addPolylineMaterialAppearanceOutline,
   addMaterialAppearanceElevationContour,
+  addPolylineColorAppearanceOutline,
   reset
 }
 const initGui = () => {
   gui = new GUI({title: "appearance外观"});
-  materialAppearanceFolder = gui.addFolder("材质外观 MaterialAppearance")
+  materialAppearanceFolder = gui.addFolder("材质外观 Material")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceColor").name("颜色")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceImage").name("图片")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceDiffuseMap").name("漫反射贴图")
@@ -666,15 +693,19 @@ const initGui = () => {
   materialAppearanceFolder.add(formData, "addMaterialAppearanceStripe").name("条纹")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceCheckerboard").name("棋盘")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceDot").name("点")
-  materialAppearanceFolder.add(formData, "addMaterialAppearanceWater").name("水")
   materialAppearanceFolder.add(formData, "addMaterialAppearancRimLighting").name("边缘照明")
   materialAppearanceFolder.add(formData, "addMaterialAppearancFade").name("褪色.")
-  materialAppearanceFolder.add(formData, "addMaterialAppearancPolylineArrow").name("折线箭头")
-  materialAppearanceFolder.add(formData, "addMaterialAppearancPolylineDash").name("折线虚线")
-  materialAppearanceFolder.add(formData, "addMaterialAppearancPolylineGlow").name("折线发光")
-  materialAppearanceFolder.add(formData, "addMaterialAppearancPolylineOutline").name("折线轮廓")
   materialAppearanceFolder.add(formData, "addMaterialAppearanceElevationContour").name("等高线.")
-
+  EllipsoidSurfaceAppearanceFolder= gui.addFolder("椭球体表面外观 EllipsoidSurface")
+  EllipsoidSurfaceAppearanceFolder.add(formData, "addEllipsoidSurfaceAppearanceWater").name("水")
+  PerInstanceColorAppearanceFolder= gui.addFolder("实例化材质外观 PerInstanceColor")
+  PolylineMaterialAppearanceFolder= gui.addFolder("线几何材质外观 PolylineMaterialAppearance")
+  PolylineMaterialAppearanceFolder.add(formData, "addPolylineMaterialAppearanceArrow").name("折线箭头")
+  PolylineMaterialAppearanceFolder.add(formData, "addPolylineMaterialAppearanceDash").name("折线虚线")
+  PolylineMaterialAppearanceFolder.add(formData, "addPolylineMaterialAppearanceGlow").name("折线发光")
+  PolylineMaterialAppearanceFolder.add(formData, "addPolylineMaterialAppearanceOutline").name("折线轮廓")
+  PolylineColorAppearanceFolder= gui.addFolder("线几何颜色外观 PolylineColorAppearance")
+  PolylineColorAppearanceFolder.add(formData, "addPolylineColorAppearanceOutline").name("折线")
   gui.add(formData, "reset")
 }
 </script>

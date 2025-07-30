@@ -23,6 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore Vue environment files
-.env
-.env.*
+/public/CesiumUnminified/
+/src/cesium-source/
