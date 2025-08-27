@@ -19,7 +19,7 @@ export interface mapStore {
 
 //用于存储全局Cesium->Viewer对象，在挂载前注意使用markRaw解除vue响应式劫持
 export const usemapStore = defineStore({
-    id: 'sys',
+    id: 'cesium',
     state: (): mapStore => ({
         cesiumViewer: null,// 全局地图实例
         dualCesiumViewer: null,// 双屏地图实例

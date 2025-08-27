@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue"
 import GUI from "lil-gui";
-import {KrigingDataMeta} from "./data1/index.ts"
+import {KrigingDataMeta} from "./data2/index.ts"
 import {TimeSeriesKrigingLayer} from "./layer";
 import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import Polygon from "@arcgis/core/geometry/Polygon";

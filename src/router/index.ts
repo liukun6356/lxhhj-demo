@@ -701,10 +701,15 @@ export const constantRoutes = [
                 path: 'main',
                 component: () => import('@/views/ui/index.vue'),
                 name: 'Ui-Main',
-                redirect: '/ui/main/dragSort',
+                redirect: '/ui/main/mapClip',
                 meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
+                        path: 'mapClip',
+                        component: () => import('@/views/ui/component/main/mapClip.vue'),
+                        name: 'Ui-Main-MapClip',
+                        meta: {title: '地图卷帘', icon: '', affix: true},
+                    },{
                         path: 'dragSort',
                         component: () => import('@/views/ui/component/main/dragSort.vue'),
                         name: 'Ui-Main-DragSort',
