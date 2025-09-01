@@ -9,9 +9,9 @@
 import {usemapStore} from "@/store/modules/cesiumMap";
 import {MyPrimitive} from "./MyPrimitive"
 import GUI from "lil-gui";
+import {onMounted, onUnmounted} from "vue";
 // Component
 import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
-import {onMounted, onUnmounted} from "vue";
 import {FluidRenderer} from "../../fluid/heightMap/fluidDemo";
 
 const mapStore = usemapStore()

@@ -187,6 +187,44 @@ export const constantRoutes = [
                     },
                 ]
             },
+            {
+                path: 'blob',
+                component: () => import('@/views/cesium/index.vue'),
+                name: 'Cesium-Blob',
+                redirect: '/cesium/blob/switchCamera',
+                meta: {title: 'blob', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'switchCamera',
+                        component: () => import('@/views/cesium/component/blob/switchCamera/index.vue'),
+                        name: 'Cesium-Blob-SwitchCamera',
+                        meta: {title: '视角切换', icon: '', affix: true},
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        path: '/cesiumLast',
+        component: () => import('@/layout/index.vue'),
+        redirect: '/cesiumLast/blob',
+        name: "cesium@",
+        children: [
+            {
+                path: 'blob',
+                component: () => import('@/views/cesiumLast/index.vue'),
+                name: 'cesium@-Blob',
+                redirect: '/cesiumLast/blob/switchCamera',
+                meta: {title: 'blob', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'switchCamera',
+                        component: () => import('@/views/cesiumLast/component/blob/switchCamera/index.vue'),
+                        name: 'cesium@-Blob-SwitchCamera',
+                        meta: {title: '视角切换', icon: '', affix: true},
+                    },
+                ]
+            },
         ]
     },
     {

@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import CesiumMap from "@/views/cesium/cesiumMap/index.vue"
+import CesiumMap from "@/views/cesiumLast/cesiumMap/index.vue"
 import {useRouter, useRoute} from "vue-router";
 
 // Refs
