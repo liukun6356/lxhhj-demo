@@ -4,6 +4,7 @@ import path from 'path';
 import {terser} from 'rollup-plugin-terser';
 import vitePluginMars3d from "vite-plugin-mars3d"
 import glsl from 'vite-plugin-glsl';
+import cesium from "vite-plugin-cesium";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
         vue(),
         vitePluginMars3d(),
         glsl(),
+        cesium()
     ],
     worker: {format: 'es'},
     resolve: {// Vite路径别名配置

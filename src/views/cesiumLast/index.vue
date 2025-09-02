@@ -23,11 +23,13 @@
 <script lang="ts" setup>
 import CesiumMap from "@/views/cesiumLast/cesiumMap/index.vue"
 import {useRouter, useRoute} from "vue-router";
+import {usemapStore} from "@/store/modules/cesiumLastMap";
 
 // Refs
 const router = useRouter()
 const route = useRoute()
 
+const mapStore = usemapStore()
 const handleNodeClick = (row) => {
   if (row.children) {
     handleNodeClick(row.children[0])

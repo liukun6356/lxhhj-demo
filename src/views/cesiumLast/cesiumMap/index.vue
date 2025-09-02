@@ -32,10 +32,10 @@
 </template>
 
 <script setup lang="ts">
-import * as mars3d from "mars3d"
-import {onMounted, markRaw, onUnmounted, reactive, toRefs, watch, nextTick} from "vue";
+import {onMounted, markRaw, onUnmounted, reactive, toRefs} from "vue";
 import {usemapStore} from "@/store/modules/cesiumLastMap"
 import {copyUrl, formatToFixed, throttle} from "@/utils/dictionary";
+import * as Cesium from "cesium";
 import {Viewer} from 'cesium'
 import skyBoxBackJpg from "@/assets/images/cesiumMap/lantian/Back.jpg"
 import skyBoxDownJpg from "@/assets/images/cesiumMap/lantian/Down.jpg"
@@ -83,23 +83,22 @@ onUnmounted(() => {
 let timer, handler
 
 const initMap = (domId) => new Promise((resolve) => {
-  const viewer = new Cesium.Viewer(domId,{
-    animation: false,
-    timeline: false,
-    fullscreenButton: false,
-    homeButton: false,
-    geocoder: false,
-    baseLayerPicker: false,
-    sceneModePicker: false,
-    navigationHelpButton: false,
-    infoBox: false,
-    selectionIndicator: false,
-    vrButton: false,
-    shadows: false,
-    creditContainer: document.createElement("div")
+  const viewer = new Cesium.Viewer(domId, {
+    animation: false,            // 左下角动画控件（播放/暂停时间轴）
+    timeline: false,             // 底部时间轴
+    fullscreenButton: false,     // 全屏按钮
+    homeButton: false,           // 回到初始视角按钮
+    geocoder: false,             // 搜索位置（地名/坐标）
+    baseLayerPicker: false,      // 底图选择器（图层切换器，会触发 Cesium Ion）
+    sceneModePicker: false,      // 2D/3D/Columbus View 模式切换
+    navigationHelpButton: false, // 帮助按钮（提示鼠标/触摸操作）
+    infoBox: false,              // 弹出信息框（Entity description）
+    selectionIndicator: false,   // 选中实体时的绿色框
+    vrButton: false,             // VR 模式按钮
+    imageryProvider: false,      // 不加载默认影像（否则会请求 Cesium Ion）
+    creditContainer: document.createElement("div") // 自定义版权信息容器（隐藏默认 Cesium logo）
   })
   const rawViewer = markRaw(viewer);
-  debugger
   // 鼠标经纬度提示控件
   coordinateChange()
   // viewer.scene.camera.moveStart.addEventListener(coordinateChange);
@@ -111,21 +110,30 @@ const initMap = (domId) => new Promise((resolve) => {
     model.locationData.fps = document.querySelector(".cesium-performanceDisplay-fps")?.innerText || ""
     model.locationData.ms = document.querySelector(".cesium-performanceDisplay-ms")?.innerText || ""
   }, 500)
+  // 快速近似抗锯齿
+  viewer.scene.postProcessStages.fxaa.enabled = true;
   // 默认打开深度监测   todo
-  viewer.scene.globe.depthTestAgainstTerrain = true;
+  viewer.scene.globe.depthTestAgainstTerrain = false;
   // 启用相机与地形的碰撞检测
   viewer.scene.screenSpaceCameraController.enableCollisionDetection = true
   // 添加近地天空盒子
-  viewer.scene.skyBox = new mars3d.GroundSkyBox({
-    sources: {
-      positiveX: skyBoxRightJpg,
-      negativeX: skyBoxLeftJpg,
-      positiveY: skyBoxFrontJpg,
-      negativeY: skyBoxBackJpg,
-      positiveZ: skyBoxUpJpg,
-      negativeZ: skyBoxDownJpg
-    },
-  });
+  // viewer.scene.skyAtmosphere.show = false;
+  // viewer.scene.skyBox = new Cesium.SkyBox({
+  //   sources: {
+  //     // positiveX: skyBoxRightJpg,
+  //     // negativeX: skyBoxLeftJpg,
+  //     // positiveY: skyBoxFrontJpg,
+  //     // negativeY: skyBoxBackJpg,
+  //     // positiveZ: skyBoxUpJpg,
+  //     // negativeZ: skyBoxDownJpg
+  //     positiveX: `https://file.threehub.cn/` + 'files/cesiumSky/px.png', // 右面
+  //     negativeX: `https://file.threehub.cn/` + 'files/cesiumSky/nx.png', // 左面
+  //     positiveY: `https://file.threehub.cn/` + 'files/cesiumSky/pz.png', // 将前面用作上面
+  //     negativeY: `https://file.threehub.cn/` + 'files/cesiumSky/nz.png', // 将后面用作下面
+  //     positiveZ: `https://file.threehub.cn/` + 'files/cesiumSky/py.png', // 将上面用作前面
+  //     negativeZ: `https://file.threehub.cn/` + 'files/cesiumSky/ny.png'  // 将下面用作后面
+  //   },
+  // });
   viewer.camera.setView({
     destination: Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 2 * 1e4),
     orientation: {
