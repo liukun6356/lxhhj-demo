@@ -41,7 +41,7 @@ const mouseleaveFn = () =>{
 }
 
 onMounted(async () => {
-  config.assetsPath = import.meta.env.VITE_ARCGIS_API + "/arcgis-core-es/assets";
+  // config.assetsPath = import.meta.env.VITE_ARCGIS_API + "/arcgis-core-es/assets";
   config.workers.loaderUrl = import.meta.env.VITE_ARCGIS_API + "/worker/system.min.js";
   config.workers.workerPath = import.meta.env.VITE_ARCGIS_API + "/worker/RemoteClient.js";
   const rawViewer = await initMap("arcgisContainer")

@@ -20,6 +20,10 @@
       <span :style="{color:getColorForLatency(parseInt(locationData.ms))}">{{ locationData.ms }}</span>
     </div>
     <section class="complete-main" v-if="mapStore.isActiveMap">
+      <div class="map-reset-toolBtn" @click="mapResetCamera">
+        <img src="@/assets/images/cesiumMap/dtfw@2x.png" style="width: 20px"/>
+        <div style="font-size: 12px">全图</div>
+      </div>
       <router-view v-slot="{ Component, route }">
         <transition name="router-fade" mode="out-in">
           <keep-alive include="[]">
@@ -67,6 +71,7 @@ onMounted(async () => {
   const rawViewer = await initMap("cesiumContainer") as Viewer
   mapStore.setCesiumViewer(rawViewer);
   mapStore.setIsActiveMap(true)
+  mapResetCamera()
 })
 
 onUnmounted(() => {
@@ -99,6 +104,7 @@ const initMap = (domId) => new Promise((resolve) => {
     creditContainer: document.createElement("div") // 自定义版权信息容器（隐藏默认 Cesium logo）
   })
   const rawViewer = markRaw(viewer);
+  console.log('Cesium',Cesium.VERSION)
   // 鼠标经纬度提示控件
   coordinateChange()
   // viewer.scene.camera.moveStart.addEventListener(coordinateChange);
@@ -134,6 +140,11 @@ const initMap = (domId) => new Promise((resolve) => {
   //     negativeZ: `https://file.threehub.cn/` + 'files/cesiumSky/ny.png'  // 将下面用作后面
   //   },
   // });
+  resolve(rawViewer)
+})
+
+const mapResetCamera = () => {
+  const viewer = mapStore.getCesiumViewer();
   viewer.camera.setView({
     destination: Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 2 * 1e4),
     orientation: {
@@ -142,8 +153,7 @@ const initMap = (domId) => new Promise((resolve) => {
       roll: Cesium.Math.toRadians(0)
     }
   });
-  resolve(rawViewer)
-})
+}
 
 const coordinateChange = () => {
   const viewer = mapStore.getCesiumViewer();
@@ -237,6 +247,29 @@ const getColorForLatency = (ms) => {
 </style>
 
 <style lang="scss">
+.map-reset-toolBtn {
+  pointer-events: auto;
+  position: fixed;
+  right: 70px;
+  bottom: 40px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: rgb(5, 9, 9, 0.5);
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: rgba(43, 126, 244, .5);
+  }
+}
+
 .cesium-performanceDisplay {
   display: none;
 }

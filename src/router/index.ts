@@ -208,6 +208,12 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-SwitchCamera',
                         meta: {title: '视角切换', icon: '', affix: true},
                     },
+                    {
+                        path: 'primitive',
+                        component: () => import('@/views/cesiumLast/component/blob/primitive/index.vue'),
+                        name: 'cesium@-Blob-Primitive',
+                        meta: {title: 'primitive', icon: '', affix: true},
+                    },
                 ]
             },
         ]
