@@ -212,7 +212,13 @@ export const constantRoutes = [
                         path: 'primitive',
                         component: () => import('@/views/cesiumLast/component/blob/primitive/index.vue'),
                         name: 'cesium@-Blob-Primitive',
-                        meta: {title: 'primitive', icon: '', affix: true},
+                        meta: {title: 'primitive-geometry', icon: '', affix: true},
+                    },
+                    {
+                        path: 'appearance',
+                        component: () => import('@/views/cesiumLast/component/blob/appearance/index.vue'),
+                        name: 'cesium@-Base-Appearance',
+                        meta: {title: 'primitive-appearance', icon: '', affix: true},
                     },
                 ]
             },

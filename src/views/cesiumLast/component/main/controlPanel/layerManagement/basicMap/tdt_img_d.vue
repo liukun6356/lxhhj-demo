@@ -4,6 +4,7 @@
 <script lang="ts" setup>
 import {usemapStore} from "@/store/modules/cesiumLastMap";
 import {onMounted, onUnmounted} from "vue";
+import * as Cesium from "cesium";
 
 // Props
 const props = defineProps<{

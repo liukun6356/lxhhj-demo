@@ -50,12 +50,11 @@ const addSingleGeometry = () => {
 
 const addMultInstanceGeometry = () => {
   reset()
-  const p = [114.347137, 30.541429];
   const instances = [];
   const positions = []; // 记录用于计算 boundingSphere
   let boxGeometry = Cesium.BoxGeometry.fromDimensions({dimensions: new Cesium.Cartesian3(100, 100, 100)})
   for (let i = 0; i < 100000; i++) {
-    const position = Cesium.Cartesian3.fromDegrees(p[0] + Math.random(), p[1] + Math.random(), 200 + Math.random() * 100)
+    const position = Cesium.Cartesian3.fromDegrees(114.347137 + Math.random(), 30.541429 + Math.random(), 200 + Math.random() * 100)
     const instance = new Cesium.GeometryInstance({
       geometry: boxGeometry,
       modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(position),//通过modelMatrix设置不同的位置
@@ -821,7 +820,7 @@ const formData = {
 }
 
 const initGui = () => {
-  gui = new GUI({title: "controls"});
+  gui = new GUI({title: "Primitive"});
   geometryFolder = gui.addFolder("primitive构成")
   geometryFolder.add(formData, "addSingleGeometry").name("添加单个实例")
   geometryFolder.add(formData, "addMultInstanceGeometry").name("添加多几何不同外观实例")

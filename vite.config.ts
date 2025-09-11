@@ -13,8 +13,8 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        vitePluginMars3d(),
-        // glsl(),
+        // vitePluginMars3d(),
+        glsl(),
         cesium()
     ],
     worker: {format: 'es'},
