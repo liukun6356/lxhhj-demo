@@ -29,7 +29,10 @@ onUnmounted(() => {
 
 const addSingleGeometry = () => {
   reset()
-  const circle = new Cesium.CircleGeometry({center: Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 100), radius: 200.0});
+  const circle = new Cesium.CircleGeometry({
+    center: Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 100),
+    radius: 200.0
+  });
   const geometry = Cesium.CircleGeometry.createGeometry(circle);
   const instance = new Cesium.GeometryInstance({geometry: geometry,});
   primitiveCollection.add(new Cesium.Primitive({
@@ -370,7 +373,7 @@ const addRectangleGeometry = () => {
 
 const addPolygonGeometry = () => {
   reset()
-  let positions =[[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
+  let positions = [[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
   const polygon = new Cesium.PolygonGeometry({
     polygonHierarchy: new Cesium.PolygonHierarchy(positions),
@@ -397,7 +400,7 @@ const addPolygonGeometry = () => {
 
 const addPolylineGeometry = () => {
   reset()
-  let positions =[[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
+  let positions = [[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
   const colors = [Cesium.Color.RED, Cesium.Color.GREEN, Cesium.Color.BLUE, Cesium.Color.YELLOW, Cesium.Color.WHITE]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
   const polygon = new Cesium.PolylineGeometry({
@@ -426,7 +429,7 @@ const addPolylineGeometry = () => {
 
 const addPolylineVolumeGeometry = () => {
   reset()
-  let positions =[[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
+  let positions = [[114.347137, 30.541429, 100], [114.347137, 30.52429, 100], [114.357137, 30.541429, 100], [114.447137, 30.542429, 100],]
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
 
   function computeCircle(radius) {
@@ -507,259 +510,6 @@ const addWallGeometry = () => {
   viewer.camera.flyToBoundingSphere(geometry.boundingSphere);
 }
 
-const addTrianglePrimitive = () => {
-  reset()
-  const vertices = new Float64Array([
-    0, 0, 0,
-    100, 0, 0,
-    0, 100, 0,
-    0, 0, 10,
-    0, 0, 100,
-    100, 0, 10
-  ])
-  const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 10))
-  const geometry = new Cesium.Geometry({
-    attributes: {
-      position: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.DOUBLE, // 双面可见
-        componentsPerAttribute: 3,
-        values: vertices
-      }),
-    },
-    primitiveType: Cesium.PrimitiveType.TRIANGLES,
-    boundingSphere: Cesium.BoundingSphere.fromVertices(vertices)
-  })
-  const instance = new Cesium.GeometryInstance({
-    geometry: geometry,
-    modelMatrix,
-    attributes: {color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)}
-  })
-  primitiveCollection.add(new Cesium.Primitive({
-    geometryInstances: instance,
-    asynchronous: false, // 关闭异步
-    appearance: new Cesium.PerInstanceColorAppearance({
-      flat: true,          // 不计算光照
-      translucent: false   // 是否透明
-    })
-  }))
-  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, modelMatrix, new Cesium.BoundingSphere());
-  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
-}
-
-const addCustomPrimitive = () => {
-  reset()
-  const vertices = new Float64Array([
-    0, 0, 0,
-    100, 0, 0,
-    0, 100, 0,
-    0, 100, 0,
-    100, 0, 0,
-    100, 100, 0
-  ])
-  const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 10))
-  const geometry = new Cesium.Geometry({
-    attributes: {
-      position: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.DOUBLE, // 双面可见
-        componentsPerAttribute: 3,
-        values: vertices
-      }),
-    },
-    primitiveType: Cesium.PrimitiveType.TRIANGLES,
-    boundingSphere: Cesium.BoundingSphere.fromVertices(vertices)
-  })
-  const instance = new Cesium.GeometryInstance({
-    geometry: geometry,
-    modelMatrix,
-    attributes: {color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)}
-  })
-  primitiveCollection.add(new Cesium.Primitive({
-    geometryInstances: instance,
-    asynchronous: false, // 关闭异步
-    appearance: new Cesium.PerInstanceColorAppearance({
-      flat: true,          // 不计算光照
-      translucent: false   // 是否透明
-    })
-  }))
-  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, modelMatrix, new Cesium.BoundingSphere());
-  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
-}
-
-const addCustomIndexPrimitive = () => {
-  reset()
-  const vertices = new Float64Array([
-    0, 0, 0,
-    100, 0, 0,
-    0, 100, 0,
-    // 0, 100, 0,
-    // 100, 0, 0,
-    100, 100, 0
-  ])
-  const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 10))
-  const indices = new Uint16Array([0, 1, 2, 2, 1, 3])// //存储一份顶点索引
-  const geometry = new Cesium.Geometry({
-    attributes: {
-      position: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.DOUBLE, // 双面可见
-        componentsPerAttribute: 3,
-        values: vertices
-      }),
-    },
-    indices,
-    primitiveType: Cesium.PrimitiveType.TRIANGLES,
-    boundingSphere: Cesium.BoundingSphere.fromVertices(vertices)
-  })
-  const instance = new Cesium.GeometryInstance({
-    geometry: geometry,
-    modelMatrix,
-    attributes: {color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)}
-  })
-  primitiveCollection.add(new Cesium.Primitive({
-    geometryInstances: instance,
-    asynchronous: false, // 关闭异步
-    appearance: new Cesium.PerInstanceColorAppearance({
-      flat: true,          // 不计算光照
-      translucent: false   // 是否透明
-    })
-  }))
-  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, modelMatrix, new Cesium.BoundingSphere());
-  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
-}
-
-const addCustomCylinderPrimitive = () => {
-  reset()
-  const vertices = new Float64Array([
-    100, -100, 100, // 0
-    -100, -100, 100,  //1
-    -100, 100, 100,  //2
-    100, 100, 100, //3
-    0, 0, -100  //4
-  ])
-  const indices = new Uint16Array([
-    4, 0, 1,  // ABE面
-    4, 1, 2,//BCE面
-    4, 2, 3, //CDE面
-    4, 3, 0, // DAE面
-    0, 1, 2,  //平面拆分的三角形 ABC
-    0, 3, 1//平面拆分的三角形 ABD
-  ])
-
-  const boundingSphere = Cesium.BoundingSphere.fromVertices(vertices);
-  const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 200))
-
-  const geometry = new Cesium.Geometry({
-    attributes: {
-      position: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.DOUBLE,
-        componentsPerAttribute: 3,
-        values: vertices
-      })
-    },
-    indices: indices,
-    primitiveType: Cesium.PrimitiveType.TRIANGLES,
-    boundingSphere: boundingSphere
-  })
-  const instance = new Cesium.GeometryInstance({
-    geometry: geometry,
-    modelMatrix,
-    attributes: {color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)}
-  })
-  primitiveCollection.add(new Cesium.Primitive({
-    geometryInstances: instance,
-    asynchronous: false, // 关闭异步
-    appearance: new Cesium.PerInstanceColorAppearance({
-      flat: true,          // 不计算光照
-      translucent: false   // 是否透明
-    })
-  }))
-  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, modelMatrix, new Cesium.BoundingSphere());
-  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
-}
-
-const addCustomNormalCylinderPrimitive = () => {
-  reset()
-  const vertices = new Float64Array([
-    // 前
-    0, 0, -100, // E点
-    100, -100, 100, //A点
-    -100, -100, 100, //B点
-    // 后
-    0, 0, -100, // E点
-    -100, 100, 100, //C点
-    100, 100, 100, //D点
-    // 左
-    0, 0, -100, // E点
-    -100, -100, 100, //B点
-    -100, 100, 100, //C点
-    // 右
-    0, 0, -100, // E点
-    100, 100, 100, //D点
-    100, -100, 100, //A点
-    // 上
-    100, -100, 100, //A点
-    -100, -100, 100, //B点
-    100, 100, 100, //D点
-    -100, -100, 100,//B点
-    100, 100, 100, //D点
-    -100, 100, 100, //C点
-  ])
-
-  const triangles = [
-    // 每个面由 3 个点组成
-    [new Cesium.Cartesian3(0, 0, -100), new Cesium.Cartesian3(100, -100, 100), new Cesium.Cartesian3(-100, -100, 100)], // 前
-    [new Cesium.Cartesian3(0, 0, -100), new Cesium.Cartesian3(-100, 100, 100), new Cesium.Cartesian3(100, 100, 100)],   // 后
-    [new Cesium.Cartesian3(0, 0, -100), new Cesium.Cartesian3(-100, -100, 100), new Cesium.Cartesian3(-100, 100, 100)], // 左
-    [new Cesium.Cartesian3(0, 0, -100), new Cesium.Cartesian3(100, 100, 100), new Cesium.Cartesian3(100, -100, 100)],   // 右
-    [new Cesium.Cartesian3(100, -100, 100), new Cesium.Cartesian3(-100, -100, 100), new Cesium.Cartesian3(100, 100, 100)], // 上1
-    [new Cesium.Cartesian3(-100, -100, 100), new Cesium.Cartesian3(100, 100, 100), new Cesium.Cartesian3(-100, 100, 100)], // 上2
-  ]
-
-  const computeNormal = (p0, p1, p2) => { // 三角形法线计算
-    const d1 = Cesium.Cartesian3.subtract(p1, p0, new Cesium.Cartesian3())
-    const d2 = Cesium.Cartesian3.subtract(p2, p0, new Cesium.Cartesian3())
-    const normal = Cesium.Cartesian3.cross(d1, d2, new Cesium.Cartesian3())
-    return Cesium.Cartesian3.normalize(normal, new Cesium.Cartesian3())
-  }
-  let normals = []
-  for (const [p0, p1, p2] of triangles) {    // 每个三角形 3 个顶点的法线相同
-    const normal = computeNormal(p0, p1, p2)
-    normals.push(normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z)
-  }
-
-  const boundingSphere = Cesium.BoundingSphere.fromVertices(vertices);
-  const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 200))
-  const geometry = new Cesium.Geometry({
-    attributes: {
-      position: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.DOUBLE,
-        componentsPerAttribute: 3,
-        values: vertices
-      }),
-      normal: new Cesium.GeometryAttribute({
-        componentDatatype: Cesium.ComponentDatatype.FLOAT,
-        componentsPerAttribute: 3,
-        values: new Float64Array(normals)
-      })
-    },
-    primitiveType: Cesium.PrimitiveType.TRIANGLES,
-    boundingSphere
-  })
-  const instance = new Cesium.GeometryInstance({
-    geometry: geometry,
-    modelMatrix,
-    attributes: {color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)}
-  })
-  primitiveCollection.add(new Cesium.Primitive({
-    geometryInstances: instance,
-    asynchronous: false, // 关闭异步
-    appearance: new Cesium.PerInstanceColorAppearance({
-      translucent: false   // 是否透明
-    })
-  }))
-  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, modelMatrix, new Cesium.BoundingSphere());
-  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
-}
-
 const generateCurvePoints = (flattenedPoints, multiplier = 30) => {
   const numOfPoints = flattenedPoints.length / 2 * multiplier
   const points = [];
@@ -791,7 +541,7 @@ const onMouseClick = (movement) => {
 
 
 // lil-gui逻辑
-let gui, geometryFolder, typeFolder, customFolder
+let gui, geometryFolder, typeFolder
 const formData = {
   addSingleGeometry,
   addMultInstanceGeometry,
@@ -811,11 +561,6 @@ const formData = {
   addPolylineVolumeGeometry,
   addSphereGeometry,
   addWallGeometry,
-  addTrianglePrimitive,
-  addCustomPrimitive,
-  addCustomIndexPrimitive,
-  addCustomCylinderPrimitive,
-  addCustomNormalCylinderPrimitive,
   reset
 }
 
@@ -841,13 +586,6 @@ const initGui = () => {
   typeFolder.add(formData, "addPolylineVolumeGeometry").name("管道")
   typeFolder.add(formData, "addSphereGeometry").name("球体几何")
   typeFolder.add(formData, "addWallGeometry").name("墙体几何")
-  customFolder = gui.addFolder("自定义Primitive")
-  customFolder.add(formData, "addTrianglePrimitive").name("两个三角形")
-  customFolder.add(formData, "addCustomPrimitive").name("顶点正方形")
-  customFolder.add(formData, "addCustomIndexPrimitive").name("顶点索引优化正方形")
-  customFolder.add(formData, "addCustomCylinderPrimitive").name("顶点索引锥体")
-  customFolder.add(formData, "addCustomNormalCylinderPrimitive").name("顶点法线锥体")
-
   gui.add(formData, "reset")
 }
 </script>

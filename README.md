@@ -37,6 +37,43 @@
 - Node 环境 版本：18.0.0
 - 开发工具 Webstorm
 
+## 目录结构
+```
+├── dist/               # 构建输出
+├── public/             # 公共资源
+├── src/                # 源代码
+│   ├─ api/             # 接口请求
+│   ├─ assets/          # 静态资源
+│   ├─ cesium-source/   # cesium源码包
+│   ├─ components/      # 公共组件
+│   ├─ layout/          # 布局组件
+│   ├─ router/          # 路由配置
+│   ├─ store/           # 状态管理
+│   ├─ styles/          # 样式文件
+│   ├─ utils/           # 工具函数
+│   ├─ views/           # 页面视图
+│       ├─ arcgis/      # arcgis应用
+│       ├─ cesium/      # cesium应用
+│       ├─ cesiumLast/  # cesiumLast应用
+│       ├─ leaflet/     # leaflet应用
+│       ├─ three/       # three应用
+│       ├─ ui/          # vite应用
+│       ├─ webgl/       # webgl应用
+│       ├─ webgpu/      # webgpu应用
+│       └─ 404.vue      # 404页面
+│   ├─ App.vue          # 根组件
+│   └─ main.ts          # 程序入口
+├── .env.development    # 开发环境
+├── .env.production     # 生产环境
+├── .env.staging        # 测试环境
+├── .gitignore          # 忽略文件
+├── package.json        # 项目配置
+├── tsconfig.json       # TS配置
+├── vite.config.ts      # Vite配置
+├── yarn.lock           # 锁定依赖
+└── README.md           # 项目说明
+```
+
 ## 项目启动
 
 1. 安装依赖

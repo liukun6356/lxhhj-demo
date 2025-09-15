@@ -39,6 +39,7 @@ const add3dtiles = async () => {
   tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
     url: 'https://file.threehub.cn/3dtiles/house/tileset.json',
   }))
+  debugger
 }
 
 const flyAnimation = () => {
