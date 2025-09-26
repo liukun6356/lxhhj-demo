@@ -30,7 +30,7 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/fluid/heightMap/index.vue'),
                         name: 'Cesium-Fluid-HeightMap',
                         meta: {title: '高度图', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'dxgw2',
                         component: () => import('@/views/cesium/component/fluid/dxgw2/index.vue'),
                         name: 'Cesium-Fluid-dxgw2',
@@ -194,13 +194,14 @@ export const constantRoutes = [
         component: () => import('@/layout/index.vue'),
         redirect: '/cesiumLast/blob',
         name: "cesium@",
+        // noShow: true,
         children: [
             {
                 path: 'blob',
                 component: () => import('@/views/cesiumLast/index.vue'),
                 name: 'cesium@-Blob',
                 redirect: '/cesiumLast/blob/switchCamera',
-                meta: {title: 'blob', icon: '', affix: true},
+                meta: {title: 'takeaway', icon: '', affix: true},
                 children: [
                     {
                         path: 'switchCamera',
@@ -228,6 +229,21 @@ export const constantRoutes = [
                     },
                 ]
             },
+            {
+                path: 'demo',
+                component: () => import('@/views/cesiumLast/index.vue'),
+                name: 'cesium@-Demo',
+                redirect: '/cesiumLast/blob/switchCamera',
+                meta: {title: 'demo', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'switchCamera',
+                        component: () => import('@/views/cesiumLast/component/demo/triangularMesh/index.vue'),
+                        name: 'cesium@-Demo-TriangularMesh',
+                        meta: {title: '水动力网格', icon: '', affix: true},
+                    },
+                ]
+            }
         ]
     },
     {
@@ -750,7 +766,7 @@ export const constantRoutes = [
                         component: () => import('@/views/ui/component/main/mapClip.vue'),
                         name: 'Ui-Main-MapClip',
                         meta: {title: '地图卷帘', icon: '', affix: true},
-                    },{
+                    }, {
                         path: 'dragSort',
                         component: () => import('@/views/ui/component/main/dragSort.vue'),
                         name: 'Ui-Main-DragSort',

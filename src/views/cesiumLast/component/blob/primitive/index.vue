@@ -565,7 +565,7 @@ const formData = {
 }
 
 const initGui = () => {
-  gui = new GUI({title: "Primitive"});
+  gui = new GUI({title: "primitive-geometry"});
   geometryFolder = gui.addFolder("primitive构成")
   geometryFolder.add(formData, "addSingleGeometry").name("添加单个实例")
   geometryFolder.add(formData, "addMultInstanceGeometry").name("添加多几何不同外观实例")
@@ -588,6 +588,7 @@ const initGui = () => {
   typeFolder.add(formData, "addWallGeometry").name("墙体几何")
   gui.add(formData, "reset")
 }
+
 </script>
 
 <style lang="scss" scoped>

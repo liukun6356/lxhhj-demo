@@ -16,7 +16,7 @@
           :default-checked-keys="[11]"
           node-key="id"/>
     </div>
-    <Tdt_img_d v-if="showTypeList.includes('img_d')"/>
+<!--    <Tdt_img_d v-if="showTypeList.includes('img_d')"/>-->
     <Tdt_img_z v-if="showTypeList.includes('img_z')"/>
     <Tdt_vec_d v-if="showTypeList.includes('vec_d')"/>
 

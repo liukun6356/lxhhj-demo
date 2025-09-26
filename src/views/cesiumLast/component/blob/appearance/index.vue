@@ -654,7 +654,6 @@ const addPolylineMaterialAppearanceArrow = () => {
 const addPolylineMaterialAppearanceDash = () => {
   reset()
   let positions = [[114.347137, 30.541429, 50], [114.347137, 30.551429, 100], [114.367137, 30.541429, 100], [114.367137, 30.551429, 100], [114.377137, 30.551429, 100]]
-
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
   const polygon = new Cesium.PolylineGeometry({
     positions: positions,
@@ -685,7 +684,6 @@ const addPolylineMaterialAppearanceDash = () => {
 const addPolylineMaterialAppearanceGlow = () => {
   reset()
   let positions = [[114.347137, 30.541429, 50], [114.347137, 30.551429, 100], [114.367137, 30.541429, 100], [114.367137, 30.551429, 100], [114.377137, 30.551429, 100]]
-
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
   const polygon = new Cesium.PolylineGeometry({
     positions: positions,
@@ -715,7 +713,6 @@ const addPolylineMaterialAppearanceGlow = () => {
 const addPolylineMaterialAppearanceOutline = () => {
   reset()
   let positions = [[114.347137, 30.541429, 50], [114.347137, 30.551429, 100], [114.367137, 30.541429, 100], [114.367137, 30.551429, 100], [114.377137, 30.551429, 100]]
-
   positions = Cesium.Cartesian3.fromDegreesArrayHeights(positions.flat())
   const polygon = new Cesium.PolylineGeometry({
     positions: positions,
@@ -825,8 +822,8 @@ const formData = {
   reset
 }
 const initGui = () => {
-  gui = new GUI({title: "appearance外观"});
-  appearanceFolder = gui.addFolder("primitive构成")
+  gui = new GUI({title: "primitive-appearance"});
+  appearanceFolder = gui.addFolder("appearance构成")
   appearanceFolder.add(formData, "addAppearance").name("原生Appearance")
   appearanceFolder.add(formData, "addCustomAppearance").name("自定义Appearance")
   materialAppearanceFolder = gui.addFolder("材质外观 Material")

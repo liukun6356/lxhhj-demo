@@ -68,7 +68,8 @@
 ├── .env.staging        # 测试环境
 ├── .gitignore          # 忽略文件
 ├── package.json        # 项目配置
-├── tsconfig.json       # TS配置
+├── index.html          # 入口页面
+├── tsconfig.json       # TS 配置
 ├── vite.config.ts      # Vite配置
 ├── yarn.lock           # 锁定依赖
 └── README.md           # 项目说明

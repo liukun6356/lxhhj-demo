@@ -20,6 +20,7 @@ import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import {formatToFixed} from "@/utils/dictionary";
 import config from "@arcgis/core/config";
 import SpatialReference from "@arcgis/core/geometry/SpatialReference.js";
+import WebTileLayer from "@arcgis/core/layers/WebTileLayer";
 import mittBus from "@/utils/mittBus";
 import {throttle} from "lodash-es";
 
@@ -34,7 +35,7 @@ const model = reactive({
 })
 const {locationData} = toRefs(model)
 
-const mouseleaveFn = () =>{
+const mouseleaveFn = () => {
   mittBus.emit("nodeOnMouseMove")
   mittBus.emit("pipelineOnMouseMove")
   mittBus.emit("waterWorkOnMouseMove")
@@ -60,14 +61,21 @@ onUnmounted(() => {
 })
 
 let viewer, pointerMoveHandler, pointerClickHandler, watchFn
+
+const ImageryProvider = new WebTileLayer({
+  layer: 'img_d',
+  urlTemplate: `http://{subDomain}.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={level}&TILEROW={row}&TILECOL={col}&tk=${import.meta.env.VITE_APP_TDT_KEY}`,
+  subDomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+})
 const initMap = (domId) => new Promise((resolve) => {
   viewer = new MapView({
     container: domId,
     center: [100.586029, 30.889587],
     zoom: 7,
     map: new Map({
-      basemap: 'satellite',
+      // basemap: 'satellite',
       // spatialReference: SpatialReference.WGS84
+      layers: [ImageryProvider]
     }),
     // spatialReference: SpatialReference.WGS84
     // spatialReference: { wkid: 4326 }

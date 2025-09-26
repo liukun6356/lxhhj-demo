@@ -412,8 +412,7 @@ export function createFloodPrimitive(mesh: {
                 flipY: false,
                 sampler: new Cesium.Sampler({
                     minificationFilter: Cesium.TextureMinificationFilter.LINEAR,
-                    magnificationFilter:
-                    Cesium.TextureMagnificationFilter.NEAREST,
+                    magnificationFilter: Cesium.TextureMagnificationFilter.NEAREST,
                 }),
                 source: img,
                 pixelDatatype: Cesium.PixelDatatype.UNSIGNED_BYTE,
@@ -573,10 +572,7 @@ function createDataSource(context: any, opts: Source) {
             } else {
                 task.isEmpty = true;
             }
-            console.log(
-                fTime(task.key),
-                `[${min.toFixed(2)}, ${max.toFixed(2)}]`
-            );
+            console.log(fTime(task.key), `[${min.toFixed(2)}, ${max.toFixed(2)}]`);
         },
         onError(error, task) {
             task.status = EnumTaskStatus.error;
