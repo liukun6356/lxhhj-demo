@@ -4639,6 +4639,13 @@ kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+kriging-webgl@^1.0.2:
+  version "1.0.2"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/kriging-webgl/-/kriging-webgl-1.0.2.tgz#285faf57ccac6ce001934fb4799a4f16de81d31c"
+  integrity sha512-1ANINomqTUIVE3G7VHuAsKtCYxUkm/YxE+JQ59lV2p1NZVP8ZYg085Bvp8iSujAHYagwo0F3s6X9tC4bmfT14A==
+  dependencies:
+    lru-cache "^11.1.0"
+
 ktx-parse@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/ktx-parse/-/ktx-parse-0.4.5.tgz#79905e22281a9d3e602b2ff522df1ee7d1813aa6"
@@ -4787,6 +4794,11 @@ long@^5.0.0:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/long/-/long-5.2.3.tgz#a3ba97f3877cf1d778eccbcb048525ebb77499e1"
   integrity sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==
+
+lru-cache@^11.1.0, lru-cache@^11.2.1:
+  version "11.2.2"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/lru-cache/-/lru-cache-11.2.2.tgz#40fd37edffcfae4b2940379c0722dc6eeaa75f24"
+  integrity sha512-F9ODfyqML2coTIsQpSkRHnLSZMtkU8Q+mSfcaIyKwy58u+8k5nvAYeiNhsyMARvzNcXJ9QfWVrcPsC9e9rAxtg==
 
 luxon@~3.4.4:
   version "3.4.4"

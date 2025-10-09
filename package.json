@@ -61,7 +61,9 @@
     "vue3-seamless-scroll": "^2.0.1",
     "x2js": "^3.4.4",
     "xlsx": "^0.17.0",
-    "xlsx-style-vite": "^0.0.2"
+    "xlsx-style-vite": "^0.0.2",
+    "kriging-webgl": "^1.0.2",
+    "lru-cache": "^11.2.1"
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.1.0",

@@ -842,7 +842,6 @@ const addCustomPrimitive = () => {
   }
 }
 
-
 const reset = () => {
   primitiveCollection.removeAll()
 }

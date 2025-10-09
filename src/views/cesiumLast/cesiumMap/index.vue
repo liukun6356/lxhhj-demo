@@ -52,7 +52,6 @@ import {ElMessage} from "element-plus";
 const mapStore = usemapStore()
 
 const model = reactive({
-  activeMap: false,
   locationData: {
     longitude: "",//经度
     latitude: "",//纬度
@@ -65,7 +64,7 @@ const model = reactive({
     ms: 0,//ping值
   }
 })
-const {activeMap, locationData} = toRefs(model)
+const {locationData} = toRefs(model)
 
 onMounted(async () => {
   const rawViewer = await initMap("cesiumContainer") as Viewer
@@ -104,7 +103,7 @@ const initMap = (domId) => new Promise((resolve) => {
     creditContainer: document.createElement("div") // 自定义版权信息容器（隐藏默认 Cesium logo）
   })
   const rawViewer = markRaw(viewer);
-  console.log('Cesium',Cesium.VERSION)
+  console.log('Cesium', Cesium.VERSION)
   // 鼠标经纬度提示控件
   coordinateChange()
   // viewer.scene.camera.moveStart.addEventListener(coordinateChange);

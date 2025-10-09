@@ -218,14 +218,20 @@ export const constantRoutes = [
                     {
                         path: 'appearance',
                         component: () => import('@/views/cesiumLast/component/blob/appearance/index.vue'),
-                        name: 'cesium@-Base-Appearance',
+                        name: 'cesium@-Blob-Appearance',
                         meta: {title: 'primitive-appearance', icon: '', affix: true},
                     },
                     {
                         path: 'customPrimitive',
                         component: () => import('@/views/cesiumLast/component/blob/customPrimitive/index.vue'),
-                        name: 'cesium@-Base-customPrimitive',
+                        name: 'cesium@-Blob-customPrimitive',
                         meta: {title: 'custom-primitive', icon: '', affix: true},
+                    },
+                    {
+                        path: 'dynamicLine',
+                        component: () => import('@/views/cesiumLast/component/blob/dynamicLine/index.vue'),
+                        name: 'cesium@-Blob-dynamicLine',
+                        meta: {title: 'dynamicLine', icon: '', affix: true},
                     },
                 ]
             },
@@ -233,14 +239,20 @@ export const constantRoutes = [
                 path: 'demo',
                 component: () => import('@/views/cesiumLast/index.vue'),
                 name: 'cesium@-Demo',
-                redirect: '/cesiumLast/blob/switchCamera',
+                redirect: '/cesiumLast/demo/triangularMesh',
                 meta: {title: 'demo', icon: '', affix: true},
                 children: [
                     {
-                        path: 'switchCamera',
+                        path: 'triangularMesh',
                         component: () => import('@/views/cesiumLast/component/demo/triangularMesh/index.vue'),
                         name: 'cesium@-Demo-TriangularMesh',
                         meta: {title: '水动力网格', icon: '', affix: true},
+                    },
+                    {
+                        path: 'weatherSample',
+                        component: () => import('@/views/cesiumLast/component/demo/weatherSample/index.vue'),
+                        name: 'cesium@-Demo-WeatherSample',
+                        meta: {title: '气象插值', icon: '', affix: true},
                     },
                 ]
             }
