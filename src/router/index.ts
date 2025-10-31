@@ -233,6 +233,12 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-dynamicLine',
                         meta: {title: 'dynamicLine', icon: '', affix: true},
                     },
+                    {
+                        path: 'asyncGrid',
+                        component: () => import('@/views/cesiumLast/component/blob/asyncGrid/index.vue'),
+                        name: 'cesium@-Blob-asyncGrid',
+                        meta: {title: '瓦片信息', icon: '', affix: true},
+                    },
                 ]
             },
             {

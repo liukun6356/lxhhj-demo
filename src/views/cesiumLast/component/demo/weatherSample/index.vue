@@ -12,22 +12,19 @@ import {onMounted, onUnmounted, reactive, toRefs} from "vue";
 import GUI from "lil-gui";
 import {usemapStore} from "@/store/modules/cesiumLastMap";
 import * as Cesium from "cesium";
-import axios from "axios";
-import {loadKrigingRainPrimitive} from './kriging.ts';
-import jsonData from "./data.ts"
+import {LRUCache} from 'lru-cache';
+import {krigingDataMeta as metaData} from "./data/index.ts"
+import {krigingDataMeta as metaData1} from "./data1/index.ts"
+import {krigingDataMeta as metaData2} from "./data2/index.ts"
+import {krigingDataMeta as metaData3} from "./data3/index.ts"
+import {krigingDataMeta as metaData4} from "./data4/index.ts"
+import {krigingDataMeta as metaData5} from "./data5/index.ts"
+import MyWorker from './worker?worker';
+import {glsl_colorMapping, glsl_pack} from "kriging-webgl";
+import moment from "moment"
 // Component
 import YbPanl from "@/components/ybPanl/index.vue"
 import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
-import {
-  Appearance, Cartesian2,
-  Cartesian3,
-  GeometryInstance,
-  GroundPrimitive, Material,
-  PolygonGeometry,
-  PolygonHierarchy,
-  VertexFormat
-} from "cesium";
-import {glsl_colorMapping, glsl_pack} from "kriging-webgl";
 
 const mapStore = usemapStore()
 const model = reactive({
@@ -36,9 +33,9 @@ const model = reactive({
 })
 const {selTimeRang, times} = toRefs(model)
 
+let krigingDataMeta
 onMounted(() => {
   initGui()
-  getlist()
   viewer.scene.primitives.add(primitiveCollection);
 })
 
@@ -48,18 +45,13 @@ onUnmounted(() => {
 })
 
 const getlist = async () => {
-  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/2dFluidModel/getTime.json`)
-  model.times = data.map(Number)
-  const start = model.times[0]
-  const end = model.times[model.times.length - 1]
-  model.selTimeRang = {start, end}
+  model.times = krigingDataMeta.data.map(item => item.time)
+  model.selTimeRang = {start: krigingDataMeta.startTime, end: krigingDataMeta.endTime}
 }
 
-let i = 1
 const timeChange = (timestamp) => {
-  const index = model.times.findIndex(t => t === timestamp)
-  if (index < 0) return
-  if (prePrimitive) prePrimitive.setTime(i += 0.1);
+  if (!prePrimitive) return
+  prePrimitive.setTime(timestamp)
 }
 
 // 地图逻辑
@@ -67,52 +59,123 @@ const viewer = mapStore.getCesiumViewer()
 let prePrimitive
 const primitiveCollection = new Cesium.PrimitiveCollection()
 
-const addCustomPrimitive = () => {
-  // 获知边界
-  class CustomPrimitive {
-    private _packValueRange = [0, 1000];
+const addKrigingPrimitive = () => {
+  class KrigingPrimitive {
+    private _timeRange
+    private _prmitive
+    private _grid
+    private _pointCollection
+    private _labelCollection
+    private _points
     private _rings
-    private _cols
-    private _rows
-    private minTime
-    private maxTime
+    private _rainDataGetter
+    private _gernerateObj
+    private _isSingle
+    private _maxIndex
+
+    private _packValueRange = [0, 1000];
     private _uniforms
 
+    private _worker
+    private _taskId
+    private _taskMap = new Map()
+    private _dataMap = new Map()
 
-    constructor(viewer, points, timeRange, rainDataGetter, minSideSize) {
-      const lons = points.map(i => i[0]);
-      const lats = points.map(i => i[1]);
-      const xmin = Math.min.apply(null, lons);
-      const xmax = Math.max.apply(null, lons);
-      const ymin = Math.min.apply(null, lats);
-      const ymax = Math.max.apply(null, lats);
-      const width = xmax - xmin, height = ymax - ymin;
-      this._rings = [[xmin, ymin], [xmax, ymin], [xmax, ymax], [xmin, ymax]];
-      const cellSize = Math.max(width, height) / minSideSize;
-      this._cols = Math.round(width / cellSize);
-      this._rows = Math.round(height / cellSize);
-      this.addPrmitive()
-
+    private _cache = new LRUCache<number, ImageBitmap>({
+      max: 32,
+      dispose: (texture, t) => {
+        texture.close()
+        console.log(`dispose at ${t} --> ${moment(t).format('YYYY-MM-DD HH:mm:ss')}`)
+      }
+    })
+    private _queue = []
+    private _loadTask
+    private _taskTime
+    private _curState: {
+      beforeTime: number,
+      afterTime: number,
+      curTime: number,
+      percent: number,
     }
 
-    addPrmitive() {
-      const prmitive = new GroundPrimitive({
+    private destroyed = false
+
+    constructor({points, timeRange, rainDataGetter, rings, minSideSize, colorMapping, girdShow}) {
+      this._points = points
+      this._rainDataGetter = rainDataGetter
+      this._timeRange = timeRange
+      const xs = points.map(i => i[0]);
+      const ys = points.map(i => i[1]);
+      const xmin = Math.min.apply(null, xs);
+      const xmax = Math.max.apply(null, xs);
+      const ymin = Math.min.apply(null, ys);
+      const ymax = Math.max.apply(null, ys);
+      const width = xmax - xmin, height = ymax - ymin;
+      this._rings = rings ? rings : [[xmin, ymin], [xmax, ymin], [xmax, ymax], [xmin, ymax]];
+      const cellSize = Math.max(width, height) / minSideSize;
+      const cols = Math.round(width / cellSize);
+      const rows = Math.round(height / cellSize);
+      this._gernerateObj = {
+        xs,
+        ys,
+        llCorner: [xmin, ymin],
+        cellSize,
+        gridSize: [cols, rows],
+        packValueRange: this._packValueRange,
+        xyxy: [xmin, ymin, xmax, ymax]
+      }
+      this.initWorker()
+      this.addGrid()
+      this.addLabel()
+      this.addPrmitive(colorMapping)
+      this.flyToExtent(this._gernerateObj.xyxy)
+      const {min, max, interval} = this._timeRange;
+      const count = max === min ? 1 : ((max - min) / interval + 1);
+      this._maxIndex = count - 1;
+      this._isSingle = count === 1;
+      this.setTime(min)
+    }
+
+    get curTime() {
+      return this._curState?.curTime || this._timeRange.min
+    }
+
+    set curTime(t) {
+      this.setTime(t)
+    }
+
+    set labelShow(bool) {
+      if (this._grid) this._grid.show = bool
+      this._labelCollection.show = bool
+      this._pointCollection.show = bool
+    }
+
+    addPrmitive(colorMapping) {
+      const glsl_getColor = colorMapping ? this.generateGLSLIfStatements(colorMapping) : `
+        if(v <= 10.0) return ivec3(166, 255, 176);
+        if(v <= 25.0) return ivec3(30, 186, 37);
+        if(v <= 50.0) return ivec3(95, 207, 255);
+        if(v <= 100.0) return ivec3(0, 0, 255);
+        if(v <= 100.0) return ivec3(0, 0, 255);
+        if(v <= 250.0) return ivec3(249, 0, 241);
+      `
+      this._prmitive = new Cesium.GroundPrimitive({
         allowPicking: false,
-        geometryInstances: new GeometryInstance({
-          geometry: new PolygonGeometry({
-            vertexFormat: VertexFormat.POSITION_AND_ST,
-            polygonHierarchy: new PolygonHierarchy(Cartesian3.fromDegreesArray(rings.flat())),
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: new Cesium.PolygonGeometry({
+            vertexFormat: Cesium.VertexFormat.POSITION_AND_ST,
+            polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray(this._rings.flat())),
           }),
         }),
-        appearance: new Appearance({
-          material: new Material({
+        appearance: new Cesium.Appearance({
+          material: new Cesium.Material({
             fabric: {
               type: 'KrigingRain',
               uniforms: {
                 u_image1: 'czm_defaultImage',
                 u_image2: 'czm_defaultImage',
-                u_unpackRange: Cartesian2.fromArray(this._packValueRange),
-                u_imageSize: Cartesian2.fromArray([this._cols, this._rows]),
+                u_unpackRange: Cesium.Cartesian2.fromArray(this._packValueRange),
+                u_imageSize: Cesium.Cartesian2.fromArray(this._gernerateObj.gridSize),
                 u_percent: -1
               },
               source: `
@@ -131,10 +194,7 @@ const addCustomPrimitive = () => {
                       vec2 uv0 = floor(uv / onePixel) * onePixel + onePixel * 0.5;
 
                       //manual bilinear
-                      vec2 offset = vec2(
-                          uv.x > uv0.x ? 1.0 : -1.0,
-                          uv.y > uv0.y ? 1.0 : -1.0
-                      );
+                      vec2 offset = vec2(uv.x > uv0.x ? 1.0 : -1.0 ,uv.y > uv0.y ? 1.0 : -1.0);
                       vec2 uv1 = uv0 + offset * onePixel * vec2(1,0);
                       vec2 uv2 = uv0 + offset * onePixel * vec2(0,1);
                       vec2 uv3 = uv0 + offset * onePixel * vec2(1,1);
@@ -150,12 +210,7 @@ const addCustomPrimitive = () => {
                   }
 
                   ivec3 getColor(float v){
-                      if(v <= 10.0) return ivec3(166, 255, 176);
-                      if(v <= 25.0) return ivec3(30, 186, 37);
-                      if(v <= 50.0) return ivec3(95, 207, 255);
-                      if(v <= 100.0) return ivec3(0, 0, 255);
-                      if(v <= 100.0) return ivec3(0, 0, 255);
-                      if(v <= 250.0) return ivec3(249, 0, 241);
+                      ${glsl_getColor}
                       return ivec3(255, 0, 0);
                   }
 
@@ -175,48 +230,257 @@ const addCustomPrimitive = () => {
           })
         }),
       });
-      primitiveCollection.add(this.prmitive);
-      this._uniforms = prmitive.appearance.material.uniforms;
+      primitiveCollection.add(this._prmitive);
+      this._uniforms = this._prmitive.appearance.material.uniforms;
     }
 
+    addGrid() {
+      const col = [...new Set(this._gernerateObj.xs)].length
+      const row = [...new Set(this._gernerateObj.ys)].length
+      if (this._points.length < col + row) return
+      const [xmin, ymin, xmax, ymax] = this._gernerateObj.xyxy
+      const yy = (ymax - ymin) / (col - 1) / 2
+      const xx = (xmax - xmin) / (row - 1) / 2
+      const instance = new Cesium.GeometryInstance({
+        geometry: new Cesium.RectangleGeometry({
+          rectangle: Cesium.Rectangle.fromDegrees(xmin - xx, ymin - yy, xmax + xx, ymax + yy),
+        }),
+      });
+      this._grid = primitiveCollection.add(new Cesium.Primitive({
+        geometryInstances: instance,
+        asynchronous: false,
+        appearance: new Cesium.MaterialAppearance({
+          material: new Cesium.Material({
+            fabric: {
+              type: 'Grid',
+              uniforms: {
+                color: Cesium.Color.WHITE,
+                cellAlpha: 0.0,
+                lineCount: new Cesium.Cartesian2(col, row), // 网格列数、行数
+                lineThickness: new Cesium.Cartesian2(1.0, 1.0),
+                lineOffset: new Cesium.Cartesian2(0.0, 0.0),
+              },
+            },
+          }),
+        }),
+      }));
+    }
+
+    addLabel() {
+      this._pointCollection = primitiveCollection.add(new Cesium.PointPrimitiveCollection());
+      this._labelCollection = primitiveCollection.add(new Cesium.LabelCollection({scene: viewer.scene}));
+      this._points.forEach(pos => {
+        this._pointCollection.add({
+          position: Cesium.Cartesian3.fromDegrees(pos[0], pos[1], 0),
+          color: Cesium.Color.YELLOW,
+        });
+        this._labelCollection.add({
+          position: Cesium.Cartesian3.fromDegrees(pos[0], pos[1], 0),
+          text: '111',
+          font: `14px`,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          pixelOffset: new Cesium.Cartesian2(0, -10),
+          fillColor: Cesium.Color.fromCssColorString("#fff").withAlpha(1),
+          outlineColor: new Cesium.Color.fromCssColorString('black'),
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        })
+      })
+    }
+
+    generateGLSLIfStatements(colorStops) {
+      function hexToRgb(hex) {
+        hex = hex.replace("#", "");
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return [r, g, b];
+      }
+
+      return colorStops.map(stop => {
+        const [r, g, b] = hexToRgb(stop.color);
+        return `if(v <= ${stop.max.toFixed(1)}) return ivec3(${r}, ${g}, ${b});`;
+      }).join("\n")
+    }
+
+    updateUniforms() {
+      const {curTime, beforeTime, afterTime, percent} = this._curState;
+      if (curTime >= this._curState.beforeTime && curTime <= this._curState.afterTime && this._cache.has(beforeTime) && this._cache.has(afterTime)) {
+        this._uniforms.u_image1 = this._cache.get(beforeTime);
+        this._uniforms.u_image2 = this._cache.get(afterTime);
+        this._uniforms.u_percent = percent;
+        // this._uniforms.u_colorMapping = 2 // 1 2
+      } else {
+        this._uniforms.u_percent = -1;
+      }
+    }
+
+    flyToExtent(xyxy) {
+      const rectangle = Cesium.Rectangle.fromDegrees.apply(null, xyxy);
+      const boundingSphere = Cesium.BoundingSphere.fromRectangle3D(rectangle)
+      viewer.camera.flyToBoundingSphere(boundingSphere, {offset: new Cesium.HeadingPitchRange(0.0, Cesium.Math.toRadians(-45.0), boundingSphere.radius * 2.5)});
+    }
+
+    setTime(t) {
+      const [beforeIndex, afterIndex] = this.getRangeValueIn(t);
+      const preloads = [];
+      for (let i = 1; i <= 5; i++) {
+        const nextIndex = afterIndex + i;
+        if (nextIndex > this._maxIndex) break;
+        preloads.push(this.getValue(nextIndex));
+      }
+      const beforeTime = this.getValue(beforeIndex);
+      const afterTime = this.getValue(afterIndex);
+      this._curState = {
+        beforeTime,
+        afterTime,
+        curTime: t,
+        percent: this._isSingle ? 0 : (t - beforeTime) / (afterTime - beforeTime)
+      };
+      if (this._dataMap.has(t)) this._labelCollection._labels.forEach((label, i) => label.text = this._dataMap.get(t)[i].toFixed(1))
+      this._queue = [beforeTime, afterTime, ...preloads].filter(t => t !== this._taskTime && !this._cache.has(t));
+      this.startLoad()
+      this.updateUniforms()
+    }
+
+    getValue(index) {
+      const {min, interval} = this._timeRange;
+      return min + index * interval
+    }
+
+    getRangeValueIn(anyValue) {
+      const {min, max, interval} = this._timeRange;
+      if (anyValue <= min) return this._isSingle ? [0.0] : [0, 1]
+      if (anyValue >= max) return [this._maxIndex, this._maxIndex]
+      const after = Math.ceil((anyValue - min) / interval)
+      return [after - 1, after]
+    }
+
+    startLoad() {
+      if (this._loadTask || !this._queue.length) return;
+      const timeFrame = this._taskTime = this._queue.shift();
+      this._loadTask = this._rainDataGetter(timeFrame)
+          .then(data => {
+            if (!this._dataMap.has(timeFrame)) {
+              this._dataMap.set(timeFrame, data)
+              if (timeFrame === this._curState.curTime) this._labelCollection._labels.forEach((label, i) => label.text = data[i].toFixed(1))
+            }
+            return this.gerenate({...this._gernerateObj, data})
+          })
+          .then(({packedImagebitmap, generateTime, trainTime}) => {
+            if (this.destroyed) return;
+            console.log(`data at ${timeFrame} --> ${moment(timeFrame).format('YYYY-MM-DD HH:mm:ss')}, train: ${trainTime.toFixed(1)}ms, generate: ${generateTime.toFixed(1)}ms`);
+            this._cache.set(timeFrame, packedImagebitmap);
+            this.updateUniforms();
+          })
+          .finally(() => {
+            this._taskTime = this._loadTask = null;
+            this.startLoad();
+          });
+    }
+
+    initWorker() {
+      this._worker = new MyWorker();
+      this._taskId = 0;
+      this._taskMap = new Map();
+      this._worker.onmessage = e => {
+        const {id, result, success, error} = e.data;
+        const handle = this._taskMap.get(id);
+        success ? handle.resolve(result) : handle.reject(error)
+        this._taskMap.delete(id);
+      }
+    }
+
+    gerenate(data) {
+      let resolve;
+      let reject;
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      const id = this._taskId++;
+      this._worker.postMessage({data, id});
+      this._taskMap.set(id, {resolve, reject});
+      return promise;
+    }
+
+    destroy() {
+      if (this.destroyed) return;
+      primitiveCollection.remove(this._prmitive)
+      this._taskMap.values().forEach(f => f.reject('close'));
+      this._taskMap.clear();
+      this._dataMap.clear();
+      this._worker.terminate();
+      this._cache.clear();
+      this.destroyed = true;
+    }
   }
 
-  console.log(123)
-}
-
-const addKrigingRainPrimitive = () => {
-  prePrimitive = loadKrigingRainPrimitive({
-    viewer,
-    points: jsonData,
-    timeRange: {min: 1, max: 100, interval: 1},
-    rainDataGetter() {
-      return Promise.resolve(new Array(jsonData.length).fill(0).map(() => Math.random() * 100))
-    },
-    minSideSize: 200
-  });
-  prePrimitive.setTime(1)
-  viewer.camera.setView({
-    destination: new Cesium.Cartesian3.fromDegrees(109.661114, 26.109445, 67000),
-    orientation: {
-      heading: Cesium.Math.toRadians(350),
-      pitch: Cesium.Math.toRadians(-57.4),
-      roll: Cesium.Math.toRadians(0),
+  prePrimitive = new KrigingPrimitive({
+    points: krigingDataMeta.points,
+    rings: krigingDataMeta.rings,
+    minSideSize: 200,
+    timeRange: {min: krigingDataMeta.startTime, max: krigingDataMeta.endTime, interval: krigingDataMeta.interval},
+    colorMapping: krigingDataMeta.colorMap.breaks,
+    rainDataGetter(t) {
+      return Promise.resolve(krigingDataMeta.data.find(item => item.time === t).value)
     },
   })
 }
 
+const destroy = () => {
+  if (prePrimitive) prePrimitive.destroy()
+}
+
+const reset = () => {
+  primitiveCollection.removeAll()
+}
+
+
 // lil-gui逻辑
 let gui
 const formData = {
-  addCustomPrimitive,
-  addKrigingRainPrimitive
+  labelShow: true,
+  minSideSize: 200,
+  data: "",
+  destroy,
+  reset
 }
 const initGui = () => {
   gui = new GUI({title: "weatherSample"});
-  gui.add(formData, "addKrigingRainPrimitive").name("生成等值图1")
-  // gui.add(formData, "addCustomPrimitive").name("生成等值图")
-
+  gui.add(formData, "data", ["jz", "data1", "ga", "data3", "mj","cz"]).onChange(type => {
+    reset()
+    switch (type) {
+      case "jz":
+        krigingDataMeta = metaData
+        break
+      case "data1":
+        krigingDataMeta = metaData1
+        break
+      case "ga":
+        krigingDataMeta = metaData2
+        break
+      case "data3":
+        krigingDataMeta = metaData3
+        break
+      case "mj":
+        krigingDataMeta = metaData4
+        break
+      case "cz":
+        krigingDataMeta = metaData5
+        break
+    }
+    getlist()
+    addKrigingPrimitive()
+  }).setValue("ga")
+  gui.add(formData, "labelShow").onChange(bool => prePrimitive.labelShow = bool)
+  gui.add(formData, "destroy")
+  gui.add(formData, "reset")
 }
+
 </script>
 
 <style lang="scss" scoped>
