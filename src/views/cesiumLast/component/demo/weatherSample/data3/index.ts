@@ -65,14 +65,14 @@ const frames = (endTime - startTime) / interval;
 const data = new Array(frames).fill('').map((i, timeIndex) => {
     return {
         time: timeIndex * interval + startTime,
-        value: new Array(points.length).fill(0).map(() => Math.random() * 10),
+        value: new Array(points.length).fill(0).map(() => Math.random() * 50),
     };
 });
 
 const colorMap = {
     type: "class-break",
     breaks: [
-        {min: 0.1, max: 1, color: "#DFDFDF"},
+        {min: 0, max: 1, color: "#DFDFDF"},
         {min: 1, max: 1.5, color: "#A3F392"},
         {min: 1.6, max: 6.9, color: "#39A501"},
         {min: 7, max: 14.9, color: "#63B7FF"},

@@ -261,7 +261,28 @@ export const constantRoutes = [
                         meta: {title: '气象插值', icon: '', affix: true},
                     },
                 ]
-            }
+            },
+            {
+                path: 'monomer',
+                component: () => import('@/views/cesiumLast/index.vue'),
+                name: 'cesium@-Monomer',
+                redirect: '/cesiumLast/monomer/rangeSearch',
+                meta: {title: '单体化', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'tilesetOnlyEntity',
+                        component: () => import('@/views/cesiumLast/component/monomer/tilesetOnlyEntity/index.vue'),
+                        name: 'cesiumLast-Monomer-TilesetOnlyEntity',
+                        meta: {title: '模型单体化(entity)', icon: '', affix: true},
+                    },
+                    {
+                        path: 'floorsStacking',
+                        component: () => import('@/views/cesiumLast/component/monomer/floorsStacking/index.vue'),
+                        name: 'cesiumLast-Monomer-FloorsStacking',
+                        meta: {title: '楼层叠加', icon: '', affix: true},
+                    },
+                ]
+            },
         ]
     },
     {

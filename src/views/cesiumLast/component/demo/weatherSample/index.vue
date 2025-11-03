@@ -20,7 +20,6 @@ import {krigingDataMeta as metaData3} from "./data3/index.ts"
 import {krigingDataMeta as metaData4} from "./data4/index.ts"
 import {krigingDataMeta as metaData5} from "./data5/index.ts"
 import MyWorker from './worker?worker';
-import {glsl_colorMapping, glsl_pack} from "kriging-webgl";
 import moment from "moment"
 // Component
 import YbPanl from "@/components/ybPanl/index.vue"
@@ -100,7 +99,7 @@ const addKrigingPrimitive = () => {
 
     private destroyed = false
 
-    constructor({points, timeRange, rainDataGetter, rings, minSideSize, colorMapping, girdShow}) {
+    constructor({points, timeRange, rainDataGetter, rings, minSideSize, colorMapping}) {
       this._points = points
       this._rainDataGetter = rainDataGetter
       this._timeRange = timeRange
@@ -180,8 +179,69 @@ const addKrigingPrimitive = () => {
               },
               source: `
                   #define texture2D texture
-                  ${glsl_colorMapping}
-                  ${glsl_pack}
+                  struct Node {
+                      float min;
+                      float max;
+                      vec4 color;
+                  };
+                  Node decode_classbreak(vec4 data){
+                      float pack_rg = data.b;
+                      float pack_ba = data.a;
+
+                      vec4 color = vec4(
+                          floor(pack_rg),
+                          clamp(fract(pack_rg) * 1000.0, 0.0, 255.0),
+                          floor(pack_ba),
+                          clamp(fract(pack_ba) * 1000.0, 0.0, 255.0)
+                      ) / 255.0;
+                      return Node(data.r, data.g, color);
+                  }
+
+                  vec4 mappingColor(
+                      sampler2D map,
+                      int stopCount,
+                      float value
+                  ){
+                      int left = 0;
+                      int right = stopCount - 1;
+
+                      vec4 headColor = vec4(0);
+                      vec4 tailColor = vec4(0);
+
+                      for(int i = 0; i < 8; i++){
+                          if(left > right) break;
+                          int middle = (left + right) / 2;
+                          float x = (float(middle) + 0.5) / 256.0;
+                          vec4 encodeData = texture2D(map, vec2(x, 0.5));
+                          Node node = decode_classbreak(encodeData);
+                          if(middle == 0) headColor = node.color;
+                          if(middle == 256 - 1) tailColor = node.color;
+                          if(node.min > value){
+                              right = middle - 1;
+                          }else if(node.max <= value){
+                              left = middle + 1;
+                          }else{
+                              return node.color;
+                          }
+                      }
+                      if(right < 0) return headColor;
+                      if(left >= stopCount) return tailColor;
+                  }
+
+                  vec4 packNormalizeFloatToRGBA( in float v ) {
+                      vec4 enc = vec4(v, fract(vec3(255.0, 65025.0, 16581375.0) * v));
+                      enc.xyz -= enc.yzw / 255.0;
+                      return enc;
+                  }
+                  float unpackRGBAToNormalizeFloat( const in vec4 v ) {
+                      return dot(v, vec4(1, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0));
+                  }
+                  vec3 packNormalizeFloatToRGB( in float v ) {
+                      return packNormalizeFloatToRGBA( v ).xyz;
+                  }
+                  float unpackRGBToNormalizeFloat( const in vec3 v ) {
+                      return unpackRGBAToNormalizeFloat( vec4( v, 0 ) );
+                  }
 
                   float samplingData(sampler2D tex, vec2 uv){
                       vec4 packData = texture(tex, uv);
@@ -272,7 +332,7 @@ const addKrigingPrimitive = () => {
       this._points.forEach(pos => {
         this._pointCollection.add({
           position: Cesium.Cartesian3.fromDegrees(pos[0], pos[1], 0),
-          color: Cesium.Color.YELLOW,
+          color: Cesium.Color.WHITE,
         });
         this._labelCollection.add({
           position: Cesium.Cartesian3.fromDegrees(pos[0], pos[1], 0),
@@ -475,7 +535,7 @@ const initGui = () => {
     }
     getlist()
     addKrigingPrimitive()
-  }).setValue("ga")
+  }).setValue("cz")
   gui.add(formData, "labelShow").onChange(bool => prePrimitive.labelShow = bool)
   gui.add(formData, "destroy")
   gui.add(formData, "reset")
