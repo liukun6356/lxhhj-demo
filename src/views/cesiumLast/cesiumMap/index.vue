@@ -87,6 +87,7 @@ onUnmounted(() => {
 let timer, handler
 
 const initMap = (domId) => new Promise((resolve) => {
+  Cesium.Ion.defaultAccessToken = import.meta.env.VITE_APP_ACCESS_KEY
   const viewer = new Cesium.Viewer(domId, {
     animation: false,            // 左下角动画控件（播放/暂停时间轴）
     timeline: false,             // 底部时间轴

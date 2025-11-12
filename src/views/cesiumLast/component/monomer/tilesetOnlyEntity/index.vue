@@ -31,9 +31,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   handler.destroy()
-  viewer.scene.primitives.removeAll()
-  tilesetOnlyEntityDatasource?.entities?.removeAll()
   viewer.dataSources.remove(tilesetOnlyEntityDatasource);
+  viewer.scene.primitives.remove(tileset)
 })
 
 // 地图逻辑

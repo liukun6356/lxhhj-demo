@@ -239,6 +239,12 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-asyncGrid',
                         meta: {title: '瓦片信息', icon: '', affix: true},
                     },
+                    {
+                        path: 'dynamicDiffusion',
+                        component: () => import('@/views/cesiumLast/component/blob/dynamicDiffusion/index.vue'),
+                        name: 'cesium@-Blob-dynamicDiffusion',
+                        meta: {title: '扩散效果', icon: '', affix: true},
+                    },
                 ]
             },
             {
@@ -272,13 +278,13 @@ export const constantRoutes = [
                     {
                         path: 'tilesetOnlyEntity',
                         component: () => import('@/views/cesiumLast/component/monomer/tilesetOnlyEntity/index.vue'),
-                        name: 'cesiumLast-Monomer-TilesetOnlyEntity',
+                        name: 'cesium@-Monomer-TilesetOnlyEntity',
                         meta: {title: '模型单体化(entity)', icon: '', affix: true},
                     },
                     {
                         path: 'floorsStacking',
                         component: () => import('@/views/cesiumLast/component/monomer/floorsStacking/index.vue'),
-                        name: 'cesiumLast-Monomer-FloorsStacking',
+                        name: 'cesium@-Monomer-FloorsStacking',
                         meta: {title: '楼层叠加', icon: '', affix: true},
                     },
                 ]
