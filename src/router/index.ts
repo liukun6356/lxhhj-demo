@@ -335,6 +335,12 @@ export const constantRoutes = [
                         name: 'cesium@-Past-ModelRotation',
                         meta: {title: 'modelRotation', icon: '', affix: true},
                     },
+                    {
+                        path: 'polylineFly',
+                        component: () => import('@/views/cesiumLast/component/past/polylineFly/index.vue'),
+                        name: 'cesium@-Past-PolylineFly',
+                        meta: {title: 'polylineFly', icon: '', affix: true},
+                    },
                 ]
             },
         ]
