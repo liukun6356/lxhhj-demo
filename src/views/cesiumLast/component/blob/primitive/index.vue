@@ -48,6 +48,7 @@ const addSingleGeometry = () => {
     })
   }));
   const boundingSphere = geometry.boundingSphere; // 获取几何体的包围球
+  debugger
   viewer.camera.flyToBoundingSphere(boundingSphere);
 }
 

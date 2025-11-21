@@ -245,24 +245,36 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-dynamicDiffusion',
                         meta: {title: '扩散效果', icon: '', affix: true},
                     },
+                    {
+                        path: 'polylineDraw',
+                        component: () => import('@/views/cesiumLast/component/blob/polylineDraw/index.vue'),
+                        name: 'cesium@-Blob-polylineDraw',
+                        meta: {title: '线性场景编辑', icon: '', affix: true},
+                    },
+                    {
+                        path: 'skybox',
+                        component: () => import('@/views/cesiumLast/component/blob/skybox/index.vue'),
+                        name: 'cesium@-Blob-skybox',
+                        meta: {title: '天空盒', icon: '', affix: true},
+                    },
                 ]
             },
             {
-                path: 'demo',
+                path: 'Water',
                 component: () => import('@/views/cesiumLast/index.vue'),
-                name: 'cesium@-Demo',
-                redirect: '/cesiumLast/demo/triangularMesh',
-                meta: {title: 'demo', icon: '', affix: true},
+                name: 'cesium@-Water',
+                redirect: '/cesiumLast/water/triangularMesh',
+                meta: {title: 'water', icon: '', affix: true},
                 children: [
                     {
                         path: 'triangularMesh',
-                        component: () => import('@/views/cesiumLast/component/demo/triangularMesh/index.vue'),
+                        component: () => import('@/views/cesiumLast/component/water/triangularMesh/index.vue'),
                         name: 'cesium@-Demo-TriangularMesh',
                         meta: {title: '水动力网格', icon: '', affix: true},
                     },
                     {
                         path: 'weatherSample',
-                        component: () => import('@/views/cesiumLast/component/demo/weatherSample/index.vue'),
+                        component: () => import('@/views/cesiumLast/component/water/weatherSample/index.vue'),
                         name: 'cesium@-Demo-WeatherSample',
                         meta: {title: '气象插值', icon: '', affix: true},
                     },
@@ -273,7 +285,7 @@ export const constantRoutes = [
                 component: () => import('@/views/cesiumLast/index.vue'),
                 name: 'cesium@-Monomer',
                 redirect: '/cesiumLast/monomer/rangeSearch',
-                meta: {title: '单体化', icon: '', affix: true},
+                meta: {title: 'monomer', icon: '', affix: true},
                 children: [
                     {
                         path: 'tilesetOnlyEntity',
@@ -286,6 +298,36 @@ export const constantRoutes = [
                         component: () => import('@/views/cesiumLast/component/monomer/floorsStacking/index.vue'),
                         name: 'cesium@-Monomer-FloorsStacking',
                         meta: {title: '楼层叠加', icon: '', affix: true},
+                    },
+                ]
+            },
+            {
+                path: 'effect',
+                component: () => import('@/views/cesiumLast/index.vue'),
+                name: 'cesium@-Monomer',
+                redirect: '/cesiumLast/project/rangeSearch',
+                meta: {title: 'effect', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'tilesetOnlyEntity',
+                        component: () => import('@/views/cesiumLast/component/monomer/tilesetOnlyEntity/index.vue'),
+                        name: 'cesium@-Monomer-TilesetOnlyEntity',
+                        meta: {title: '模型单体化(entity)', icon: '', affix: true},
+                    },
+                ]
+            },
+            {
+                path: 'past',
+                component: () => import('@/views/cesiumLast/index.vue'),
+                name: 'cesium@-Past',
+                redirect: '/cesiumLast/past/modelRotation',
+                meta: {title: 'past', icon: '', affix: true},
+                children: [
+                    {
+                        path: 'modelRotation',
+                        component: () => import('@/views/cesiumLast/component/past/modelRotation/index.vue'),
+                        name: 'cesium@-Past-ModelRotation',
+                        meta: {title: 'modelRotation', icon: '', affix: true},
                     },
                 ]
             },

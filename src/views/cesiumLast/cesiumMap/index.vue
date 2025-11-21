@@ -122,24 +122,6 @@ const initMap = (domId) => new Promise((resolve) => {
   viewer.scene.globe.depthTestAgainstTerrain = false;
   // 启用相机与地形的碰撞检测
   viewer.scene.screenSpaceCameraController.enableCollisionDetection = true
-  // 添加近地天空盒子
-  // viewer.scene.skyAtmosphere.show = false;
-  // viewer.scene.skyBox = new Cesium.SkyBox({
-  //   sources: {
-  //     // positiveX: skyBoxRightJpg,
-  //     // negativeX: skyBoxLeftJpg,
-  //     // positiveY: skyBoxFrontJpg,
-  //     // negativeY: skyBoxBackJpg,
-  //     // positiveZ: skyBoxUpJpg,
-  //     // negativeZ: skyBoxDownJpg
-  //     positiveX: `https://file.threehub.cn/` + 'files/cesiumSky/px.png', // 右面
-  //     negativeX: `https://file.threehub.cn/` + 'files/cesiumSky/nx.png', // 左面
-  //     positiveY: `https://file.threehub.cn/` + 'files/cesiumSky/pz.png', // 将前面用作上面
-  //     negativeY: `https://file.threehub.cn/` + 'files/cesiumSky/nz.png', // 将后面用作下面
-  //     positiveZ: `https://file.threehub.cn/` + 'files/cesiumSky/py.png', // 将上面用作前面
-  //     negativeZ: `https://file.threehub.cn/` + 'files/cesiumSky/ny.png'  // 将下面用作后面
-  //   },
-  // });
   resolve(rawViewer)
 })
 

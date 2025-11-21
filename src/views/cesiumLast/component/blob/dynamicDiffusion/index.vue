@@ -23,13 +23,14 @@ onMounted(() => {
 
 onUnmounted(() => {
   gui.destroy()
-  window.clearInterval(timer)
+  window.cancelAnimationFrame(animateFrame);
   viewer.scene.primitives.remove(primitiveCollection);
 })
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer()
 const primitiveCollection = new Cesium.PrimitiveCollection()
+let  animateFrame
 
 const addPrimitive1 = () => {
   const primitive = new Cesium.GroundPrimitive({
@@ -328,7 +329,8 @@ const addPrimitive5 = () => {
   primitiveCollection.add(primitive)
   const mScale = Cesium.Matrix4.fromUniformScale(1.0);
   let num = 1
-  timer = window.setInterval(() => {
+  ;(function frame() {
+    animateFrame = window.requestAnimationFrame(frame);
     num = num + 10
     const time = num / 1000;
     let tt = time - Math.floor(time);
@@ -336,7 +338,7 @@ const addPrimitive5 = () => {
     mScale[0] = mScale[5] = tt * 2;
     mScale[10] = 1.1 - tt;
     primitive.modelMatrix = scaleXYZ(center, mScale);
-  }, 10)
+  })();
 
   function scaleXYZ(point, mScale) {
     let m = Cesium.Transforms.eastNorthUpToFixedFrame(point);
@@ -354,7 +356,6 @@ const addPrimitive5 = () => {
   }
 }
 
-let timer
 const addPrimitive6 = () => {
   const center = new Cesium.Cartesian3.fromDegrees(114.436207, 30.550013)
   const cps = getEllipseOuterPositions(center)
@@ -468,7 +469,8 @@ const addPrimitive6 = () => {
   primitiveCollection.add(primitive)
   const mScale = Cesium.Matrix4.fromUniformScale(1.0);
   let num = 1
-  timer = window.setInterval(() => {
+  ;(function frame() {
+    animateFrame = window.requestAnimationFrame(frame);
     num = num + 10
     const time = num / 1000;
     let tt = time - Math.floor(time);
@@ -476,7 +478,7 @@ const addPrimitive6 = () => {
     mScale[0] = mScale[5] = tt * 2;
     mScale[10] = 1.1 - tt;
     primitive.modelMatrix = scaleXYZ(center, mScale);
-  }, 10)
+  })();
 
   function scaleXYZ(point, mScale) {
     let m = Cesium.Transforms.eastNorthUpToFixedFrame(point);
@@ -590,22 +592,17 @@ const add3dtiles = async () => {
 
 const addpostProcessStage1 = () => {
   const cartographicCenter = new Cesium.Cartographic(Cesium.Math.toRadians(125.330769), Cesium.Math.toRadians(43.802369), 0);
-
   const cartesian3Center = Cesium.Cartographic.toCartesian(cartographicCenter);
   const cartesian4Center = new Cesium.Cartesian4(cartesian3Center.x, cartesian3Center.y, cartesian3Center.z, 1);
-
   const cartographicCenter1 = new Cesium.Cartographic(cartographicCenter.longitude, cartographicCenter.latitude, cartographicCenter.height + 500);
   const cartesian3Center1 = Cesium.Cartographic.toCartesian(cartographicCenter1);
   const cartesian4Center1 = new Cesium.Cartesian4(cartesian3Center1.x, cartesian3Center1.y, cartesian3Center1.z, 1);
-
   const cartographicCenter2 = new Cesium.Cartographic(cartographicCenter.longitude + Cesium.Math.toRadians(0.001), cartographicCenter.latitude, cartographicCenter.height);
   const cartesian3Center2 = Cesium.Cartographic.toCartesian(cartographicCenter2);
   const cartesian4Center2 = new Cesium.Cartesian4(cartesian3Center2.x, cartesian3Center2.y, cartesian3Center2.z, 1);
   const rotateQ = new Cesium.Quaternion();
   const rotateM = new Cesium.Matrix3();
-
   const _time = moment().valueOf();
-
   const scratchCartesian4Center = new Cesium.Cartesian4();
   const scratchCartesian4Center1 = new Cesium.Cartesian4();
   const scratchCartesian4Center2 = new Cesium.Cartesian4();
@@ -613,6 +610,45 @@ const addpostProcessStage1 = () => {
   const scratchCartesian3Normal1 = new Cesium.Cartesian3();
 
   const ScanPostStage = new Cesium.PostProcessStage({
+    uniforms: {
+      u_scanCenterEC: Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center),
+      u_scanPlaneNormalEC: function () {
+        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
+        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
+        scratchCartesian3Normal.x = temp1.x - temp.x;
+        scratchCartesian3Normal.y = temp1.y - temp.y;
+        scratchCartesian3Normal.z = temp1.z - temp.z;
+
+        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
+        return scratchCartesian3Normal;
+      },
+      u_radius: 1000,
+      u_scanLineNormalEC: function () {
+        const duration = 5000
+
+        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
+        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
+        const temp2 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center2, scratchCartesian4Center2);
+
+        scratchCartesian3Normal.x = temp1.x - temp.x;
+        scratchCartesian3Normal.y = temp1.y - temp.y;
+        scratchCartesian3Normal.z = temp1.z - temp.z;
+
+        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
+
+        scratchCartesian3Normal1.x = temp2.x - temp.x;
+        scratchCartesian3Normal1.y = temp2.y - temp.y;
+        scratchCartesian3Normal1.z = temp2.z - temp.z;
+
+        const tempTime = ((moment().valueOf() - _time) % duration) / duration;
+        Cesium.Quaternion.fromAxisAngle(scratchCartesian3Normal, tempTime * Cesium.Math.PI * 2, rotateQ);
+        Cesium.Matrix3.fromQuaternion(rotateQ, rotateM);
+        Cesium.Matrix3.multiplyByVector(rotateM, scratchCartesian3Normal1, scratchCartesian3Normal1);
+        Cesium.Cartesian3.normalize(scratchCartesian3Normal1, scratchCartesian3Normal1);
+        return scratchCartesian3Normal1;
+      },
+      u_color: Cesium.Color.fromCssColorString('red').withAlpha(1)
+    },
     fragmentShader: `
         #version 300 es
         precision highp float;
@@ -688,66 +724,44 @@ const addpostProcessStage1 = () => {
             }
         }
     `,
-    uniforms: {
-      u_scanCenterEC: Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center),
-      u_scanPlaneNormalEC: function () {
-        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
-        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
-        scratchCartesian3Normal.x = temp1.x - temp.x;
-        scratchCartesian3Normal.y = temp1.y - temp.y;
-        scratchCartesian3Normal.z = temp1.z - temp.z;
-
-        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
-        return scratchCartesian3Normal;
-      },
-      u_radius: 1000,
-      u_scanLineNormalEC: function () {
-        const duration = 5000
-
-        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
-        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
-        const temp2 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center2, scratchCartesian4Center2);
-
-        scratchCartesian3Normal.x = temp1.x - temp.x;
-        scratchCartesian3Normal.y = temp1.y - temp.y;
-        scratchCartesian3Normal.z = temp1.z - temp.z;
-
-        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
-
-        scratchCartesian3Normal1.x = temp2.x - temp.x;
-        scratchCartesian3Normal1.y = temp2.y - temp.y;
-        scratchCartesian3Normal1.z = temp2.z - temp.z;
-
-        const tempTime = ((moment().valueOf() - _time) % duration) / duration;
-        Cesium.Quaternion.fromAxisAngle(scratchCartesian3Normal, tempTime * Cesium.Math.PI * 2, rotateQ);
-        Cesium.Matrix3.fromQuaternion(rotateQ, rotateM);
-        Cesium.Matrix3.multiplyByVector(rotateM, scratchCartesian3Normal1, scratchCartesian3Normal1);
-        Cesium.Cartesian3.normalize(scratchCartesian3Normal1, scratchCartesian3Normal1);
-        return scratchCartesian3Normal1;
-      },
-      u_color: Cesium.Color.fromCssColorString('red').withAlpha(1)
-    }
   });
   viewer.scene.postProcessStages.add(ScanPostStage);
 }
 
 const addpostProcessStage2 = () => {
   const cartographicCenter = new Cesium.Cartographic(Cesium.Math.toRadians(125.300769), Cesium.Math.toRadians(43.802369), 0);
-
   const cartesian3Center = Cesium.Cartographic.toCartesian(cartographicCenter);
   const cartesian4Center = new Cesium.Cartesian4(cartesian3Center.x, cartesian3Center.y, cartesian3Center.z, 1);
-
   const cartograhpicCenter1 = new Cesium.Cartographic(cartographicCenter.longitude, cartographicCenter.latitude, cartographicCenter.height + 500);
   const cartesian3Center1 = Cesium.Cartographic.toCartesian(cartograhpicCenter1);
   const cartesian4Center1 = new Cesium.Cartesian4(cartesian3Center1.x, cartesian3Center1.y, cartesian3Center1.z, 1);
-
   const _time = moment().valueOf();
-
   const scratchCartesian4Center = new Cesium.Cartesian4();
   const scratchCartesian4Center1 = new Cesium.Cartesian4();
   const scratchCartesian3Normal = new Cesium.Cartesian3();
 
   const ScanPostStage = new Cesium.PostProcessStage({
+    uniforms: {
+      u_scanCenterEC: Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center),
+      u_scanPlaneNormalEC: function () {
+        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
+        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
+
+        scratchCartesian3Normal.x = temp1.x - temp.x;
+        scratchCartesian3Normal.y = temp1.y - temp.y;
+        scratchCartesian3Normal.z = temp1.z - temp.z;
+
+        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
+
+        return scratchCartesian3Normal;
+      },
+      u_radius: function () {
+        const maxRadius = 1000
+        const duration = 4000
+        return maxRadius * ((moment().valueOf() - _time) % duration) / duration;
+      },
+      u_color: Cesium.Color.fromCssColorString('red').withAlpha(1)
+    },
     fragmentShader: `
       uniform sampler2D colorTexture;
       uniform sampler2D depthTexture;
@@ -792,40 +806,124 @@ const addpostProcessStage2 = () => {
           }
       }
     `,
-    uniforms: {
-      u_scanCenterEC: Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center),
-      u_scanPlaneNormalEC: function () {
-        const temp = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center, scratchCartesian4Center);
-        const temp1 = Cesium.Matrix4.multiplyByVector(viewer.camera._viewMatrix, cartesian4Center1, scratchCartesian4Center1);
-
-        scratchCartesian3Normal.x = temp1.x - temp.x;
-        scratchCartesian3Normal.y = temp1.y - temp.y;
-        scratchCartesian3Normal.z = temp1.z - temp.z;
-
-        Cesium.Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
-
-        return scratchCartesian3Normal;
-      },
-      u_radius: function () {
-        const maxRadius = 1000
-        const duration = 4000
-        return maxRadius * ((moment().valueOf() - _time) % duration) / duration;
-      },
-      u_color: Cesium.Color.fromCssColorString('red').withAlpha(1)
-    }
   });
 
   viewer.scene.postProcessStages.add(ScanPostStage);
 }
 
+const addSatellite1 = () => {
+  const primitive = new Cesium.Primitive({
+    geometryInstances: new Cesium.GeometryInstance({
+      geometry: new Cesium.CylinderGeometry({
+        length: 2 * 1e5,
+        topRadius: 0,
+        bottomRadius: 3 * 1e4,
+      }),
+      modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 1 * 1e5))
+    }),
+    appearance: new Cesium.MaterialAppearance({
+      material: new Cesium.Material({
+        fabric: {
+          uniforms: {
+            u_color: Cesium.Color.fromCssColorString('yellow').withAlpha(1),
+            u_speed: 10.0,
+            u_count: 1.0,
+            u_gradient: 0.1
+          },
+          source: `
+            czm_material czm_getMaterial(czm_materialInput materialInput){
+                czm_material material = czm_getDefaultMaterial(materialInput);
+                material.diffuse = 1.5 * u_color.rgb;
+                vec2 st = materialInput.st;
+
+                float dis = distance(st, vec2(0.5, 0.5));
+                float per = fract(u_speed*czm_frameNumber/1000.0);
+                if(dis > per * 0.5) discard;
+                material.alpha = u_color.a  * dis / per / 2.0;
+                return material;
+            }
+        `
+        },
+        translucent: true
+      }),
+    }),
+    asynchronous: false
+  });
+  primitiveCollection.add(primitive);
+  const geometry = Cesium.CylinderGeometry.createGeometry(primitive.geometryInstances.geometry)
+  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, primitive.geometryInstances.modelMatrix, new Cesium.BoundingSphere());
+  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
+}
+
+const addSatellite2 = () => {
+  const primitive = new Cesium.Primitive({
+    geometryInstances: new Cesium.GeometryInstance({
+      geometry: new Cesium.CylinderGeometry({
+        length: 2 * 1e5,
+        topRadius: 0,
+        bottomRadius: 3 * 1e4,
+        vertexFormat: Cesium.VertexFormat.POSITION_NORMAL_AND_ST
+      }),
+      modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 1 * 1e5))
+    }),
+    appearance: new Cesium.MaterialAppearance({
+      material: new Cesium.Material({
+        fabric: {
+          uniforms: {
+            u_color: Cesium.Color.fromCssColorString('yellow').withAlpha(1),
+            u_repeat: 30,
+            u_offset: 1,
+            u_thickness: 0.1
+          },
+          source: `
+            czm_material czm_getMaterial(czm_materialInput materialInput){
+                czm_material material = czm_getDefaultMaterial(materialInput);
+                float sp = 1.0 / u_repeat;
+                vec2 st = materialInput.st;
+                float dis = distance(st, vec2(0.5));
+                float m = mod(dis + u_offset, sp);
+                float a = step(sp * (1.0 - u_thickness), m);
+                material.diffuse = u_color.rgb;
+                material.alpha = a * u_color.a;
+                return material;
+            }
+        `
+        },
+        translucent: true
+      }),
+      faceForward: false,
+      closed: true
+    }),
+    asynchronous: false
+  });
+  primitiveCollection.add(primitive);
+
+  let then = Date.now(), duration = 1000 / 60 // 每秒60次
+  ;(function frame() {
+    animateFrame = window.requestAnimationFrame(frame);
+    const now = Date.now();
+    const delta = now - then;
+    if (delta <= duration) return
+    then = now - (delta % duration);
+    let offset = primitive.appearance.material.uniforms.u_offset;
+    offset -= 0.001;
+    if (offset > 1.0) offset = 0;
+    primitive.appearance.material.uniforms.u_offset = offset;
+  })();
+
+  const geometry = Cesium.CylinderGeometry.createGeometry(primitive.geometryInstances.geometry)
+  const worldBoundingSphere = Cesium.BoundingSphere.transform(geometry.boundingSphere, primitive.geometryInstances.modelMatrix, new Cesium.BoundingSphere());
+  viewer.camera.flyToBoundingSphere(worldBoundingSphere);
+}
+
 const reset = () => {
   primitiveCollection.removeAll()
   viewer.scene.postProcessStages.removeAll()
-  window.clearInterval(timer)
+  window.cancelAnimationFrame(animateFrame);
 }
 
 // lil-gui逻辑
-let gui, primitiveFolder, postProcessStageFolder
+let gui, primitiveFolder, postProcessStageFolder, satelliteFolder
 const formData = {
   reset,
   addPrimitive1,
@@ -838,6 +936,8 @@ const formData = {
   add3dtiles,
   addpostProcessStage1,
   addpostProcessStage2,
+  addSatellite1,
+  addSatellite2,
 }
 const initGui = () => {
   gui = new GUI({title: "dynamicDiffusion"});
@@ -851,8 +951,11 @@ const initGui = () => {
   primitiveFolder.add(formData, "addPrimitive7").name("7 扫描线")
   postProcessStageFolder = gui.addFolder("postProcessStage")
   postProcessStageFolder.add(formData, "add3dtiles")
-  postProcessStageFolder.add(formData, "addpostProcessStage1")
-  postProcessStageFolder.add(formData, "addpostProcessStage2")
+  postProcessStageFolder.add(formData, "addpostProcessStage1").name("1 扫描效果-后处理")
+  postProcessStageFolder.add(formData, "addpostProcessStage2").name("2 扩散效果-后处理")
+  satelliteFolder = gui.addFolder("satellite")
+  satelliteFolder.add(formData, "addSatellite1").name("1 扩散效果-卫星")
+  satelliteFolder.add(formData, "addSatellite2").name("2 扫描效果-卫星")
   gui.add(formData, "reset")
 }
 
