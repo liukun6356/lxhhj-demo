@@ -86,11 +86,6 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/main/polylineFly/index.vue'),
                         name: 'Cesium-Main-PolylineFly',
                         meta: {title: '无人机轨道飞行(clock)', icon: '', affix: true},
-                    }, {
-                        path: 'flyDemo',
-                        component: () => import('@/views/cesium/component/main/flyDemo/index.vue'),
-                        name: 'Cesium-Main-flyDemo',
-                        meta: {title: '实时轨迹demo', icon: '', affix: true},
                     }
                 ]
             },
@@ -136,54 +131,6 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/analysis/skyline/index.vue'),
                         name: 'Cesium-Analysis-Skyline',
                         meta: {title: '天际线分析', icon: '', affix: true},
-                    },
-                ]
-            },
-            {
-                path: 'tools',
-                component: () => import('@/views/cesium/index.vue'),
-                name: 'Cesium-Tools',
-                redirect: '/cesium/tools/rangeSearch',
-                meta: {title: '工具控件', icon: '', affix: true},
-                children: [
-                    {
-                        path: 'mapSplit',
-                        component: () => import('@/views/cesium/component/tools/mapSplit/index.vue'),
-                        name: 'Cesium-Tools-MapSplit',
-                        meta: {title: '卷帘', icon: '', affix: true},
-                    },
-                ]
-            },
-            {
-                path: 'base',
-                component: () => import('@/views/cesium/index.vue'),
-                name: 'Cesium-Base',
-                redirect: '/cesium/base/DrawCommand',
-                meta: {title: '原理', icon: '', affix: true},
-                children: [
-                    {
-                        path: 'primitive',
-                        component: () => import('@/views/cesium/component/base/primitive/index.vue'),
-                        name: 'Cesium-Base-Primitive',
-                        meta: {title: 'primitive', icon: '', affix: true},
-                    },
-                    {
-                        path: 'appearance',
-                        component: () => import('@/views/cesium/component/base/appearance/index.vue'),
-                        name: 'Cesium-Base-Appearance',
-                        meta: {title: 'appearance', icon: '', affix: true},
-                    },
-                    {
-                        path: 'DrawCommand',
-                        component: () => import('@/views/cesium/component/base/DrawCommand/index.vue'),
-                        name: 'Cesium-Base-DrawCommand',
-                        meta: {title: 'DrawCommand', icon: '', affix: true},
-                    },
-                    {
-                        path: 'drawFlood',
-                        component: () => import('@/views/cesium/component/base/drawFlood/index.vue'),
-                        name: 'Cesium-Base-DrawFlood',
-                        meta: {title: '画水动力三角形', icon: '', affix: true},
                     },
                 ]
             },
@@ -339,7 +286,13 @@ export const constantRoutes = [
                         path: 'polylineFly',
                         component: () => import('@/views/cesiumLast/component/past/polylineFly/index.vue'),
                         name: 'cesium@-Past-PolylineFly',
-                        meta: {title: 'polylineFly', icon: '', affix: true},
+                        meta: {title: '无人机飞行(clock)', icon: '', affix: true},
+                    },
+                    {
+                        path: 'mapSplit',
+                        component: () => import('@/views/cesiumLast/component/past/mapSplit/index.vue'),
+                        name: 'cesium@-Past-mapSplit',
+                        meta: {title: '卷帘', icon: '', affix: true},
                     },
                 ]
             },

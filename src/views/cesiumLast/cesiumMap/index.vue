@@ -208,17 +208,6 @@ const getColorForLatency = (ms) => {
   transition: all 0.5s ease-in-out;
   user-select: none;
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 10px;
-    top: 0;
-    width: 100px;
-    height: 100%;
-    background: rgba(32, 32, 32, 1);
-    z-index: 1;
-  }
-
   span {
     margin-left: 15px;
   }

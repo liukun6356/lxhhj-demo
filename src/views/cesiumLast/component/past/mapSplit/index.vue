@@ -1,17 +1,20 @@
 <template>
   <div class="mapSplit-wrap">
-    <div class="slider" ref="sliderRef">
-      <div class="sliderImg" ></div>
+    <div class="slider" ref="sliderRef" @mouseup="moveActive = false">
+      <div class="sliderImg" @mousedown="moveActive = true"></div>
     </div>
+    <!-- 默认加载天地图-->
     <Tdt_img_d/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {reactive, onMounted, onUnmounted, ref} from "vue";
-import {usemapStore} from "@/store/modules/cesiumMap";
+import {usemapStore} from "@/store/modules/cesiumLastMap";
+import GUI from "lil-gui";
+import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
+import * as Cesium from "cesium";
 // Component
-import Tdt_img_d from "@/views/cesium/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 // Ref
 const sliderRef = ref(null)
 
@@ -19,25 +22,22 @@ const mapStore = usemapStore()
 const model = reactive({
   moveActive: false
 })
-
-onMounted(() => {
-  viewer.scene.splitPosition = sliderRef.value.offsetLeft  / viewer.scene.canvas.offsetWidth;
+const {moveActive} = toRefs(model)
+onMounted(async () => {
+  initGui()
+  handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+  viewer.scene.splitPosition = sliderRef.value.offsetLeft / viewer.scene.canvas.offsetWidth;
   handler.setInputAction(onMouseMove, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-  handler.setInputAction(() => model.moveActive = true, Cesium.ScreenSpaceEventType.LEFT_DOWN);
-  handler.setInputAction(() => model.moveActive = false, Cesium.ScreenSpaceEventType.LEFT_UP);
   addSplitDirection()
 })
 
 onUnmounted(() => {
-  viewer.scene.splitPosition = 1;
-  handler?.destroy();
+  gui.destroy()
 })
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer()
-const handler = new Cesium.ScreenSpaceEventHandler(sliderRef.value);
-let imageryProviderL, imageryProviderR
-
+let handler, imageryProviderL, imageryProviderR
 
 const addSplitDirection = async () => {
   imageryProviderL = await viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
@@ -50,32 +50,36 @@ const addSplitDirection = async () => {
     maximumLevel: 18
   }));
   imageryProviderL.splitDirection = -1
-  viewer.imageryLayers.raiseToTop(imageryProviderL)
 
   imageryProviderR = await viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-    url: 'https://{s}.tianditu.gov.cn/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=' + import.meta.env.VITE_APP_TDT_KEY,
-    layer: 'vec_z',
+    url: 'https://{s}.tianditu.gov.cn/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=' + import.meta.env.VITE_APP_TDT_KEY,
+    layer: 'img_d',
     style: 'default',
     format: 'image/jpeg',
     tileMatrixSetID: 'GoogleMapsCompatible',
     subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-    maximumLevel: 18,
+    maximumLevel: 18
   }));
   imageryProviderR.splitDirection = 1
-  viewer.imageryLayers.raiseToTop(imageryProviderR)
 }
 
 const onMouseMove = (movement) => {
   if (!model.moveActive) return
-  const relativeOffset = movement.endPosition.x;
-  const splitPosition = (relativeOffset) / viewer.scene.canvas.offsetWidth;
+  const splitPosition = movement.endPosition.x / viewer.scene.canvas.offsetWidth;
   sliderRef.value.style.left = `${100 * splitPosition}%`;
   viewer.scene.splitPosition = splitPosition;
-  console.log(splitPosition)
+}
+
+// lil-gui逻辑
+let gui
+const formData = {
+}
+
+const initGui = () => {
+  gui = new GUI({title: "mapSplit"});
 }
 
 </script>
-
 <style lang="scss" scoped>
 .mapSplit-wrap {
   position: fixed;
@@ -93,6 +97,7 @@ const onMouseMove = (movement) => {
     width: 5px;
     background: #1F1E1D;
     z-index: 1;
+    pointer-events: auto;
 
     .sliderImg {
       position: absolute;
@@ -104,7 +109,5 @@ const onMouseMove = (movement) => {
       transform: translateY(-50%);
     }
   }
-
-
 }
 </style>
