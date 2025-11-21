@@ -44,7 +44,7 @@ const rotateFn = () => {
 
 const addModelRotation = async () => {
   reset()
-  const position =  Cesium.Cartesian3.fromDegrees(99.151194, 25.124811, 2000)
+  const position =  Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 2000)
   const hpr = new Cesium.HeadingPitchRoll(model.hpr.heading, model.hpr.pitch, model.hpr.roll)
   preEntity = viewer.entities.add({
     name: 'Model',
@@ -65,19 +65,19 @@ const addMultipleModel = async () => {
   reset()
   const parentModel = viewer.scene.primitives.add(await Cesium.Model.fromGltfAsync({url: import.meta.env.VITE_APP_MODELVIEW + '/model7.glb',}));
   const childModel = viewer.scene.primitives.add(await Cesium.Model.fromGltfAsync({url: import.meta.env.VITE_APP_MODELVIEW + '/model6.glb'}));
-  const position = Cesium.Cartesian3.fromDegrees(99.151194, 25.124811, 2000);
+  const position = Cesium.Cartesian3.fromDegrees(114.347137, 30.541429, 0);
   parentModel.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(position);
-  const position1 = Cesium.Cartesian3.add(new Cesium.Cartesian3(0, 0, -10), Cesium.Cartesian3.fromDegrees(99.151194, 25.124811, 2000), new Cesium.Cartesian3());
+  const position1 = Cesium.Cartesian3.add(new Cesium.Cartesian3(0, 0, 10), position, new Cesium.Cartesian3());
   childModel.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(position1);
   const heading = Cesium.Math.toRadians(90.0);
   const pitch = Cesium.Math.toRadians(90);
   const range = 5000.0;
-  viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(99.151194, 25.124811, 2000), new Cesium.HeadingPitchRange(heading, pitch, range));
+  viewer.camera.lookAt(position, new Cesium.HeadingPitchRange(heading, pitch, range));
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(99.151697, 25.124711, 1984.73),
+    destination: Cesium.Cartesian3.fromDegrees(114.348354, 30.542609, 273.8),
     orientation: {
-      heading: Cesium.Math.toRadians(282.3),
-      pitch: Cesium.Math.toRadians(24.6),
+      heading: Cesium.Math.toRadians(222),
+      pitch: Cesium.Math.toRadians(-51),
       roll: 0.0
     }
   });

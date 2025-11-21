@@ -120,6 +120,8 @@ const initMap = (domId) => new Promise((resolve) => {
   viewer.scene.postProcessStages.fxaa.enabled = true;
   // 默认打开深度监测   todo
   viewer.scene.globe.depthTestAgainstTerrain = false;
+  // 禁用双击缩放
+  viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
   // 启用相机与地形的碰撞检测
   viewer.scene.screenSpaceCameraController.enableCollisionDetection = true
   resolve(rawViewer)

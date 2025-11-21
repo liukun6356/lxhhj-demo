@@ -304,15 +304,21 @@ export const constantRoutes = [
             {
                 path: 'effect',
                 component: () => import('@/views/cesiumLast/index.vue'),
-                name: 'cesium@-Monomer',
-                redirect: '/cesiumLast/project/rangeSearch',
+                name: 'cesium@-Effect',
+                redirect: '/cesiumLast/effect/rangeSearch',
                 meta: {title: 'effect', icon: '', affix: true},
                 children: [
                     {
-                        path: 'tilesetOnlyEntity',
-                        component: () => import('@/views/cesiumLast/component/monomer/tilesetOnlyEntity/index.vue'),
-                        name: 'cesium@-Monomer-TilesetOnlyEntity',
-                        meta: {title: '模型单体化(entity)', icon: '', affix: true},
+                        path: 'legendShow',
+                        component: () => import('@/views/cesiumLast/component/effect/legendShow/index.vue'),
+                        name: 'cesium@-Effect-LegendShow',
+                        meta: {title: '图例展示+点聚合(base64)', icon: '', affix: true},
+                    },
+                    {
+                        path: 'buildingProgression',
+                        component: () => import('@/views/cesiumLast/component/effect/buildingProgression/index.vue'),
+                        name: 'cesium@-Effect-BuildingProgression',
+                        meta: {title: '楼宇管线场景递进', icon: '', affix: true},
                     },
                 ]
             },
