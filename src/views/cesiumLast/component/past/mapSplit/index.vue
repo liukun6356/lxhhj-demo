@@ -10,9 +10,9 @@
 
 <script lang="ts" setup>
 import {usemapStore} from "@/store/modules/cesiumLastMap";
+import * as Cesium from "cesium";
 import GUI from "lil-gui";
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
-import * as Cesium from "cesium";
 // Component
 import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 // Ref

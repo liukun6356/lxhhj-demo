@@ -256,6 +256,12 @@ export const constantRoutes = [
                 meta: {title: 'effect', icon: '', affix: true},
                 children: [
                     {
+                        path: 'controlPanel',
+                        component: () => import('@/views/cesiumLast/component/effect/controlPanel/index.vue'),
+                        name: 'cesium@-Effect-ControlPanel',
+                        meta: {title: '地图工具栏(图层管理)', icon: '', affix: true},
+                    },
+                    {
                         path: 'legendShow',
                         component: () => import('@/views/cesiumLast/component/effect/legendShow/index.vue'),
                         name: 'cesium@-Effect-LegendShow',

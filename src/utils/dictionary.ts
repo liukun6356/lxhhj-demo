@@ -4,6 +4,7 @@
  * @describe: 逻辑处理函数
  */
 import {computed} from 'vue'
+import * as Cesium from "cesium";
 // 字典
 const dictionarys = computed(() => [])
 // [
