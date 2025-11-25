@@ -81,12 +81,7 @@ export const constantRoutes = [
                         component: () => import('@/views/cesium/component/analysis/terrainClipPlan/index.vue'),
                         name: 'Cesium-Analysis-TerrainClipPlan',
                         meta: {title: '挖方分析(dom+dem)', icon: '', affix: true},
-                    }, {
-                        path: 'skyline',
-                        component: () => import('@/views/cesium/component/analysis/skyline/index.vue'),
-                        name: 'Cesium-Analysis-Skyline',
-                        meta: {title: '天际线分析', icon: '', affix: true},
-                    },
+                    }
                 ]
             },
         ]

@@ -14,9 +14,12 @@ import * as Cesium from "cesium";
 import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
 const mapStore = usemapStore()
-onMounted(() => {
+onMounted(async () => {
   // createWorldTerrainAsync().then(terrain => viewer.terrainProvider = terrain);
   viewer.scene.postProcessStages.add(postProcess);
+  const tileset =await Cesium.Cesium3DTileset.fromUrl('https://file.threehub.cn/3dtiles/house/tileset.json')
+  viewer.scene.primitives.add(tileset)
+  viewer.flyTo(tileset)
 })
 
 onUnmounted(() => {
@@ -142,7 +145,7 @@ let postProcess = new Cesium.PostProcessStage({
   uniforms: {
     height: viewer.camera.positionCartographic.height,
     lineWidth: 2, //天际线宽度
-    strokeType: new Cesium.Cartesian3(true, false, false), //天际线，物体描边，全描边
+    strokeType: new Cesium.Cartesian3(1, 0, 0), //天际线，物体描边，全描边
     tjxColor: new Cesium.Color(1.0, 0.0, 0.0), //边际线颜色
     bjColor: new Cesium.Color(0.0, 0.0, 1.0),//物体描边颜色
     cameraPos: viewer.scene.camera.position,
