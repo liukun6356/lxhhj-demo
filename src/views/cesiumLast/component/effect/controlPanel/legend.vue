@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import iconTypes from "@/views/cesiumMap/iconTypes"
+import iconTypes from "@/views/cesium/cesiumMap/iconTypes"
 
 const formatStr = (val, type) => {
   switch (+val) {

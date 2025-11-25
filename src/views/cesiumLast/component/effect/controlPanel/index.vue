@@ -25,9 +25,9 @@
         <diagram v-if="diagramShow" @close="diagramShow=false"/>
       </Teleport>
       <data-panel3d v-show="mapStore.curSelectTool === '图层'"/>
-      <!-- <Teleport to="body">-->
-      <!--   <Legend v-if="mapStore.curSelectTool === '图例'"/>-->
-      <!-- </Teleport>-->
+       <Teleport to="body">
+         <Legend v-if="mapStore.curSelectTool === '图例'"/>
+       </Teleport>
       <map-scene v-if="mapStore.curSelectTool === '环境'"/>
       <roam v-if="mapStore.curSelectTool === '漫游'"/>
       <!-- <simulate v-if="mapStore.curSelectTool === '模拟'"/>-->
@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import twoD from '@/assets/images/cesiumMap/2D@2x.png'
 import threeD from '@/assets/images/cesiumMap/3D@2x.png'
-import ghtPng from "@/assets/images/cesiumMap/ght@2x.png"
+import ght from "@/assets/images/cesiumMap/ght@2x.png"
 import tc from '@/assets/images/cesiumMap/tc@2x.png'
 import tl from '@/assets/images/cesiumMap/tl@2x.png'
 import gj from '@/assets/images/cesiumMap/gj@2x.png'
@@ -81,7 +81,7 @@ const rightToolList2 = computed(() => {
     {label: '模拟', src: fz},
     {label: '雷达', src: twoD},
     {label: '云图', src: sz},
-    {label: '台风', src: ghtPng},
+    {label: '台风', src: ght},
     {label: '全图', src: dt},
   ]
 })
@@ -90,14 +90,11 @@ const model = reactive({
   diagramShow: false,//概化图显隐
   mapPointList: [],//地图重叠站点列表
   showPopup: false,
-  popupPos: {
-    left: '',
-    top: ''
-  },
+  popupPos: {left: '', top: ''},
   terrainProviderShow: false
 })
 const {boundaryShow, diagramShow, terrainProviderShow} = toRefs(model)
-
+model.terrainProviderShow = false
 onMounted(() => {
   model.boundaryShow = true
   mittBus.on('toggmap2dOr3d', toggmap2dOr3dMittBusFn)

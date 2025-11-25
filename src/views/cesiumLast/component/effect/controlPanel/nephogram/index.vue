@@ -1,4 +1,4 @@
-<!--雷达图-->
+<!--云图-->
 <template>
   <div class="nephogram-wrap"></div>
 </template>
@@ -10,7 +10,8 @@ import img2 from "./img/cloud02.png"
 import img3 from "./img/cloud03.png"
 import img4 from "./img/cloud04.png"
 import img5 from "./img/cloud05.png"
-import {usemapStore} from "@/store/modules/cesiumMap";
+import {usemapStore} from "@/store/modules/cesiumLastMap";
+import * as Cesium from "cesium";
 import mittBus from "@/utils/mittBus"
 
 const mapStore = usemapStore()
@@ -39,6 +40,8 @@ const addImageryProvider = () => {
   urlArr.forEach(url => {
     const imageryProvider = new Cesium.SingleTileImageryProvider({
       url,
+      tileWidth: 256,
+      tileHeight: 256,
       rectangle: Cesium.Rectangle.fromDegrees(112.848443, 25.554061, 113.213276, 25.949843),
     });
     const imagelayer = new Cesium.ImageryLayer(imageryProvider, {alpha: 0})

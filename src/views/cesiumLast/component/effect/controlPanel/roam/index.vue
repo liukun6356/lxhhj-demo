@@ -134,8 +134,9 @@
 import {computed, onMounted, onUnmounted, reactive, ref, toRefs} from 'vue';
 import jsonData from "./data.json"
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {usemapStore} from "@/store/modules/cesiumMap";
 import {v4 as uuidv4} from 'uuid';
+import {usemapStore} from "@/store/modules/cesiumLastMap";
+import * as Cesium from "cesium";
 // Refs
 const treeRef = ref();
 const formRef = ref()

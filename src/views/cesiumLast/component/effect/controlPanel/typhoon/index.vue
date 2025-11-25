@@ -24,8 +24,8 @@
 
 <script lang="ts" setup>
 import {onMounted, onUnmounted, reactive, toRefs, ref} from "vue";
-import {usemapStore} from "@/store/modules/cesiumMap";
-import LineFlowMaterialProperty from "@/utils/material/LineFlowMaterialProperty.ts"
+import {usemapStore} from "@/store/modules/cesiumLastMap";
+import * as Cesium from "cesium";
 import arrowPng from "@/assets/images/cesiumMap/controlPanel/ArrowOpacity.png"
 import mittBus from "@/utils/mittBus"
 
@@ -35,18 +35,21 @@ const model = reactive({
     x: 0,
     y: 0
   },
-  showPopup:true
+  showPopup: true
 })
-const {popupPos,showPopup} = toRefs(model)
+const {popupPos, showPopup} = toRefs(model)
 
 onMounted(() => {
-   mittBus.emit("mapResetCamera")
+  mittBus.emit("mapResetCamera")
   viewer.dataSources.add(typhoonDatasource);
   addEntity()
+  addBoundary()
   viewer.scene.postRender.addEventListener(showPopupBox);
 })
 
 onUnmounted(() => {
+  curPosition = new Cesium.Cartesian3()
+  viewer.scene.primitives.remove(primitive);
   typhoonDatasource.entities.removeAll()
   viewer.dataSources.remove(typhoonDatasource);
   viewer.scene.postRender.removeEventListener(showPopupBox);
@@ -54,24 +57,74 @@ onUnmounted(() => {
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer();
+viewer.clock.shouldAnimate = true;
 const typhoonDatasource = new Cesium.CustomDataSource("typhoon")
+let curPosition = new Cesium.Cartesian3(), entity, primitive
 
-let curPosition
+const addBoundary = () => {
+  // GroundPolyline
+  primitive = new Cesium.GroundPolylinePrimitive({
+    geometryInstances: new Cesium.GeometryInstance({
+      geometry: new Cesium.GroundPolylineGeometry({
+        positions: Cesium.Cartesian3.fromDegreesArray([113.129544, 25.630585, 112.91728, 25.816368]),
+        width: 8,
+      })
+    }),
+    appearance: new Cesium.PolylineMaterialAppearance({
+      material: new Cesium.Material({
+        fabric: {
+          uniforms: {
+            axisY: false,
+            hasImage2: false,
+            image2: Cesium.Material.DefaultImageId,
+            color2: new Cesium.Color(1, 1, 1),
+            color: Cesium.Color.fromCssColorString("red"),
+            repeat: new Cesium.Cartesian2(10.0, 1.0),
+            image: arrowPng,
+            speed: 20, //速度，建议取值范围1-100
+          },
+          source: `
+            czm_material czm_getMaterial(czm_materialInput materialInput)
+            {
+                czm_material material = czm_getDefaultMaterial(materialInput);
+                vec2 st = repeat * materialInput.st;
+
+                vec2 uv = vec2(fract((axisY ? st.t : st.s) - speed * float(czm_frameNumber) / 1000.0), st.t);
+                vec4 colorImage = texture(image, uv);
+
+                if (color.a == 0.0) {
+                    material.alpha = colorImage.a;
+                    material.diffuse = colorImage.rgb;
+                } else {
+                    material.alpha = colorImage.a * color.a;
+                    material.diffuse = max(color.rgb * material.alpha * 3.0, color.rgb);
+                }
+
+                if (hasImage2) {
+                    vec4 colorBG = texture(image2, materialInput.st);
+                    if (colorBG.a > 0.5) {
+                        material.diffuse = color2.rgb;
+                    }
+                }
+
+                return material;
+            }
+        `
+        },
+        translucent: false
+      }),
+    }),
+    asynchronous: false
+  });
+  viewer.scene.primitives.add(primitive);
+}
+
 
 const addEntity = () => {
-  typhoonDatasource.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(113.129544, 25.630585),
-    polyline: {
-      positions: Cesium.Cartesian3.fromDegreesArray([113.129544, 25.630585, 112.91728, 25.816368]),
-      width: 10,
-      material: new LineFlowMaterialProperty({//动画线材质
-        color: Cesium.Color.fromCssColorString("red"),
-        repeat: new Cesium.Cartesian2(10.0, 1.0),
-        image: arrowPng,
-        speed: 20, //速度，建议取值范围1-100
-      }),
-      clampToGround: true,
-    },
+  const startPosition = Cesium.Cartesian3.fromDegrees(113.129544, 25.630585);
+  const targetPosition = Cesium.Cartesian3.fromDegrees(112.91728, 25.816368);
+  entity = typhoonDatasource.entities.add({
+    position: startPosition,
     point: {
       color: Cesium.Color.fromCssColorString("#2ea5ff").withAlpha(0),
       pixelSize: 10,
@@ -79,23 +132,14 @@ const addEntity = () => {
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
     },
   });
-  startRun()
-}
-
-const startRun = () => {
   const startTime = Cesium.JulianDate.now()
-  // 初始点位和目标点位
-  const startPosition = Cesium.Cartesian3.fromDegrees(113.129544, 25.630585);
-  const targetPosition = Cesium.Cartesian3.fromDegrees(112.91728, 25.816368);
-  curPosition = new Cesium.Cartesian3()
-  typhoonDatasource.entities.values[0].position = new Cesium.CallbackProperty(function (time) {
-    const elapsedTime = Cesium.JulianDate.secondsDifference(time, startTime);
-    const ratio = elapsedTime / 10;
-    switch (true){
+  entity.position = new Cesium.CallbackProperty(function (time) {
+    const ratio = Cesium.JulianDate.secondsDifference(time, startTime) / 10;
+    switch (true) {
       case ratio >= 1.0:
         curPosition = targetPosition.clone()
-            break
-      case ratio <=0:
+        break
+      case ratio <= 0:
         curPosition = startPosition.clone()
         break
       default:
@@ -106,6 +150,7 @@ const startRun = () => {
 }
 
 const showPopupBox = () => {
+  if (!curPosition) return
   const {x, y} = viewer.scene.cartesianToCanvasCoordinates(curPosition)
   model.popupPos.x = x + 50
   model.popupPos.y = y - 50
@@ -121,6 +166,7 @@ const showPopupBox = () => {
   border: 1px solid;
   background-color: #fff;
   color: #000;
+
   &::after {
     content: "";
     position: absolute;

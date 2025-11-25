@@ -3,6 +3,7 @@
  * @date: 2024-07-14
  * @describe:线状 流动效果 材质
  */
+import * as Cesium from "cesium";
 export default class LineFlowMaterialProperty {
     //========== 构造方法 ==========
     constructor(options) {
