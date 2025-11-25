@@ -15,7 +15,7 @@ import * as Cesium from "cesium";
 import {usemapStore} from "@/store/modules/cesiumLastMap";
 
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import {ElMessage} from "element-plus";
 
 const timestamp = ref(null)

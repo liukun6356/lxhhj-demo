@@ -9,7 +9,7 @@ import {usemapStore} from "@/store/modules/cesiumLastMap";
 import * as Cesium from "cesium";
 import {onMounted, onUnmounted, reactive} from "vue";
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import GUI from "lil-gui";
 
 

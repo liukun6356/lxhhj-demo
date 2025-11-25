@@ -31,10 +31,7 @@ import mittBus from "@/utils/mittBus"
 
 const mapStore = usemapStore()
 const model = reactive({
-  popupPos: {
-    x: 0,
-    y: 0
-  },
+  popupPos: {x: 0, y: 0},
   showPopup: true
 })
 const {popupPos, showPopup} = toRefs(model)
@@ -57,7 +54,6 @@ onUnmounted(() => {
 
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer();
-viewer.clock.shouldAnimate = true;
 const typhoonDatasource = new Cesium.CustomDataSource("typhoon")
 let curPosition = new Cesium.Cartesian3(), entity, primitive
 
@@ -119,8 +115,9 @@ const addBoundary = () => {
   viewer.scene.primitives.add(primitive);
 }
 
-
 const addEntity = () => {
+  viewer.clock.shouldAnimate = true;
+  const startTime = Cesium.JulianDate.now()
   const startPosition = Cesium.Cartesian3.fromDegrees(113.129544, 25.630585);
   const targetPosition = Cesium.Cartesian3.fromDegrees(112.91728, 25.816368);
   entity = typhoonDatasource.entities.add({
@@ -132,7 +129,7 @@ const addEntity = () => {
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
     },
   });
-  const startTime = Cesium.JulianDate.now()
+
   entity.position = new Cesium.CallbackProperty(function (time) {
     const ratio = Cesium.JulianDate.secondsDifference(time, startTime) / 10;
     switch (true) {
@@ -155,6 +152,7 @@ const showPopupBox = () => {
   model.popupPos.x = x + 50
   model.popupPos.y = y - 50
 }
+
 </script>
 
 <style lang="scss" scoped>

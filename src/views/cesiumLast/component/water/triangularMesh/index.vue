@@ -20,7 +20,7 @@ import {asyncTaskScheduler, calcDataTexSize, findIntervalIndexThatValueIn, getFr
 import moment from "moment";
 // Component
 import YbPanl from "@/components/ybPanl/index.vue"
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
 const mapStore = usemapStore()
 const model = reactive({

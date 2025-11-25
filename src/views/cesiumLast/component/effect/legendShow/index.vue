@@ -35,7 +35,7 @@ import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
 import * as Cesium from "cesium";
 import jsonData from "./data.json"
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 // Refs
 const animationListRef = ref(null)
 

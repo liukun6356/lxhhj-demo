@@ -12,7 +12,7 @@ import {onMounted, onUnmounted, reactive} from "vue";
 import * as Cesium from "cesium";
 
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
 const mapStore = usemapStore()
 const model = reactive({

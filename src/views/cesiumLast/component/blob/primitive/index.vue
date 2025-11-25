@@ -11,7 +11,7 @@ import {usemapStore} from "@/store/modules/cesiumLastMap";
 import * as Cesium from "cesium";
 import png5 from "@/assets/images/legendShow/cy.png"
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
 const mapStore = usemapStore()
 onMounted(() => {

@@ -9,7 +9,7 @@
       <!--主地图-->
       <div id="cesiumContainer" :style="{width: mapStore.isDualScreen?'50%':'100%',height: '100%'}"></div>
       <!--双屏地图-->
-      <dual-map v-if="mapStore.isDualScreen"/>
+      <!--<dual-map v-if="mapStore.isDualScreen"/>-->
     </div>
     <div class="locationbar">
       <span>经度:{{ locationData.longitude }}</span>
@@ -46,7 +46,7 @@ import skyBoxLeftJpg from "@/assets/images/cesiumMap/lantian/Left.jpg"
 import skyBoxRightJpg from "@/assets/images/cesiumMap/lantian/Right.jpg"
 import skyBoxUpJpg from "@/assets/images/cesiumMap/lantian/Up.jpg"
 // Components
-import DualMap from "./dualMap.vue"
+// import DualMap from "./dualMap.vue"
 
 import {ElMessage} from "element-plus";
 

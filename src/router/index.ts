@@ -9,7 +9,7 @@ export const constantRoutes = [
     {
         path: '/cesium',
         component: () => import('@/layout/index.vue'),
-        redirect: '/cesium/base',
+        redirect: '/cesium/analysis',
         name: "Cesium",
         children: [
             {
@@ -57,55 +57,10 @@ export const constantRoutes = [
                 meta: {title: 'demo效果', icon: '', affix: true},
                 children: [
                     {
-                        path: 'controlPanel',
-                        component: () => import('@/views/cesium/component/main/controlPanel/index.vue'),
-                        name: 'Cesium-Main-ControlPanel',
-                        meta: {title: '地图工具栏(图层管理)', icon: '', affix: true},
-                    }, {
-                        path: 'lengendShow',
-                        component: () => import('@/views/cesium/component/main/lengendShow/index.vue'),
-                        name: 'Cesium-Main-LengendShow',
-                        meta: {title: '图例展示+点聚合(base64)', icon: '', affix: true},
-                    }, {
                         path: 'sceneEdit',
                         component: () => import('@/views/cesium/component/main/sceneEdit/index.vue'),
                         name: 'Cesium-Main-SceneEdit',
                         meta: {title: '场景编辑+粒子特效', icon: '', affix: true},
-                    }, {
-                        path: 'buildingProgression',
-                        component: () => import('@/views/cesium/component/main/buildingProgression/index.vue'),
-                        name: 'Cesium-Main-BuildingProgression',
-                        meta: {title: '楼宇管线场景递进', icon: '', affix: true},
-                    }, {
-                        path: 'sceneRehearsal',
-                        component: () => import('@/views/cesium/component/main/sceneRehearsal/index.vue'),
-                        name: 'Cesium-Main-SceneRehearsal',
-                        meta: {title: '救援场景演练(czml)', icon: '', affix: true},
-                    }, {
-                        path: 'polylineFly',
-                        component: () => import('@/views/cesium/component/main/polylineFly/index.vue'),
-                        name: 'Cesium-Main-PolylineFly',
-                        meta: {title: '无人机轨道飞行(clock)', icon: '', affix: true},
-                    }
-                ]
-            },
-            {
-                path: 'monomer',
-                component: () => import('@/views/cesium/index.vue'),
-                name: 'Cesium-Monomer',
-                redirect: '/cesium/monomer/rangeSearch',
-                meta: {title: '单体化', icon: '', affix: true},
-                children: [
-                    {
-                        path: 'tilesetOnlyEntity',
-                        component: () => import('@/views/cesium/component/monomer/tilesetOnlyEntity/index.vue'),
-                        name: 'Cesium-Monomer-TilesetOnlyEntity',
-                        meta: {title: '模型单体化(entity)', icon: '', affix: true},
-                    }, {
-                        path: 'floorsStacking',
-                        component: () => import('@/views/cesium/component/monomer/floorsStacking/index.vue'),
-                        name: 'Cesium-Monomer-FloorsStacking',
-                        meta: {title: '楼层叠加', icon: '', affix: true},
                     },
                 ]
             },
@@ -216,14 +171,26 @@ export const constantRoutes = [
                     {
                         path: 'triangularMesh',
                         component: () => import('@/views/cesiumLast/component/water/triangularMesh/index.vue'),
-                        name: 'cesium@-Demo-TriangularMesh',
+                        name: 'cesium@-water-TriangularMesh',
                         meta: {title: '水动力网格', icon: '', affix: true},
                     },
                     {
                         path: 'weatherSample',
                         component: () => import('@/views/cesiumLast/component/water/weatherSample/index.vue'),
-                        name: 'cesium@-Demo-WeatherSample',
+                        name: 'cesium@-water-WeatherSample',
                         meta: {title: '气象插值', icon: '', affix: true},
+                    },
+                    {
+                        path: 'dxgw',
+                        component: () => import('@/views/cesiumLast/component/water/dxgw/index.vue'),
+                        name: 'Cesium-water-dxgw',
+                        meta: {title: '地下管网测试', icon: '', affix: true},
+                    },
+                    {
+                        path: 'heightMap',
+                        component: () => import('@/views/cesiumLast/component/water/heightMap/index.vue'),
+                        name: 'Cesium-water-heightMap',
+                        meta: {title: '高度图', icon: '', affix: true},
                     },
                 ]
             },

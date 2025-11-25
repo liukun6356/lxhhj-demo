@@ -15,7 +15,7 @@ import {onMounted, onUnmounted} from "vue"
 import * as Cesium from "cesium";
 import GUI from "lil-gui";
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import {ElMessage} from "element-plus";
 
 const mapStore = usemapStore()

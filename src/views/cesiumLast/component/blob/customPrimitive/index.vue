@@ -14,7 +14,7 @@ import img2 from "./img2.png"
 import img3 from "./gugong.jpg"
 import img4 from "./img4.png"
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
 const mapStore = usemapStore()
 onMounted(() => {

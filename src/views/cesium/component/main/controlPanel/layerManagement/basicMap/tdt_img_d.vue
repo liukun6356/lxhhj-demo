@@ -2,7 +2,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import {usemapStore} from "@/store/modules/cesiumMap.ts";
+import {usemapStore} from "@/store/modules/cesiumMap";
 import {onMounted, onUnmounted} from "vue";
 
 // Props

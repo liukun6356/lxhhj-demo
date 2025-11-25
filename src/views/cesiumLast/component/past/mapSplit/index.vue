@@ -14,7 +14,7 @@ import * as Cesium from "cesium";
 import GUI from "lil-gui";
 import {onMounted, onUnmounted, reactive, ref, toRefs} from "vue";
 // Component
-import Tdt_img_d from "@/views/cesiumLast/component/main/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
+import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 // Ref
 const sliderRef = ref(null)
 
