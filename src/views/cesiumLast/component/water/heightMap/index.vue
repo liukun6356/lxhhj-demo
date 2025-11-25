@@ -9,12 +9,12 @@
 <script lang="ts" setup>
 import {usemapStore} from "@/store/modules/cesiumLastMap";
 import * as Cesium from "cesium";
+import {createWorldTerrainAsync} from "cesium";
 import GUI from "lil-gui";
 import {onMounted, onUnmounted} from "vue";
 import {FluidRenderer} from "./fluidDemo"
 // Component
 import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
-import {createWorldTerrainAsync} from "cesium";
 
 const mapStore = usemapStore()
 onMounted(async () => {

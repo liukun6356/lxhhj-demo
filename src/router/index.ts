@@ -267,6 +267,12 @@ export const constantRoutes = [
                         name: 'cesium@-Past-mapSplit',
                         meta: {title: '卷帘', icon: '', affix: true},
                     },
+                    {
+                        path: 'skyline',
+                        component: () => import('@/views/cesiumLast/component/past/skyline/index.vue'),
+                        name: 'cesium@-Past-skyline',
+                        meta: {title: '天际线分析', icon: '', affix: true},
+                    },
                 ]
             },
         ]
