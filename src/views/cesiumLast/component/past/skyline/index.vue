@@ -16,7 +16,8 @@ import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerMan
 const mapStore = usemapStore()
 onMounted(async () => {
   // createWorldTerrainAsync().then(terrain => viewer.terrainProvider = terrain);
-  viewer.scene.postProcessStages.add(postProcess);
+  // const tileset =await Cesium.Cesium3DTileset.fromUrl(import.meta.env.VITE_APP_GISDATA + '/ZHONGHUAXUN/tileset.json')
+  // viewer.scene.postProcessStages.add(postProcess);
   const tileset =await Cesium.Cesium3DTileset.fromUrl('https://file.threehub.cn/3dtiles/house/tileset.json')
   viewer.scene.primitives.add(tileset)
   viewer.flyTo(tileset)

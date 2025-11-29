@@ -44,7 +44,7 @@ const addEntity = () => {
     floorsStackingDatasource.entities.add({
       customType: "floorsStacking",
       floor: index + 1,
-      position: Cesium.Cartesian3.fromDegrees(113.136103, 25.720441, 673 + index * 3 - (index && 2.3)),
+      position: Cesium.Cartesian3.fromDegrees(113.136103, 25.720441, 5 + index * 3 - (index && 2.3)),
       model: {
         uri: getGlbUrl(index + 1),
       },
@@ -103,10 +103,10 @@ const getGlbUrl = (i) => {
 
 const mapResetCamera = () => {
   viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(113.139392, 25.720645, 792.29),
+    destination: Cesium.Cartesian3.fromDegrees(113.139126, 25.720262, 100),
     orientation: {
-      heading: Cesium.Math.toRadians(275),
-      pitch: Cesium.Math.toRadians(-17.7),
+      heading: Cesium.Math.toRadians(277),
+      pitch: Cesium.Math.toRadians(-12),
       roll: 0.0
     }
   });

@@ -15,7 +15,7 @@
       <div @click="weatherClick(2)" :class="{ select: weatherItemSelectIndex === 2 }">下雪</div>
       <div @click="weatherClick(3)" :class="{ select: weatherItemSelectIndex === 3 }">大雾</div>
       <div @click="weatherClick(4)" :class="{ select: weatherItemSelectIndex === 4 }">风1</div>
-      <!--      <div @click="weatherClick(5)" :class="{ select: weatherItemSelectIndex === 5 }">风2</div>-->
+      <!--            <div @click="weatherClick(5)" :class="{ select: weatherItemSelectIndex === 5 }">风2</div>-->
     </div>
     <div class="second-level-heading">
       <span>日照模拟</span>
@@ -30,15 +30,12 @@
 
 <script lang="ts" setup>
 import moment from "moment";
-import {onMounted, reactive, toRefs} from "vue";
+import {reactive, toRefs} from "vue";
 import {usemapStore} from "@/store/modules/cesiumLastMap";
 import * as Cesium from "cesium";
-import LineFlowMaterial from "@/utils/material/LineFlowMaterial.glsl";
 import ArrowOpacityPng from "@/assets/images/cesiumMap/controlPanel/ArrowOpacity.png"
 import windpoint from "@/assets/data/windpoint.json"
 import {CanvasWindy} from "./canvasWindy"
-
-let lastStage
 
 const mapStore = usemapStore()
 const model = reactive({
@@ -46,17 +43,6 @@ const model = reactive({
   hour: 12,
 })
 const {weatherItemSelectIndex, hour} = toRefs(model)
-
-onMounted(() => {
-  // fogEffect = new FogEffect({
-  //   show: false,
-  //   viewer,
-  //   maxHeight: 40000, //大于此高度后不显示
-  //   fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
-  //   color: Cesium.Color.WHITE,
-  // });
-  // fogEffect.show = false
-})
 
 const weatherClick = (index) => {
   model.weatherItemSelectIndex = model.weatherItemSelectIndex === index ? -1 : index
@@ -85,7 +71,7 @@ const weatherClick = (index) => {
 }
 // 地图逻辑
 const viewer = mapStore.getCesiumViewer();
-let primitive
+let primitive, lastStage
 const showSnow = () => {
   lastStage = new Cesium.PostProcessStage({
     fragmentShader: `
@@ -197,6 +183,7 @@ const showfogEffect = () => {
   })
   viewer.scene.postProcessStages.add(lastStage);
 }
+
 const shadowSliderChange = (val) => {
   viewer.scene.globe.enableLighting = true
   // JulianDate 与北京时间 相差8小时
@@ -236,31 +223,43 @@ const showWindField = () => {
     });
     geometryInstances.push(polylineinstance);
   })
-  Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlowType, {
-    fabric: {
-      type: "LineFlow",
-      uniforms: {
-        image: Cesium.Material.DefaultImageId,
-        color: new Cesium.Color(1, 0, 0, 1.0),
-        repeat: new Cesium.Cartesian2(1.0, 1.0),
-        axisY: false,
-        speed: 10.0,
-        hasImage2: false,
-        image2: Cesium.Material.DefaultImageId,
-        color2: new Cesium.Color(1, 1, 1)
-      },
-      source: LineFlowMaterial
-    },
-    translucent: true
-  });
   primitive = new Cesium.Primitive({
     geometryInstances: geometryInstances,
     appearance: new Cesium.PolylineMaterialAppearance({
-      material: Cesium.Material.fromType("LineFlow", {
-        image: ArrowOpacityPng,
-        color: Cesium.Color.fromCssColorString("#00ff00"),
-        speed: 20,
-        //速度，建议取值范围1-100
+      material: new Cesium.Material({
+        fabric: {
+          uniforms: {
+            image: ArrowOpacityPng,
+            color: Cesium.Color.fromCssColorString("#00ff00"),
+            speed: 20,
+            repeat: new Cesium.Cartesian2(1.0, 1.0),
+            axisY: false,
+            hasImage2: false,
+            image2: Cesium.Material.DefaultImageId,
+            color2: new Cesium.Color(1, 1, 1)
+          },
+          source: `
+            czm_material czm_getMaterial(czm_materialInput materialInput){
+                czm_material material = czm_getDefaultMaterial(materialInput);
+                vec2 st = repeat * materialInput.st;
+                vec4 colorImage = texture(image, vec2(fract((axisY?st.t:st.s) - speed*czm_frameNumber/1000.0), st.t));
+                if(color.a == 0.0){
+                    material.alpha = colorImage.a;
+                    material.diffuse = colorImage.rgb;
+                }else{
+                    material.alpha = colorImage.a * color.a;
+                    material.diffuse = max(color.rgb * material.alpha * 3.0, color.rgb);
+                }
+
+                if(hasImage2){
+                    vec4 colorBG = texture(image2,materialInput.st);
+                    if(colorBG.a>0.5)material.diffuse = color2.rgb;
+                }
+                return material;
+            }
+          `
+        },
+        translucent: false
       }),
     }),
   });

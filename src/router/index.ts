@@ -166,25 +166,25 @@ export const constantRoutes = [
                     {
                         path: 'triangularMesh',
                         component: () => import('@/views/cesiumLast/component/water/triangularMesh/index.vue'),
-                        name: 'cesium@-water-TriangularMesh',
+                        name: 'cesium@-Water-TriangularMesh',
                         meta: {title: '水动力网格', icon: '', affix: true},
                     },
                     {
                         path: 'weatherSample',
                         component: () => import('@/views/cesiumLast/component/water/weatherSample/index.vue'),
-                        name: 'cesium@-water-WeatherSample',
+                        name: 'cesium@-Water-WeatherSample',
                         meta: {title: '气象插值', icon: '', affix: true},
                     },
                     {
                         path: 'dxgw',
                         component: () => import('@/views/cesiumLast/component/water/dxgw/index.vue'),
-                        name: 'Cesium-water-dxgw',
+                        name: 'cesium@-Water-dxgw',
                         meta: {title: '地下管网测试', icon: '', affix: true},
                     },
                     {
                         path: 'heightMap',
                         component: () => import('@/views/cesiumLast/component/water/heightMap/index.vue'),
-                        name: 'Cesium-water-heightMap',
+                        name: 'cesium@-Water-heightMap',
                         meta: {title: '高度图', icon: '', affix: true},
                     },
                 ]
@@ -267,6 +267,12 @@ export const constantRoutes = [
                         component: () => import('@/views/cesiumLast/component/past/skyline/index.vue'),
                         name: 'cesium@-Past-skyline',
                         meta: {title: '天际线分析', icon: '', affix: true},
+                    },
+                    {
+                        path: 'collisionTest',
+                        component: () => import('@/views/cesiumLast/component/past/collisionTest/index.vue'),
+                        name: 'cesium@-Past-collisionTest',
+                        meta: {title: '标签碰撞测试', icon: '', affix: true},
                     },
                 ]
             },

@@ -197,11 +197,7 @@ const addKrigingPrimitive = () => {
                       return Node(data.r, data.g, color);
                   }
 
-                  vec4 mappingColor(
-                      sampler2D map,
-                      int stopCount,
-                      float value
-                  ){
+                  vec4 mappingColor(sampler2D map, int stopCount, float value){
                       int left = 0;
                       int right = stopCount - 1;
 
