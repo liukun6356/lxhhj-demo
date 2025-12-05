@@ -338,7 +338,7 @@ const reset = () => {
 }
 
 // lil-gui逻辑
-let gui, typeControl, gridFolder, heightFolder, timeFolder, flowFolder
+let gui, typeControl, gridFolder, heightFolder, timeFolder, flowFolder,resetCtrl
 const formData = {
   type: "",
   gridShow: false,
@@ -354,6 +354,7 @@ const initGui = () => {
     if (heightFolder) heightFolder.destroy();
     if (timeFolder) timeFolder.destroy();
     if (flowFolder) flowFolder.destroy();
+    if(resetCtrl)resetCtrl.destroy()
     gridFolder = gui.addFolder("网格")
     heightFolder = gui.addFolder("高程")
     heightFolder.close()
@@ -361,6 +362,7 @@ const initGui = () => {
     timeFolder.close()
     flowFolder = gui.addFolder("流场")
     flowFolder.close()
+    resetCtrl =  gui.add(formData, "reset")
     if (layer) {
       viewer.map.remove(layer)
       layer = null
@@ -368,7 +370,6 @@ const initGui = () => {
     if (type) getlist()
   })
   typeControl.setValue("p_10")
-  gui.add(formData, "reset")
 }
 </script>
 
