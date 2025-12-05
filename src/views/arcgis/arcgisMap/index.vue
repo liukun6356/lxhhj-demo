@@ -23,6 +23,8 @@ import SpatialReference from "@arcgis/core/geometry/SpatialReference.js";
 import WebTileLayer from "@arcgis/core/layers/WebTileLayer";
 import mittBus from "@/utils/mittBus";
 import {throttle} from "lodash-es";
+import {ReprojTileLayer} from "../component/main/hsfx/layer/web/arcgis/layers/ReprojTileLayer/ReprojTileLayer";
+import TileInfo from "@arcgis/core/layers/support/TileInfo";
 
 const mapStore = usearcgisMapStore()
 const model = reactive({
@@ -43,8 +45,11 @@ const mouseleaveFn = () => {
 
 onMounted(async () => {
   // config.assetsPath = import.meta.env.VITE_ARCGIS_API + "/arcgis-core-es/assets";
-  config.workers.loaderUrl = import.meta.env.VITE_ARCGIS_API + "/worker/system.min.js";
-  config.workers.workerPath = import.meta.env.VITE_ARCGIS_API + "/worker/RemoteClient.js";
+  // tsKriging
+  // config.workers.loaderUrl = import.meta.env.VITE_ARCGIS_API + "/worker/system.min.js";
+  // config.workers.workerPath = import.meta.env.VITE_ARCGIS_API + "/worker/RemoteClient.js";
+  // hsfx
+  config.workers.workerPath = import.meta.env.VITE_ARCGIS_API + "/arcgis-worker/RemoteClient.js";
   const rawViewer = await initMap("arcgisContainer")
   mapStore.setArcgisViewer(rawViewer);
   mapStore.setIsActiveMap(true)
@@ -77,8 +82,6 @@ const initMap = (domId) => new Promise((resolve) => {
       // spatialReference: SpatialReference.WGS84
       layers: [ImageryProvider]
     }),
-    // spatialReference: SpatialReference.WGS84
-    // spatialReference: { wkid: 4326 }
   })
   reactiveUtils.when(() => viewer.ready, () => {
     console.log("Truthy", viewer.ready)

@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "experimentalDecorators": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "web/*": ["./public/hsfx/web/*"],
+      "shared/*": ["./public/hsfx/shared/*"]
     },
     "lib": [
       "decorators",

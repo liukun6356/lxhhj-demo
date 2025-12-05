@@ -1,0 +1,29 @@
+@import url('web/style.css');
+
+#app, #map{
+    width: 100%;
+    height: 100%;
+}
+#app{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+.time-player{
+    pointer-events: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    width: 60vw;
+}
+
+.lil-gui{
+    --font-size: 14px;
+    button{
+        --title-height:32px;
+        color: #3bebeb;
+    }
+}

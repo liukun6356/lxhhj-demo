@@ -108,7 +108,7 @@ export class TimeSeriesKrigingLayer extends Layer {
 
     createLayerView(view: any) {
         if (view.type !== "2d") throw new Error("不支持3d");
-        debugger
+        // debugger
         const lyView = (this._layerView = new CustomLayerView({
             view: view,
             //@ts-ignore

@@ -604,6 +604,11 @@ export const constantRoutes = [
                         component: () => import('@/views/arcgis/component/main/tsRaster/index.vue'),
                         name: 'Arcgis-Main-TsRaster',
                         meta: {title: 'tsRaster', icon: '', affix: true},
+                    }, {
+                        path: 'hsfx',
+                        component: () => import('@/views/arcgis/component/main/hsfx/index.vue'),
+                        name: 'Arcgis-Main-Hsfx',
+                        meta: {title: 'hsfx', icon: '', affix: true},
                     }
                 ]
             }, {
