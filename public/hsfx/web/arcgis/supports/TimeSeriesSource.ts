@@ -91,7 +91,7 @@ export abstract class BaseTimeSeriesSourceLoader<T> extends EventedMixin(Accesso
     _rawGetter: TimeSeriesSource['dataGetter'];
 
     timeInfo: ReturnType<typeof validateTimes>;
-    preloads = 5;
+    preloads = 20; // todo 5
 
     @property()
     curTime: number;
@@ -104,7 +104,7 @@ export abstract class BaseTimeSeriesSourceLoader<T> extends EventedMixin(Accesso
     private _runningMap = new Map<number, () => void /* cancel function */>();
 
     private _loadedCache: LRUCache<number, T>;
-    constructor(opts: TimeSeriesSource, cacheSize = 32) {
+    constructor(opts: TimeSeriesSource, cacheSize = 128) { // todo 32
         super();
         this._loadedCache = new LRUCache({
             max: cacheSize,

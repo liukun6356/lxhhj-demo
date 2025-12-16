@@ -2,7 +2,7 @@
   <div class="hsfx-wrap">
     <yb-panl class="triangularMesh-panl" v-if="selTimeRang" :selTimeRang="selTimeRang"
              :defaultStartTime="selTimeRang.start" :defaultRange="times.length"
-             timeType="m" @timeChange="timeChange"/>
+             timeType="5m" @timeChange="timeChange"/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import {onMounted, onUnmounted, reactive, ref, toRefs, h, render, createApp} from "vue"
 import GUI from "lil-gui";
 import {usearcgisMapStore} from "@/store/modules/arcgisMap";
-import YbPanl from "@/components/ybPanl/index.vue"
+import YbPanl from "./ybPanl/index.vue"
 import axios from "axios";
 import moment from "moment";
 import {TimeSeriesVectorLayer} from "web/arcgis/layers/TimeSeriesVectorLayer/layer";
@@ -48,7 +48,7 @@ onUnmounted(() => {
 const getlist = async () => {
   const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/Depth/meta.json`)
   const startTime = moment("2020-01-01 08:00:00").valueOf();
-  const interval = 3600 * 1000;
+  const interval = 5 * 60 * 1000;
   model.times = data.times.map((_, index) => startTime + index * interval)
   model.selTimeRang = {start: startTime, end: model.times[model.times.length - 1]}
   model.valueRange = data.valueRange
@@ -377,7 +377,7 @@ const initGui = () => {
     }
     if (type) getlist()
   })
-  typeControl.setValue("bgh")
+  typeControl.setValue("lh")
 }
 </script>
 
