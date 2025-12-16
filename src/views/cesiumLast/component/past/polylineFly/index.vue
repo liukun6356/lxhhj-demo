@@ -12,12 +12,12 @@ import {onMounted, onUnmounted, reactive} from "vue";
 import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 import GUI from "lil-gui";
 
-
 const mapStore = usemapStore()
 const model = reactive({
   curRuningArr_i: 0,
   curRuningArr: [],
 })
+
 onMounted(() => {
   initGui()
   viewer.dataSources.add(datasource);

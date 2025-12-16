@@ -154,6 +154,12 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-skybox',
                         meta: {title: '天空盒', icon: '', affix: true},
                     },
+                    {
+                        path: 'lineObj',
+                        component: () => import('@/views/cesiumLast/component/blob/lineObj/index.vue'),
+                        name: 'cesium@-Blob-lineObj',
+                        meta: {title: '迁徙路网', icon: '', affix: true},
+                    },
                 ]
             },
             {
