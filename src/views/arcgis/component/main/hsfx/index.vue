@@ -13,8 +13,6 @@ import {usearcgisMapStore} from "@/store/modules/arcgisMap";
 import YbPanl from "@/components/ybPanl/index.vue"
 import axios from "axios";
 import moment from "moment";
-import {createTileSchemeFromBBoxAndResolution} from "shared/utils/tile";
-import TileInfo from "@arcgis/core/layers/support/TileInfo";
 import {TimeSeriesVectorLayer} from "web/arcgis/layers/TimeSeriesVectorLayer/layer";
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import SpatialReference from "@arcgis/core/geometry/SpatialReference";
@@ -48,7 +46,7 @@ onUnmounted(() => {
 })
 
 const getlist = async () => {
-  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/Depth/meta.json`)
+  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/Depth/meta.json`)
   const startTime = moment("2020-01-01 08:00:00").valueOf();
   const interval = 3600 * 1000;
   model.times = data.times.map((_, index) => startTime + index * interval)
@@ -67,11 +65,11 @@ const viewer = mapStore.getArcgisViewer();
 let layer
 
 const addLayer = async () => {
-  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/meta.json`)
+  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/meta.json`)
   const {proj, minSize, extent, hash, primitiveType, series, flow} = data
   const result = await Promise.all([
-    axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/vertices`, {responseType: 'arraybuffer'}),
-    axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/indices`, {responseType: 'arraybuffer'}),
+    axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/vertices`, {responseType: 'arraybuffer'}),
+    axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/indices`, {responseType: 'arraybuffer'}),
   ]);
 
   let vertices = new Float32Array(result[0].data)
@@ -83,10 +81,6 @@ const addLayer = async () => {
   vertices = new Float32Array(arr.map(item => proj4('EPSG:4547', 'EPSG:4326', item)).flat());
 
   const crs = new SpatialReference({wkid: 4326});
-  viewer.goTo({
-    center: [113.898922, 31.317001],
-    zoom: 13
-  })
   layer = new TimeSeriesVectorLayer({
     curTime: moment("2020-01-01 08:00:00").valueOf(),
     timeDataRenderOpts: {},
@@ -216,19 +210,19 @@ const addTimeData = (series) => { // 添加时序数据
     layer.timeSource = {
       meshMappingMode: 'per-vertex',
       times: model.times,
-      dataGetter: async (_, timeIndex) => fetch(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/${params.series}/${timeIndex}`).then(res => res.arrayBuffer()).then(buf => new Float32Array(buf))
+      dataGetter: async (_, timeIndex) => fetch(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/${params.series}/${timeIndex}`).then(res => res.arrayBuffer()).then(buf => new Float32Array(buf))
     };
     renderOpts.colorMapping = params.series === 'Depth' ? DepthColorMapping : createWaterLevelColorMapping(model.valueRange);
   }
 }
 
 const addFlow = async (flow) => {
-  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/${flow}/meta.json`)
+  const {data} = await axios.get(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/${flow}/meta.json`)
   const {valueRange} = data
   layer.vectorFieldTimeSource = {
     meshMappingMode: 'per-vertex',
     times: model.times,
-    dataGetter: (_, timeIndex) => fetch(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/${flow}/${timeIndex}`).then(res => res.arrayBuffer()).then(buf => new Float32Array(buf))
+    dataGetter: (_, timeIndex) => fetch(import.meta.env.VITE_APP_MODELDATA + `/hsfx/${formData.type}/p_10/${flow}/${timeIndex}`).then(res => res.arrayBuffer()).then(buf => new Float32Array(buf))
   };
   layer.vectorFieldRenderOpts = {
     enableColorMapping: true,
@@ -349,7 +343,7 @@ const formData = {
 }
 const initGui = () => {
   gui = new GUI({title: "洪水分析"});
-  typeControl = gui.add(formData, "type", ["p_10", "p_20", "p_50", "p_100"]).onChange((type) => {
+  typeControl = gui.add(formData, "type", ["bgh", "lh"]).onChange((type) => {
     if (gridFolder) gridFolder.destroy();
     if (heightFolder) heightFolder.destroy();
     if (timeFolder) timeFolder.destroy();
@@ -363,13 +357,27 @@ const initGui = () => {
     flowFolder = gui.addFolder("流场")
     flowFolder.close()
     resetCtrl =  gui.add(formData, "reset")
+    switch (type){
+      case "bgh":
+        viewer.goTo({
+          center: [113.898922, 31.317001],
+          zoom: 13
+        })
+        break
+      case "lh":
+        viewer.goTo({
+          center: [113.231193, 31.658443],
+          zoom: 13
+        })
+        break
+    }
     if (layer) {
       viewer.map.remove(layer)
       layer = null
     }
     if (type) getlist()
   })
-  typeControl.setValue("p_10")
+  typeControl.setValue("bgh")
 }
 </script>
 
