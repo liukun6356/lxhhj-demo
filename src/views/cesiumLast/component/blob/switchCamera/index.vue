@@ -36,7 +36,8 @@ const addEntity = () => {
 }
 
 const add3dtiles = async () => {
-  tileset =await Cesium.Cesium3DTileset.fromUrl('https://zhx.dashuiyun.cn/gisdata/tileset.json')
+  tileset =await Cesium.Cesium3DTileset.fromUrl('https://file.threehub.cn/3dtiles/house/tileset.json')
+  // tileset =await Cesium.Cesium3DTileset.fromUrl('https://zhx.dashuiyun.cn/gisdata/tileset.json')
   viewer.scene.primitives.add(tileset)
 }
 

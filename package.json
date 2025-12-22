@@ -35,7 +35,6 @@
     "gl-matrix": "^3.4.3",
     "heatmap.js": "^2.0.5",
     "jsencrypt": "^3.3.2",
-    "kriging-webgl": "^1.0.2",
     "leaflet": "^1.0.3",
     "leaflet-draw": "^1.0.4",
     "lil-gui": "^0.20.0",

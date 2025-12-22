@@ -50,22 +50,22 @@ const addLineQx = () => {
   })
   const center = Cesium.Cartesian3.fromDegrees(117.29, 32.0581, 0);
   const cities = [
-    {name: '六安市', lon: 116.3123, lat: 31.8329},
-    {name: '安庆市', lon: 116.7517, lat: 30.5255},
-    {name: '滁州市', lon: 118.1909, lat: 32.536},
-    {name: '宣城市', lon: 118.8062, lat: 30.6244},
-    {name: '阜阳市', lon: 115.7629, lat: 32.9919},
-    {name: '宿州市', lon: 117.5208, lat: 33.6841},
-    {name: '黄山市', lon: 118.0481, lat: 29.9542},
-    {name: '巢湖市', lon: 117.7734, lat: 31.4978},
-    {name: '亳州市', lon: 116.1914, lat: 33.4698},
-    {name: '池州市', lon: 117.3889, lat: 30.2014},
-    {name: '蚌埠市', lon: 117.4109, lat: 33.1073},
-    {name: '芜湖市', lon: 118.3557, lat: 31.0858},
-    {name: '淮北市', lon: 116.6968, lat: 33.6896},
-    {name: '淮南市', lon: 116.7847, lat: 32.7722},
-    {name: '马鞍山市', lon: 118.6304, lat: 31.5363},
-    {name: '铜陵市', lon: 117.9382, lat: 30.9375}
+    { lon: 116.3123, lat: 31.8329},
+    { lon: 116.7517, lat: 30.5255},
+    { lon: 118.1909, lat: 32.536},
+    { lon: 118.8062, lat: 30.6244},
+    { lon: 115.7629, lat: 32.9919},
+    { lon: 117.5208, lat: 33.6841},
+    { lon: 118.0481, lat: 29.9542},
+    { lon: 117.7734, lat: 31.4978},
+    { lon: 116.1914, lat: 33.4698},
+    { lon: 117.3889, lat: 30.2014},
+    { lon: 117.4109, lat: 33.1073},
+    { lon: 118.3557, lat: 31.0858},
+    { lon: 116.6968, lat: 33.6896},
+    { lon: 116.7847, lat: 32.7722},
+    { lon: 118.6304, lat: 31.5363},
+    { lon: 117.9382, lat: 30.9375}
   ];
   cities.forEach(item => {
     const thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 0);
@@ -304,7 +304,7 @@ const addLineWh = async () => {
           width: 2,
         }),
       }),
-      appearance: new Cesium.PolylineMaterialAppearance({ // 需要使用专门的PolylineMaterialAppearance外观
+      appearance: new Cesium.PolylineMaterialAppearance({
         material: new Cesium.Material({
           fabric: {
             type: 'PolylineArrow',
@@ -407,15 +407,15 @@ const addLineGlow = async () => {
 const addLineRiver = () => {
   reset()
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(117.186207, 31.810169, 250.52),
+    destination: Cesium.Cartesian3.fromDegrees(114.355012, 30.525486, 892),
     orientation: {
-      heading: Cesium.Math.toRadians(100),
-      pitch: Cesium.Math.toRadians(-19.7),
-      roll: Cesium.Math.toRadians(0.2)
+      heading: Cesium.Math.toRadians(330.5),
+      pitch: Cesium.Math.toRadians(-37.6),
+      roll: Cesium.Math.toRadians(0)
     },
   })
-  const lines = [[117.181132, 31.814245, 45.95], [117.185542, 31.8125, 43.23], [117.190607, 31.810037, 38.95], [117.195048, 31.807351, 39.03], [117.198338, 31.804961, 39.86], [117.201378, 31.802543, 33.1], [117.204316, 31.80064, 34.33], [117.209094, 31.798011, 33.56], [117.212615, 31.796325, 33.75], [117.216706, 31.794731, 39.96]];
-  const sideRes = Lines2Plane(lines.map(item => Cesium.Cartesian3.fromDegrees(item[0], item[1], item[2])), 15, 1)
+  const lines = [[114.347819, 30.528961, 0], [114.348155, 30.529824, 0], [114.348504, 30.530718, 0], [114.348813, 30.531634, 0], [114.349198, 30.53254, 0], [114.349549, 30.53347, 0], [114.349885, 30.534357, 0], [114.350282, 30.535254, 0], [114.350666, 30.536134, 0], [114.35096, 30.537147, 0], [114.350439, 30.538686, 0], [114.349896, 30.539568, 0], [114.349211, 30.540571, 0]]
+  const sideRes = Lines2Plane(lines.map(item => Cesium.Cartesian3.fromDegrees(item[0], item[1])), 15, 1)
   const positions = new Float64Array(sideRes.vertexs);
   const attributes = new Cesium.GeometryAttributes();
   attributes.position = new Cesium.GeometryAttribute({
@@ -446,10 +446,10 @@ const addLineRiver = () => {
           uniforms: {
             image: icons['road'],
             alpha: 1,
-            moveVar:new Cesium.Cartesian3(50, 1, 100),
+            moveVar: new Cesium.Cartesian3(50, 1, 100),
             reflux: true ? -1 : 1,
             speed: 1,
-            move: false,
+            move: true,
             flipY: true
           },
           source: `

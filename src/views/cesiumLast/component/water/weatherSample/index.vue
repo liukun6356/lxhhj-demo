@@ -25,6 +25,9 @@ import moment from "moment"
 import YbPanl from "@/components/ybPanl/index.vue"
 import Tdt_img_d from "@/views/cesiumLast/component/effect/controlPanel/layerManagement/basicMap/tdt_img_d.vue"
 
+import { generate_WEBGL } from 'kriging-webgl';
+console.log(generate_WEBGL,1234)
+debugger
 const mapStore = usemapStore()
 const model = reactive({
   selTimeRang: null,

@@ -1,4 +1,5 @@
-import { generate_WEBGL, train } from 'kriging-webgl';
+import { generate_WEBGL, train } from './kriging-webgl';
+
 self.onmessage = async e => {
     const result = await workerGernerate(e.data.data);
     self.postMessage({
