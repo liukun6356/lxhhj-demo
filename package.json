@@ -3,13 +3,11 @@
   "private": true,
   "version": "2024.07.15",
   "type": "module",
-  "homepage": "https://github.com/liukun6356/lxhhj-demo/",
   "scripts": {
     "dev": "vite",
     "build:prod": "vite build --mode production",
     "build:staging": "vite build --mode staging",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist --repo git@github.com/liukun6356/lxhhj-demo.git"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@arcgis/core": "4.33.14",
