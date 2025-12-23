@@ -13,6 +13,7 @@ export default defineConfig(({mode}) => {
         optimizeDeps: {
             include: ['simplex-noise', '@tweenjs/tween.js'], // 强制包含 simplex-noise
         },
+        base: '/lxhhj-demo/',
         plugins: [
             vue(),
             // vitePluginMars3d(),

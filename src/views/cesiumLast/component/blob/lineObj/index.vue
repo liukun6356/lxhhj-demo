@@ -765,7 +765,7 @@ const initGui = () => {
 
 // 图标
 const icons = (() => {
-  const raw = import.meta.glob('/src/views/cesiumLast/component/blob/lineObj/*.png', {eager: true, import: 'default'});
+  const raw = import.meta.glob('/src/views/cesiumLast/component/blob/lineObj/*.(png|jpg)', {eager: true, import: 'default'});
   return Object.keys(raw).reduce((obj, path) => {
     obj[path.match(/lineObj\/(.*)\.png$/)[1]] = raw[path];
     return obj;
