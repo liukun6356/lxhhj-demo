@@ -40,6 +40,7 @@ const model = reactive({
 const {arrowType} = toRefs(model)
 
 const changeActiveId = ({name}) => {
+console.log(name,888)
   router.push({name})
 }
 

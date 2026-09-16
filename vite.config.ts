@@ -13,7 +13,7 @@ export default defineConfig(({mode}) => {
         optimizeDeps: {
             include: ['simplex-noise', '@tweenjs/tween.js'], // 强制包含 simplex-noise
         },
-        base: '/lxhhj-demo/',
+        base: '/',
         plugins: [
             vue(),
             // vitePluginMars3d(),
@@ -54,6 +54,11 @@ export default defineConfig(({mode}) => {
                     changeOrigin: true,
                     rewrite: (p) => p.replace(/^\/dev-api/, ""),
                 },
+                "/gisdata-api": {
+                    target: "http://127.0.0.1:6060/gisdata", // dsy内网geoserver地址
+                    changeOrigin: true,
+                    rewrite: (p) => p.replace(/^\/gisdata-api/, ""),
+                },
                 "/geoserver-api": {
                     target: "http://192.168.30.50:8089/geoserver", // dsy内网geoserver地址
                     changeOrigin: true,
@@ -68,6 +73,11 @@ export default defineConfig(({mode}) => {
                     target: "http://127.0.0.1:6060/modelData", // dsy内网geoserver地址
                     changeOrigin: true,
                     rewrite: (p) => p.replace(/^\/modelData-api/, ""),
+                },
+                "/arcgis-api": {
+                    target: "http://127.0.0.1:6060/arcgis", // dsy内网geoserver地址
+                    changeOrigin: true,
+                    rewrite: (p) => p.replace(/^\/arcgis-api/, ""),
                 },
             },
         },

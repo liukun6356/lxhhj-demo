@@ -19,6 +19,8 @@ import {krigingDataMeta as metaData2} from "./data2/index.ts"
 import {krigingDataMeta as metaData3} from "./data3/index.ts"
 import {krigingDataMeta as metaData4} from "./data4/index.ts"
 import {krigingDataMeta as metaData5} from "./data5/index.ts"
+import {krigingDataMeta as metaData6} from "./data6/index.ts"
+
 import MyWorker from './worker?worker';
 import moment from "moment"
 // Component
@@ -507,7 +509,7 @@ const formData = {
 }
 const initGui = () => {
   gui = new GUI({title: "weatherSample"});
-  gui.add(formData, "data", ["jz", "data1", "ga", "data3", "mj","cz"]).onChange(type => {
+  gui.add(formData, "data", ["jz", "data1", "ga", "data3", "mj","cz","ga2"]).onChange(type => {
     reset()
     switch (type) {
       case "jz":
@@ -528,6 +530,9 @@ const initGui = () => {
       case "cz":
         krigingDataMeta = metaData5
         break
+      case "ga2":
+        krigingDataMeta = metaData6
+        break
     }
     getlist()
     addKrigingPrimitive()
@@ -536,6 +541,15 @@ const initGui = () => {
   gui.add(formData, "destroy")
   gui.add(formData, "reset")
 }
+
+
+// 测试位图
+// const canvas = document.createElement('canvas')
+// document.body.appendChild(canvas)
+// window.ctx = canvas.getContext('2d')
+// canvas.width = this._uniforms.u_image1.width
+// canvas.height = this._uniforms.u_image1.height
+// ctx.drawImage(this._uniforms.u_image1,0,0)
 
 </script>
 

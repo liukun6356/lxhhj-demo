@@ -29,6 +29,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  gui.destroy()
   handler.destroy()
   floorsStackingDatasource?.entities?.removeAll()
   viewer.dataSources.remove(floorsStackingDatasource);

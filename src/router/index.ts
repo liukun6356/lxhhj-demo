@@ -4,7 +4,7 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 export const constantRoutes = [
     {
         path: '/',
-        redirect: '/three',
+        redirect: '/cesiumLast',
     },
     {
         path: '/cesium',
@@ -160,6 +160,12 @@ export const constantRoutes = [
                         name: 'cesium@-Blob-lineObj',
                         meta: {title: '迁徙路网', icon: '', affix: true},
                     },
+                    {
+                        path: 'spaceRadar',
+                        component: () => import('@/views/cesiumLast/component/blob/spaceRadar/index.vue'),
+                        name: 'cesium@-Blob-spaceRadar',
+                        meta: {title: '空间雷达', icon: '', affix: true},
+                    },
                 ]
             },
             {
@@ -174,6 +180,12 @@ export const constantRoutes = [
                         component: () => import('@/views/cesiumLast/component/water/triangularMesh/index.vue'),
                         name: 'cesium@-Water-TriangularMesh',
                         meta: {title: '水动力网格', icon: '', affix: true},
+                    },
+                    {
+                        path: 'twoWater',
+                        component: () => import('@/views/cesiumLast/component/water/twoWater/index.vue'),
+                        name: 'cesium@-Water-twoWater',
+                        meta: {title: '二维水动力', icon: '', affix: true},
                     },
                     {
                         path: 'weatherSample',
@@ -228,6 +240,12 @@ export const constantRoutes = [
                         component: () => import('@/views/cesiumLast/component/effect/controlPanel/index.vue'),
                         name: 'cesium@-Effect-ControlPanel',
                         meta: {title: '地图工具栏(图层管理)', icon: '', affix: true},
+                    },
+                    {
+                        path: 'geojsonShow',
+                        component: () => import('@/views/cesiumLast/component/effect/geojsonShow/index.vue'),
+                        name: 'cesium@-Effect-GeojsonShow',
+                        meta: {title: 'geojson多图层', icon: '', affix: true},
                     },
                     {
                         path: 'legendShow',
@@ -578,10 +596,10 @@ export const constantRoutes = [
         ]
     },
     {
+        name: "Arcgis",
         path: '/arcgis',
         component: () => import('@/layout/index.vue'),
         redirect: '/arcgis/main',
-        name: "Arcgis",
         children: [
             {
                 path: 'main',

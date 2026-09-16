@@ -59,7 +59,7 @@ const initLeaflet = () => {
         }
       }
   )
-  L.tileLayer('http://t0.tianditu.gov.cn/DataServer?T=vec_c&x={x}&y={y}&l={z}&tk=902014349629fe7d6d4b5273211a2fd6', {
+  L.tileLayer('http://t0.tianditu.gov.cn/DataServer?T=vec_c&x={x}&y={y}&l={z}&tk=bdc878b39913481beea522a504325cc5', {
     tileSize: 256,
     zoomOffset: 1
   }).addTo(map);

@@ -190,7 +190,7 @@ const addGridPrimitive = () => {
           out vec4 fragColor;
 
           void main() {
-              fragColor = vec4(color, 0.1);
+              fragColor = vec4(color, 0.05);
           }
       `;
       const vertexShaderSource = new Cesium.ShaderSource({sources: [vertexShader]});
@@ -202,7 +202,7 @@ const addGridPrimitive = () => {
         attributeLocations
       })
       const uniformMap = {
-        color: () => Cesium.Color.WHITE
+        color: () => Cesium.Color.fromCssColorString("#fff")
       }
       const rawRenderState = Cesium.Appearance.getDefaultRenderState(true, false, {});
       const renderState = Cesium.RenderState.fromCache(rawRenderState);
@@ -317,7 +317,6 @@ const addFloodPrimitive = () => {
         tex2: null as Cesium.Texture,
         texSize: new Cartesian2(1, 1),
         texDataFlag: new Cartesian2(0, 0),
-        gridColor: Color.fromCssColorString('rgba(255, 255, 255, 0.1)'),
       }
       this.name = "flood"
       this.show = true;
@@ -498,7 +497,7 @@ const addFloodPrimitive = () => {
           in vec4 v_color;
           void main(){
               vec3 color = czm_gammaCorrect(v_color.rgb);
-              out_FragColor = vec4(color, v_color.a);
+              out_FragColor = vec4(color, v_color.a - 0.2);
           }
       `
       const vertexShaderSource = new Cesium.ShaderSource({sources: [vertexShader]});
@@ -823,8 +822,6 @@ class DataSource {
         obj.destroy();
       },
     });
-
-
   }
 }
 
